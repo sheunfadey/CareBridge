@@ -1,0 +1,263 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound, redirect } from "next/navigation";
+import { PlusIcon } from "lucide-react";
+
+import { PageHeader } from "@/components/layout/page-header";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/ui/status-badge";
+import { getCurrentUser } from "@/server/auth/current-user";
+import { getManagedCourseDetail } from "@/server/academy/queries";
+import { courseDifficultyLabels } from "@/lib/validation/academy";
+import { AddModuleDialog } from "@/features/academy/components/add-module-dialog";
+import { AddLessonDialog } from "@/features/academy/components/add-lesson-dialog";
+import { PublishCourseButton } from "@/features/academy/components/publish-course-button";
+
+type ManageCoursePageProps = {
+  params: Promise<{ courseId: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: ManageCoursePageProps): Promise<Metadata> {
+  const { courseId } = await params;
+  const user = await getCurrentUser();
+  if (!user) return { title: "Manage course" };
+  const course = await getManagedCourseDetail(courseId, user);
+  return { title: course ? `Manage: ${course.title}` : "Manage course" };
+}
+
+export default async function ManageCoursePage({
+  params,
+}: ManageCoursePageProps) {
+  const { courseId } = await params;
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect(`/login?redirectTo=/dashboard/academy/manage/${courseId}`);
+  }
+
+  const course = await getManagedCourseDetail(courseId, user);
+  if (!course) {
+    notFound();
+  }
+
+  const canEdit =
+    user.isSuperAdmin || user.permissions.has("course_manage");
+  const canPublish =
+    user.isSuperAdmin || user.permissions.has("course_publish");
+  const canAddContent =
+    user.isSuperAdmin || user.permissions.has("learning_material_manage");
+
+  return (
+    <div className="space-y-6">
+      <PageHeader
+        eyebrow="Academy management"
+        title={course.title}
+        description={course.summary ?? "Course details and syllabus."}
+        breadcrumbs={[
+          { label: "Dashboard", href: "/dashboard" },
+          { label: "Academy", href: "/dashboard/academy" },
+          { label: "Manage courses", href: "/dashboard/academy/manage" },
+          { label: course.title },
+        ]}
+        actions={
+          <>
+            <Button variant="outline" asChild>
+              <Link href={`/courses/${course.slug}`}>View public page</Link>
+            </Button>
+            {canPublish ? (
+              <PublishCourseButton
+                courseId={course.id}
+                published={course.status === "published"}
+              />
+            ) : null}
+          </>
+        }
+      />
+
+      <div className="flex flex-wrap items-center gap-2">
+        <StatusBadge status={course.status} />
+        <Badge variant="outline">
+          {courseDifficultyLabels[course.difficulty]}
+        </Badge>
+        <Badge variant="secondary">
+          {course.organisationName ?? "CareBridge platform"}
+        </Badge>
+        <Badge variant="secondary">{course.programmeTitle}</Badge>
+        <span className="text-xs text-muted-foreground">
+          {course.totalLessons} lesson{course.totalLessons === 1 ? "" : "s"} ·{" "}
+          {course.estimatedMinutes} min
+        </span>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="font-heading text-base font-semibold text-brand-navy">
+              Syllabus
+            </h2>
+            {canAddContent ? (
+              <AddModuleDialog courseId={course.id}>
+                <Button variant="outline" size="sm">
+                  <PlusIcon />
+                  Add module
+                </Button>
+              </AddModuleDialog>
+            ) : null}
+          </div>
+
+          {course.modules.length === 0 ? (
+            <Card className="p-6 text-center">
+              <p className="font-heading font-semibold text-brand-navy">
+                No modules yet
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Add a module, then add lessons inside it.
+              </p>
+            </Card>
+          ) : (
+            course.modules.map((module) => (
+              <Card key={module.id} className="overflow-hidden">
+                <div className="flex items-start justify-between gap-3 border-b p-5">
+                  <div>
+                    <p className="font-heading font-semibold text-brand-navy">
+                      Module {module.position}: {module.title}
+                    </p>
+                    {module.summary ? (
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {module.summary}
+                      </p>
+                    ) : null}
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      {module.lessons.length} lesson
+                      {module.lessons.length === 1 ? "" : "s"}
+                      {module.isRequired ? " · Required" : ""}
+                    </p>
+                  </div>
+                  {canAddContent ? (
+                    <AddLessonDialog moduleId={module.id}>
+                      <Button variant="outline" size="sm">
+                        <PlusIcon />
+                        Add lesson
+                      </Button>
+                    </AddLessonDialog>
+                  ) : null}
+                </div>
+                {module.lessons.length === 0 ? (
+                  <p className="p-5 text-sm text-muted-foreground">
+                    No lessons in this module yet.
+                  </p>
+                ) : (
+                  <div className="divide-y">
+                    {module.lessons.map((lesson) => (
+                      <details key={lesson.id}>
+                        <summary className="flex cursor-pointer items-center justify-between gap-3 p-4 text-sm hover:bg-muted/50">
+                          <span className="font-medium text-brand-navy">
+                            {lesson.position}. {lesson.title}
+                          </span>
+                          <span className="flex items-center gap-2 text-xs text-muted-foreground">
+                            {lesson.isPreview ? (
+                              <Badge variant="secondary">Preview</Badge>
+                            ) : null}
+                            {lesson.estimatedMinutes} min
+                          </span>
+                        </summary>
+                        <div className="space-y-3 px-4 pb-4">
+                          <div className="whitespace-pre-wrap rounded-lg bg-muted/50 p-4 text-sm leading-relaxed">
+                            {lesson.content}
+                          </div>
+                          {lesson.videoUrl ? (
+                            <p className="text-xs text-muted-foreground">
+                              Video: {lesson.videoUrl}
+                            </p>
+                          ) : null}
+                        </div>
+                      </details>
+                    ))}
+                  </div>
+                )}
+              </Card>
+            ))
+          )}
+        </div>
+
+        <div className="space-y-4">
+          <Card className="p-5">
+            <p className="font-heading font-semibold text-brand-navy">
+              Course details
+            </p>
+            <dl className="mt-4 space-y-3 text-sm">
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-muted-foreground">
+                  Description
+                </dt>
+                <dd className="mt-1 whitespace-pre-wrap text-muted-foreground">
+                  {course.description}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-muted-foreground">
+                  Learning outcomes
+                </dt>
+                <dd className="mt-1">
+                  {course.learningOutcomes.length === 0 ? (
+                    <span className="text-muted-foreground">None listed</span>
+                  ) : (
+                    <ul className="list-disc space-y-1 pl-4 text-muted-foreground">
+                      {course.learningOutcomes.map((outcome) => (
+                        <li key={outcome}>{outcome}</li>
+                      ))}
+                    </ul>
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-muted-foreground">
+                  Prerequisites
+                </dt>
+                <dd className="mt-1">
+                  {course.prerequisites.length === 0 ? (
+                    <span className="text-muted-foreground">None listed</span>
+                  ) : (
+                    <ul className="list-disc space-y-1 pl-4 text-muted-foreground">
+                      {course.prerequisites.map((prerequisite) => (
+                        <li key={prerequisite}>{prerequisite}</li>
+                      ))}
+                    </ul>
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-muted-foreground">
+                  Certificate
+                </dt>
+                <dd className="mt-1 text-muted-foreground">
+                  {course.certificateEnabled
+                    ? "Issued on completion"
+                    : "Not issued"}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-muted-foreground">
+                  Scholarship
+                </dt>
+                <dd className="mt-1 text-muted-foreground">
+                  {course.scholarshipEligible ? "Eligible" : "Not eligible"}
+                </dd>
+              </div>
+            </dl>
+            {canEdit ? (
+              <p className="mt-4 text-xs text-muted-foreground">
+                Editing course details is not yet available in this build.
+                Content and publication controls are enabled.
+              </p>
+            ) : null}
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}

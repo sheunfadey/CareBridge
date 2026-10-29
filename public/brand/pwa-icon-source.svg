@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none" width="128" height="128" role="img" aria-label="CareBridge">
+  <rect width="128" height="128" rx="28" fill="#12304A"/>
+  <g transform="translate(24 24)">
+    <rect x="6" y="17.5" width="9" height="18" rx="4.5" fill="#EAF4F7"/>
+    <rect x="25" y="17.5" width="9" height="18" rx="4.5" fill="#EAF4F7"/>
+    <circle cx="10.5" cy="12.5" r="3.75" fill="#EAF4F7"/>
+    <circle cx="29.5" cy="12.5" r="3.75" fill="#EAF4F7"/>
+    <path d="M10.5 25C10.5 10 29.5 10 29.5 25" stroke="#2FB3B5" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>

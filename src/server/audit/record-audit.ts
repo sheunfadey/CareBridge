@@ -1,0 +1,127 @@
+import "server-only";
+
+import { createClient } from "@/lib/supabase/server";
+import type { Json } from "@/types/database";
+
+/**
+ * Canonical audit actions. Kept as a union so callers cannot invent
+ * free-form action names that would fragment reporting.
+ */
+export type AuditAction =
+  | "auth.registered"
+  | "auth.login"
+  | "auth.logout"
+  | "onboarding.completed"
+  | "organisation.created"
+  | "organisation.updated"
+  | "membership.invited"
+  | "membership.accepted"
+  | "membership.role_assigned"
+  | "membership.role_revoked"
+  | "membership.removed"
+  | "invitation.revoked"
+  | "verification.submitted"
+  | "verification.reviewed"
+  | "account.activated"
+  | "account.deactivated"
+  | "organisation.status.pending"
+  | "organisation.status.active"
+  | "organisation.status.suspended"
+  | "organisation.status.disabled"
+  | "organisation.verification.unverified"
+  | "organisation.verification.pending"
+  | "organisation.verification.verified"
+  | "organisation.verification.rejected"
+  | "course.created"
+  | "course.updated"
+  | "course.published"
+  | "course.unpublished"
+  | "course.module.created"
+  | "course.lesson.created"
+  | "course.enrolled"
+  | "course.completed"
+  | "certificate.issued"
+  | "job.created"
+  | "job.updated"
+  | "job.published"
+  | "job.closed"
+  | "job.application.submitted"
+  | "job.application.status_changed"
+  | "internship.created"
+  | "internship.updated"
+  | "internship.opened"
+  | "internship.closed"
+  | "internship.application.submitted"
+  | "internship.application.status_changed"
+  | "placement.created"
+  | "placement.updated"
+  | "placement.activated"
+  | "placement.completed"
+  | "placement.terminated"
+  | "placement.agreement.responded"
+  | "internship.log.submitted"
+  | "internship.log.reviewed"
+  | "internship.attendance.recorded"
+  | "internship.evaluation.submitted"
+  | "internship.incident.reported"
+  | "internship.incident.updated"
+  | "internship.completion.issued"
+  | "interview.scheduled"
+  | "interview.updated"
+  | "job.offer.sent"
+  | "job.offer.responded"
+  | "job.offer.withdrawn"
+  | "internship.offer.sent"
+  | "internship.offer.responded"
+  | "internship.offer.withdrawn"
+  | "organisation.verification_requested"
+  | "placement_provider.updated"
+  | "payment.checkout_started"
+  | "payment.verified"
+  | "payment.failed"
+  | "payment.refunded"
+  | "referral.partner.applied"
+  | "referral.partner.reviewed"
+  | "referral.policy.saved"
+  | "referral.commission.reviewed"
+  | "referral.payout.requested"
+  | "referral.payout.reviewed"
+  | "referral.payout.transfer"
+  | "referral.payout_account.saved"
+  | "referral.payout_account.verified";
+
+export type AuditEntry = {
+  actorId: string | null;
+  organisationId?: string | null;
+  action: AuditAction;
+  entityType: string;
+  entityId?: string | null;
+  metadata?: Json;
+};
+
+/**
+ * Writes an audit record through the request-scoped client, so RLS applies.
+ * Failures are logged but never thrown — audit must not break the user flow,
+ * and the database remains the source of truth via triggers where required.
+ */
+export async function recordAudit(entry: AuditEntry): Promise<void> {
+  const supabase = await createClient();
+
+  const { error } = await supabase.from("audit_logs").insert({
+    actor_id: entry.actorId,
+    organisation_id: entry.organisationId ?? null,
+    action: entry.action,
+    entity_type: entry.entityType,
+    entity_id: entry.entityId ?? null,
+    metadata: entry.metadata ?? {},
+  });
+
+  if (error) {
+    console.error("[audit] failed to write audit log", {
+      action: entry.action,
+      entityType: entry.entityType,
+      entityId: entry.entityId,
+      message: error.message,
+    });
+  }
+}

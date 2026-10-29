@@ -1,0 +1,132 @@
+# Known Limitations
+
+This document tracks features that are incomplete, disabled, or awaiting
+external configuration. It is updated as each phase lands.
+
+## Current state: Phases 2-5 complete, Phase 6 in progress
+
+### Implemented and verified
+
+- **Supabase connected** to project `ggizvtzlhdciykfmdsjl`. Migrations `0001` to
+  `0015` are applied and in sync.
+- **Identity & multi-tenancy schema**: `profiles`, `organisations`,
+  `organisation_memberships`, `roles`, `permissions`, `role_permissions`,
+  `user_role_assignments`, `organisation_invitations`,
+  `organisation_verifications`, `user_consents`,
+  `user_notification_preferences`, `audit_logs`, notifications.
+- **Row Level Security** on every tenant-owned table, with helper functions
+  `has_permission`, `is_super_admin`, `current_organisation_ids`, `is_org_member`.
+- **Auth flows**: register, email verification callback, login, logout, forgot
+  password, reset password, and post-signup onboarding.
+- **Organisations**: create, invite members, revoke invitations, assign roles,
+  remove members, accept invitations (via the SECURITY DEFINER
+  `accept_invitation` RPC).
+- **Audit logging** (`src/server/audit/record-audit.ts`).
+- **Email abstraction** (`src/lib/email/*`): branded templates, a Resend HTTP
+  provider and a console fallback.
+- **Platform administration** (`src/server/admin/*`, `/dashboard/admin`):
+  super-admin-only, uses the service-role client when available and reports the
+  capability as unavailable otherwise.
+- **Academy (Phase 4)**: programmes, courses, modules, lessons, enrolments,
+  progress, certificates, provider management and public certificate
+  verification.
+- **Internships (Phase 5)**: placement providers, listings, applications,
+  provider review, placements, supervision, weekly logbooks, attendance,
+  evaluations, incidents, completion records and agreement acceptance.
+- **Employment (Phase 5)**: job postings with draft/publish/close lifecycle,
+  applications, applicant review, withdrawal, interviews and offers.
+- **Payments (Phase 6, partial)**: Paystack provider abstraction, server-side
+  verification, signature-checked and idempotent webhooks, paid course checkout,
+  refunds, finance payment review and reconciliation pages.
+- **Referrals (Phase 6, partial)**: partner applications, published commission
+  policies, `/r/[code]` attribution, immutable commission ledger, payout
+  requests, finance approval, beneficiary verification and a guarded transfer
+  workflow.
+- **Notifications**: in-app notification centre and unread counts.
+- **Test runner** (Vitest): `npm test` runs unit tests for the permission
+  registry, validation schemas, money and commission calculations, email
+  templates, admin-service contracts and navigation.
+- **Cross-tenant isolation test** (`supabase/tests/rls_isolation.sql`) - passes
+  against the live database for migrations `0001`-`0015`, including payments,
+  commission ledger isolation, write denial and self-referral rejection.
+
+### Not yet implemented or not yet verified
+
+- **No provider credentials are configured.** Paystack checkout, refunds and
+  transfers have not been exercised end-to-end against sandbox or live. Add
+  `PAYSTACK_SECRET_KEY` (and `PAYSTACK_WEBHOOK_SECRET`) to enable checkout.
+- **Provider transfers are disabled by default.** Even with a key, payouts can
+  only be sent when `PAYSTACK_TRANSFERS_ENABLED=true`; the business must approve
+  the arrangement first.
+- **No webhook is registered with Paystack** for this deployment. Until it is,
+  successful payments rely on the server-side verification on callback/refresh.
+- **Email delivery is not enabled.** `EMAIL_PROVIDER` defaults to `console`, so
+  emails are logged, not delivered. Set `EMAIL_PROVIDER=resend` plus
+  `EMAIL_PROVIDER_API_KEY` and a verified `EMAIL_FROM_ADDRESS` to deliver.
+- **Candidate profiles / CVs**: applications capture a cover letter only; there
+  is no structured candidate profile or document upload.
+- **No file uploads / storage buckets.**
+- **No end-to-end browser tests.** Unit tests (Vitest) and the SQL RLS isolation
+  test exist; Playwright is not yet set up. Phase 6 pages have been driven with
+  seeded fixtures over authenticated HTTP requests, but not in an automated
+  browser session.
+- **Care-home operations, charity and analytics** modules are not built. Their
+  dashboard routes show an honest "planned" placeholder, never fabricated data.
+- **Profile editing and notification preferences** are not implemented; the
+  settings pages are read-only or marked as planned.
+- **Dashboard top-bar search** is not wired to a search backend.
+
+### Intentional behaviour
+
+- `/dashboard` and `/onboarding` require an authenticated session; middleware
+  redirects unauthenticated visitors to `/login`.
+- Privileged roles (`super_admin`, `platform_support`, `finance_officer`,
+  `compliance_officer`) can only be granted through direct platform
+  administration - never through an organisation invite or self-service.
+- A user can never assign themselves a role or escalate `is_super_admin`; both
+  are blocked by RLS `WITH CHECK` clauses and a database trigger. Trusted
+  server-side connections without an auth session (SQL editor, service role,
+  migrations) may bootstrap the first super admin; this is enforced by
+  `0010_super_admin_bootstrap.sql`.
+- Job and internship applications are readable only by the applicant and by
+  staff of the owning organisation; RLS enforces this. Published jobs are
+  readable by any visitor, and any signed-in visitor may apply; draft postings
+  are visible only to that organisation's managers.
+- A payment is only successful after server-side provider verification. A
+  browser redirect alone never grants access or enrolment.
+- Commission rates are never invented. No commission is created unless an
+  active policy covers the payment purpose.
+- Commission ledger rows are immutable; status changes follow database-guarded
+  transitions and are recorded as events.
+- Self-referral is rejected in the database. Payouts require a verified
+  beneficiary account and a finance-approved request.
+- Provider transfers are off unless explicitly enabled in the environment.
+
+
+### External dependencies pending
+
+| Integration | Blocked on |
+| ----------- | ---------- |
+| Email provider | API key + verified sender domain |
+| SMS provider | Provider account (later phase) |
+| Paystack checkout | Secret key + registered webhook URL and secret |
+| Paystack transfers | Business approval + `PAYSTACK_TRANSFERS_ENABLED=true` |
+| Error monitoring | DSN (optional) |
+
+## Verification status
+
+- `npm run lint` - clean
+- `npm run typecheck` - clean
+- `npm test` - 57 unit tests pass (8 files)
+- `npm run build` - succeeds (production build)
+- Unauthenticated smoke test - `/`, `/login`, `/register`, `/forgot-password`,
+  `/reset-password`, `/verify-email` return HTTP 200; `/dashboard` returns 307 to
+  `/login?redirectTo=%2Fdashboard` when unauthenticated.
+- Authenticated smoke test (earlier Phase 5 run, local dev, `admin@carebridge.test`)
+  - employment routes returned HTTP 200 with seeded data. Phase 6 pages were
+  added after that run and have been compiled but not smoke-tested in a browser.
+- `npm run db:test:rls` - cross-tenant isolation assertions hold for the applied
+  schema through migration `0015`, including Phase 6 payment and commission
+  isolation, write denial and self-referral rejection.
+
+No feature in later phases is claimed as complete.

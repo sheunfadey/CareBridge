@@ -1,0 +1,2632 @@
+# MASTER OPENCODE BUILD PROMPT
+# CAREBRIDGE — CAREGIVER TRAINING, EMPLOYMENT, CARE HOME MANAGEMENT & CHARITY PLATFORM
+
+## 1. YOUR ROLE AND MISSION
+
+Act as a senior full-stack software architect, UI/UX designer, brand designer, database engineer, security engineer, DevOps engineer, QA engineer and product manager.
+
+Build a complete, production-oriented, responsive, multi-tenant SaaS application named **CareBridge**.
+
+**Working tagline:** Learn to Care. Grow Your Career. Make a Difference.
+
+This is not a static website, design-only exercise, or dashboard demo. Build a functioning application with a real database, authentication, role-based permissions, data validation, file uploads, payment integration, transactional workflows, administrative approvals, audit trails, error handling, automated tests and deployment documentation.
+
+The platform will initially target Nigeria and must accommodate Nigerian users, businesses, payment practices, currencies, mobile devices and network conditions.
+
+The application combines:
+
+1. Caregiver training and learning management.
+2. Practical assessment and internship placement.
+3. Caregiver recruitment and employment matching.
+4. Care-home and home-care agency operations management.
+5. Referral tracking and commission management.
+6. Training payments and approved referral payouts.
+7. Charity campaigns, scholarships and donor management.
+8. Multi-tenant institutional administration.
+9. Platform-wide super administration.
+10. Reporting, analytics, notifications and audit logging.
+
+Build the complete system through clearly defined implementation phases. Do not try to create every feature in a single unverified code-generation pass.
+
+First inspect the existing project, preserve any working code, identify the current framework and produce an implementation plan. Then build, test and verify each phase before continuing.
+
+Do not stop after producing a plan. Begin implementation immediately.
+
+---
+
+## 2. PRODUCT VISION
+
+CareBridge connects the entire caregiver development journey:
+
+Discover training → enrol → learn → complete assessments → demonstrate practical competence → undertake supervised internship → obtain verified credentials where applicable → apply for jobs → gain employment → continue professional development.
+
+The platform also allows verified care homes and home-care agencies to manage staff, shifts, residents, approved care plans, daily records, incidents, inventory, invoices and operational reports.
+
+Referral partners can introduce students or institutional customers and earn approved commissions under transparent programme rules.
+
+Charities, NGOs, churches, companies and individual donors can sponsor training and monitor approved campaign outcomes.
+
+### Product principles
+
+- Safety before growth.
+- Real functionality before decorative features.
+- Mobile-first design.
+- Clear and transparent financial records.
+- Strict separation between organisations.
+- Privacy by default.
+- Verifiable training and employment records.
+- Accessible design.
+- Reliable performance on Nigerian mobile networks.
+- No fabricated analytics or fake transactions.
+- No false promises of employment or professional certification.
+- No hidden deductions or silently changed financial terms.
+
+---
+
+## 3. BRAND IDENTITY AND VISUAL DIRECTION
+
+Create a distinctive, professional, trustworthy healthcare and education technology brand.
+
+The product should feel like a modern international SaaS platform, with enough warmth to communicate compassion, dignity and human connection.
+
+Avoid generic hospital imagery, childish illustrations, crowded dashboards, excessive gradients and unnecessary decorative elements.
+
+### 3.1 Brand identity
+
+Product name: CareBridge
+
+Tagline: Learn to Care. Grow Your Career. Make a Difference.
+
+Brand personality:
+- Trustworthy.
+- Compassionate.
+- Professional.
+- Modern.
+- Secure.
+- Inclusive.
+- Career-focused.
+- Human-centred.
+
+### 3.2 Official proposed colour palette
+
+Use these exact design tokens consistently across the application.
+
+Primary navy:
+- HEX: #12304A
+- Use for primary branding, navigation, headings and important text.
+
+Care teal:
+- HEX: #0F8B8D
+- Use for primary actions, active navigation, progress indicators and positive care-related interactions.
+
+Growth green:
+- HEX: #2E9D68
+- Use for completed learning, verified milestones, successful outcomes and positive status indicators.
+
+Warm coral:
+- HEX: #F28C75
+- Use sparingly for human warmth, selected illustrations and secondary accents.
+
+Soft sky:
+- HEX: #EAF4F7
+- Use for highlighted panels and calm information sections.
+
+Warm ivory:
+- HEX: #FAFAF7
+- Use as a light page background.
+
+White:
+- HEX: #FFFFFF
+- Use for cards and content surfaces.
+
+Primary text:
+- HEX: #192B3A
+
+Secondary text:
+- HEX: #64748B
+
+Border:
+- HEX: #E2E8F0
+
+Warning:
+- HEX: #D97706
+
+Error:
+- HEX: #DC4545
+
+Success:
+- HEX: #218653
+
+Dark dashboard background:
+- HEX: #101D2A
+
+Dark elevated surface:
+- HEX: #172839
+
+Ensure adequate contrast for text, controls, status labels and focus indicators.
+
+Never rely on colour alone to communicate a financial, clinical or workflow status.
+
+### 3.3 Typography
+
+Use:
+- Inter for general interface text.
+- A suitable system sans-serif fallback.
+- Consistent heading, body, caption and numerical typography scales.
+
+Use clear typographic hierarchy:
+- Dashboard page titles: approximately 26–32px on desktop.
+- Section titles: approximately 18–22px.
+- Card headings: approximately 14–16px.
+- Body text: approximately 14–16px.
+- Supporting labels: approximately 12–13px, with sufficient readability.
+
+Adapt typography to smaller mobile screens.
+
+### 3.4 Logo design
+
+Create a custom, original vector logo for CareBridge.
+
+Concept:
+- A simple bridge or connecting arch.
+- A subtle healthcare cross or human connection motif.
+- Two connected forms representing caregivers and the people they support.
+- A strong, readable silhouette that works at small sizes.
+
+Avoid directly copying an existing healthcare, charity or SaaS logo.
+
+The logo must communicate connection, care, reliability and professional development.
+
+Create these brand assets:
+
+- Full horizontal logo.
+- Icon-only logo.
+- Compact stacked logo.
+- Light-background variant.
+- Dark-background variant.
+- Monochrome variant.
+- Browser favicon.
+- PWA icon set.
+- Social sharing image.
+- Login-page brand lockup.
+
+Store source logo assets in a dedicated public assets directory. Prefer SVG for the logo and appropriate PNG sizes for platform icons.
+
+Do not generate a logo using an emoji, text glyph or CSS approximation when a real vector asset can be created.
+
+If image generation or vector illustration tools are unavailable, create an original, clean SVG logo directly and make it easy to replace later.
+
+### 3.5 Brand usage
+
+Create a central brand configuration file and design tokens.
+
+Do not scatter hard-coded brand colours throughout components.
+
+Use CSS variables or the framework's theme system.
+
+All buttons, cards, sidebars, progress indicators, charts, modals, badges, forms, login screens and loading states must use the central design system.
+
+---
+
+## 4. ANIMATED LOGO AND LOADING EXPERIENCE
+
+Create a polished CareBridge animated loading sequence.
+
+The animation should feel premium, calm and purposeful, not distracting.
+
+### Animation sequence
+
+Stage 1 — Logo reveal:
+- Duration: 0–500ms.
+- Fade in the icon.
+- Scale smoothly from 0.88 to 1.
+- Use a subtle easing curve.
+
+Stage 2 — Connection animation:
+- Duration: 400–1100ms.
+- Animate the bridge or connecting arch using an SVG stroke animation or a suitable transform.
+- Reveal the connection between the two human forms.
+- Keep the animation subtle and elegant.
+
+Stage 3 — Care pulse:
+- Duration: 800–1400ms.
+- Add one gentle pulse to the connection motif.
+- Do not use an aggressive heartbeat animation.
+
+Stage 4 — Wordmark:
+- Duration: 1000–1600ms.
+- Fade and slide the CareBridge wordmark into place.
+- Reveal the tagline only on larger loading screens.
+
+Stage 5 — Application readiness:
+- Show a subtle loading indicator only while real loading work is in progress.
+- Display useful status text such as “Preparing your workspace” where appropriate.
+- Do not display a fake percentage.
+
+### Implementation requirements
+
+Create reusable components:
+
+- `CareBridgeLogo`
+- `AnimatedCareBridgeLogo`
+- `AppLoadingScreen`
+- `PageLoadingSkeleton`
+- `InlineLoadingIndicator`
+- `RouteLoadingFallback`
+
+Use the animated logo for:
+- Initial application loading.
+- Authentication transitions where appropriate.
+- Major dashboard loading states.
+- First-time workspace setup.
+- Branded empty/loading states.
+
+Use lightweight skeletons for ordinary table refreshes and small content updates.
+
+Do not replay the full animation every time a user changes tabs.
+
+Respect `prefers-reduced-motion`.
+
+Do not block the application unnecessarily with a long intro animation. Once the application is ready, make the interface available immediately.
+
+---
+
+## 5. TECHNICAL ARCHITECTURE
+
+Use a modern, maintainable architecture.
+
+### Preferred stack
+
+- Next.js with App Router.
+- TypeScript in strict mode.
+- React.
+- Tailwind CSS.
+- shadcn/ui for accessible UI primitives.
+- Lucide React icons.
+- Framer Motion or Motion for appropriate interface animations.
+- Supabase PostgreSQL.
+- Supabase Auth.
+- Supabase Storage with private buckets for sensitive documents.
+- Supabase Row Level Security.
+- React Hook Form.
+- Zod.
+- Recharts for analytics.
+- TanStack Table for complex data tables.
+- A supported date utility library.
+- A maintained rich-text editor for lesson content where necessary.
+- A secure background-job mechanism for scheduled notifications and processing.
+- Paystack for eligible payment and transfer workflows, behind a provider abstraction.
+- An email delivery provider abstraction.
+- An SMS or messaging provider abstraction for later configuration.
+
+Use current stable, mutually compatible package versions at implementation time.
+
+Verify current package APIs before implementing integrations. Do not copy obsolete examples blindly.
+
+If the repository already uses a compatible framework or contains working infrastructure, preserve it unless there is a documented reason to migrate.
+
+### Architectural rules
+
+1. Use Server Components by default where suitable.
+2. Use Client Components only when browser interaction requires them.
+3. Keep secrets on the server.
+4. Do not expose service-role keys to the browser.
+5. Keep privileged administrative operations in protected server-side services.
+6. Validate all incoming data with schemas.
+7. Enforce authorisation on the server, not only in the UI.
+8. Use database transactions for multi-step financial operations.
+9. Use idempotency for payment and payout processing.
+10. Use background jobs for reliable scheduled work.
+11. Store timestamps in UTC and display them in the user's configured timezone.
+12. Default the platform to Africa/Lagos for Nigerian organisations.
+13. Use NGN as the initial platform currency.
+14. Store monetary amounts as integer minor units or a suitable exact decimal representation. Never use floating-point arithmetic for money.
+15. Use explicit database constraints and indexes.
+16. Maintain migration files for every schema change.
+17. Separate development, testing and production environments.
+18. Avoid circular imports, duplicated business logic and oversized components.
+19. Keep UI, business services, data access and integration adapters separate.
+20. Make error states actionable and understandable.
+
+### Suggested project structure
+
+Adapt this structure to the repository rather than forcing it blindly.
+
+`src/`
+- `app/`
+  - `(marketing)/`
+  - `(auth)/`
+  - `(platform)/`
+  - `admin/`
+  - `academy/`
+  - `caregiver/`
+  - `internships/`
+  - `jobs/`
+  - `care-homes/`
+  - `referrals/`
+  - `charity/`
+  - `settings/`
+  - `api/`
+- `components/`
+  - `brand/`
+  - `layout/`
+  - `dashboard/`
+  - `charts/`
+  - `forms/`
+  - `tables/`
+  - `feedback/`
+  - `accessibility/`
+- `features/`
+  - `auth/`
+  - `academy/`
+  - `assessments/`
+  - `internships/`
+  - `recruitment/`
+  - `care-homes/`
+  - `referrals/`
+  - `payments/`
+  - `charity/`
+  - `notifications/`
+  - `reporting/`
+- `lib/`
+  - `supabase/`
+  - `validation/`
+  - `security/`
+  - `formatting/`
+  - `permissions/`
+  - `observability/`
+- `server/`
+  - `services/`
+  - `repositories/`
+  - `jobs/`
+  - `integrations/`
+  - `policies/`
+- `types/`
+- `config/`
+- `styles/`
+
+Also create:
+- `supabase/migrations/`
+- `supabase/seed.sql`
+- `tests/unit/`
+- `tests/integration/`
+- `tests/e2e/`
+- `docs/`
+- `.env.example`
+- `README.md`
+
+The final structure may differ where a cleaner, well-justified architecture is used.
+
+---
+
+## 6. MULTI-TENANCY AND ORGANISATION MODEL
+
+CareBridge must support both a central platform and independent organisations.
+
+Supported organisation types:
+
+- CareBridge-operated academy.
+- Independent training provider.
+- Care home.
+- Home-care agency.
+- Recruitment partner.
+- Charity or NGO.
+- Corporate training customer.
+
+Each organisation must have:
+- Unique ID.
+- Display name.
+- Organisation type.
+- Verification status.
+- Logo.
+- Contact information.
+- Address and service locations where appropriate.
+- Subscription or contract information where applicable.
+- Created date.
+- Status.
+- Permitted modules.
+- Organisation-specific settings.
+
+### Tenant isolation
+
+Every tenant-owned record must include a tenant or organisation scope where appropriate.
+
+Implement database-level RLS policies for all tenant-owned tables.
+
+A user belonging to one organisation must not be able to read, modify or delete another organisation's private records merely by changing an ID in a URL or request.
+
+Where a record is shared across organisations, define the sharing relationship explicitly.
+
+Use least-privilege access.
+
+Do not implement broad policies such as “any authenticated user can read everything.”
+
+Create automated cross-tenant isolation tests.
+
+The Super Administrator may perform authorised platform-wide operations through controlled server-side procedures, with audit logging.
+
+Never rely solely on hidden menu items or frontend route guards for security.
+
+---
+
+## 7. AUTHENTICATION AND ONBOARDING
+
+Implement a complete authentication experience.
+
+Required functionality:
+- Email registration.
+- Email verification.
+- Login.
+- Logout.
+- Password reset.
+- Password change.
+- Session management.
+- Secure account recovery.
+- Optional phone number collection.
+- Optional phone verification when configured.
+- Terms and privacy acceptance.
+- Account status handling.
+- Secure invitation acceptance.
+- Optional MFA for privileged accounts.
+- Rate limiting for sensitive authentication endpoints.
+
+Support invitation-only access for selected organisational roles.
+
+### Onboarding
+
+After registration, users should select or confirm their intended account type.
+
+Possible account types:
+- Caregiver or student.
+- Training provider.
+- Care home or home-care agency.
+- Referral partner.
+- Charity or donor.
+- Employer or recruiter.
+
+Allow multiple roles only through explicit role assignment and permission checks.
+
+Do not let a normal user self-assign a Super Administrator, Finance Officer or other privileged role.
+
+### Caregiver onboarding fields
+
+Collect only information needed for the intended purpose.
+
+Possible fields:
+- Full name.
+- Email.
+- Phone.
+- Profile photo.
+- State and city.
+- Education and relevant experience.
+- Skills and interests.
+- Preferred training path.
+- Availability.
+- Emergency contact where justified.
+- References and verification documents where required.
+
+Collect sensitive identity or health information only where necessary, with suitable safeguards and retention policies.
+
+Provide clear privacy notices.
+
+---
+
+## 8. ROLE-BASED ACCESS CONTROL
+
+Create a central permission registry and a server-side permission service.
+
+Initial roles:
+
+1. `super_admin`
+2. `platform_support`
+3. `training_admin`
+4. `instructor`
+5. `caregiver`
+6. `internship_supervisor`
+7. `employer`
+8. `care_home_owner`
+9. `care_home_manager`
+10. `care_staff`
+11. `referral_partner`
+12. `charity_admin`
+13. `donor`
+14. `finance_officer`
+15. `compliance_officer`
+16. `family_member`
+
+Add `organisation_owner` and other scoped roles if required by the final data model.
+
+Roles must be scoped to the relevant organisation wherever appropriate.
+
+### Permission categories
+
+- Platform settings.
+- Organisation management.
+- User management.
+- Course management.
+- Learning material management.
+- Assessments and results.
+- Internship administration.
+- Employment and recruitment.
+- Resident records.
+- Care plans and daily logs.
+- Incident records.
+- Financial reporting.
+- Payment review.
+- Refund processing.
+- Referral rules.
+- Commission approval.
+- Payout approval.
+- Charity campaigns.
+- Donor reporting.
+- Compliance records.
+- Audit logs.
+
+Use permission checks for both reads and writes.
+
+Sensitive actions must require appropriate privileges and, where needed, a reason, additional confirmation or second-person approval.
+
+Do not allow a user to approve their own financial payout request.
+
+---
+
+## 9. PUBLIC WEBSITE AND MARKETING PAGES
+
+Create a polished public-facing website.
+
+Required pages:
+- Home.
+- About CareBridge.
+- How It Works.
+- Caregiver Training.
+- Courses.
+- Internship Opportunities.
+- Find Caregivers.
+- For Care Homes.
+- For Employers.
+- Referral Programme.
+- Charity and Scholarships.
+- Donate.
+- Become a Training Partner.
+- Become an Employer Partner.
+- Frequently Asked Questions.
+- Contact.
+- Help Centre.
+- Privacy Policy.
+- Terms of Service.
+- Cookie and privacy preferences where applicable.
+- Refund Policy.
+- Referral Programme Terms.
+- Safeguarding Policy.
+- Accessibility Statement.
+
+Use original, professional copy. Do not fabricate partnerships, accreditations, customer testimonials, employment statistics or training outcomes.
+
+### Homepage structure
+
+1. Professional navigation.
+2. Hero section with the headline:
+   “Build a Career in Care. Help Someone Live Better.”
+3. Supporting text explaining training, practical experience and employment opportunities.
+4. Primary CTA: Explore Training.
+5. Secondary CTA: Become a Care Partner.
+6. Trust and verification section with factual, substantiated claims only.
+7. How CareBridge works.
+8. Featured training programmes.
+9. Internship and employment pathway.
+10. Care-home software showcase.
+11. Charity and scholarship section.
+12. Referral programme introduction.
+13. Frequently asked questions.
+14. Footer with important policies and contact links.
+
+Build a cohesive visual identity across the public site and the authenticated platform.
+
+---
+
+## 10. CAREGIVER ACADEMY AND LEARNING MANAGEMENT SYSTEM
+
+Build a full learning management system.
+
+### Course structure
+
+Use this hierarchy:
+
+Programme → Course → Module → Lesson → Resource → Assessment.
+
+A course should support:
+- Title.
+- Slug.
+- Summary.
+- Description.
+- Cover image.
+- Category.
+- Learning outcomes.
+- Prerequisites.
+- Difficulty level.
+- Estimated duration.
+- Instructor.
+- Course status.
+- Published date.
+- Pricing.
+- Scholarship eligibility.
+- Enrolment limits where appropriate.
+- Completion criteria.
+- Certificate rules.
+- Course version.
+- Review or approval status.
+
+### Supported materials
+
+Allow administrators and authorised instructors to upload:
+- PDF.
+- DOC/DOCX.
+- PPT/PPTX.
+- TXT.
+- ZIP.
+- MP3.
+- M4A.
+- WAV.
+- MP4.
+- WebM.
+- Images.
+- Other explicitly supported file types.
+
+Use a secure upload pipeline.
+
+Requirements:
+- File size limits.
+- File type validation.
+- MIME type verification.
+- Generated storage paths.
+- Private storage by default for restricted resources.
+- Signed URLs for authorised downloads.
+- Malware scanning where infrastructure permits.
+- Archive inspection and extraction safeguards for ZIP files.
+- Protection against path traversal, archive bombs and oversized files.
+- Clear upload failure messages.
+- Upload progress indicators.
+- File metadata and version tracking.
+
+Never execute uploaded files.
+
+Do not blindly extract ZIP contents on the application server.
+
+Do not store large video files directly in the PostgreSQL database.
+
+Use object storage or an appropriate video hosting provider.
+
+### Video delivery
+
+Support secure video embeds or a configurable video delivery provider.
+
+For YouTube-hosted materials, use supported embed mechanisms and comply with platform terms.
+
+Do not promise that videos cannot be downloaded or screen-recorded. Use access controls and provider capabilities without claiming impossible DRM guarantees.
+
+### Student learning experience
+
+Build:
+- Course catalogue.
+- Search and filtering.
+- Course details.
+- Enrolment flow.
+- Payment or scholarship access.
+- Course player.
+- Lesson navigation.
+- Resource viewer.
+- Audio player.
+- Video player.
+- Downloadable resources where permitted.
+- Lesson completion.
+- Course progress.
+- Bookmarks.
+- Notes where appropriate.
+- Assessments.
+- Assignment submissions.
+- Feedback.
+- Announcements.
+- Discussion functionality if enabled.
+- Learning history.
+- Certificate records.
+
+Persist progress reliably.
+
+Prevent duplicate completion events from corrupting progress.
+
+### Course completion
+
+Completion must be based on configured criteria.
+
+Examples:
+- Required lessons completed.
+- Required quiz passed.
+- Required assignments approved.
+- Practical assessment recorded.
+- Required internship completed.
+
+A course completion certificate must state its issuer and scope.
+
+Never label a platform-issued certificate as a government licence or external professional accreditation unless formally authorised.
+
+---
+
+## 11. ASSESSMENTS AND PRACTICAL COMPETENCY
+
+Build an assessment engine.
+
+Support:
+- Multiple-choice questions.
+- Multiple-select questions.
+- True/false questions.
+- Short answers.
+- Instructor-reviewed answers.
+- Question banks.
+- Randomised question selection.
+- Configurable passing marks.
+- Time limits.
+- Attempt limits.
+- Result review.
+- Retakes.
+- Feedback.
+- Assessment history.
+- Instructor grading.
+
+Keep correct answers on the server until the appropriate review stage.
+
+Do not expose answer keys in client-side page data.
+
+### Practical assessment
+
+Create practical competency checklists with:
+- Assessment title.
+- Competency.
+- Required steps.
+- Assessment criteria.
+- Assessor.
+- Assessment date.
+- Outcome.
+- Feedback.
+- Remediation requirements.
+- Evidence attachments where appropriate.
+- Review history.
+
+Possible outcomes:
+- Not started.
+- In progress.
+- Competent.
+- Further practice required.
+- Reassessment required.
+
+Only authorised assessors may record practical outcomes.
+
+Maintain the difference between academic assessment and practical competence.
+
+---
+
+## 12. INTERNSHIP MANAGEMENT
+
+Build an internship workflow that connects learners with approved placement providers.
+
+### Features
+
+- Internship programme creation.
+- Placement provider registration.
+- Placement-provider verification.
+- Available placement listings.
+- Application forms.
+- Eligibility rules.
+- Candidate shortlisting.
+- Placement offers.
+- Acceptance and rejection.
+- Supervisor assignment.
+- Placement start and end dates.
+- Attendance tracking.
+- Weekly progress reports.
+- Competency assessments.
+- Supervisor feedback.
+- Incident reporting.
+- Absence management.
+- Completion review.
+- Internship certificate or completion record.
+- Dispute and complaint tracking.
+
+### Placement requirements
+
+Store:
+- Host organisation.
+- Supervisor.
+- Candidate.
+- Placement location.
+- Start date.
+- End date.
+- Expected hours.
+- Attendance.
+- Learning objectives.
+- Supervision arrangements.
+- Insurance or safeguarding checks where required.
+- Agreement status.
+- Evaluation records.
+- Completion status.
+
+Do not allow unverified facilities to accept interns without the configured approval process.
+
+Do not assume an intern is a fully qualified caregiver.
+
+Provide documented processes for reporting safeguarding concerns and urgent incidents.
+
+Do not permit the system to automatically certify unsafe or incomplete placements.
+
+---
+
+## 13. CAREGIVER EMPLOYMENT MARKETPLACE
+
+Build a real recruitment workflow.
+
+### Employer features
+
+- Employer registration.
+- Organisation verification.
+- Job creation.
+- Job editing.
+- Job approval where required.
+- Vacancy status.
+- Candidate search.
+- Candidate shortlisting.
+- Interview scheduling.
+- Interview feedback.
+- Job offers.
+- Candidate acceptance.
+- Rejection.
+- Employment status.
+- Vacancy analytics.
+- Hiring history.
+
+### Job fields
+
+- Job title.
+- Employer.
+- Work location.
+- Employment type.
+- Full-time, part-time, temporary or other configured arrangements.
+- Shift requirements.
+- Experience requirements.
+- Qualifications.
+- Skills.
+- Salary range where disclosed.
+- Application deadline.
+- Job description.
+- Duties.
+- Safeguarding requirements.
+- Verification requirements.
+- Application status.
+
+### Caregiver features
+
+- Search vacancies.
+- Filter by location.
+- Filter by role.
+- Filter by experience.
+- Filter by employment type.
+- View employer information.
+- Apply for jobs.
+- Upload permitted documents.
+- Track application status.
+- Schedule interviews.
+- Accept or decline offers.
+- Maintain a professional profile.
+- Manage availability.
+- Record verified experience.
+
+### Verification
+
+Provide a controlled process for verifying:
+- Identity.
+- Qualifications.
+- References.
+- Employment history where appropriate.
+- Relevant background checks where lawful and available.
+- Professional credentials where applicable.
+
+Record the source, verifier, status and date of each verification.
+
+Do not claim a background check has passed unless the check actually occurred.
+
+Provide employer access only to information necessary for the recruitment purpose and permitted by the caregiver's permissions and applicable law.
+
+---
+
+## 14. CARE HOME AND HOME-CARE OPERATIONS
+
+Create a dedicated operational dashboard for care homes and home-care agencies.
+
+Each care organisation must have a private workspace.
+
+### Core modules
+
+#### A. Resident management
+- Resident profiles.
+- Admission and discharge records.
+- Emergency contacts.
+- Authorised representatives.
+- Relevant care requirements.
+- Accessibility needs.
+- Consents and permissions.
+- Approved care-plan references.
+- Record access history.
+
+#### B. Staff management
+- Staff profiles.
+- Assigned roles.
+- Qualifications.
+- Verification status.
+- Availability.
+- Employment status.
+- Training records.
+- Required document expiry dates.
+
+#### C. Shift scheduling
+- Calendar view.
+- Daily and weekly rosters.
+- Staff assignment.
+- Shift coverage.
+- Absence tracking.
+- Shift handover.
+- Schedule conflict detection.
+- Notifications.
+
+Do not automatically assign a worker to a task for which required qualifications or permissions are missing.
+
+#### D. Daily care records
+- Activities completed.
+- Personal care assistance records.
+- Meals and hydration observations where appropriate.
+- Mobility assistance.
+- General observations.
+- Shift handover notes.
+- Uncompleted tasks.
+- Supervisor review.
+
+Only collect information relevant to care delivery.
+
+#### E. Care plans
+- Authorised care-plan records.
+- Version history.
+- Assigned responsibilities.
+- Review dates.
+- Approval workflow.
+- Relevant access restrictions.
+
+The software must not independently diagnose conditions or replace professional clinical judgment.
+
+#### F. Medication-related records
+Where appropriate, provide controlled medication administration and recording workflows.
+
+Require clearly defined permissions, timestamps, responsible staff identity and audit trails.
+
+Do not create autonomous medication recommendations or dose calculations without a separately validated, professionally governed system.
+
+#### G. Incident management
+- Incident reporting.
+- Falls and injuries.
+- Safeguarding concerns.
+- Medication incidents.
+- Missing person reports.
+- Property damage.
+- Urgent escalation.
+- Incident severity.
+- Investigation status.
+- Assigned reviewer.
+- Corrective actions.
+- Closure notes.
+- Audit trail.
+
+Restrict sensitive incident records to authorised personnel.
+
+Provide clear emergency escalation instructions configured by each organisation. The application must not imply that a notification guarantees emergency assistance.
+
+#### H. Inventory
+- Inventory items.
+- Categories.
+- Units.
+- Opening balances.
+- Purchases.
+- Stock movements.
+- Issues.
+- Adjustments.
+- Wastage.
+- Reorder thresholds.
+- Supplier records.
+- Stock reports.
+
+Never change inventory balances without a corresponding movement record.
+
+#### I. Expenses and purchases
+- Expense categories.
+- Suppliers.
+- Purchase requests.
+- Approval workflow.
+- Receipts.
+- Expense transactions.
+- Payment status.
+- Audit trail.
+
+#### J. Billing
+- Resident or client invoices.
+- Service charges.
+- Invoice line items.
+- Due dates.
+- Payment records.
+- Outstanding balances.
+- Receipts.
+- Refund records.
+- Ageing reports.
+
+#### K. Reports
+- Occupancy where applicable.
+- Staffing coverage.
+- Staff attendance.
+- Training compliance.
+- Incidents.
+- Inventory.
+- Expenses.
+- Invoices.
+- Outstanding payments.
+- Operational trends.
+
+Do not expose sensitive resident information in aggregate reports unless the viewer is authorised.
+
+---
+
+## 15. REFERRAL PROGRAMME
+
+Build a configurable referral programme for approved users.
+
+### Referral partner experience
+
+- Apply to become a referral partner.
+- Receive approval or rejection.
+- Generate referral links.
+- Access referral codes.
+- Share permitted promotional materials.
+- View attributed registrations.
+- View eligible purchases.
+- Track pending commissions.
+- Track approved commissions.
+- View payout history.
+- Request payouts.
+- Read commission rules.
+
+### Admin referral management
+
+- Approve and suspend partners.
+- Define commission policies.
+- Define eligible products.
+- Configure percentage or fixed commission.
+- Configure attribution window.
+- Configure payout eligibility delay.
+- Configure minimum payout.
+- Configure refund and reversal rules.
+- Review suspicious activity.
+- Approve or reject payout requests.
+- Record reasons for decisions.
+- Export reports.
+
+### Financial correctness
+
+Every commission record must reference:
+- Referral partner.
+- Attributed customer.
+- Qualifying transaction.
+- Applicable commission policy.
+- Calculation basis.
+- Gross eligible amount.
+- Commission amount.
+- Currency.
+- Status.
+- Eligibility date.
+- Reversal information.
+- Payout reference where applicable.
+
+Use an immutable transaction ledger.
+
+Never overwrite a paid commission to hide a reversal. Record an adjustment or reversal transaction linked to the original.
+
+Commission status lifecycle:
+
+`pending → eligible → approved → processing → paid`
+
+Also support:
+- `rejected`
+- `reversed`
+- `failed`
+- `on_hold`
+
+The exact allowed transitions must be validated server-side.
+
+A refunded or disputed purchase must be handled according to the published commission policy.
+
+Prevent self-referrals where prohibited, duplicate attribution and unauthorised changes to referral ownership.
+
+Do not allow referral commissions to be calculated from unverified browser payment redirects.
+
+---
+
+## 16. PAYMENTS AND PAYSTACK INTEGRATION
+
+Implement a provider-abstracted payment architecture.
+
+Paystack is the initial preferred payment provider, subject to account eligibility, supported product availability and the current provider terms.
+
+Keep the integration isolated so another compliant provider can be added later.
+
+### Customer payments
+
+Support:
+- Training fees.
+- Course purchases.
+- Eligible subscriptions.
+- Care-home software subscriptions.
+- Approved donations.
+- Other explicitly configured products.
+
+Every payment must have:
+- Unique internal transaction ID.
+- Customer or payer.
+- Product or purpose.
+- Amount.
+- Currency.
+- Provider reference.
+- Status.
+- Created date.
+- Verification timestamp.
+- Webhook history.
+- Refund state.
+- Reconciliation status.
+
+### Payment lifecycle
+
+`initiated → pending → successful`
+
+Also support:
+- `failed`
+- `cancelled`
+- `refunded`
+- `partially_refunded` where supported.
+
+Verify payment status on the server using the provider's supported verification process.
+
+Validate webhook signatures according to current provider documentation.
+
+Make webhook processing idempotent.
+
+Do not trust the browser redirect as proof of payment.
+
+Do not credit a purchase twice if the same webhook is received more than once.
+
+Never mark a payment successful before reliable verification.
+
+### Referral payouts
+
+Treat outgoing referral payouts as a separate workflow from incoming customer payments.
+
+Implement:
+- Payout request.
+- Beneficiary details management.
+- Appropriate identity and beneficiary checks.
+- Eligibility calculation.
+- Administrator review.
+- Approval or rejection reason.
+- Provider transfer request.
+- Transfer status.
+- Provider reference.
+- Failed transfer handling.
+- Reconciliation.
+- Audit logging.
+
+Require explicit authorisation for each financial operation.
+
+Use idempotency keys where supported.
+
+Do not retry transfers blindly after an ambiguous network timeout. First check the provider's transfer status to avoid duplicate payments.
+
+Keep provider credentials on the server.
+
+Do not store raw card details.
+
+Use the current official Paystack API documentation and sandbox environment.
+
+Before enabling live transfers, confirm that the platform's business model, Paystack account, beneficiary arrangement and intended use case are supported.
+
+If the live payout arrangement is not yet approved, build the complete payout workflow in a disabled or sandbox mode and provide a clear configuration status. Never simulate a real successful transfer.
+
+### Reconciliation
+
+Build an administrative reconciliation page showing:
+- Internal transaction.
+- Provider reference.
+- Expected amount.
+- Confirmed amount.
+- Transaction status.
+- Difference.
+- Last verification.
+- Reconciliation result.
+
+Flag mismatches for review.
+
+---
+
+## 17. CHARITY, DONATIONS AND SCHOLARSHIPS
+
+Create a charity and sponsorship module.
+
+### Campaign features
+
+- Campaign creation.
+- Campaign review and approval.
+- Campaign title.
+- Purpose.
+- Description.
+- Beneficiary criteria.
+- Funding target.
+- Start and end dates.
+- Campaign status.
+- Sponsorship options.
+- Donation records.
+- Expense allocation.
+- Impact metrics.
+- Published updates.
+- Supporting documents.
+- Donor receipts where appropriate.
+
+### Scholarship management
+
+Support:
+- Scholarship programmes.
+- Eligibility requirements.
+- Applications.
+- Supporting evidence.
+- Reviewer assignment.
+- Approval or rejection.
+- Award amount.
+- Course allocation.
+- Training progress.
+- Completion outcome.
+- Internship outcome.
+- Employment outcome where known and appropriately shareable.
+
+Allow full or partial scholarships.
+
+### Donor experience
+
+- Browse approved campaigns.
+- Make eligible donations.
+- View donation history.
+- Receive payment confirmation.
+- Download available receipts.
+- View campaign progress.
+- View published impact reports.
+- Select whether to be publicly acknowledged.
+
+Respect donor privacy preferences.
+
+### Financial separation
+
+Maintain separate ledger categories and reporting for:
+- Training revenue.
+- Software subscriptions.
+- Donations.
+- Scholarship allocations.
+- Referral commissions.
+- Refunds.
+- Care-home transactions.
+- Operating expenses.
+
+Do not represent donated funds as unrestricted company revenue.
+
+Do not automatically transfer campaign money to beneficiaries without an approved, documented process.
+
+Do not launch public fundraising until the organisation's applicable legal, financial and governance requirements have been assessed.
+
+---
+
+## 18. DASHBOARD DESIGN SYSTEM
+
+Create beautiful, modern, data-rich dashboards.
+
+Every dashboard must have its own relevant metrics and actions. Do not reuse the same generic cards for every role.
+
+### Shared dashboard layout
+
+Desktop:
+- Collapsible left sidebar.
+- Top header.
+- Breadcrumbs where useful.
+- Workspace switcher for users with multiple organisations.
+- Global search where appropriate.
+- Notification centre.
+- User avatar and profile menu.
+- Main content area.
+- Responsive page container.
+
+Mobile:
+- Compact top bar.
+- Accessible navigation drawer or bottom navigation where appropriate.
+- Touch-friendly controls.
+- Horizontally scrollable data areas only when necessary.
+- Responsive cards.
+- No horizontal page overflow.
+- Essential actions easy to reach.
+
+Use a consistent spacing system, clear visual hierarchy and predictable interaction patterns.
+
+### Dashboard cards
+
+Create reusable components:
+- `StatCard`
+- `MetricCard`
+- `TrendCard`
+- `ProgressCard`
+- `ActionCard`
+- `ChartCard`
+- `RecentActivityCard`
+- `StatusCard`
+- `EmptyStateCard`
+- `AlertCard`
+
+Cards should support:
+- Title.
+- Value.
+- Icon.
+- Supporting text.
+- Optional comparison period.
+- Optional trend.
+- Optional sparkline.
+- Optional action.
+- Loading skeleton.
+- Empty state.
+- Error state.
+- Accessible description.
+
+### Analytical cards and animations
+
+Use subtle animations where they add value.
+
+Examples:
+- Metric value fades or counts up once when real data arrives.
+- Progress bars animate from their prior state to the current value.
+- Chart series reveal smoothly.
+- Small sparklines draw on initial display.
+- Cards use subtle hover elevation on pointer devices.
+- Loading skeletons use restrained shimmer.
+- Notification badges animate only for meaningful state changes.
+
+Do not continuously animate every card.
+
+Do not animate figures in a way that misrepresents financial values.
+
+For money, prioritise readable formatting and accurate values over dramatic counting animations.
+
+Respect reduced-motion preferences.
+
+### Dashboard states
+
+Every dashboard must handle:
+- Initial loading.
+- Empty data.
+- Partial data.
+- Failed data request.
+- Permission denied.
+- Offline or disconnected state where detectable.
+- Successful data refresh.
+
+Do not hard-code fake growth percentages or fabricated business metrics.
+
+### Charts
+
+Use Recharts or an equivalent supported chart library.
+
+Support:
+- Tooltips.
+- Legends where useful.
+- Responsive sizing.
+- Empty-state handling.
+- Accessible text summaries.
+- Meaningful axis labels.
+- Appropriate number formatting.
+- Date range selection.
+
+Never draw a chart from invented production values.
+
+Demo data may be used only in an explicitly identified development/demo environment.
+
+---
+
+## 19. ROLE-SPECIFIC DASHBOARDS
+
+### A. Super Administrator dashboard
+
+Metric cards:
+- Total registered users.
+- Active caregivers.
+- Active students.
+- Published courses.
+- Pending verifications.
+- Active training organisations.
+- Verified care homes.
+- Internship placements.
+- Open job vacancies.
+- Pending payout requests.
+- Payments requiring reconciliation.
+- Active charity campaigns.
+
+Charts:
+- User registration trends.
+- Enrolment and completion trends.
+- Internship outcomes.
+- Job placement outcomes.
+- Revenue by product category.
+- Payment status distribution.
+- Organisation growth.
+
+Quick actions:
+- Review organisation.
+- Publish course.
+- Review payout.
+- Approve charity campaign.
+- Review flagged activity.
+- View audit log.
+
+Sensitive financial operations must not be performed merely by clicking a dashboard metric.
+
+### B. Training administrator dashboard
+
+Metric cards:
+- Total enrolments.
+- Active learners.
+- Courses in draft.
+- Courses awaiting approval.
+- Course completion rate.
+- Pending assessments.
+- Practical assessments due.
+- Learners eligible for internship.
+
+Widgets:
+- Recent enrolments.
+- Learning progress.
+- Course performance.
+- Assessment review queue.
+- Upcoming practical sessions.
+- Learners needing support.
+
+### C. Instructor dashboard
+
+Show:
+- Assigned courses.
+- Enrolled students.
+- Pending assignments.
+- Assessments requiring grading.
+- Upcoming classes.
+- Student progress.
+- Recent feedback.
+- Course announcements.
+
+### D. Caregiver/student dashboard
+
+Show:
+- Welcome panel.
+- Current training programme.
+- Overall learning progress.
+- Continue learning card.
+- Upcoming assessments.
+- Pending assignments.
+- Internship eligibility status.
+- Available internships.
+- Recommended job opportunities.
+- Application progress.
+- Verification checklist.
+- Recent notifications.
+
+Display a clear distinction between completed online learning and completed practical competency requirements.
+
+### E. Internship supervisor dashboard
+
+Show:
+- Assigned interns.
+- Current placements.
+- Attendance needing review.
+- Upcoming evaluations.
+- Outstanding progress reports.
+- Reported concerns.
+- Placement completion status.
+
+### F. Employer/recruiter dashboard
+
+Show:
+- Active vacancies.
+- New applicants.
+- Shortlisted candidates.
+- Interviews scheduled.
+- Pending offers.
+- Verified candidate matches.
+- Hiring activity.
+
+### G. Care home owner/manager dashboard
+
+Show:
+- Current residents or clients.
+- Staff on duty.
+- Shifts requiring coverage.
+- Upcoming shifts.
+- Outstanding care records.
+- Incidents awaiting review.
+- Inventory alerts.
+- Pending expenses.
+- Outstanding invoices.
+- Staff training compliance.
+
+Restrict resident and incident data according to permissions.
+
+### H. Referral partner dashboard
+
+Show:
+- Referral clicks where tracked lawfully.
+- Attributed registrations.
+- Qualifying purchases.
+- Pending commissions.
+- Eligible commissions.
+- Approved payouts.
+- Paid commissions.
+- Conversion trends.
+
+Clearly explain how each figure is calculated.
+
+### I. Charity administrator dashboard
+
+Show:
+- Active campaigns.
+- Funding targets.
+- Donations received.
+- Available allocated funds.
+- Scholarships awarded.
+- Students sponsored.
+- Learners completing training.
+- Internship outcomes.
+- Published impact updates pending.
+
+Distinguish committed funds, received funds and disbursed funds.
+
+### J. Donor dashboard
+
+Show:
+- Donations made.
+- Campaigns supported.
+- Receipts.
+- Campaign progress.
+- Published impact reports.
+- Donation acknowledgement preferences.
+
+### K. Finance dashboard
+
+Show:
+- Payments awaiting verification.
+- Reconciliation exceptions.
+- Refund requests.
+- Payout requests.
+- Approved payouts awaiting processing.
+- Failed transfers.
+- Commission liabilities.
+- Financial summaries by category.
+
+Enforce appropriate separation of duties.
+
+---
+
+## 20. ANALYTICS AND REPORTING
+
+Build a reusable reporting system.
+
+Filters:
+- Date range.
+- Organisation.
+- Programme.
+- Course.
+- Location.
+- User status.
+- Transaction status.
+- Internship status.
+- Employment outcome.
+
+Reports:
+- Enrolment report.
+- Course completion report.
+- Assessment performance.
+- Internship completion.
+- Employment outcomes.
+- Employer activity.
+- Referral performance.
+- Commission liabilities.
+- Payment reconciliation.
+- Refunds.
+- Charity campaign performance.
+- Scholarship allocation.
+- Care-home operations.
+- Staffing coverage.
+- Incident trends.
+- Inventory movements.
+- Expense summaries.
+- Outstanding invoices.
+
+Support CSV exports where permitted.
+
+For sensitive exports:
+- Require appropriate permissions.
+- Record the exporting user.
+- Record the filters and timestamp.
+- Avoid exporting unnecessary personal information.
+- Apply sensible row and file-size limits.
+
+Do not expose sensitive personal or clinical information in public reports.
+
+---
+
+## 21. NOTIFICATIONS AND COMMUNICATION
+
+Create an in-app notification centre.
+
+Notification events may include:
+- Account verification.
+- Course enrolment.
+- New lesson or announcement.
+- Assessment deadline.
+- Assessment result.
+- Internship application.
+- Placement offer.
+- Placement evaluation.
+- Job application status.
+- Interview invitation.
+- Job offer.
+- Referral commission eligibility.
+- Payout approval or rejection.
+- Payment confirmation.
+- Refund status.
+- Donation receipt.
+- Scholarship decision.
+- Care-home shift reminder.
+- Incident escalation.
+- Document expiry.
+
+Support email notifications through a provider abstraction.
+
+Design SMS integration as configurable and optional.
+
+Use notification preferences and avoid unnecessary messages.
+
+Critical safeguarding or operational incidents should have a separately configured escalation process. Do not treat ordinary in-app notifications as guaranteed emergency communication.
+
+---
+
+## 22. SEARCH AND FILTERING
+
+Build search interfaces for:
+- Courses.
+- Lessons.
+- Training providers.
+- Caregivers.
+- Employers.
+- Jobs.
+- Internships.
+- Care homes.
+- Charity campaigns.
+- Transactions.
+- Operational records where authorised.
+
+Support:
+- Debounced search.
+- Pagination.
+- Sorting.
+- Filters.
+- Clear filters.
+- URL-synchronised filters where useful.
+- Empty search results.
+- Loading indicators.
+- Server-side access control.
+
+Never return restricted results just because a search query matches them.
+
+---
+
+## 23. DATABASE DESIGN
+
+Design a normalised PostgreSQL schema with appropriate foreign keys, constraints, indexes and RLS.
+
+At minimum, evaluate and create tables for the following entities.
+
+### Identity and organisations
+
+- `profiles`
+- `organisations`
+- `organisation_memberships`
+- `roles`
+- `permissions`
+- `role_permissions`
+- `user_role_assignments`
+- `organisation_invitations`
+- `organisation_verifications`
+- `user_consents`
+- `user_notification_preferences`
+
+Use Supabase Auth as the authentication identity source. Do not duplicate password storage in application tables.
+
+### Academy
+
+- `programmes`
+- `courses`
+- `course_versions`
+- `course_modules`
+- `lessons`
+- `learning_resources`
+- `course_enrolments`
+- `lesson_progress`
+- `learning_bookmarks`
+- `learning_notes`
+- `question_banks`
+- `questions`
+- `question_options`
+- `assessments`
+- `assessment_questions`
+- `assessment_attempts`
+- `assessment_answers`
+- `assignment_submissions`
+- `assessment_reviews`
+- `practical_competencies`
+- `practical_assessments`
+- `completion_records`
+- `certificates`
+
+### Internship and employment
+
+- `placement_providers`
+- `internship_programmes`
+- `internship_openings`
+- `internship_applications`
+- `internship_placements`
+- `internship_attendance`
+- `internship_evaluations`
+- `internship_incidents`
+- `employers`
+- `job_postings`
+- `job_applications`
+- `interviews`
+- `job_offers`
+- `employment_records`
+- `verification_checks`
+
+### Care-home operations
+
+- `care_facilities`
+- `residents`
+- `resident_contacts`
+- `resident_consents`
+- `care_plans`
+- `care_plan_versions`
+- `care_plan_assignments`
+- `care_tasks`
+- `care_task_records`
+- `shift_schedules`
+- `shift_assignments`
+- `shift_attendance`
+- `shift_handovers`
+- `medication_records` where appropriate
+- `incidents`
+- `incident_actions`
+- `staff_documents`
+- `inventory_items`
+- `inventory_movements`
+- `suppliers`
+- `purchase_requests`
+- `purchases`
+- `expense_records`
+- `service_invoices`
+- `service_invoice_items`
+- `service_payments`
+
+### Referral and financial records
+
+- `referral_partners`
+- `referral_codes`
+- `referral_attributions`
+- `commission_policies`
+- `commission_entries`
+- `payout_requests`
+- `payout_beneficiaries`
+- `payout_transactions`
+- `payments`
+- `payment_events`
+- `refunds`
+- `financial_ledger_entries`
+- `reconciliation_runs`
+- `reconciliation_exceptions`
+
+### Charity
+
+- `charity_campaigns`
+- `campaign_reviews`
+- `donations`
+- `scholarship_programmes`
+- `scholarship_applications`
+- `scholarship_awards`
+- `campaign_allocations`
+- `campaign_expenses`
+- `impact_reports`
+
+### Platform services
+
+- `notifications`
+- `notification_deliveries`
+- `support_tickets`
+- `audit_logs`
+- `webhook_events`
+- `background_job_records`
+- `organisation_subscriptions`
+- `subscription_events`
+- `feature_flags`
+
+Refine the schema based on the actual workflows. Do not create unnecessary tables merely to match a list.
+
+### Database standards
+
+- UUID primary keys where appropriate.
+- Foreign keys.
+- Appropriate unique constraints.
+- Indexes on common filters and joins.
+- Created and updated timestamps.
+- Explicit lifecycle statuses.
+- Soft deletion only where justified.
+- Immutable financial history.
+- Database migrations.
+- Seed data for local development.
+- Consistent naming conventions.
+- Transactional operations where needed.
+
+Use database constraints to enforce important invariants instead of relying only on application code.
+
+### Financial ledger
+
+Never treat a mutable `balance` column as the sole source of truth for financial history.
+
+Maintain an auditable ledger of transactions and adjustments.
+
+Use database transactions and appropriate locking or concurrency controls when processing money.
+
+If cached or derived balances are maintained, reconcile them against ledger entries.
+
+Do not delete posted financial transactions to correct mistakes. Record a reversal or adjustment with a reference to the original transaction.
+
+### RLS
+
+Write explicit policies for each tenant-owned table.
+
+Test:
+- Unauthenticated access.
+- Cross-tenant access.
+- Role escalation.
+- Unauthorized writes.
+- Direct API requests.
+- Attempts to access sensitive records using guessed IDs.
+- Storage access to private documents.
+- Privileged server actions.
+
+Create reusable server-side authorization helpers, but remember that application helpers do not replace database RLS.
+
+---
+
+## 24. SECURITY AND PRIVACY
+
+Treat security as a core architectural requirement.
+
+Implement:
+
+- Server-side input validation.
+- Output encoding.
+- Authentication and authorisation checks.
+- CSRF protection where applicable.
+- Rate limiting.
+- Secure cookies and sessions.
+- Secure secret management.
+- SQL injection prevention.
+- XSS prevention.
+- Safe file upload handling.
+- Secure signed URLs.
+- Webhook signature verification.
+- Idempotent payment processing.
+- Audit logging.
+- Least-privilege database permissions.
+- Sensitive-data access logging.
+- Dependency vulnerability checks.
+- Backup and recovery documentation.
+- Error monitoring without leaking personal data.
+- Production-safe error messages.
+
+Do not log passwords, access tokens, secret keys, full payment credentials or unnecessary personal data.
+
+### Privacy requirements
+
+Implement:
+- Clear privacy notices.
+- Consent records where appropriate.
+- Data minimisation.
+- Retention rules.
+- Secure data export.
+- Account deactivation.
+- A reviewed process for access, correction and deletion requests.
+- Protection for sensitive resident information.
+- Appropriate data-processing agreements with organisational customers.
+- A process for handling suspected data breaches.
+
+Design for the Nigeria Data Protection Act and other applicable requirements. Obtain qualified legal advice on the platform's exact processing and retention obligations.
+
+Do not claim legal compliance merely because a privacy policy page exists.
+
+---
+
+## 25. ADMINISTRATION AND PLATFORM SETTINGS
+
+Create a comprehensive administrative interface.
+
+### Platform settings
+
+- Branding settings.
+- Organisation types.
+- User account controls.
+- Role and permission configuration.
+- Course categories.
+- Training settings.
+- Assessment settings.
+- Internship settings.
+- Recruitment settings.
+- Referral policies.
+- Commission configuration.
+- Payment provider configuration status.
+- Payout limits.
+- Notification settings.
+- Charity settings.
+- Subscription plans.
+- Feature flags.
+- Maintenance mode.
+- Audit log viewer.
+
+### Administrative workflows
+
+Provide:
+- Approval queues.
+- Detail views.
+- Decision notes.
+- Reason fields for rejection.
+- Confirmation dialogs for high-impact actions.
+- Review history.
+- Export controls.
+- Audit records.
+
+Avoid giving the Super Administrator unrestricted access to every sensitive function without logging or separation of duties.
+
+Require additional controls for:
+- Payout approval.
+- Manual financial adjustments.
+- Privileged role assignment.
+- Sensitive resident-record access.
+- Deleting or disabling organisations.
+- Changing financial policies.
+
+Never allow a financial policy change to silently rewrite previously earned commissions or completed transactions.
+
+---
+
+## 26. BILLING AND SAAS SUBSCRIPTIONS
+
+Build subscription support for organisational customers, but keep it configurable.
+
+Potential plans:
+- Starter.
+- Professional.
+- Enterprise.
+
+Do not hard-code final pricing into business logic.
+
+Allow configuration of:
+- Monthly or annual billing.
+- Permitted modules.
+- User limits.
+- Facility limits.
+- Storage allowances.
+- Usage limits.
+- Trial periods.
+- Subscription status.
+- Renewal dates.
+- Grace periods.
+- Cancellation.
+- Upgrade and downgrade.
+- Payment failure handling.
+
+Keep subscription billing separate from training purchases, charitable donations and referral payouts.
+
+Enforce feature limits server-side.
+
+Do not disable access to critical care or resident records in a way that could create a safety risk because of a billing dispute. Define an appropriate read-only or export access policy for suspended organisations.
+
+---
+
+## 27. ACCESSIBILITY AND RESPONSIVENESS
+
+Build mobile-first and ensure the platform works on:
+- Small Android phones.
+- Larger Android phones.
+- iPhones.
+- Tablets.
+- Laptops.
+- Desktop monitors.
+
+Requirements:
+- Semantic HTML.
+- Keyboard navigation.
+- Visible focus states.
+- Accessible labels.
+- Screen-reader support.
+- Sufficient contrast.
+- Accessible modals.
+- Accessible chart summaries.
+- Responsive tables.
+- Touch-friendly controls.
+- Reduced-motion support.
+- Meaningful error messages.
+
+Avoid hover-only interactions.
+
+Ensure core workflows remain usable with a keyboard.
+
+---
+
+## 28. PERFORMANCE AND NETWORK RESILIENCE
+
+Optimise for typical Nigerian mobile networks and modest devices.
+
+Implement:
+- Server-side pagination.
+- Lazy loading for large media.
+- Image optimisation.
+- Route-level loading states.
+- Code splitting where appropriate.
+- Sensible caching.
+- Database query optimisation.
+- Appropriate indexes.
+- Upload progress.
+- Retry handling for safe operations.
+- Graceful failure states.
+- Small initial JavaScript bundles where practical.
+
+Do not cache sensitive resident information in publicly accessible caches.
+
+If a PWA is implemented:
+- Provide a proper manifest.
+- Add installable icons.
+- Use a service worker carefully.
+- Cache public assets appropriately.
+- Do not cache sensitive authenticated pages indiscriminately.
+- Do not queue financial actions for blind replay while offline.
+- Clearly label offline functionality and its limitations.
+
+---
+
+## 29. EMAIL, DOCUMENTS AND CERTIFICATES
+
+Implement configurable transactional email templates for:
+- Registration.
+- Email verification.
+- Password reset.
+- Enrolment confirmation.
+- Payment receipt.
+- Internship application.
+- Placement offer.
+- Interview invitation.
+- Job offer.
+- Referral commission update.
+- Payout status.
+- Donation receipt.
+- Scholarship decision.
+- Organisation approval.
+
+Use an email provider abstraction and document the required environment variables.
+
+Generate certificates as PDFs only after the configured completion requirements have been satisfied.
+
+Certificate data must include:
+- Learner name.
+- Programme or course title.
+- Issuer.
+- Issue date.
+- Unique certificate identifier.
+- Verification URL or code.
+- Credential scope.
+- Applicable disclaimer.
+
+Build a public certificate verification page that reveals only the information intended for verification.
+
+Provide a process to revoke or correct an invalid certificate while preserving an audit trail.
+
+---
+
+## 30. TESTING REQUIREMENTS
+
+Do not declare the application complete merely because the pages render.
+
+Create automated tests and run them.
+
+### Unit tests
+
+Test:
+- Validation schemas.
+- Permission decisions.
+- Course completion calculations.
+- Assessment scoring.
+- Internship eligibility.
+- Referral attribution.
+- Commission calculations.
+- Refund reversals.
+- Payment status transitions.
+- Payout eligibility.
+- Ledger calculations.
+- Report aggregation.
+
+### Integration tests
+
+Test:
+- Authentication.
+- Organisation membership.
+- RLS.
+- File upload permissions.
+- Course enrolment.
+- Assessment submission.
+- Internship placement.
+- Job application.
+- Payment verification.
+- Webhook idempotency.
+- Commission generation.
+- Payout approval.
+- Charity donation recording.
+- Inventory movements.
+- Invoice reconciliation.
+
+### End-to-end tests
+
+Use a suitable browser testing framework to test key journeys:
+
+1. Register and verify a caregiver.
+2. Enrol in a course.
+3. Complete lessons and assessments.
+4. Record practical competency.
+5. Apply for an internship.
+6. Record internship evaluation.
+7. Apply for a job.
+8. Register and verify an employer.
+9. Create and review a job vacancy.
+10. Make a sandbox training payment.
+11. Generate a referral commission.
+12. Request and approve a sandbox payout.
+13. Create a charity campaign.
+14. Record a donation.
+15. Create a care-home workspace.
+16. Add an authorised resident record.
+17. Create a shift and record attendance.
+18. Submit and review an incident.
+19. Record an inventory movement.
+20. Confirm cross-tenant access is denied.
+
+### Required quality checks
+
+Run:
+- TypeScript type checking.
+- Linting.
+- Unit tests.
+- Integration tests where configured.
+- Production build.
+- Database migration checks.
+- RLS tests.
+- E2E tests for critical workflows.
+
+Fix errors rather than suppressing them.
+
+Do not use `any` indiscriminately to silence TypeScript errors.
+
+Do not leave placeholder buttons that appear functional but do nothing.
+
+---
+
+## 31. DEVELOPMENT AND DEMO DATA
+
+Create realistic seed data for local development only.
+
+Include:
+- A sample training provider.
+- Sample courses and modules.
+- Sample lessons.
+- Sample assessments.
+- Sample internship openings.
+- Sample employer vacancies.
+- Sample care-home workspace.
+- Sample inventory items.
+- Sample referral programme.
+- Sample charity campaign.
+- Sample financial records clearly marked as test data.
+
+Do not create production users with default passwords.
+
+Do not ship fabricated testimonials, accreditations, financial claims or employment success statistics.
+
+Keep demo mode visibly separate from production mode.
+
+---
+
+## 32. ENVIRONMENT VARIABLES
+
+Create a complete `.env.example` file with documented variable names.
+
+Include only the variables required by the selected implementation, potentially including:
+
+- `NEXT_PUBLIC_APP_URL`
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `PAYSTACK_SECRET_KEY`
+- `PAYSTACK_PUBLIC_KEY`
+- `PAYSTACK_WEBHOOK_SECRET` where applicable
+- `EMAIL_PROVIDER_API_KEY`
+- `EMAIL_FROM_ADDRESS`
+- `SMS_PROVIDER_API_KEY` if enabled
+- `STORAGE_PROVIDER_CONFIGURATION` where needed
+- `BACKGROUND_JOB_CONFIGURATION` where needed
+- `ERROR_MONITORING_DSN` where enabled
+
+Do not expose secret variables through client-side code.
+
+Do not invent a provider's secret format.
+
+Do not hard-code credentials in the repository.
+
+If a required credential is missing, show a clear configuration error and disable the relevant live integration safely.
+
+---
+
+## 33. DOCUMENTATION
+
+Create comprehensive documentation.
+
+### README
+
+Include:
+- Product overview.
+- Main features.
+- Technology stack.
+- Local setup.
+- Installation.
+- Environment variables.
+- Database setup.
+- Migration commands.
+- Seed-data commands.
+- Development commands.
+- Testing commands.
+- Production build.
+- Deployment instructions.
+- Troubleshooting.
+
+### Additional documentation
+
+Create:
+- `docs/ARCHITECTURE.md`
+- `docs/DATABASE_SCHEMA.md`
+- `docs/ROLE_PERMISSION_MATRIX.md`
+- `docs/RLS_POLICIES.md`
+- `docs/PAYMENTS_AND_WEBHOOKS.md`
+- `docs/REFERRAL_COMMISSION_RULES.md`
+- `docs/CARE_HOME_WORKFLOWS.md`
+- `docs/INTERNSHIP_WORKFLOWS.md`
+- `docs/SECURITY_AND_PRIVACY.md`
+- `docs/BACKUP_AND_RECOVERY.md`
+- `docs/DEPLOYMENT.md`
+- `docs/TESTING.md`
+- `docs/KNOWN_LIMITATIONS.md`
+
+Document any feature that is incomplete, disabled or awaiting external provider credentials.
+
+---
+
+## 34. DEPLOYMENT
+
+Prepare the application for deployment to a suitable hosting provider, with Vercel as a possible Next.js deployment target and Supabase as the initial managed database and authentication provider.
+
+Do not assume production credentials already exist.
+
+Create:
+- Production build configuration.
+- Database migration instructions.
+- Environment variable checklist.
+- Storage bucket setup instructions.
+- RLS verification steps.
+- Authentication redirect configuration.
+- Payment webhook configuration.
+- Domain and HTTPS checklist.
+- Email sender configuration.
+- Backup strategy.
+- Monitoring recommendations.
+- Rollback instructions.
+- Smoke-test checklist.
+
+Do not run destructive production migrations without explicit authorisation.
+
+Do not enable live financial transactions until sandbox tests, reconciliation tests, account configuration and required business approvals are complete.
+
+---
+
+## 35. IMPLEMENTATION PHASES
+
+Build the application in the following sequence.
+
+### Phase 0 — Repository inspection and planning
+
+- Inspect all files.
+- Identify the existing stack.
+- Inspect package versions and available scripts.
+- Identify existing routes and components.
+- Review environment configuration without exposing secrets.
+- Check existing database setup.
+- Create a build plan.
+- Identify risks and dependencies.
+- Preserve working code.
+- Do not overwrite the project blindly.
+
+Deliver:
+- Architecture plan.
+- Route map.
+- Database plan.
+- Role-permission matrix.
+- Implementation checklist.
+
+Then continue immediately.
+
+### Phase 1 — Branding and design system
+
+Implement:
+- Logo assets.
+- Brand configuration.
+- Colour tokens.
+- Typography.
+- Buttons.
+- Cards.
+- Forms.
+- Tables.
+- Modals.
+- Toasts.
+- Badges.
+- Skeletons.
+- Loading screens.
+- Animated logo.
+- Responsive sidebar.
+- Header.
+- Mobile navigation.
+- Empty states.
+- Error states.
+
+Create a visually polished design-system showcase page for internal verification.
+
+### Phase 2 — Authentication and multi-tenancy
+
+Implement:
+- Authentication.
+- Onboarding.
+- User profiles.
+- Organisations.
+- Memberships.
+- Role assignments.
+- Permission service.
+- RLS.
+- Audit logging.
+- Cross-tenant tests.
+
+### Phase 3 — Public website and admin foundation
+
+Implement:
+- Public marketing pages.
+- Admin layout.
+- User management.
+- Organisation management.
+- Approval queues.
+- Settings.
+- Notifications foundation.
+
+### Phase 4 — Academy
+
+Implement:
+- Courses.
+- Modules.
+- Lessons.
+- Resources.
+- File uploads.
+- Enrolment.
+- Learning progress.
+- Assessments.
+- Practical competency.
+- Completion records.
+- Certificates.
+
+### Phase 5 — Internship and employment
+
+Implement:
+- Placement providers.
+- Internship listings.
+- Applications.
+- Placements.
+- Supervisors.
+- Evaluations.
+- Employer verification.
+- Job postings.
+- Applications.
+- Interviews.
+- Offers.
+- Verification workflows.
+
+### Phase 6 — Payments and referral management
+
+Implement:
+- Payment abstraction.
+- Paystack sandbox.
+- Payment verification.
+- Webhooks.
+- Referral attribution.
+- Commission policies.
+- Commission ledger.
+- Payout requests.
+- Administrative approvals.
+- Transfer sandbox where supported.
+- Reconciliation.
+- Financial audit logs.
+
+### Phase 7 — Care-home operations
+
+Implement:
+- Resident records.
+- Staff.
+- Shifts.
+- Daily care records.
+- Care plans.
+- Incidents.
+- Inventory.
+- Purchases.
+- Expenses.
+- Invoices.
+- Reports.
+
+### Phase 8 — Charity and scholarships
+
+Implement:
+- Campaigns.
+- Donations.
+- Scholarship applications.
+- Awards.
+- Fund allocation.
+- Campaign reporting.
+- Impact reports.
+
+### Phase 9 — Analytics and subscriptions
+
+Implement:
+- Role-specific dashboards.
+- Reporting.
+- CSV exports.
+- Organisation subscriptions.
+- Feature limits.
+- Billing lifecycle.
+
+### Phase 10 — Quality assurance and production readiness
+
+Run all checks.
+
+Fix build failures, runtime errors, permission defects, data integrity issues and broken user journeys.
+
+Verify every critical workflow end-to-end.
+
+Complete documentation and deployment instructions.
+
+If external credentials are unavailable, complete the integration architecture and sandbox tests where possible, clearly document the remaining setup and do not fabricate successful live transactions.
+
+---
+
+## 36. CRITICAL BUILD RULES
+
+These rules are mandatory.
+
+1. Do not build only a landing page.
+2. Do not build only static dashboard cards.
+3. Do not leave core actions unimplemented.
+4. Do not use fake analytics in production.
+5. Do not invent partnerships or credentials.
+6. Do not expose private keys.
+7. Do not rely only on frontend authorisation.
+8. Do not skip RLS.
+9. Do not trust client-submitted payment status.
+10. Do not credit payments twice.
+11. Do not create duplicate commissions from repeated events.
+12. Do not allow self-approval of restricted financial actions.
+13. Do not overwrite financial history.
+14. Do not modify stock balances without movements.
+15. Do not allow cross-tenant data access.
+16. Do not expose resident information to unauthorised users.
+17. Do not treat course completion as automatic professional qualification.
+18. Do not claim that jobs are guaranteed unless a real, enforceable arrangement supports that claim.
+19. Do not claim legal or regulatory approval without evidence.
+20. Do not use unnecessary animations that reduce usability.
+21. Do not suppress TypeScript or build errors just to finish.
+22. Do not replace working code without a reason.
+23. Do not implement live money movement without appropriate credentials, verification and explicit configuration.
+24. Do not make destructive changes to production data.
+25. Do not stop at a plan when implementation can proceed.
+
+When an external integration cannot be completed because credentials or approval are missing, implement the relevant interface, validation, sandbox/test flow and setup documentation, and clearly state the remaining dependency.
+
+---
+
+## 37. DEFINITION OF DONE
+
+The application is complete only when:
+
+- The brand is consistent throughout.
+- The logo and animated loading sequence work.
+- The public website is responsive.
+- Authentication works.
+- Roles and permissions are enforced.
+- Tenant data is isolated.
+- Database migrations run successfully.
+- The academy supports real learning workflows.
+- Assessments are securely processed.
+- Practical competency can be recorded.
+- Internship applications and evaluations work.
+- Employers can post jobs and manage candidates.
+- Care-home operational workflows function.
+- Referral attribution and commissions are auditable.
+- Payment verification is secure and idempotent.
+- Payout approval and reconciliation are implemented.
+- Charity campaigns and scholarship records work.
+- Dashboards use real database data.
+- Charts and analytical cards handle loading and empty states.
+- Sensitive data is properly restricted.
+- Automated tests cover critical workflows.
+- The production build succeeds.
+- Documentation is complete.
+- Deployment instructions are usable.
+- Incomplete integrations are clearly identified.
+
+## 38. HOW YOU MUST WORK
+
+Work methodically.
+
+At the start, inspect the repository and identify the current state.
+
+Create a task checklist and update it as each phase is completed.
+
+Implement one coherent phase at a time.
+
+After each phase:
+1. Run the relevant checks.
+2. Fix discovered errors.
+3. Confirm that existing features still work.
+4. Update documentation.
+5. Mark completed tasks.
+6. Proceed to the next phase.
+
+Use sensible defaults for non-critical decisions rather than repeatedly asking the user questions.
+
+If an architectural decision materially affects security, money movement, regulatory exposure or irreversible data changes, document the decision and use a safe default.
+
+Keep the implementation maintainable. Prefer reusable components and clear service boundaries over rushed, monolithic files.
+
+Do not report a feature as complete unless its core workflow works and has been verified.
+
+**Start now by inspecting the repository, creating the implementation checklist and building Phase 1. Continue through the phases in order until the application is implemented, tested and documented, subject to clearly identified external dependencies.**

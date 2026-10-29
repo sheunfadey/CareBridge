@@ -1,0 +1,839 @@
+import "server-only";
+
+import { createClient } from "@/lib/supabase/server";
+import type { CurrentUser } from "@/server/auth/current-user";
+import type {
+  CourseDifficulty,
+  CourseStatus,
+  EnrolmentStatus,
+  LearningResourceKind,
+} from "@/types/database";
+
+export type AcademyCourseSummary = {
+  id: string;
+  title: string;
+  slug: string;
+  summary: string | null;
+  category: string | null;
+  difficulty: CourseDifficulty;
+  estimatedMinutes: number;
+  priceMinorUnits: number;
+  currency: string;
+  scholarshipEligible: boolean;
+  certificateEnabled: boolean;
+  programmeTitle: string;
+  providerName: string;
+  moduleCount: number;
+};
+
+export type SyllabusLesson = {
+  id: string;
+  title: string;
+  slug: string;
+  estimatedMinutes: number;
+  position: number;
+  isRequired: boolean;
+  isPreview: boolean;
+};
+
+export type SyllabusModule = {
+  id: string;
+  title: string;
+  summary: string | null;
+  position: number;
+  isRequired: boolean;
+  lessons: SyllabusLesson[];
+};
+
+export type AcademyCourseSyllabus = AcademyCourseSummary & {
+  description: string | null;
+  learningOutcomes: string[];
+  prerequisites: string[];
+  version: number;
+  publishedAt: string | null;
+  modules: SyllabusModule[];
+  totalLessons: number;
+};
+
+export type LearningLesson = SyllabusLesson & {
+  content: string;
+  videoUrl: string | null;
+  completedAt: string | null;
+};
+
+export type LearningModule = Omit<SyllabusModule, "lessons"> & {
+  lessons: LearningLesson[];
+};
+
+export type CourseResource = {
+  id: string;
+  lessonId: string | null;
+  title: string;
+  kind: LearningResourceKind;
+  externalUrl: string | null;
+  isPrivate: boolean;
+};
+
+export type LearningCourse = Omit<AcademyCourseSyllabus, "modules"> & {
+  modules: LearningModule[];
+  enrolmentId: string;
+  completedLessons: number;
+  completedAt: string | null;
+  resources: CourseResource[];
+};
+
+export type MyLearningCourse = {
+  enrolmentId: string;
+  status: EnrolmentStatus;
+  enrolledAt: string;
+  completedAt: string | null;
+  courseId: string;
+  title: string;
+  slug: string;
+  summary: string | null;
+  difficulty: CourseDifficulty;
+  estimatedMinutes: number;
+  courseStatus: CourseStatus;
+  certificateEnabled: boolean;
+  certificateId: string | null;
+  certificateNumber: string | null;
+  certificateCode: string | null;
+  totalLessons: number;
+  completedLessons: number;
+};
+
+export type ManagedCourse = {
+  id: string;
+  title: string;
+  slug: string;
+  status: CourseStatus;
+  difficulty: CourseDifficulty;
+  isPublic: boolean;
+  organisationId: string | null;
+  organisationName: string | null;
+  programmeTitle: string;
+  moduleCount: number;
+  enrolmentCount: number;
+  updatedAt: string;
+};
+
+export type ProgrammeOption = {
+  id: string;
+  title: string;
+  organisationId: string | null;
+};
+
+export type OrganisationOption = {
+  id: string;
+  name: string;
+};
+
+export type ManagedCourseDetail = {
+  id: string;
+  title: string;
+  slug: string;
+  summary: string | null;
+  description: string | null;
+  category: string | null;
+  difficulty: CourseDifficulty;
+  estimatedMinutes: number;
+  learningOutcomes: string[];
+  prerequisites: string[];
+  scholarshipEligible: boolean;
+  certificateEnabled: boolean;
+  status: CourseStatus;
+  isPublic: boolean;
+  organisationId: string | null;
+  programmeId: string;
+  programmeTitle: string;
+  organisationName: string | null;
+  publishedAt: string | null;
+  modules: (Omit<SyllabusModule, "lessons"> & {
+    lessons: (SyllabusLesson & {
+      content: string;
+      videoUrl: string | null;
+    })[];
+  })[];
+  totalLessons: number;
+};
+
+export type IssuedCertificate = {
+  id: string;
+  certificateNumber: string;
+  verificationCode: string;
+  learnerName: string;
+  courseTitle: string;
+  issuerName: string;
+  credentialScope: string;
+  disclaimer: string;
+  issuedAt: string;
+  revokedAt: string | null;
+  revokedReason: string | null;
+  courseSlug: string;
+};
+
+export type CertificateVerification = {
+  certificateNumber: string;
+  learnerName: string;
+  courseTitle: string;
+  issuerName: string;
+  credentialScope: string;
+  disclaimer: string;
+  issuedAt: string;
+  revoked: boolean;
+};
+
+type Relation<T> = T | T[] | null;
+
+function singleRelation<T>(relation: Relation<T>): T | null {
+  if (Array.isArray(relation)) return relation[0] ?? null;
+  return relation;
+}
+
+function normaliseModules(
+  modules: {
+    id: string;
+    title: string;
+    summary: string | null;
+    position: number;
+    is_required: boolean;
+    lessons: {
+      id: string;
+      title: string;
+      slug: string;
+      estimated_minutes: number;
+      position: number;
+      is_required: boolean;
+      is_preview: boolean;
+    }[];
+  }[],
+): SyllabusModule[] {
+  return [...modules]
+    .sort((a, b) => a.position - b.position)
+    .map((module) => ({
+      id: module.id,
+      title: module.title,
+      summary: module.summary,
+      position: module.position,
+      isRequired: module.is_required,
+      lessons: [...module.lessons]
+        .sort((a, b) => a.position - b.position)
+        .map((lesson) => ({
+          id: lesson.id,
+          title: lesson.title,
+          slug: lesson.slug,
+          estimatedMinutes: lesson.estimated_minutes,
+          position: lesson.position,
+          isRequired: lesson.is_required,
+          isPreview: lesson.is_preview,
+        })),
+    }));
+}
+
+export async function getPublishedCourses(): Promise<{
+  courses: AcademyCourseSummary[];
+  unavailable: boolean;
+}> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("courses")
+    .select(
+      "id, title, slug, summary, category, difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, programmes(title), organisations(name), course_modules(id)",
+    )
+    .eq("status", "published")
+    .eq("is_public", true)
+    .order("published_at", { ascending: false });
+
+  if (error) {
+    console.error("[academy] could not load published courses", error);
+    return { courses: [], unavailable: true };
+  }
+
+  return {
+    unavailable: false,
+    courses: (data ?? []).map((course) => {
+      const programme = singleRelation(course.programmes);
+      const organisation = singleRelation(course.organisations);
+      return {
+        id: course.id,
+        title: course.title,
+        slug: course.slug,
+        summary: course.summary,
+        category: course.category,
+        difficulty: course.difficulty,
+        estimatedMinutes: course.estimated_minutes,
+        priceMinorUnits: course.price_minor_units,
+        currency: course.currency,
+        scholarshipEligible: course.scholarship_eligible,
+        certificateEnabled: course.certificate_enabled,
+        programmeTitle: programme?.title ?? "CareBridge Academy",
+        providerName: organisation?.name ?? "CareBridge Academy",
+        moduleCount: course.course_modules?.length ?? 0,
+      };
+    }),
+  };
+}
+
+export async function getPublishedCourseSyllabus(
+  slug: string,
+): Promise<AcademyCourseSyllabus | null> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("courses")
+    .select(
+      "id, title, slug, summary, description, category, difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, learning_outcomes, prerequisites, version, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, estimated_minutes, position, is_required, is_preview))",
+    )
+    .eq("slug", slug)
+    .eq("status", "published")
+    .eq("is_public", true)
+    .maybeSingle();
+
+  if (error || !data) {
+    if (error) console.error("[academy] could not load course syllabus", error);
+    return null;
+  }
+
+  const modules = normaliseModules(data.course_modules ?? []);
+  const programme = singleRelation(data.programmes);
+  const organisation = singleRelation(data.organisations);
+
+  return {
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    summary: data.summary,
+    description: data.description,
+    category: data.category,
+    difficulty: data.difficulty,
+    estimatedMinutes: data.estimated_minutes,
+    priceMinorUnits: data.price_minor_units,
+    currency: data.currency,
+    scholarshipEligible: data.scholarship_eligible,
+    certificateEnabled: data.certificate_enabled,
+    learningOutcomes: data.learning_outcomes,
+    prerequisites: data.prerequisites,
+    version: data.version,
+    publishedAt: data.published_at,
+    programmeTitle: programme?.title ?? "CareBridge Academy",
+    providerName: organisation?.name ?? "CareBridge Academy",
+    moduleCount: modules.length,
+    totalLessons: modules.reduce(
+      (total, module) => total + module.lessons.length,
+      0,
+    ),
+    modules,
+  };
+}
+
+export async function getEnrolment(
+  courseId: string,
+  userId: string,
+): Promise<{ id: string; status: EnrolmentStatus; completedAt: string | null } | null> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("course_enrolments")
+    .select("id, status, completed_at")
+    .eq("course_id", courseId)
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  if (error) {
+    console.error("[academy] could not load enrolment", error);
+    return null;
+  }
+
+  if (!data) return null;
+  return {
+    id: data.id,
+    status: data.status,
+    completedAt: data.completed_at,
+  };
+}
+
+export async function getCourseForLearning(
+  courseId: string,
+  userId: string,
+): Promise<LearningCourse | null> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("courses")
+    .select(
+      "id, title, slug, summary, description, category, difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, learning_outcomes, prerequisites, version, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, content, video_url, estimated_minutes, position, is_required, is_preview))",
+    )
+    .eq("id", courseId)
+    .maybeSingle();
+
+  if (error || !data) {
+    if (error) console.error("[academy] could not load course", error);
+    return null;
+  }
+
+  const enrolment = await getEnrolment(courseId, userId);
+  if (!enrolment || enrolment.status === "withdrawn") {
+    return null;
+  }
+
+  const [{ data: progress }, { data: resources }] = await Promise.all([
+    supabase
+      .from("lesson_progress")
+      .select("lesson_id, completed_at")
+      .eq("enrolment_id", enrolment.id),
+    supabase
+      .from("learning_resources")
+      .select("id, lesson_id, title, kind, external_url, is_private")
+      .eq("course_id", courseId)
+      .order("position", { ascending: true }),
+  ]);
+
+  const completedByLesson = new Map(
+    (progress ?? []).map((row) => [row.lesson_id, row.completed_at]),
+  );
+
+  const learningModules: LearningModule[] = normaliseModules(
+    data.course_modules ?? [],
+  ).map((m) => ({
+    ...m,
+    lessons: m.lessons.map((lesson) => ({
+      ...lesson,
+      content: "",
+      videoUrl: null,
+      completedAt: completedByLesson.get(lesson.id) ?? null,
+    })),
+  }));
+
+  const contentByLesson = new Map(
+    (data.course_modules ?? []).flatMap((m) =>
+      m.lessons.map((lesson) => [
+        lesson.id,
+        { content: lesson.content, videoUrl: lesson.video_url },
+      ]),
+    ),
+  );
+
+  for (const learningModule of learningModules) {
+    for (const lesson of learningModule.lessons) {
+      const content = contentByLesson.get(lesson.id);
+      if (content) {
+        lesson.content = content.content;
+        lesson.videoUrl = content.videoUrl;
+      }
+    }
+  }
+
+  const programme = singleRelation(data.programmes);
+  const organisation = singleRelation(data.organisations);
+
+  return {
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    summary: data.summary,
+    description: data.description,
+    category: data.category,
+    difficulty: data.difficulty,
+    estimatedMinutes: data.estimated_minutes,
+    priceMinorUnits: data.price_minor_units,
+    currency: data.currency,
+    scholarshipEligible: data.scholarship_eligible,
+    certificateEnabled: data.certificate_enabled,
+    learningOutcomes: data.learning_outcomes,
+    prerequisites: data.prerequisites,
+    version: data.version,
+    publishedAt: data.published_at,
+    programmeTitle: programme?.title ?? "CareBridge Academy",
+    providerName: organisation?.name ?? "CareBridge Academy",
+    moduleCount: learningModules.length,
+    totalLessons: learningModules.reduce(
+      (total, module) => total + module.lessons.length,
+      0,
+    ),
+    modules: learningModules,
+    enrolmentId: enrolment.id,
+    completedLessons: completedByLesson.size,
+    completedAt: enrolment.completedAt,
+    resources: (resources ?? []).map((resource) => ({
+      id: resource.id,
+      lessonId: resource.lesson_id,
+      title: resource.title,
+      kind: resource.kind,
+      externalUrl: resource.external_url,
+      isPrivate: resource.is_private,
+    })),
+  };
+}
+
+export async function getMyLearning(userId: string): Promise<MyLearningCourse[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("course_enrolments")
+    .select(
+      "id, status, enrolled_at, completed_at, course_id, courses(id, title, slug, summary, difficulty, estimated_minutes, status, certificate_enabled, course_modules(id, lessons(id)))",
+    )
+    .eq("user_id", userId)
+    .order("enrolled_at", { ascending: false });
+
+  if (error) {
+    console.error("[academy] could not load learning", error);
+    return [];
+  }
+
+  const enrolments = data ?? [];
+  if (enrolments.length === 0) return [];
+
+  const enrolmentIds = enrolments.map((row) => row.id);
+  const courseIds = enrolments.map((row) => row.course_id);
+
+  const [{ data: progress }, { data: certificates }] = await Promise.all([
+    supabase
+      .from("lesson_progress")
+      .select("enrolment_id, lesson_id")
+      .in("enrolment_id", enrolmentIds),
+    supabase
+      .from("certificates")
+      .select("id, course_id, certificate_number, verification_code")
+      .eq("user_id", userId)
+      .in("course_id", courseIds),
+  ]);
+
+  const completedByEnrolment = new Map<string, number>();
+  for (const row of progress ?? []) {
+    completedByEnrolment.set(
+      row.enrolment_id,
+      (completedByEnrolment.get(row.enrolment_id) ?? 0) + 1,
+    );
+  }
+
+  const certificateByCourse = new Map(
+    (certificates ?? []).map((certificate) => [
+      certificate.course_id,
+      certificate,
+    ]),
+  );
+
+  return enrolments.flatMap((enrolment) => {
+    const course = singleRelation(enrolment.courses);
+    if (!course) return [];
+    const certificate = certificateByCourse.get(course.id);
+    const totalLessons = (course.course_modules ?? []).reduce(
+      (total, module) => total + (module.lessons?.length ?? 0),
+      0,
+    );
+
+    return [
+      {
+        enrolmentId: enrolment.id,
+        status: enrolment.status,
+        enrolledAt: enrolment.enrolled_at,
+        completedAt: enrolment.completed_at,
+        courseId: course.id,
+        title: course.title,
+        slug: course.slug,
+        summary: course.summary,
+        difficulty: course.difficulty,
+        estimatedMinutes: course.estimated_minutes,
+        courseStatus: course.status,
+        certificateEnabled: course.certificate_enabled,
+        certificateId: certificate?.id ?? null,
+        certificateNumber: certificate?.certificate_number ?? null,
+        certificateCode: certificate?.verification_code ?? null,
+        totalLessons,
+        completedLessons: completedByEnrolment.get(enrolment.id) ?? 0,
+      },
+    ];
+  });
+}
+
+export async function listManagedCourses(
+  user: CurrentUser,
+): Promise<ManagedCourse[]> {
+  const supabase = await createClient();
+  const managedOrganisations = user.isSuperAdmin
+    ? []
+    : user.organisations
+        .filter(
+          (org) =>
+            org.roles.includes("training_admin") ||
+            org.roles.includes("instructor"),
+        )
+        .map((org) => org.organisationId);
+
+  if (!user.isSuperAdmin && managedOrganisations.length === 0) {
+    return [];
+  }
+
+  let query = supabase
+    .from("courses")
+    .select(
+      "id, title, slug, status, difficulty, is_public, organisation_id, updated_at, programmes(title), organisations(name), course_modules(id), course_enrolments(id)",
+    )
+    .order("updated_at", { ascending: false });
+
+  if (!user.isSuperAdmin) {
+    query = query.in("organisation_id", managedOrganisations);
+  }
+
+  const { data, error } = await query;
+  if (error) {
+    console.error("[academy] could not load managed courses", error);
+    return [];
+  }
+
+  return (data ?? []).map((course) => {
+    const programme = singleRelation(course.programmes);
+    const organisation = singleRelation(course.organisations);
+    return {
+      id: course.id,
+      title: course.title,
+      slug: course.slug,
+      status: course.status,
+      difficulty: course.difficulty,
+      isPublic: course.is_public,
+      organisationId: course.organisation_id,
+      organisationName: organisation?.name ?? null,
+      programmeTitle: programme?.title ?? "CareBridge Academy",
+      moduleCount: course.course_modules?.length ?? 0,
+      enrolmentCount: course.course_enrolments?.length ?? 0,
+      updatedAt: course.updated_at,
+    };
+  });
+}
+
+export async function listProgrammeOptions(): Promise<ProgrammeOption[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("programmes")
+    .select("id, title, organisation_id")
+    .eq("status", "active")
+    .order("title", { ascending: true });
+
+  if (error) {
+    console.error("[academy] could not load programmes", error);
+    return [];
+  }
+
+  return (data ?? []).map((programme) => ({
+    id: programme.id,
+    title: programme.title,
+    organisationId: programme.organisation_id,
+  }));
+}
+
+export function managedOrganisationOptions(
+  user: CurrentUser,
+): OrganisationOption[] {
+  if (user.isSuperAdmin) {
+    return user.organisations.map((org) => ({
+      id: org.organisationId,
+      name: org.organisationName,
+    }));
+  }
+  return user.organisations
+    .filter(
+      (org) =>
+        org.roles.includes("training_admin") || org.roles.includes("instructor"),
+    )
+    .map((org) => ({
+      id: org.organisationId,
+      name: org.organisationName,
+    }));
+}
+
+export async function verifyCertificate(
+  code: string,
+): Promise<CertificateVerification | null> {
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("get_public_certificate", {
+    p_code: code.trim(),
+  });
+
+  if (error) {
+    console.error("[academy] certificate verification failed", error);
+    return null;
+  }
+
+  const result = data?.[0];
+  if (!result) return null;
+  return {
+    certificateNumber: result.certificate_number,
+    learnerName: result.learner_name,
+    courseTitle: result.course_title,
+    issuerName: result.issuer_name,
+    credentialScope: result.credential_scope,
+    disclaimer: result.disclaimer,
+    issuedAt: result.issued_at,
+    revoked: result.revoked,
+  };
+}
+
+export async function getManagedCourseDetail(
+  courseId: string,
+  user: CurrentUser,
+): Promise<ManagedCourseDetail | null> {
+  if (
+    !user.isSuperAdmin &&
+    !user.permissions.has("course_manage") &&
+    !user.permissions.has("course_publish") &&
+    !user.permissions.has("learning_material_manage")
+  ) {
+    return null;
+  }
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("courses")
+    .select(
+      "id, title, slug, summary, description, category, difficulty, estimated_minutes, learning_outcomes, prerequisites, scholarship_eligible, certificate_enabled, status, is_public, organisation_id, programme_id, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, content, video_url, estimated_minutes, position, is_required, is_preview))",
+    )
+    .eq("id", courseId)
+    .maybeSingle();
+
+  if (error || !data) {
+    if (error) console.error("[academy] could not load managed course", error);
+    return null;
+  }
+
+  if (!user.isSuperAdmin && data.organisation_id) {
+    const allowed = user.organisations.some(
+      (org) =>
+        org.organisationId === data.organisation_id &&
+        (org.roles.includes("training_admin") || org.roles.includes("instructor")),
+    );
+    if (!allowed) return null;
+  }
+
+  const syllabusModules = normaliseModules(data.course_modules ?? []).map((m) => {
+    const rawModule = (data.course_modules ?? []).find((rm) => rm.id === m.id);
+    return {
+      ...m,
+      lessons: m.lessons.map((lesson) => {
+        const rawLesson = (rawModule?.lessons ?? []).find((l) => l.id === lesson.id);
+        return {
+          ...lesson,
+          content: rawLesson?.content ?? "",
+          videoUrl: rawLesson?.video_url ?? null,
+        };
+      }),
+    };
+  });
+
+  const programme = singleRelation(data.programmes);
+  const organisation = singleRelation(data.organisations);
+
+  return {
+    id: data.id,
+    title: data.title,
+    slug: data.slug,
+    summary: data.summary,
+    description: data.description,
+    category: data.category,
+    difficulty: data.difficulty,
+    estimatedMinutes: data.estimated_minutes,
+    learningOutcomes: data.learning_outcomes,
+    prerequisites: data.prerequisites,
+    scholarshipEligible: data.scholarship_eligible,
+    certificateEnabled: data.certificate_enabled,
+    status: data.status,
+    isPublic: data.is_public,
+    organisationId: data.organisation_id,
+    programmeId: data.programme_id,
+    programmeTitle: programme?.title ?? "CareBridge Academy",
+    organisationName: organisation?.name ?? null,
+    publishedAt: data.published_at,
+    modules: syllabusModules,
+    totalLessons: syllabusModules.reduce(
+      (total, module) => total + module.lessons.length,
+      0,
+    ),
+  };
+}
+
+export async function listIssuedCertificates(
+  user: CurrentUser,
+): Promise<IssuedCertificate[]> {
+  const supabase = await createClient();
+  let query = supabase
+    .from("certificates")
+    .select(
+      "id, certificate_number, verification_code, learner_name, course_title, issuer_name, credential_scope, disclaimer, issued_at, revoked_at, revoked_reason, courses(slug)",
+    )
+    .order("issued_at", { ascending: false });
+
+  if (!user.isSuperAdmin && !user.permissions.has("course_publish")) {
+    query = query.eq("user_id", user.id);
+  } else if (!user.isSuperAdmin) {
+    const orgs = user.organisations
+      .filter(
+        (org) =>
+          org.roles.includes("training_admin") ||
+          org.roles.includes("instructor"),
+      )
+      .map((org) => org.organisationId);
+
+    if (orgs.length === 0) return [];
+
+    const { data: courseIds } = await supabase
+      .from("courses")
+      .select("id")
+      .in("organisation_id", orgs);
+
+    const ids = (courseIds ?? []).map((row) => row.id);
+    if (ids.length === 0) return [];
+    query = query.in("course_id", ids);
+  }
+
+  const { data, error } = await query;
+  if (error) {
+    console.error("[academy] could not load certificates", error);
+    return [];
+  }
+
+  return (data ?? []).map((certificate) => {
+    const course = singleRelation(certificate.courses);
+    return {
+      id: certificate.id,
+      certificateNumber: certificate.certificate_number,
+      verificationCode: certificate.verification_code,
+      learnerName: certificate.learner_name,
+      courseTitle: certificate.course_title,
+      issuerName: certificate.issuer_name,
+      credentialScope: certificate.credential_scope,
+      disclaimer: certificate.disclaimer,
+      issuedAt: certificate.issued_at,
+      revokedAt: certificate.revoked_at,
+      revokedReason: certificate.revoked_reason,
+      courseSlug: course?.slug ?? "",
+    };
+  });
+}
+
+export async function getAcademyFacts(userId: string): Promise<{
+  activeEnrolments: number;
+  completedCourses: number;
+  certificates: number;
+}> {
+  const supabase = await createClient();
+  const [{ count: active }, { count: completed }, { count: certificates }] =
+    await Promise.all([
+      supabase
+        .from("course_enrolments")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId)
+        .eq("status", "active"),
+      supabase
+        .from("course_enrolments")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId)
+        .eq("status", "completed"),
+      supabase
+        .from("certificates")
+        .select("id", { count: "exact", head: true })
+        .eq("user_id", userId)
+        .is("revoked_at", null),
+    ]);
+
+  return {
+    activeEnrolments: active ?? 0,
+    completedCourses: completed ?? 0,
+    certificates: certificates ?? 0,
+  };
+}
