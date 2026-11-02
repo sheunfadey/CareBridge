@@ -109,14 +109,19 @@ non-super-admins from escalating themselves.
   publishing, published job browsing, applications with status tracking,
   employer applicant review, interviews and formal offers with candidate
   responses.
-- **Payments (Phase 6, in progress)** - Paystack behind a provider abstraction,
-  server-side verification, signed and idempotent webhooks, course checkout,
-  refunds with an append-only ledger, and finance reconciliation pages. Live
-  checkout has not been exercised because no provider key is configured.
-- **Referral management (Phase 6, in progress)** - partner applications,
-  published commission policies, referral attribution, an immutable commission
-  ledger, payout requests, finance approval and a guarded transfer workflow.
-  Provider transfers are disabled unless `PAYSTACK_TRANSFERS_ENABLED=true`.
+- **Payments (Phase 6, complete; live checkout pending credentials)** - Paystack
+  behind a provider abstraction, server-side verification, signed and idempotent
+  webhooks, course checkout, refunds with an append-only ledger, and finance
+  reconciliation pages.
+- **Referral management (Phase 6, complete)** - partner applications, published
+  commission policies, referral attribution, an immutable commission ledger,
+  payout requests, finance approval and a guarded transfer workflow. Provider
+  transfers are disabled unless `PAYSTACK_TRANSFERS_ENABLED=true`.
+- **Care-home operations (Phase 7, schema only)** - migrations for facilities,
+  residents, staff, shifts, daily care, care plans, medication records,
+  incidents, inventory, purchasing, invoices and reports are authored and
+  offline-validated. No server queries or UI yet; reconnect the Supabase project
+  and apply `0016`-`0020` first.
 - **Theme & responsiveness** - light/dark theme toggle, mobile navigation and
   responsive dashboard layouts.
 

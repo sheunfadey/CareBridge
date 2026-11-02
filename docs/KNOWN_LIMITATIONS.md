@@ -3,12 +3,15 @@
 This document tracks features that are incomplete, disabled, or awaiting
 external configuration. It is updated as each phase lands.
 
-## Current state: Phases 2-5 complete, Phase 6 in progress
+## Current state: Phases 2-6 implemented; Phase 7 schema authored, awaiting a Supabase project
 
 ### Implemented and verified
 
-- **Supabase connected** to project `ggizvtzlhdciykfmdsjl`. Migrations `0001` to
-  `0015` are applied and in sync.
+- **Supabase project unavailable at the time of writing.** The previously linked
+  project `ggizvtzlhdciykfmdsjl` no longer resolves (NXDOMAIN) and its access
+  token was rejected. Migrations `0001`-`0015` had been applied there;
+  `0016`-`0020` are authored but not applied. Reconnect a project and run
+  `supabase db push --include-all` to restore a verified environment.
 - **Identity & multi-tenancy schema**: `profiles`, `organisations`,
   `organisation_memberships`, `roles`, `permissions`, `role_permissions`,
   `user_role_assignments`, `organisation_invitations`,
@@ -70,8 +73,12 @@ external configuration. It is updated as each phase lands.
   test exist; Playwright is not yet set up. Phase 6 pages have been driven with
   seeded fixtures over authenticated HTTP requests, but not in an automated
   browser session.
-- **Care-home operations, charity and analytics** modules are not built. Their
-  dashboard routes show an honest "planned" placeholder, never fabricated data.
+- **Care-home operations** — the Phase 7 schema (migrations `0016`-`0020`) is
+  authored and validated offline against an embedded PostgreSQL instance, but it
+  has not been applied to the Supabase project and has no server queries or UI
+  yet. `/dashboard/care-homes` remains an honest placeholder.
+- **Charity and analytics** modules are not built. Their dashboard routes show
+  an honest "planned" placeholder, never fabricated data.
 - **Profile editing and notification preferences** are not implemented; the
   settings pages are read-only or marked as planned.
 - **Dashboard top-bar search** is not wired to a search backend.
@@ -122,11 +129,16 @@ external configuration. It is updated as each phase lands.
 - Unauthenticated smoke test - `/`, `/login`, `/register`, `/forgot-password`,
   `/reset-password`, `/verify-email` return HTTP 200; `/dashboard` returns 307 to
   `/login?redirectTo=%2Fdashboard` when unauthenticated.
-- Authenticated smoke test (earlier Phase 5 run, local dev, `admin@carebridge.test`)
-  - employment routes returned HTTP 200 with seeded data. Phase 6 pages were
-  added after that run and have been compiled but not smoke-tested in a browser.
+- Authenticated Phase 6 smoke test (production server, disposable fixtures,
+  removed afterwards) - 15/15 route and permission checks passed; partner
+  balances, commission ledger, payout history, payment filters and
+  reconciliation rendered seeded data.
 - `npm run db:test:rls` - cross-tenant isolation assertions hold for the applied
   schema through migration `0015`, including Phase 6 payment and commission
   isolation, write denial and self-referral rejection.
+- Phase 7 SQL - migrations `0016`-`0020` apply cleanly and 34 RLS/invariant
+  assertions pass against an embedded PostgreSQL instance. They have **not** been
+  applied to the Supabase project: the linked project host did not resolve at the
+  time of writing, so there is no live RLS run for Phase 7 yet.
 
 No feature in later phases is claimed as complete.
