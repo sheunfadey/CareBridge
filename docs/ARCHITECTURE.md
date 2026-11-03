@@ -125,6 +125,45 @@ and write.
   `PAYSTACK_TRANSFERS_ENABLED=true`, reuses the transfer reference and verifies an
   ambiguous outcome before retrying.
 
+### Care-home operations (Phase 7)
+
+- **Workspace model** (`src/server/care/access.ts`). A care workspace is an
+  existing organisation of type `care_home` or `home_care_agency`. Facilities,
+  residents, staff, shifts, stock and invoices all carry `organisation_id`, and
+  every permission check is delegated to the database `has_permission` function
+  with the organisation id. Super administrators can see every care workspace.
+- **Resident privacy**. `can_access_resident()` is the single RLS helper for
+  resident-scoped tables. Staff with `resident_view` see their organisation's
+  residents; family accounts only see an explicit, unrevoked
+  `resident_relationships` row. `family_member` no longer inherits an
+  organisation-wide permission. Resident record views are written to
+  `resident_access_events`.
+- **Staff and rostering**. Staff profiles, qualifications, training and document
+  expiry live in dedicated tables. Shift assignment is guarded in the database:
+  the worker must be an active member, must not already have an overlapping
+  shift, and must hold the shift's required verified qualification. Nothing is
+  auto-assigned.
+- **Daily care and care plans**. Daily records reference a resident, task and
+  optional shift; supervisor review locks the record against further edits.
+  Care plans keep immutable versions with a draft to pending-approval to active
+  to archived workflow, and restricted plans are hidden from general staff.
+- **Medication**. Administration records require `medication_manage`; an
+  administered row is immutable and every status change is written to
+  `medication_record_events`. No dose calculation or recommendation logic exists.
+- **Incidents**. Categories, severity, investigation status, reviewer, corrective
+  actions and closure notes are recorded. Closure requires a reviewer and notes.
+  Sensitive records are restricted to incident permissions.
+- **Inventory**. `inventory_items` stores no balance; the current quantity is
+  derived from append-only `inventory_movements`. Movements cannot be updated or
+  deleted, and receiving a purchase line writes a purchase movement.
+- **Billing**. Invoice numbers are allocated by a per-organisation monthly
+  counter, totals are derived from line items, payments and refunds are
+  append-only, and overpayment/over-refund are rejected in the database.
+- **Reports**. `care_occupancy`, `care_staffing_coverage`,
+  `care_training_compliance`, `care_incident_summary`, `care_inventory_status`,
+  `care_expense_summary` and `care_invoice_ageing` are `security_invoker` views,
+  so the caller's RLS applies. Aggregates never expose resident names.
+
 ### Cross-tenant isolation
 
 `supabase/tests/rls_isolation.sql` seeds two tenants and asserts — as an

@@ -578,6 +578,179 @@ begin
   raise notice 'PASS: cross-tenant isolation checks held';
 end $$;
 
+-- =============================================================================
+-- Phase 7: care operations isolation
+-- =============================================================================
+do $$
+declare
+  v_owner_a uuid := '11111111-1111-1111-1111-111111111111';
+  v_owner_b uuid := '22222222-2222-2222-2222-222222222222';
+  v_family  uuid := 'f7f00000-0000-4000-8000-000000000001';
+  v_staff   uuid := 'f7f00000-0000-4000-8000-000000000002';
+  v_med     uuid := 'f7f00000-0000-4000-8000-000000000003';
+  v_org_a   uuid := 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+  v_org_b   uuid := 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb';
+  v_fac_a   uuid := 'f7a00000-0000-4000-8000-000000000001';
+  v_fac_b   uuid := 'f7a00000-0000-4000-8000-000000000002';
+  v_res_a1  uuid := 'f7b00000-0000-4000-8000-000000000001';
+  v_res_a2  uuid := 'f7b00000-0000-4000-8000-000000000002';
+  v_res_b1  uuid := 'f7b00000-0000-4000-8000-000000000003';
+  v_count   int;
+  v_rows    int;
+begin
+  insert into auth.users (id, email, encrypted_password, email_confirmed_at, created_at, updated_at)
+  values
+    (v_family, 'family-a@example.test', crypt('password', gen_salt('bf')), now(), now(), now()),
+    (v_staff, 'staff-a@example.test', crypt('password', gen_salt('bf')), now(), now(), now()),
+    (v_med, 'med-a@example.test', crypt('password', gen_salt('bf')), now(), now(), now())
+  on conflict (id) do nothing;
+
+  insert into public.organisation_memberships (organisation_id, user_id, status, is_owner, joined_at)
+  values
+    (v_org_a, v_family, 'active', false, now()),
+    (v_org_a, v_staff, 'active', false, now()),
+    (v_org_a, v_med, 'active', false, now())
+  on conflict (organisation_id, user_id) do nothing;
+
+  insert into public.user_role_assignments (user_id, role_key, organisation_id)
+  values
+    (v_owner_a, 'care_home_owner', v_org_a),
+    (v_owner_b, 'care_home_owner', v_org_b),
+    (v_family, 'family_member', v_org_a),
+    (v_staff, 'care_staff', v_org_a),
+    (v_med, 'care_medication_staff', v_org_a)
+  on conflict do nothing;
+
+  insert into public.care_facilities (id, organisation_id, name, capacity, created_by)
+  values
+    (v_fac_a, v_org_a, 'Tenant A House', 10, v_owner_a),
+    (v_fac_b, v_org_b, 'Tenant B House', 10, v_owner_b)
+  on conflict (id) do nothing;
+
+  insert into public.residents
+    (id, facility_id, reference, first_name, last_name, created_by)
+  values
+    (v_res_a1, v_fac_a, 'A-R1', 'Resident', 'A-One', v_owner_a),
+    (v_res_a2, v_fac_a, 'A-R2', 'Resident', 'A-Two', v_owner_a),
+    (v_res_b1, v_fac_b, 'B-R1', 'Resident', 'B-One', v_owner_b)
+  on conflict (id) do nothing;
+
+  insert into public.resident_relationships
+    (resident_id, user_id, relationship, access_level)
+  values (v_res_a1, v_family, 'Daughter', 'full')
+  on conflict (resident_id, user_id) do nothing;
+
+  insert into public.incidents
+    (id, facility_id, resident_id, category, severity, occurred_at, reported_by, description)
+  values
+    ('f7c00000-0000-4000-8000-000000000001', v_fac_b, v_res_b1, 'fall', 'high',
+     now(), v_owner_b, 'Tenant B incident used only by the RLS isolation test.')
+  on conflict do nothing;
+
+  insert into public.service_invoices
+    (id, facility_id, resident_id, payer_name, due_date)
+  values
+    ('f7d00000-0000-4000-8000-000000000001', v_fac_b, v_res_b1,
+     'Tenant B Payer', current_date + 30)
+  on conflict (id) do nothing;
+
+  insert into public.medication_records
+    (id, resident_id, medication_name, dose_text, scheduled_at, recorded_by)
+  values
+    ('f7e00000-0000-4000-8000-000000000001', v_res_a1, 'Example medicine',
+     'as prescribed', now(), v_med)
+  on conflict (id) do nothing;
+
+  -- Linked family member: only the resident they are linked to.
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_family, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count from public.residents;
+  if v_count <> 1 then
+    raise exception 'FAIL: family expected 1 linked resident, saw %', v_count;
+  end if;
+
+  select count(*) into v_count from public.incidents;
+  if v_count <> 0 then
+    raise exception 'FAIL: family could read incidents';
+  end if;
+
+  update public.residents set first_name = 'Injected' where id = v_res_a1;
+  get diagnostics v_rows = row_count;
+  if v_rows <> 0 then
+    raise exception 'FAIL: family could edit a resident record';
+  end if;
+
+  reset role;
+
+  -- Care staff: organisation-wide residents, but no medication, billing or B data.
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_staff, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count from public.residents;
+  if v_count <> 2 then
+    raise exception 'FAIL: care staff expected 2 residents, saw %', v_count;
+  end if;
+
+  select count(*) into v_count from public.residents where id = v_res_b1;
+  if v_count <> 0 then
+    raise exception 'FAIL: care staff could read a tenant B resident';
+  end if;
+
+  select count(*) into v_count from public.medication_records;
+  if v_count <> 0 then
+    raise exception 'FAIL: care staff could read medication records';
+  end if;
+
+  select count(*) into v_count from public.service_invoices;
+  if v_count <> 0 then
+    raise exception 'FAIL: care staff could read invoices';
+  end if;
+
+  begin
+    insert into public.residents (facility_id, reference, first_name, last_name)
+    values (v_fac_b, 'B-INJECTED', 'Injected', 'Resident');
+    raise exception 'FAIL: care staff could create a resident in tenant B';
+  exception
+    when insufficient_privilege then null; -- expected: RLS denied
+  end;
+
+  reset role;
+
+  -- Medication-authorised staff can read their organisation's records only.
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_med, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count from public.medication_records;
+  if v_count <> 1 then
+    raise exception 'FAIL: medication staff expected 1 medication record, saw %', v_count;
+  end if;
+
+  reset role;
+
+  -- Tenant owner A cannot read tenant B care data.
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_owner_a, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count from public.residents where organisation_id = v_org_b;
+  if v_count <> 0 then
+    raise exception 'FAIL: tenant A owner could read tenant B residents';
+  end if;
+
+  select count(*) into v_count from public.care_facilities where organisation_id = v_org_b;
+  if v_count <> 0 then
+    raise exception 'FAIL: tenant A owner could read tenant B facilities';
+  end if;
+
+  reset role;
+
+  raise notice 'PASS: care operations isolation checks held';
+end $$;
+
 rollback;
 
 -- Final, non-transactional confirmation the harness can assert on.

@@ -20,8 +20,8 @@ mobile-first).
 | 3 | Public website & admin foundation | Complete |
 | 4 | Academy (LMS) | Complete |
 | 5 | Internships & employment | Complete |
-| 6 | Payments & referral management | In progress |
-| 7 | Care-home operations | Not started |
+| 6 | Payments & referral management | Complete |
+| 7 | Care-home operations | Complete (core modules) |
 | 8 | Charity & scholarships | Not started |
 | 9 | Analytics & subscriptions | Not started |
 | 10 | QA & production readiness | Not started |
@@ -117,11 +117,14 @@ non-super-admins from escalating themselves.
   commission policies, referral attribution, an immutable commission ledger,
   payout requests, finance approval and a guarded transfer workflow. Provider
   transfers are disabled unless `PAYSTACK_TRANSFERS_ENABLED=true`.
-- **Care-home operations (Phase 7, schema only)** - migrations for facilities,
-  residents, staff, shifts, daily care, care plans, medication records,
-  incidents, inventory, purchasing, invoices and reports are authored and
-  offline-validated. No server queries or UI yet; reconnect the Supabase project
-  and apply `0016`-`0020` first.
+- **Care-home operations (Phase 7, core modules complete)** - facility and
+  resident records, contacts and consents, family links, staff qualifications and
+  compliance, shift rosters with overlap/qualification guards, daily care records
+  and supervisor review, versioned care plans with approval, medication
+  administration records, incidents and corrective actions, inventory with
+  append-only movements, expenses, invoices/payments/refunds and operational
+  reports. Family accounts are linked per resident; the dedicated family portal is
+  still pending.
 - **Theme & responsiveness** - light/dark theme toggle, mobile navigation and
   responsive dashboard layouts.
 
@@ -139,6 +142,7 @@ non-super-admins from escalating themselves.
 | `/dashboard/internships/*` | Placement browse, apply and management |
 | `/dashboard/jobs/*` | Job browse, apply, applications and employer management |
 | `/dashboard/referrals` | Referral partner dashboard and payouts |
+| `/dashboard/care-homes/*` | Residents, staff, roster, daily care, plans, medication, incidents, inventory, expenses, invoices and reports |
 | `/dashboard/admin/payments/*` | Finance payment review and refunds |
 | `/dashboard/admin/reconciliation` | Provider reconciliation |
 | `/dashboard/admin/referrals` | Partner, commission and payout administration |

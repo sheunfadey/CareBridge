@@ -95,7 +95,8 @@ before the migrations are written.
 - `incidents` — facility, optional resident, category (fall, injury,
   safeguarding, medication, missing_person, property, other), severity
   (`low|medium|high|critical`), occurred_at, reported_by, description,
-  immediate action, status (`open|investigating|awaiting_review|closed`),
+  immediate action, status (`open|investigating|resolved|closed`, reusing the
+  Phase 5 incident vocabulary),
   assigned reviewer, closure notes, safeguarding flag, external reference.
 - `incident_actions` — corrective action, owner, due_at, status, completed_at,
   notes.
@@ -216,8 +217,12 @@ counts/amounts — never resident names — for viewers without resident permiss
 7. **Verification** — unit tests, RLS isolation fixtures, lint/typecheck/test/
    build, authenticated smoke test with disposable data.
 
-Until the migrations are applied to the target Supabase project, the UI and
-generated database types are intentionally not started. The SQL has been applied
-and exercised against an embedded PostgreSQL instance with the existing core
-schema stubbed (34 RLS/invariant assertions pass), but that is not a substitute
-for the real project's RLS fixtures.
+**Status:** migrations `0016`-`0020` are applied to the live Supabase project,
+the RLS isolation suite covers the Phase 7 tables, and the core care workspace UI
+is implemented (workspace overview, residents, staff, roster, daily care, care
+plans, medication, incidents, inventory, expenses, invoices and reports). The
+remaining polish items are tracked in `docs/KNOWN_LIMITATIONS.md` (family portal,
+purchase-request UI, availability editor, access-history UI, delivery-backed
+notifications and a calendar grid). The SQL was additionally exercised against
+an embedded PostgreSQL instance with 34 RLS/invariant assertions before it was
+applied to the live project.

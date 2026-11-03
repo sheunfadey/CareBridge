@@ -3,15 +3,13 @@
 This document tracks features that are incomplete, disabled, or awaiting
 external configuration. It is updated as each phase lands.
 
-## Current state: Phases 2-6 implemented; Phase 7 schema authored, awaiting a Supabase project
+## Current state: Phases 2-7 implemented (Phase 7 core modules); Phase 8 not started
 
 ### Implemented and verified
 
-- **Supabase project unavailable at the time of writing.** The previously linked
-  project `ggizvtzlhdciykfmdsjl` no longer resolves (NXDOMAIN) and its access
-  token was rejected. Migrations `0001`-`0015` had been applied there;
-  `0016`-`0020` are authored but not applied. Reconnect a project and run
-  `supabase db push --include-all` to restore a verified environment.
+- **Supabase project** `teejjgzkvvgmsvtblncr` is active and healthy. Migrations
+  `0001`-`0020` are applied and in sync. The earlier project
+  (`ggizvtzlhdciykfmdsjl`) was deleted; this project replaces it.
 - **Identity & multi-tenancy schema**: `profiles`, `organisations`,
   `organisation_memberships`, `roles`, `permissions`, `role_permissions`,
   `user_role_assignments`, `organisation_invitations`,
@@ -38,20 +36,27 @@ external configuration. It is updated as each phase lands.
   evaluations, incidents, completion records and agreement acceptance.
 - **Employment (Phase 5)**: job postings with draft/publish/close lifecycle,
   applications, applicant review, withdrawal, interviews and offers.
-- **Payments (Phase 6, partial)**: Paystack provider abstraction, server-side
-  verification, signature-checked and idempotent webhooks, paid course checkout,
-  refunds, finance payment review and reconciliation pages.
-- **Referrals (Phase 6, partial)**: partner applications, published commission
+- **Payments (Phase 6, complete; live provider pending credentials)**: Paystack
+  provider abstraction, server-side verification, signature-checked and
+  idempotent webhooks, paid course checkout, refunds, finance payment review and
+  reconciliation pages.
+- **Referrals (Phase 6, complete)**: partner applications, published commission
   policies, `/r/[code]` attribution, immutable commission ledger, payout
   requests, finance approval, beneficiary verification and a guarded transfer
   workflow.
+- **Care-home operations (Phase 7, core modules)**: facilities, residents,
+  contacts, consents and family links; staff qualifications, training and
+  document expiry; rosters with overlap and qualification guards; daily care and
+  supervisor review; versioned care plans with approval; medication
+  administration; incidents and corrective actions; inventory with append-only
+  movements; expenses; invoices, payments and refunds; operational reports.
 - **Notifications**: in-app notification centre and unread counts.
 - **Test runner** (Vitest): `npm test` runs unit tests for the permission
   registry, validation schemas, money and commission calculations, email
-  templates, admin-service contracts and navigation.
+  templates, admin-service contracts, navigation and care validation.
 - **Cross-tenant isolation test** (`supabase/tests/rls_isolation.sql`) - passes
-  against the live database for migrations `0001`-`0015`, including payments,
-  commission ledger isolation, write denial and self-referral rejection.
+  against the live database for migrations `0001`-`0020`, including care
+  resident, medication, invoice and family-link isolation.
 
 ### Not yet implemented or not yet verified
 
@@ -70,13 +75,20 @@ external configuration. It is updated as each phase lands.
   is no structured candidate profile or document upload.
 - **No file uploads / storage buckets.**
 - **No end-to-end browser tests.** Unit tests (Vitest) and the SQL RLS isolation
-  test exist; Playwright is not yet set up. Phase 6 pages have been driven with
-  seeded fixtures over authenticated HTTP requests, but not in an automated
-  browser session.
-- **Care-home operations** — the Phase 7 schema (migrations `0016`-`0020`) is
-  authored and validated offline against an embedded PostgreSQL instance, but it
-  has not been applied to the Supabase project and has no server queries or UI
-  yet. `/dashboard/care-homes` remains an honest placeholder.
+  test exist; Playwright is not yet set up. Phase 6 and Phase 7 pages have been
+  driven with seeded fixtures over authenticated HTTP requests, but not in an
+  automated browser session.
+- **Phase 7 remaining polish**:
+  - no dedicated family/resident portal; family accounts are linked per resident
+    but cannot yet sign in to view a summary;
+  - purchase requests can be created/reviewed through server actions but have no
+    dedicated UI page;
+  - staff availability is stored as JSON but has no editor;
+  - resident access history is recorded but not displayed in the UI;
+  - shift reminders and incident escalation notifications are not wired to a
+    delivery provider;
+  - shift calendars are rendered as a 14-day grouped list rather than a monthly
+    grid.
 - **Charity and analytics** modules are not built. Their dashboard routes show
   an honest "planned" placeholder, never fabricated data.
 - **Profile editing and notification preferences** are not implemented; the
@@ -124,7 +136,7 @@ external configuration. It is updated as each phase lands.
 
 - `npm run lint` - clean
 - `npm run typecheck` - clean
-- `npm test` - 57 unit tests pass (8 files)
+- `npm test` - 70 unit tests pass (9 files)
 - `npm run build` - succeeds (production build)
 - Unauthenticated smoke test - `/`, `/login`, `/register`, `/forgot-password`,
   `/reset-password`, `/verify-email` return HTTP 200; `/dashboard` returns 307 to
@@ -133,12 +145,16 @@ external configuration. It is updated as each phase lands.
   removed afterwards) - 15/15 route and permission checks passed; partner
   balances, commission ledger, payout history, payment filters and
   reconciliation rendered seeded data.
+- Authenticated Phase 7 smoke test (production server, disposable fixtures,
+  removed afterwards) - 23/23 route and permission checks passed across the
+  workspace, residents, staff, roster, plans, daily care, medication, incidents,
+  inventory, expenses, invoices and reports. Care staff were denied billing,
+  staff management and reports; family accounts were denied the staff workspace.
 - `npm run db:test:rls` - cross-tenant isolation assertions hold for the applied
-  schema through migration `0015`, including Phase 6 payment and commission
-  isolation, write denial and self-referral rejection.
-- Phase 7 SQL - migrations `0016`-`0020` apply cleanly and 34 RLS/invariant
-  assertions pass against an embedded PostgreSQL instance. They have **not** been
-  applied to the Supabase project: the linked project host did not resolve at the
-  time of writing, so there is no live RLS run for Phase 7 yet.
+  schema through migration `0020`, including Phase 6 payment/commission and
+  Phase 7 resident, medication, invoice and family-link isolation.
+- Phase 7 SQL - migrations `0016`-`0020` apply cleanly, and 34 RLS/invariant
+  assertions pass against both an embedded PostgreSQL instance and the live
+  project.
 
 No feature in later phases is claimed as complete.

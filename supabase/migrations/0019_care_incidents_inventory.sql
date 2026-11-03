@@ -25,14 +25,10 @@ create type incident_category as enum (
   'other'
 );
 
-create type incident_severity as enum ('low', 'medium', 'high', 'critical');
-
-create type incident_status as enum (
-  'open',
-  'investigating',
-  'awaiting_review',
-  'closed'
-);
+-- `incident_severity` (low|medium|high|critical) and `incident_status`
+-- (open|investigating|resolved|closed) already exist from the placement
+-- incidents migration. Care incidents reuse them rather than creating a second
+-- vocabulary.
 
 create type incident_action_status as enum (
   'open',

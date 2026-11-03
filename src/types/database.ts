@@ -1,4 +1,4 @@
-﻿export type Json =
+export type Json =
   | string
   | number
   | boolean
@@ -58,6 +58,574 @@ export type Database = {
             columns: ["organisation_id"]
             isOneToOne: false
             referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      care_facilities: {
+        Row: {
+          address: string | null
+          capacity: number | null
+          city: string | null
+          created_at: string
+          created_by: string | null
+          email: string | null
+          id: string
+          name: string
+          organisation_id: string
+          phone: string | null
+          state: string | null
+          status: Database["public"]["Enums"]["care_facility_status"]
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          capacity?: number | null
+          city?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          organisation_id: string
+          phone?: string | null
+          state?: string | null
+          status?: Database["public"]["Enums"]["care_facility_status"]
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          capacity?: number | null
+          city?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          organisation_id?: string
+          phone?: string | null
+          state?: string | null
+          status?: Database["public"]["Enums"]["care_facility_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "care_facilities_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_facilities_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      care_plan_assignments: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          created_by: string | null
+          due_on: string | null
+          id: string
+          organisation_id: string
+          plan_id: string
+          responsibility: string
+          staff_user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          due_on?: string | null
+          id?: string
+          organisation_id: string
+          plan_id: string
+          responsibility: string
+          staff_user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          due_on?: string | null
+          id?: string
+          organisation_id?: string
+          plan_id?: string
+          responsibility?: string
+          staff_user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "care_plan_assignments_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_plan_assignments_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_plan_assignments_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "care_plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_plan_assignments_staff_user_id_fkey"
+            columns: ["staff_user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      care_plan_versions: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          change_summary: string | null
+          content: Json
+          created_at: string
+          created_by: string | null
+          id: string
+          organisation_id: string
+          plan_id: string
+          resident_id: string
+          version_number: number
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          change_summary?: string | null
+          content?: Json
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          organisation_id: string
+          plan_id: string
+          resident_id: string
+          version_number: number
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          change_summary?: string | null
+          content?: Json
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          organisation_id?: string
+          plan_id?: string
+          resident_id?: string
+          version_number?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "care_plan_versions_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_plan_versions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_plan_versions_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_plan_versions_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "care_plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_plan_versions_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      care_plans: {
+        Row: {
+          access_level: Database["public"]["Enums"]["care_plan_access"]
+          approved_at: string | null
+          approved_by: string | null
+          archived_at: string | null
+          created_at: string
+          created_by: string | null
+          current_version_id: string | null
+          id: string
+          organisation_id: string
+          resident_id: string
+          review_due_on: string | null
+          status: Database["public"]["Enums"]["care_plan_status"]
+          summary: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          access_level?: Database["public"]["Enums"]["care_plan_access"]
+          approved_at?: string | null
+          approved_by?: string | null
+          archived_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          current_version_id?: string | null
+          id?: string
+          organisation_id: string
+          resident_id: string
+          review_due_on?: string | null
+          status?: Database["public"]["Enums"]["care_plan_status"]
+          summary?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          access_level?: Database["public"]["Enums"]["care_plan_access"]
+          approved_at?: string | null
+          approved_by?: string | null
+          archived_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          current_version_id?: string | null
+          id?: string
+          organisation_id?: string
+          resident_id?: string
+          review_due_on?: string | null
+          status?: Database["public"]["Enums"]["care_plan_status"]
+          summary?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "care_plans_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_plans_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_plans_current_version_fk"
+            columns: ["current_version_id"]
+            isOneToOne: false
+            referencedRelation: "care_plan_versions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_plans_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_plans_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      care_staff_profiles: {
+        Row: {
+          availability: Json
+          created_at: string
+          created_by: string | null
+          employment_status: Database["public"]["Enums"]["care_employment_status"]
+          end_date: string | null
+          id: string
+          job_title: string | null
+          notes: string | null
+          organisation_id: string
+          start_date: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          availability?: Json
+          created_at?: string
+          created_by?: string | null
+          employment_status?: Database["public"]["Enums"]["care_employment_status"]
+          end_date?: string | null
+          id?: string
+          job_title?: string | null
+          notes?: string | null
+          organisation_id: string
+          start_date?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          availability?: Json
+          created_at?: string
+          created_by?: string | null
+          employment_status?: Database["public"]["Enums"]["care_employment_status"]
+          end_date?: string | null
+          id?: string
+          job_title?: string | null
+          notes?: string | null
+          organisation_id?: string
+          start_date?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "care_staff_profiles_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_staff_profiles_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_staff_profiles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      care_task_records: {
+        Row: {
+          assistance_notes: string | null
+          completed_at: string | null
+          created_at: string
+          hydration_ml: number | null
+          id: string
+          meal_consumed: string | null
+          meal_offered: string | null
+          mobility_notes: string | null
+          observations: string | null
+          organisation_id: string
+          recorded_by: string | null
+          resident_id: string
+          review_notes: string | null
+          review_outcome:
+            | Database["public"]["Enums"]["care_review_outcome"]
+            | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          shift_id: string | null
+          status: Database["public"]["Enums"]["care_task_record_status"]
+          task_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          assistance_notes?: string | null
+          completed_at?: string | null
+          created_at?: string
+          hydration_ml?: number | null
+          id?: string
+          meal_consumed?: string | null
+          meal_offered?: string | null
+          mobility_notes?: string | null
+          observations?: string | null
+          organisation_id: string
+          recorded_by?: string | null
+          resident_id: string
+          review_notes?: string | null
+          review_outcome?:
+            | Database["public"]["Enums"]["care_review_outcome"]
+            | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          shift_id?: string | null
+          status?: Database["public"]["Enums"]["care_task_record_status"]
+          task_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          assistance_notes?: string | null
+          completed_at?: string | null
+          created_at?: string
+          hydration_ml?: number | null
+          id?: string
+          meal_consumed?: string | null
+          meal_offered?: string | null
+          mobility_notes?: string | null
+          observations?: string | null
+          organisation_id?: string
+          recorded_by?: string | null
+          resident_id?: string
+          review_notes?: string | null
+          review_outcome?:
+            | Database["public"]["Enums"]["care_review_outcome"]
+            | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          shift_id?: string | null
+          status?: Database["public"]["Enums"]["care_task_record_status"]
+          task_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "care_task_records_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_task_records_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_task_records_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_task_records_reviewed_by_fkey"
+            columns: ["reviewed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_task_records_shift_id_fkey"
+            columns: ["shift_id"]
+            isOneToOne: false
+            referencedRelation: "care_staffing_coverage"
+            referencedColumns: ["shift_id"]
+          },
+          {
+            foreignKeyName: "care_task_records_shift_id_fkey"
+            columns: ["shift_id"]
+            isOneToOne: false
+            referencedRelation: "shift_schedules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_task_records_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "care_tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      care_tasks: {
+        Row: {
+          care_plan_id: string | null
+          category: Database["public"]["Enums"]["care_task_category"]
+          created_at: string
+          created_by: string | null
+          id: string
+          instructions: string | null
+          is_active: boolean
+          organisation_id: string
+          required_qualification: string | null
+          requires_two_staff: boolean
+          resident_id: string
+          schedule_times: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          care_plan_id?: string | null
+          category?: Database["public"]["Enums"]["care_task_category"]
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          instructions?: string | null
+          is_active?: boolean
+          organisation_id: string
+          required_qualification?: string | null
+          requires_two_staff?: boolean
+          resident_id: string
+          schedule_times?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          care_plan_id?: string | null
+          category?: Database["public"]["Enums"]["care_task_category"]
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          instructions?: string | null
+          is_active?: boolean
+          organisation_id?: string
+          required_qualification?: string | null
+          requires_two_staff?: boolean
+          resident_id?: string
+          schedule_times?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "care_tasks_care_plan_id_fkey"
+            columns: ["care_plan_id"]
+            isOneToOne: false
+            referencedRelation: "care_plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_tasks_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_tasks_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_tasks_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
             referencedColumns: ["id"]
           },
         ]
@@ -410,6 +978,309 @@ export type Database = {
             columns: ["programme_id"]
             isOneToOne: false
             referencedRelation: "programmes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      expense_records: {
+        Row: {
+          amount_minor_units: number
+          approved_at: string | null
+          approved_by: string | null
+          category: string
+          created_at: string
+          currency: string
+          description: string | null
+          facility_id: string
+          id: string
+          incurred_on: string
+          organisation_id: string
+          payment_method: string | null
+          payment_status: Database["public"]["Enums"]["expense_payment_status"]
+          purchase_id: string | null
+          receipt_reference: string | null
+          recorded_by: string | null
+          supplier_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount_minor_units: number
+          approved_at?: string | null
+          approved_by?: string | null
+          category: string
+          created_at?: string
+          currency?: string
+          description?: string | null
+          facility_id: string
+          id?: string
+          incurred_on?: string
+          organisation_id: string
+          payment_method?: string | null
+          payment_status?: Database["public"]["Enums"]["expense_payment_status"]
+          purchase_id?: string | null
+          receipt_reference?: string | null
+          recorded_by?: string | null
+          supplier_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount_minor_units?: number
+          approved_at?: string | null
+          approved_by?: string | null
+          category?: string
+          created_at?: string
+          currency?: string
+          description?: string | null
+          facility_id?: string
+          id?: string
+          incurred_on?: string
+          organisation_id?: string
+          payment_method?: string | null
+          payment_status?: Database["public"]["Enums"]["expense_payment_status"]
+          purchase_id?: string | null
+          receipt_reference?: string | null
+          recorded_by?: string | null
+          supplier_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expense_records_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expense_records_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expense_records_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "expense_records_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expense_records_purchase_id_fkey"
+            columns: ["purchase_id"]
+            isOneToOne: false
+            referencedRelation: "purchases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expense_records_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expense_records_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      incident_actions: {
+        Row: {
+          action: string
+          completed_at: string | null
+          created_at: string
+          created_by: string | null
+          due_on: string | null
+          id: string
+          incident_id: string
+          notes: string | null
+          organisation_id: string
+          owner_id: string | null
+          status: Database["public"]["Enums"]["incident_action_status"]
+          updated_at: string
+        }
+        Insert: {
+          action: string
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          due_on?: string | null
+          id?: string
+          incident_id: string
+          notes?: string | null
+          organisation_id: string
+          owner_id?: string | null
+          status?: Database["public"]["Enums"]["incident_action_status"]
+          updated_at?: string
+        }
+        Update: {
+          action?: string
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          due_on?: string | null
+          id?: string
+          incident_id?: string
+          notes?: string | null
+          organisation_id?: string
+          owner_id?: string | null
+          status?: Database["public"]["Enums"]["incident_action_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "incident_actions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "incident_actions_incident_id_fkey"
+            columns: ["incident_id"]
+            isOneToOne: false
+            referencedRelation: "incidents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "incident_actions_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "incident_actions_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      incidents: {
+        Row: {
+          assigned_reviewer: string | null
+          category: Database["public"]["Enums"]["incident_category"]
+          closed_at: string | null
+          closed_by: string | null
+          closure_notes: string | null
+          created_at: string
+          description: string
+          external_reference: string | null
+          facility_id: string
+          id: string
+          immediate_action: string | null
+          is_safeguarding: boolean
+          occurred_at: string
+          organisation_id: string
+          reported_by: string | null
+          resident_id: string | null
+          severity: Database["public"]["Enums"]["incident_severity"]
+          status: Database["public"]["Enums"]["incident_status"]
+          updated_at: string
+        }
+        Insert: {
+          assigned_reviewer?: string | null
+          category: Database["public"]["Enums"]["incident_category"]
+          closed_at?: string | null
+          closed_by?: string | null
+          closure_notes?: string | null
+          created_at?: string
+          description: string
+          external_reference?: string | null
+          facility_id: string
+          id?: string
+          immediate_action?: string | null
+          is_safeguarding?: boolean
+          occurred_at: string
+          organisation_id: string
+          reported_by?: string | null
+          resident_id?: string | null
+          severity?: Database["public"]["Enums"]["incident_severity"]
+          status?: Database["public"]["Enums"]["incident_status"]
+          updated_at?: string
+        }
+        Update: {
+          assigned_reviewer?: string | null
+          category?: Database["public"]["Enums"]["incident_category"]
+          closed_at?: string | null
+          closed_by?: string | null
+          closure_notes?: string | null
+          created_at?: string
+          description?: string
+          external_reference?: string | null
+          facility_id?: string
+          id?: string
+          immediate_action?: string | null
+          is_safeguarding?: boolean
+          occurred_at?: string
+          organisation_id?: string
+          reported_by?: string | null
+          resident_id?: string | null
+          severity?: Database["public"]["Enums"]["incident_severity"]
+          status?: Database["public"]["Enums"]["incident_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "incidents_assigned_reviewer_fkey"
+            columns: ["assigned_reviewer"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "incidents_closed_by_fkey"
+            columns: ["closed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "incidents_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "incidents_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "incidents_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "incidents_reported_by_fkey"
+            columns: ["reported_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "incidents_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
             referencedColumns: ["id"]
           },
         ]
@@ -1162,6 +2033,145 @@ export type Database = {
           },
         ]
       }
+      inventory_items: {
+        Row: {
+          category: string | null
+          created_at: string
+          created_by: string | null
+          facility_id: string
+          id: string
+          is_active: boolean
+          name: string
+          organisation_id: string
+          reorder_level: number
+          sku: string
+          unit: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          facility_id: string
+          id?: string
+          is_active?: boolean
+          name: string
+          organisation_id: string
+          reorder_level?: number
+          sku: string
+          unit?: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          created_by?: string | null
+          facility_id?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          organisation_id?: string
+          reorder_level?: number
+          sku?: string
+          unit?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_items_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_items_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_items_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "inventory_items_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventory_movements: {
+        Row: {
+          created_at: string
+          id: string
+          item_id: string
+          movement_type: Database["public"]["Enums"]["inventory_movement_type"]
+          organisation_id: string
+          quantity_delta: number
+          reason: string | null
+          recorded_by: string | null
+          reference: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          item_id: string
+          movement_type: Database["public"]["Enums"]["inventory_movement_type"]
+          organisation_id: string
+          quantity_delta: number
+          reason?: string | null
+          recorded_by?: string | null
+          reference?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          item_id?: string
+          movement_type?: Database["public"]["Enums"]["inventory_movement_type"]
+          organisation_id?: string
+          quantity_delta?: number
+          reason?: string | null
+          recorded_by?: string | null
+          reference?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_movements_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "care_inventory_status"
+            referencedColumns: ["item_id"]
+          },
+          {
+            foreignKeyName: "inventory_movements_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_movements_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_movements_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       job_applications: {
         Row: {
           applicant_id: string
@@ -1556,6 +2566,171 @@ export type Database = {
             columns: ["module_id"]
             isOneToOne: false
             referencedRelation: "course_modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medication_record_events: {
+        Row: {
+          actor_id: string | null
+          created_at: string
+          from_status: Database["public"]["Enums"]["medication_status"] | null
+          id: string
+          medication_record_id: string
+          organisation_id: string
+          reason: string | null
+          to_status: Database["public"]["Enums"]["medication_status"]
+        }
+        Insert: {
+          actor_id?: string | null
+          created_at?: string
+          from_status?: Database["public"]["Enums"]["medication_status"] | null
+          id?: string
+          medication_record_id: string
+          organisation_id: string
+          reason?: string | null
+          to_status: Database["public"]["Enums"]["medication_status"]
+        }
+        Update: {
+          actor_id?: string | null
+          created_at?: string
+          from_status?: Database["public"]["Enums"]["medication_status"] | null
+          id?: string
+          medication_record_id?: string
+          organisation_id?: string
+          reason?: string | null
+          to_status?: Database["public"]["Enums"]["medication_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medication_record_events_actor_id_fkey"
+            columns: ["actor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medication_record_events_medication_record_id_fkey"
+            columns: ["medication_record_id"]
+            isOneToOne: false
+            referencedRelation: "medication_records"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medication_record_events_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medication_records: {
+        Row: {
+          administered_at: string | null
+          administered_by: string | null
+          created_at: string
+          dose_text: string | null
+          facility_id: string
+          id: string
+          medication_name: string
+          notes: string | null
+          organisation_id: string
+          reason: string | null
+          recorded_by: string | null
+          resident_id: string
+          route: string | null
+          scheduled_at: string
+          status: Database["public"]["Enums"]["medication_status"]
+          updated_at: string
+          witnessed_by: string | null
+        }
+        Insert: {
+          administered_at?: string | null
+          administered_by?: string | null
+          created_at?: string
+          dose_text?: string | null
+          facility_id: string
+          id?: string
+          medication_name: string
+          notes?: string | null
+          organisation_id: string
+          reason?: string | null
+          recorded_by?: string | null
+          resident_id: string
+          route?: string | null
+          scheduled_at: string
+          status?: Database["public"]["Enums"]["medication_status"]
+          updated_at?: string
+          witnessed_by?: string | null
+        }
+        Update: {
+          administered_at?: string | null
+          administered_by?: string | null
+          created_at?: string
+          dose_text?: string | null
+          facility_id?: string
+          id?: string
+          medication_name?: string
+          notes?: string | null
+          organisation_id?: string
+          reason?: string | null
+          recorded_by?: string | null
+          resident_id?: string
+          route?: string | null
+          scheduled_at?: string
+          status?: Database["public"]["Enums"]["medication_status"]
+          updated_at?: string
+          witnessed_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medication_records_administered_by_fkey"
+            columns: ["administered_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medication_records_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medication_records_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "medication_records_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medication_records_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medication_records_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medication_records_witnessed_by_fkey"
+            columns: ["witnessed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -2309,6 +3484,308 @@ export type Database = {
           },
         ]
       }
+      purchase_items: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          inventory_item_id: string | null
+          line_total_minor_units: number | null
+          organisation_id: string
+          purchase_id: string
+          quantity: number
+          unit_cost_minor_units: number
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          inventory_item_id?: string | null
+          line_total_minor_units?: number | null
+          organisation_id: string
+          purchase_id: string
+          quantity: number
+          unit_cost_minor_units?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          inventory_item_id?: string | null
+          line_total_minor_units?: number | null
+          organisation_id?: string
+          purchase_id?: string
+          quantity?: number
+          unit_cost_minor_units?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchase_items_inventory_item_id_fkey"
+            columns: ["inventory_item_id"]
+            isOneToOne: false
+            referencedRelation: "care_inventory_status"
+            referencedColumns: ["item_id"]
+          },
+          {
+            foreignKeyName: "purchase_items_inventory_item_id_fkey"
+            columns: ["inventory_item_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_items_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_items_purchase_id_fkey"
+            columns: ["purchase_id"]
+            isOneToOne: false
+            referencedRelation: "purchases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      purchase_request_items: {
+        Row: {
+          created_at: string
+          description: string
+          estimated_unit_cost_minor_units: number
+          id: string
+          inventory_item_id: string | null
+          organisation_id: string
+          quantity: number
+          request_id: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          estimated_unit_cost_minor_units?: number
+          id?: string
+          inventory_item_id?: string | null
+          organisation_id: string
+          quantity: number
+          request_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          estimated_unit_cost_minor_units?: number
+          id?: string
+          inventory_item_id?: string | null
+          organisation_id?: string
+          quantity?: number
+          request_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchase_request_items_inventory_item_id_fkey"
+            columns: ["inventory_item_id"]
+            isOneToOne: false
+            referencedRelation: "care_inventory_status"
+            referencedColumns: ["item_id"]
+          },
+          {
+            foreignKeyName: "purchase_request_items_inventory_item_id_fkey"
+            columns: ["inventory_item_id"]
+            isOneToOne: false
+            referencedRelation: "inventory_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_request_items_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_request_items_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "purchase_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      purchase_requests: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          created_at: string
+          facility_id: string
+          id: string
+          needed_by: string | null
+          notes: string | null
+          organisation_id: string
+          rejection_reason: string | null
+          requested_by: string | null
+          status: Database["public"]["Enums"]["purchase_request_status"]
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          facility_id: string
+          id?: string
+          needed_by?: string | null
+          notes?: string | null
+          organisation_id: string
+          rejection_reason?: string | null
+          requested_by?: string | null
+          status?: Database["public"]["Enums"]["purchase_request_status"]
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          facility_id?: string
+          id?: string
+          needed_by?: string | null
+          notes?: string | null
+          organisation_id?: string
+          rejection_reason?: string | null
+          requested_by?: string | null
+          status?: Database["public"]["Enums"]["purchase_request_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchase_requests_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_requests_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_requests_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "purchase_requests_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_requests_requested_by_fkey"
+            columns: ["requested_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      purchases: {
+        Row: {
+          created_at: string
+          currency: string
+          facility_id: string
+          id: string
+          invoice_number: string | null
+          notes: string | null
+          organisation_id: string
+          purchase_request_id: string | null
+          purchased_on: string
+          recorded_by: string | null
+          status: Database["public"]["Enums"]["purchase_status"]
+          supplier_id: string | null
+          total_minor_units: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          currency?: string
+          facility_id: string
+          id?: string
+          invoice_number?: string | null
+          notes?: string | null
+          organisation_id: string
+          purchase_request_id?: string | null
+          purchased_on?: string
+          recorded_by?: string | null
+          status?: Database["public"]["Enums"]["purchase_status"]
+          supplier_id?: string | null
+          total_minor_units?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          currency?: string
+          facility_id?: string
+          id?: string
+          invoice_number?: string | null
+          notes?: string | null
+          organisation_id?: string
+          purchase_request_id?: string | null
+          purchased_on?: string
+          recorded_by?: string | null
+          status?: Database["public"]["Enums"]["purchase_status"]
+          supplier_id?: string | null
+          total_minor_units?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchases_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchases_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "purchases_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchases_purchase_request_id_fkey"
+            columns: ["purchase_request_id"]
+            isOneToOne: false
+            referencedRelation: "purchase_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchases_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchases_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       referral_attributions: {
         Row: {
           attributed_at: string
@@ -2865,6 +4342,373 @@ export type Database = {
           },
         ]
       }
+      resident_access_events: {
+        Row: {
+          action: string
+          created_at: string
+          id: string
+          metadata: Json
+          organisation_id: string
+          resident_id: string
+          user_id: string | null
+        }
+        Insert: {
+          action?: string
+          created_at?: string
+          id?: string
+          metadata?: Json
+          organisation_id: string
+          resident_id: string
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          id?: string
+          metadata?: Json
+          organisation_id?: string
+          resident_id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resident_access_events_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resident_access_events_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resident_access_events_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resident_consents: {
+        Row: {
+          consent_type: Database["public"]["Enums"]["resident_consent_type"]
+          created_at: string
+          effective_from: string
+          evidence_reference: string | null
+          expires_on: string | null
+          granted: boolean
+          granted_by_name: string | null
+          id: string
+          notes: string | null
+          organisation_id: string
+          recorded_by: string | null
+          resident_id: string
+          withdrawn_at: string | null
+        }
+        Insert: {
+          consent_type: Database["public"]["Enums"]["resident_consent_type"]
+          created_at?: string
+          effective_from?: string
+          evidence_reference?: string | null
+          expires_on?: string | null
+          granted: boolean
+          granted_by_name?: string | null
+          id?: string
+          notes?: string | null
+          organisation_id: string
+          recorded_by?: string | null
+          resident_id: string
+          withdrawn_at?: string | null
+        }
+        Update: {
+          consent_type?: Database["public"]["Enums"]["resident_consent_type"]
+          created_at?: string
+          effective_from?: string
+          evidence_reference?: string | null
+          expires_on?: string | null
+          granted?: boolean
+          granted_by_name?: string | null
+          id?: string
+          notes?: string | null
+          organisation_id?: string
+          recorded_by?: string | null
+          resident_id?: string
+          withdrawn_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resident_consents_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resident_consents_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resident_consents_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resident_contacts: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          email: string | null
+          id: string
+          is_authorised_representative: boolean
+          is_emergency: boolean
+          name: string
+          notes: string | null
+          organisation_id: string
+          phone: string | null
+          priority: number
+          relationship: string | null
+          resident_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          is_authorised_representative?: boolean
+          is_emergency?: boolean
+          name: string
+          notes?: string | null
+          organisation_id: string
+          phone?: string | null
+          priority?: number
+          relationship?: string | null
+          resident_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          is_authorised_representative?: boolean
+          is_emergency?: boolean
+          name?: string
+          notes?: string | null
+          organisation_id?: string
+          phone?: string | null
+          priority?: number
+          relationship?: string | null
+          resident_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resident_contacts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resident_contacts_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resident_contacts_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resident_relationships: {
+        Row: {
+          access_level: Database["public"]["Enums"]["resident_access_level"]
+          created_at: string
+          id: string
+          invited_by: string | null
+          organisation_id: string
+          relationship: string | null
+          resident_id: string
+          revoked_at: string | null
+          user_id: string
+        }
+        Insert: {
+          access_level?: Database["public"]["Enums"]["resident_access_level"]
+          created_at?: string
+          id?: string
+          invited_by?: string | null
+          organisation_id: string
+          relationship?: string | null
+          resident_id: string
+          revoked_at?: string | null
+          user_id: string
+        }
+        Update: {
+          access_level?: Database["public"]["Enums"]["resident_access_level"]
+          created_at?: string
+          id?: string
+          invited_by?: string | null
+          organisation_id?: string
+          relationship?: string | null
+          resident_id?: string
+          revoked_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resident_relationships_invited_by_fkey"
+            columns: ["invited_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resident_relationships_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resident_relationships_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resident_relationships_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      residents: {
+        Row: {
+          accessibility_needs: string | null
+          admission_date: string
+          care_level: string | null
+          care_requirements: string | null
+          communication_notes: string | null
+          created_at: string
+          created_by: string | null
+          date_of_birth: string | null
+          dietary_notes: string | null
+          discharge_date: string | null
+          facility_id: string
+          first_name: string
+          gender: string | null
+          id: string
+          last_name: string
+          medical_notes: string | null
+          mobility_notes: string | null
+          organisation_id: string
+          preferred_name: string | null
+          reference: string
+          room_number: string | null
+          status: Database["public"]["Enums"]["resident_status"]
+          updated_at: string
+        }
+        Insert: {
+          accessibility_needs?: string | null
+          admission_date?: string
+          care_level?: string | null
+          care_requirements?: string | null
+          communication_notes?: string | null
+          created_at?: string
+          created_by?: string | null
+          date_of_birth?: string | null
+          dietary_notes?: string | null
+          discharge_date?: string | null
+          facility_id: string
+          first_name: string
+          gender?: string | null
+          id?: string
+          last_name: string
+          medical_notes?: string | null
+          mobility_notes?: string | null
+          organisation_id: string
+          preferred_name?: string | null
+          reference: string
+          room_number?: string | null
+          status?: Database["public"]["Enums"]["resident_status"]
+          updated_at?: string
+        }
+        Update: {
+          accessibility_needs?: string | null
+          admission_date?: string
+          care_level?: string | null
+          care_requirements?: string | null
+          communication_notes?: string | null
+          created_at?: string
+          created_by?: string | null
+          date_of_birth?: string | null
+          dietary_notes?: string | null
+          discharge_date?: string | null
+          facility_id?: string
+          first_name?: string
+          gender?: string | null
+          id?: string
+          last_name?: string
+          medical_notes?: string | null
+          mobility_notes?: string | null
+          organisation_id?: string
+          preferred_name?: string | null
+          reference?: string
+          room_number?: string | null
+          status?: Database["public"]["Enums"]["resident_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "residents_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "residents_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "residents_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "residents_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       role_permissions: {
         Row: {
           permission_key: string
@@ -2918,6 +4762,901 @@ export type Database = {
           name?: string
         }
         Relationships: []
+      }
+      service_invoice_counters: {
+        Row: {
+          last_value: number
+          organisation_id: string
+          period: string
+        }
+        Insert: {
+          last_value?: number
+          organisation_id: string
+          period: string
+        }
+        Update: {
+          last_value?: number
+          organisation_id?: string
+          period?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_invoice_counters_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      service_invoice_items: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          invoice_id: string
+          line_total_minor_units: number | null
+          organisation_id: string
+          quantity: number
+          unit_price_minor_units: number
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          invoice_id: string
+          line_total_minor_units?: number | null
+          organisation_id: string
+          quantity: number
+          unit_price_minor_units?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          invoice_id?: string
+          line_total_minor_units?: number | null
+          organisation_id?: string
+          quantity?: number
+          unit_price_minor_units?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_invoice_items_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "care_invoice_ageing"
+            referencedColumns: ["invoice_id"]
+          },
+          {
+            foreignKeyName: "service_invoice_items_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "service_invoices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "service_invoice_items_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      service_invoices: {
+        Row: {
+          amount_paid_minor_units: number
+          created_at: string
+          created_by: string | null
+          currency: string
+          due_date: string
+          facility_id: string
+          id: string
+          invoice_number: string
+          issue_date: string
+          notes: string | null
+          organisation_id: string
+          payer_contact: string | null
+          payer_name: string
+          resident_id: string | null
+          status: Database["public"]["Enums"]["service_invoice_status"]
+          subtotal_minor_units: number
+          total_minor_units: number
+          updated_at: string
+        }
+        Insert: {
+          amount_paid_minor_units?: number
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          due_date: string
+          facility_id: string
+          id?: string
+          invoice_number: string
+          issue_date?: string
+          notes?: string | null
+          organisation_id: string
+          payer_contact?: string | null
+          payer_name: string
+          resident_id?: string | null
+          status?: Database["public"]["Enums"]["service_invoice_status"]
+          subtotal_minor_units?: number
+          total_minor_units?: number
+          updated_at?: string
+        }
+        Update: {
+          amount_paid_minor_units?: number
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          due_date?: string
+          facility_id?: string
+          id?: string
+          invoice_number?: string
+          issue_date?: string
+          notes?: string | null
+          organisation_id?: string
+          payer_contact?: string | null
+          payer_name?: string
+          resident_id?: string | null
+          status?: Database["public"]["Enums"]["service_invoice_status"]
+          subtotal_minor_units?: number
+          total_minor_units?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_invoices_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "service_invoices_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "service_invoices_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "service_invoices_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "service_invoices_resident_id_fkey"
+            columns: ["resident_id"]
+            isOneToOne: false
+            referencedRelation: "residents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      service_payments: {
+        Row: {
+          amount_minor_units: number
+          created_at: string
+          id: string
+          invoice_id: string
+          method: Database["public"]["Enums"]["service_payment_method"]
+          notes: string | null
+          organisation_id: string
+          paid_at: string
+          receipt_reference: string | null
+          recorded_by: string | null
+          reference: string | null
+        }
+        Insert: {
+          amount_minor_units: number
+          created_at?: string
+          id?: string
+          invoice_id: string
+          method?: Database["public"]["Enums"]["service_payment_method"]
+          notes?: string | null
+          organisation_id: string
+          paid_at?: string
+          receipt_reference?: string | null
+          recorded_by?: string | null
+          reference?: string | null
+        }
+        Update: {
+          amount_minor_units?: number
+          created_at?: string
+          id?: string
+          invoice_id?: string
+          method?: Database["public"]["Enums"]["service_payment_method"]
+          notes?: string | null
+          organisation_id?: string
+          paid_at?: string
+          receipt_reference?: string | null
+          recorded_by?: string | null
+          reference?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_payments_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "care_invoice_ageing"
+            referencedColumns: ["invoice_id"]
+          },
+          {
+            foreignKeyName: "service_payments_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "service_invoices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "service_payments_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "service_payments_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      service_refunds: {
+        Row: {
+          amount_minor_units: number
+          created_at: string
+          id: string
+          invoice_id: string
+          organisation_id: string
+          payment_id: string
+          reason: string
+          recorded_by: string | null
+          refunded_at: string
+        }
+        Insert: {
+          amount_minor_units: number
+          created_at?: string
+          id?: string
+          invoice_id: string
+          organisation_id: string
+          payment_id: string
+          reason: string
+          recorded_by?: string | null
+          refunded_at?: string
+        }
+        Update: {
+          amount_minor_units?: number
+          created_at?: string
+          id?: string
+          invoice_id?: string
+          organisation_id?: string
+          payment_id?: string
+          reason?: string
+          recorded_by?: string | null
+          refunded_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_refunds_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "care_invoice_ageing"
+            referencedColumns: ["invoice_id"]
+          },
+          {
+            foreignKeyName: "service_refunds_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "service_invoices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "service_refunds_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "service_refunds_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "service_payments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "service_refunds_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shift_assignments: {
+        Row: {
+          assigned_by: string | null
+          created_at: string
+          id: string
+          organisation_id: string
+          shift_id: string
+          staff_user_id: string
+          status: Database["public"]["Enums"]["shift_assignment_status"]
+          updated_at: string
+        }
+        Insert: {
+          assigned_by?: string | null
+          created_at?: string
+          id?: string
+          organisation_id: string
+          shift_id: string
+          staff_user_id: string
+          status?: Database["public"]["Enums"]["shift_assignment_status"]
+          updated_at?: string
+        }
+        Update: {
+          assigned_by?: string | null
+          created_at?: string
+          id?: string
+          organisation_id?: string
+          shift_id?: string
+          staff_user_id?: string
+          status?: Database["public"]["Enums"]["shift_assignment_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shift_assignments_assigned_by_fkey"
+            columns: ["assigned_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_assignments_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_assignments_shift_id_fkey"
+            columns: ["shift_id"]
+            isOneToOne: false
+            referencedRelation: "care_staffing_coverage"
+            referencedColumns: ["shift_id"]
+          },
+          {
+            foreignKeyName: "shift_assignments_shift_id_fkey"
+            columns: ["shift_id"]
+            isOneToOne: false
+            referencedRelation: "shift_schedules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_assignments_staff_user_id_fkey"
+            columns: ["staff_user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shift_attendance: {
+        Row: {
+          assignment_id: string
+          break_minutes: number
+          clock_in_at: string | null
+          clock_out_at: string | null
+          created_at: string
+          id: string
+          notes: string | null
+          organisation_id: string
+          recorded_by: string | null
+          source: string | null
+          updated_at: string
+        }
+        Insert: {
+          assignment_id: string
+          break_minutes?: number
+          clock_in_at?: string | null
+          clock_out_at?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          organisation_id: string
+          recorded_by?: string | null
+          source?: string | null
+          updated_at?: string
+        }
+        Update: {
+          assignment_id?: string
+          break_minutes?: number
+          clock_in_at?: string | null
+          clock_out_at?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          organisation_id?: string
+          recorded_by?: string | null
+          source?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shift_attendance_assignment_id_fkey"
+            columns: ["assignment_id"]
+            isOneToOne: true
+            referencedRelation: "shift_assignments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_attendance_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_attendance_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shift_handovers: {
+        Row: {
+          accepted_at: string | null
+          accepted_by: string | null
+          created_at: string
+          facility_id: string
+          id: string
+          organisation_id: string
+          outstanding_tasks: string | null
+          shift_id: string
+          submitted_at: string
+          submitted_by: string | null
+          summary: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          accepted_by?: string | null
+          created_at?: string
+          facility_id: string
+          id?: string
+          organisation_id: string
+          outstanding_tasks?: string | null
+          shift_id: string
+          submitted_at?: string
+          submitted_by?: string | null
+          summary: string
+        }
+        Update: {
+          accepted_at?: string | null
+          accepted_by?: string | null
+          created_at?: string
+          facility_id?: string
+          id?: string
+          organisation_id?: string
+          outstanding_tasks?: string | null
+          shift_id?: string
+          submitted_at?: string
+          submitted_by?: string | null
+          summary?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shift_handovers_accepted_by_fkey"
+            columns: ["accepted_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_handovers_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_handovers_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "shift_handovers_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_handovers_shift_id_fkey"
+            columns: ["shift_id"]
+            isOneToOne: false
+            referencedRelation: "care_staffing_coverage"
+            referencedColumns: ["shift_id"]
+          },
+          {
+            foreignKeyName: "shift_handovers_shift_id_fkey"
+            columns: ["shift_id"]
+            isOneToOne: false
+            referencedRelation: "shift_schedules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_handovers_submitted_by_fkey"
+            columns: ["submitted_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      shift_schedules: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          ends_at: string
+          facility_id: string
+          id: string
+          notes: string | null
+          organisation_id: string
+          required_qualification: string | null
+          required_staff: number
+          starts_at: string
+          status: Database["public"]["Enums"]["shift_status"]
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          ends_at: string
+          facility_id: string
+          id?: string
+          notes?: string | null
+          organisation_id: string
+          required_qualification?: string | null
+          required_staff?: number
+          starts_at: string
+          status?: Database["public"]["Enums"]["shift_status"]
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          ends_at?: string
+          facility_id?: string
+          id?: string
+          notes?: string | null
+          organisation_id?: string
+          required_qualification?: string | null
+          required_staff?: number
+          starts_at?: string
+          status?: Database["public"]["Enums"]["shift_status"]
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shift_schedules_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_schedules_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_schedules_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "shift_schedules_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      staff_documents: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          document_type: string
+          expires_on: string | null
+          file_reference: string | null
+          id: string
+          notes: string | null
+          organisation_id: string
+          staff_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          document_type: string
+          expires_on?: string | null
+          file_reference?: string | null
+          id?: string
+          notes?: string | null
+          organisation_id: string
+          staff_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          document_type?: string
+          expires_on?: string | null
+          file_reference?: string | null
+          id?: string
+          notes?: string | null
+          organisation_id?: string
+          staff_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "staff_documents_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "staff_documents_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "staff_documents_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "care_staff_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "staff_documents_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "care_training_compliance"
+            referencedColumns: ["staff_id"]
+          },
+        ]
+      }
+      staff_qualifications: {
+        Row: {
+          awarded_on: string | null
+          code: string
+          created_at: string
+          created_by: string | null
+          evidence_reference: string | null
+          expires_on: string | null
+          id: string
+          name: string
+          organisation_id: string
+          staff_id: string
+          updated_at: string
+          verification_status: Database["public"]["Enums"]["verification_status"]
+        }
+        Insert: {
+          awarded_on?: string | null
+          code: string
+          created_at?: string
+          created_by?: string | null
+          evidence_reference?: string | null
+          expires_on?: string | null
+          id?: string
+          name: string
+          organisation_id: string
+          staff_id: string
+          updated_at?: string
+          verification_status?: Database["public"]["Enums"]["verification_status"]
+        }
+        Update: {
+          awarded_on?: string | null
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          evidence_reference?: string | null
+          expires_on?: string | null
+          id?: string
+          name?: string
+          organisation_id?: string
+          staff_id?: string
+          updated_at?: string
+          verification_status?: Database["public"]["Enums"]["verification_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "staff_qualifications_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "staff_qualifications_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "staff_qualifications_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "care_staff_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "staff_qualifications_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "care_training_compliance"
+            referencedColumns: ["staff_id"]
+          },
+        ]
+      }
+      staff_training_records: {
+        Row: {
+          completed_on: string
+          created_at: string
+          created_by: string | null
+          evidence_reference: string | null
+          expires_on: string | null
+          id: string
+          organisation_id: string
+          staff_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          completed_on?: string
+          created_at?: string
+          created_by?: string | null
+          evidence_reference?: string | null
+          expires_on?: string | null
+          id?: string
+          organisation_id: string
+          staff_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          completed_on?: string
+          created_at?: string
+          created_by?: string | null
+          evidence_reference?: string | null
+          expires_on?: string | null
+          id?: string
+          organisation_id?: string
+          staff_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "staff_training_records_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "staff_training_records_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "staff_training_records_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "care_staff_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "staff_training_records_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "care_training_compliance"
+            referencedColumns: ["staff_id"]
+          },
+        ]
+      }
+      suppliers: {
+        Row: {
+          address: string | null
+          contact_name: string | null
+          created_at: string
+          created_by: string | null
+          email: string | null
+          id: string
+          name: string
+          notes: string | null
+          organisation_id: string
+          phone: string | null
+          status: Database["public"]["Enums"]["supplier_status"]
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          contact_name?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          organisation_id: string
+          phone?: string | null
+          status?: Database["public"]["Enums"]["supplier_status"]
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          contact_name?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          organisation_id?: string
+          phone?: string | null
+          status?: Database["public"]["Enums"]["supplier_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "suppliers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "suppliers_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_consents: {
         Row: {
@@ -3047,6 +5786,262 @@ export type Database = {
       }
     }
     Views: {
+      care_expense_summary: {
+        Row: {
+          category: string | null
+          expense_count: number | null
+          facility_id: string | null
+          month: string | null
+          organisation_id: string | null
+          total_minor_units: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expense_records_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expense_records_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "expense_records_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      care_incident_summary: {
+        Row: {
+          category: Database["public"]["Enums"]["incident_category"] | null
+          facility_id: string | null
+          incident_count: number | null
+          organisation_id: string | null
+          safeguarding_count: number | null
+          severity: Database["public"]["Enums"]["incident_severity"] | null
+          status: Database["public"]["Enums"]["incident_status"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "incidents_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "incidents_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "incidents_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      care_inventory_status: {
+        Row: {
+          below_reorder: boolean | null
+          category: string | null
+          current_quantity: number | null
+          facility_id: string | null
+          item_id: string | null
+          name: string | null
+          organisation_id: string | null
+          reorder_level: number | null
+          sku: string | null
+          unit: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_items_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inventory_items_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "inventory_items_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      care_invoice_ageing: {
+        Row: {
+          amount_paid_minor_units: number | null
+          days_overdue: number | null
+          due_date: string | null
+          facility_id: string | null
+          invoice_id: string | null
+          invoice_number: string | null
+          issue_date: string | null
+          organisation_id: string | null
+          outstanding_minor_units: number | null
+          payer_name: string | null
+          status: Database["public"]["Enums"]["service_invoice_status"] | null
+          total_minor_units: number | null
+        }
+        Insert: {
+          amount_paid_minor_units?: number | null
+          days_overdue?: never
+          due_date?: string | null
+          facility_id?: string | null
+          invoice_id?: string | null
+          invoice_number?: string | null
+          issue_date?: string | null
+          organisation_id?: string | null
+          outstanding_minor_units?: never
+          payer_name?: string | null
+          status?: Database["public"]["Enums"]["service_invoice_status"] | null
+          total_minor_units?: number | null
+        }
+        Update: {
+          amount_paid_minor_units?: number | null
+          days_overdue?: never
+          due_date?: string | null
+          facility_id?: string | null
+          invoice_id?: string | null
+          invoice_number?: string | null
+          issue_date?: string | null
+          organisation_id?: string | null
+          outstanding_minor_units?: never
+          payer_name?: string | null
+          status?: Database["public"]["Enums"]["service_invoice_status"] | null
+          total_minor_units?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_invoices_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "service_invoices_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "service_invoices_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      care_occupancy: {
+        Row: {
+          active_residents: number | null
+          capacity: number | null
+          facility_id: string | null
+          facility_name: string | null
+          occupancy_percent: number | null
+          organisation_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "care_facilities_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      care_staffing_coverage: {
+        Row: {
+          assigned_staff: number | null
+          coverage_gap: number | null
+          ends_at: string | null
+          facility_id: string | null
+          organisation_id: string | null
+          required_staff: number | null
+          shift_id: string | null
+          starts_at: string | null
+          status: Database["public"]["Enums"]["shift_status"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shift_schedules_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_facilities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "shift_schedules_facility_id_fkey"
+            columns: ["facility_id"]
+            isOneToOne: false
+            referencedRelation: "care_occupancy"
+            referencedColumns: ["facility_id"]
+          },
+          {
+            foreignKeyName: "shift_schedules_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      care_training_compliance: {
+        Row: {
+          employment_status:
+            | Database["public"]["Enums"]["care_employment_status"]
+            | null
+          expired_documents: number | null
+          expired_qualifications: number | null
+          expired_training: number | null
+          organisation_id: string | null
+          staff_id: string | null
+          unverified_qualifications: number | null
+          user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "care_staff_profiles_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "care_staff_profiles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       referral_partner_balances: {
         Row: {
           approved_minor_units: number | null
@@ -3096,6 +6091,10 @@ export type Database = {
         Returns: string
       }
       attribute_referral: { Args: { p_code: string }; Returns: string }
+      can_access_resident: {
+        Args: { p_permission?: string; p_resident: string }
+        Returns: boolean
+      }
       can_manage_course: { Args: { p_course: string }; Returns: boolean }
       can_manage_internships: {
         Args: { p_organisation: string }
@@ -3157,6 +6156,10 @@ export type Database = {
         }
         Returns: undefined
       }
+      record_resident_access: {
+        Args: { p_action?: string; p_metadata?: Json; p_resident: string }
+        Returns: undefined
+      }
       release_due_commissions: { Args: never; Returns: number }
       request_referral_payout: { Args: never; Returns: string }
       review_referral_commission: {
@@ -3200,6 +6203,25 @@ export type Database = {
         | "rejected"
         | "withdrawn"
       attendance_status: "present" | "absent" | "late" | "excused"
+      care_employment_status: "active" | "on_leave" | "suspended" | "ended"
+      care_facility_status: "active" | "inactive"
+      care_plan_access: "standard" | "restricted"
+      care_plan_status:
+        | "draft"
+        | "pending_approval"
+        | "active"
+        | "rejected"
+        | "archived"
+      care_review_outcome: "accepted" | "follow_up_required" | "escalated"
+      care_task_category:
+        | "personal_care"
+        | "meals_hydration"
+        | "mobility"
+        | "activities"
+        | "observation"
+        | "clinical"
+        | "other"
+      care_task_record_status: "completed" | "refused" | "not_done" | "deferred"
       course_difficulty: "foundation" | "intermediate" | "advanced"
       course_status: "draft" | "in_review" | "published" | "archived"
       employment_type:
@@ -3211,6 +6233,16 @@ export type Database = {
       enrolment_status: "active" | "completed" | "withdrawn"
       evaluation_recommendation: "pass" | "needs_improvement" | "fail"
       evaluation_status: "draft" | "submitted"
+      expense_payment_status: "unpaid" | "paid" | "reimbursed" | "void"
+      incident_action_status: "open" | "in_progress" | "completed" | "cancelled"
+      incident_category:
+        | "fall"
+        | "injury"
+        | "safeguarding"
+        | "medication"
+        | "missing_person"
+        | "property"
+        | "other"
       incident_severity: "low" | "medium" | "high" | "critical"
       incident_status: "open" | "investigating" | "resolved" | "closed"
       internship_application_status:
@@ -3225,6 +6257,13 @@ export type Database = {
       internship_log_status: "submitted" | "approved" | "changes_requested"
       interview_mode: "in_person" | "video" | "phone"
       interview_status: "scheduled" | "completed" | "cancelled" | "no_show"
+      inventory_movement_type:
+        | "opening"
+        | "purchase"
+        | "issue"
+        | "adjustment"
+        | "wastage"
+        | "return"
       job_status:
         | "draft"
         | "pending_approval"
@@ -3240,6 +6279,12 @@ export type Database = {
         | "image"
         | "link"
         | "other"
+      medication_status:
+        | "scheduled"
+        | "administered"
+        | "refused"
+        | "held"
+        | "omitted"
       membership_status: "invited" | "active" | "suspended" | "removed"
       notification_category:
         | "account"
@@ -3292,6 +6337,15 @@ export type Database = {
         | "completed"
         | "terminated"
       programme_status: "active" | "archived"
+      purchase_request_status:
+        | "draft"
+        | "submitted"
+        | "approved"
+        | "rejected"
+        | "ordered"
+        | "received"
+        | "cancelled"
+      purchase_status: "pending" | "paid" | "partially_paid" | "void"
       referral_commission_entry: "commission" | "reversal" | "adjustment"
       referral_commission_status:
         | "pending"
@@ -3313,6 +6367,37 @@ export type Database = {
         | "rejected"
         | "failed"
         | "cancelled"
+      resident_access_level: "summary" | "full"
+      resident_consent_type:
+        | "care"
+        | "medical"
+        | "data_sharing"
+        | "photography"
+        | "research"
+        | "other"
+      resident_status: "active" | "on_leave" | "discharged" | "deceased"
+      service_invoice_status:
+        | "draft"
+        | "issued"
+        | "partially_paid"
+        | "paid"
+        | "overdue"
+        | "void"
+      service_payment_method:
+        | "cash"
+        | "bank_transfer"
+        | "card"
+        | "cheque"
+        | "other"
+      shift_assignment_status:
+        | "assigned"
+        | "confirmed"
+        | "declined"
+        | "absent"
+        | "completed"
+        | "cancelled"
+      shift_status: "draft" | "published" | "completed" | "cancelled"
+      supplier_status: "active" | "inactive"
       verification_status: "unverified" | "pending" | "verified" | "rejected"
     }
     CompositeTypes: {
@@ -3461,6 +6546,27 @@ export const Constants = {
         "withdrawn",
       ],
       attendance_status: ["present", "absent", "late", "excused"],
+      care_employment_status: ["active", "on_leave", "suspended", "ended"],
+      care_facility_status: ["active", "inactive"],
+      care_plan_access: ["standard", "restricted"],
+      care_plan_status: [
+        "draft",
+        "pending_approval",
+        "active",
+        "rejected",
+        "archived",
+      ],
+      care_review_outcome: ["accepted", "follow_up_required", "escalated"],
+      care_task_category: [
+        "personal_care",
+        "meals_hydration",
+        "mobility",
+        "activities",
+        "observation",
+        "clinical",
+        "other",
+      ],
+      care_task_record_status: ["completed", "refused", "not_done", "deferred"],
       course_difficulty: ["foundation", "intermediate", "advanced"],
       course_status: ["draft", "in_review", "published", "archived"],
       employment_type: [
@@ -3473,6 +6579,17 @@ export const Constants = {
       enrolment_status: ["active", "completed", "withdrawn"],
       evaluation_recommendation: ["pass", "needs_improvement", "fail"],
       evaluation_status: ["draft", "submitted"],
+      expense_payment_status: ["unpaid", "paid", "reimbursed", "void"],
+      incident_action_status: ["open", "in_progress", "completed", "cancelled"],
+      incident_category: [
+        "fall",
+        "injury",
+        "safeguarding",
+        "medication",
+        "missing_person",
+        "property",
+        "other",
+      ],
       incident_severity: ["low", "medium", "high", "critical"],
       incident_status: ["open", "investigating", "resolved", "closed"],
       internship_application_status: [
@@ -3488,6 +6605,14 @@ export const Constants = {
       internship_log_status: ["submitted", "approved", "changes_requested"],
       interview_mode: ["in_person", "video", "phone"],
       interview_status: ["scheduled", "completed", "cancelled", "no_show"],
+      inventory_movement_type: [
+        "opening",
+        "purchase",
+        "issue",
+        "adjustment",
+        "wastage",
+        "return",
+      ],
       job_status: [
         "draft",
         "pending_approval",
@@ -3504,6 +6629,13 @@ export const Constants = {
         "image",
         "link",
         "other",
+      ],
+      medication_status: [
+        "scheduled",
+        "administered",
+        "refused",
+        "held",
+        "omitted",
       ],
       membership_status: ["invited", "active", "suspended", "removed"],
       notification_category: [
@@ -3563,6 +6695,16 @@ export const Constants = {
         "terminated",
       ],
       programme_status: ["active", "archived"],
+      purchase_request_status: [
+        "draft",
+        "submitted",
+        "approved",
+        "rejected",
+        "ordered",
+        "received",
+        "cancelled",
+      ],
+      purchase_status: ["pending", "paid", "partially_paid", "void"],
       referral_commission_entry: ["commission", "reversal", "adjustment"],
       referral_commission_status: [
         "pending",
@@ -3586,16 +6728,45 @@ export const Constants = {
         "failed",
         "cancelled",
       ],
+      resident_access_level: ["summary", "full"],
+      resident_consent_type: [
+        "care",
+        "medical",
+        "data_sharing",
+        "photography",
+        "research",
+        "other",
+      ],
+      resident_status: ["active", "on_leave", "discharged", "deceased"],
+      service_invoice_status: [
+        "draft",
+        "issued",
+        "partially_paid",
+        "paid",
+        "overdue",
+        "void",
+      ],
+      service_payment_method: [
+        "cash",
+        "bank_transfer",
+        "card",
+        "cheque",
+        "other",
+      ],
+      shift_assignment_status: [
+        "assigned",
+        "confirmed",
+        "declined",
+        "absent",
+        "completed",
+        "cancelled",
+      ],
+      shift_status: ["draft", "published", "completed", "cancelled"],
+      supplier_status: ["active", "inactive"],
       verification_status: ["unverified", "pending", "verified", "rejected"],
     },
   },
 } as const
-
-// -----------------------------------------------------------------------------
-// Application-level aliases for database enums.
-// `supabase gen types` only emits the raw Database shape; these aliases keep the
-// rest of the codebase readable and are preserved across regenerations.
-// -----------------------------------------------------------------------------
 
 export type AccountType = Database["public"]["Enums"]["account_type"];
 export type AccountStatus = Database["public"]["Enums"]["account_status"];
@@ -3614,6 +6785,7 @@ export type RoleKey =
   | "care_home_owner"
   | "care_home_manager"
   | "care_staff"
+  | "care_medication_staff"
   | "care_medication_staff"
   | "referral_partner"
   | "charity_admin"
@@ -3671,3 +6843,27 @@ export type ReferralCommissionEntry =
   Database["public"]["Enums"]["referral_commission_entry"];
 export type ReferralPayoutStatus =
   Database["public"]["Enums"]["referral_payout_status"];
+
+// Phase 7 care operations ------------------------------------------------------
+
+export type CareFacilityStatus = Database["public"]["Enums"]["care_facility_status"];
+export type ResidentStatus = Database["public"]["Enums"]["resident_status"];
+export type ResidentAccessLevel = Database["public"]["Enums"]["resident_access_level"];
+export type ResidentConsentType = Database["public"]["Enums"]["resident_consent_type"];
+export type CareEmploymentStatus = Database["public"]["Enums"]["care_employment_status"];
+export type ShiftStatus = Database["public"]["Enums"]["shift_status"];
+export type ShiftAssignmentStatus = Database["public"]["Enums"]["shift_assignment_status"];
+export type CareTaskCategory = Database["public"]["Enums"]["care_task_category"];
+export type CareTaskRecordStatus = Database["public"]["Enums"]["care_task_record_status"];
+export type CareReviewOutcome = Database["public"]["Enums"]["care_review_outcome"];
+export type CarePlanStatus = Database["public"]["Enums"]["care_plan_status"];
+export type CarePlanAccess = Database["public"]["Enums"]["care_plan_access"];
+export type MedicationStatus = Database["public"]["Enums"]["medication_status"];
+export type IncidentCategory = Database["public"]["Enums"]["incident_category"];
+export type SupplierStatus = Database["public"]["Enums"]["supplier_status"];
+export type InventoryMovementType = Database["public"]["Enums"]["inventory_movement_type"];
+export type PurchaseRequestStatus = Database["public"]["Enums"]["purchase_request_status"];
+export type PurchaseStatus = Database["public"]["Enums"]["purchase_status"];
+export type ExpensePaymentStatus = Database["public"]["Enums"]["expense_payment_status"];
+export type ServiceInvoiceStatus = Database["public"]["Enums"]["service_invoice_status"];
+export type ServicePaymentMethod = Database["public"]["Enums"]["service_payment_method"];
