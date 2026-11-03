@@ -22,7 +22,7 @@ mobile-first).
 | 5 | Internships & employment | Complete |
 | 6 | Payments & referral management | Complete |
 | 7 | Care-home operations | Complete (core modules) |
-| 8 | Charity & scholarships | Not started |
+| 8 | Charity & scholarships | Complete (core modules) |
 | 9 | Analytics & subscriptions | Not started |
 | 10 | QA & production readiness | Not started |
 
@@ -125,6 +125,13 @@ non-super-admins from escalating themselves.
   append-only movements, expenses, invoices/payments/refunds and operational
   reports. Family accounts are linked per resident; the dedicated family portal is
   still pending.
+- **Charity and scholarships (Phase 8, core modules complete)** - reviewed
+  campaigns with funding targets, verified donations through the payment
+  abstraction, donor receipts and privacy preferences, append-only fund
+  allocations and campaign expenses, scholarship programmes, applications,
+  reviewer decisions, full/partial awards with course allocation, outcome
+  tracking and published impact reports. Donations are reported separately from
+  commercial revenue.
 - **Theme & responsiveness** - light/dark theme toggle, mobile navigation and
   responsive dashboard layouts.
 
@@ -143,6 +150,8 @@ non-super-admins from escalating themselves.
 | `/dashboard/jobs/*` | Job browse, apply, applications and employer management |
 | `/dashboard/referrals` | Referral partner dashboard and payouts |
 | `/dashboard/care-homes/*` | Residents, staff, roster, daily care, plans, medication, incidents, inventory, expenses, invoices and reports |
+| `/charity`, `/charity/[slug]` | Public charity campaigns and donation pages |
+| `/dashboard/charity/*` | Campaigns, donations, scholarships, impact reports and charity reporting |
 | `/dashboard/admin/payments/*` | Finance payment review and refunds |
 | `/dashboard/admin/reconciliation` | Provider reconciliation |
 | `/dashboard/admin/referrals` | Partner, commission and payout administration |

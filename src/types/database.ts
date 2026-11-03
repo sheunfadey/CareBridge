@@ -62,6 +62,244 @@ export type Database = {
           },
         ]
       }
+      campaign_allocations: {
+        Row: {
+          allocated_by: string | null
+          allocation_type: Database["public"]["Enums"]["campaign_allocation_type"]
+          amount_minor_units: number
+          campaign_id: string
+          category: string
+          created_at: string
+          currency: string
+          id: string
+          notes: string | null
+          organisation_id: string
+        }
+        Insert: {
+          allocated_by?: string | null
+          allocation_type?: Database["public"]["Enums"]["campaign_allocation_type"]
+          amount_minor_units: number
+          campaign_id: string
+          category: string
+          created_at?: string
+          currency?: string
+          id?: string
+          notes?: string | null
+          organisation_id: string
+        }
+        Update: {
+          allocated_by?: string | null
+          allocation_type?: Database["public"]["Enums"]["campaign_allocation_type"]
+          amount_minor_units?: number
+          campaign_id?: string
+          category?: string
+          created_at?: string
+          currency?: string
+          id?: string
+          notes?: string | null
+          organisation_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_allocations_allocated_by_fkey"
+            columns: ["allocated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_allocations_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_campaign_finance"
+            referencedColumns: ["campaign_id"]
+          },
+          {
+            foreignKeyName: "campaign_allocations_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_allocations_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_public_campaign_progress"
+            referencedColumns: ["campaign_id"]
+          },
+          {
+            foreignKeyName: "campaign_allocations_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_expenses: {
+        Row: {
+          amount_minor_units: number
+          approved_at: string | null
+          approved_by: string | null
+          campaign_id: string
+          category: string
+          created_at: string
+          currency: string
+          description: string | null
+          id: string
+          incurred_on: string
+          organisation_id: string
+          payee: string | null
+          receipt_reference: string | null
+          recorded_by: string | null
+          status: Database["public"]["Enums"]["campaign_expense_status"]
+        }
+        Insert: {
+          amount_minor_units: number
+          approved_at?: string | null
+          approved_by?: string | null
+          campaign_id: string
+          category: string
+          created_at?: string
+          currency?: string
+          description?: string | null
+          id?: string
+          incurred_on?: string
+          organisation_id: string
+          payee?: string | null
+          receipt_reference?: string | null
+          recorded_by?: string | null
+          status?: Database["public"]["Enums"]["campaign_expense_status"]
+        }
+        Update: {
+          amount_minor_units?: number
+          approved_at?: string | null
+          approved_by?: string | null
+          campaign_id?: string
+          category?: string
+          created_at?: string
+          currency?: string
+          description?: string | null
+          id?: string
+          incurred_on?: string
+          organisation_id?: string
+          payee?: string | null
+          receipt_reference?: string | null
+          recorded_by?: string | null
+          status?: Database["public"]["Enums"]["campaign_expense_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_expenses_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_expenses_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_campaign_finance"
+            referencedColumns: ["campaign_id"]
+          },
+          {
+            foreignKeyName: "campaign_expenses_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_expenses_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_public_campaign_progress"
+            referencedColumns: ["campaign_id"]
+          },
+          {
+            foreignKeyName: "campaign_expenses_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_expenses_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_reviews: {
+        Row: {
+          campaign_id: string
+          created_at: string
+          decision: Database["public"]["Enums"]["campaign_review_decision"]
+          id: string
+          notes: string | null
+          organisation_id: string
+          reviewer_id: string | null
+        }
+        Insert: {
+          campaign_id: string
+          created_at?: string
+          decision: Database["public"]["Enums"]["campaign_review_decision"]
+          id?: string
+          notes?: string | null
+          organisation_id: string
+          reviewer_id?: string | null
+        }
+        Update: {
+          campaign_id?: string
+          created_at?: string
+          decision?: Database["public"]["Enums"]["campaign_review_decision"]
+          id?: string
+          notes?: string | null
+          organisation_id?: string
+          reviewer_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_reviews_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_campaign_finance"
+            referencedColumns: ["campaign_id"]
+          },
+          {
+            foreignKeyName: "campaign_reviews_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_reviews_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_public_campaign_progress"
+            referencedColumns: ["campaign_id"]
+          },
+          {
+            foreignKeyName: "campaign_reviews_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_reviews_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       care_facilities: {
         Row: {
           address: string | null
@@ -706,6 +944,100 @@ export type Database = {
           },
         ]
       }
+      charity_campaigns: {
+        Row: {
+          approved_at: string | null
+          approved_by: string | null
+          beneficiary_criteria: string | null
+          created_at: string
+          created_by: string | null
+          currency: string
+          description: string | null
+          ends_on: string | null
+          funding_target_minor_units: number
+          id: string
+          is_public: boolean
+          organisation_id: string
+          published_at: string | null
+          purpose: string
+          slug: string
+          sponsorship_options: Json
+          starts_on: string
+          status: Database["public"]["Enums"]["charity_campaign_status"]
+          supporting_documents: Json
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          approved_by?: string | null
+          beneficiary_criteria?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          description?: string | null
+          ends_on?: string | null
+          funding_target_minor_units: number
+          id?: string
+          is_public?: boolean
+          organisation_id: string
+          published_at?: string | null
+          purpose: string
+          slug: string
+          sponsorship_options?: Json
+          starts_on?: string
+          status?: Database["public"]["Enums"]["charity_campaign_status"]
+          supporting_documents?: Json
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          approved_by?: string | null
+          beneficiary_criteria?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          description?: string | null
+          ends_on?: string | null
+          funding_target_minor_units?: number
+          id?: string
+          is_public?: boolean
+          organisation_id?: string
+          published_at?: string | null
+          purpose?: string
+          slug?: string
+          sponsorship_options?: Json
+          starts_on?: string
+          status?: Database["public"]["Enums"]["charity_campaign_status"]
+          supporting_documents?: Json
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "charity_campaigns_approved_by_fkey"
+            columns: ["approved_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "charity_campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "charity_campaigns_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       completion_records: {
         Row: {
           completed_at: string
@@ -982,6 +1314,106 @@ export type Database = {
           },
         ]
       }
+      donations: {
+        Row: {
+          amount_minor_units: number
+          campaign_id: string
+          created_at: string
+          currency: string
+          donor_display_name: string | null
+          donor_id: string | null
+          id: string
+          is_public: boolean
+          message: string | null
+          organisation_id: string
+          paid_at: string | null
+          payment_transaction_id: string | null
+          receipt_reference: string | null
+          refunded_amount_minor_units: number
+          status: Database["public"]["Enums"]["donation_status"]
+          updated_at: string
+        }
+        Insert: {
+          amount_minor_units: number
+          campaign_id: string
+          created_at?: string
+          currency?: string
+          donor_display_name?: string | null
+          donor_id?: string | null
+          id?: string
+          is_public?: boolean
+          message?: string | null
+          organisation_id: string
+          paid_at?: string | null
+          payment_transaction_id?: string | null
+          receipt_reference?: string | null
+          refunded_amount_minor_units?: number
+          status?: Database["public"]["Enums"]["donation_status"]
+          updated_at?: string
+        }
+        Update: {
+          amount_minor_units?: number
+          campaign_id?: string
+          created_at?: string
+          currency?: string
+          donor_display_name?: string | null
+          donor_id?: string | null
+          id?: string
+          is_public?: boolean
+          message?: string | null
+          organisation_id?: string
+          paid_at?: string | null
+          payment_transaction_id?: string | null
+          receipt_reference?: string | null
+          refunded_amount_minor_units?: number
+          status?: Database["public"]["Enums"]["donation_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "donations_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_campaign_finance"
+            referencedColumns: ["campaign_id"]
+          },
+          {
+            foreignKeyName: "donations_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "donations_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_public_campaign_progress"
+            referencedColumns: ["campaign_id"]
+          },
+          {
+            foreignKeyName: "donations_donor_id_fkey"
+            columns: ["donor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "donations_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "donations_payment_transaction_id_fkey"
+            columns: ["payment_transaction_id"]
+            isOneToOne: true
+            referencedRelation: "payment_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       expense_records: {
         Row: {
           amount_minor_units: number
@@ -1091,6 +1523,84 @@ export type Database = {
             columns: ["supplier_id"]
             isOneToOne: false
             referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      impact_reports: {
+        Row: {
+          campaign_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_published: boolean
+          metrics: Json
+          organisation_id: string
+          published_at: string | null
+          summary: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          campaign_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_published?: boolean
+          metrics?: Json
+          organisation_id: string
+          published_at?: string | null
+          summary?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          campaign_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_published?: boolean
+          metrics?: Json
+          organisation_id?: string
+          published_at?: string | null
+          summary?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "impact_reports_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_campaign_finance"
+            referencedColumns: ["campaign_id"]
+          },
+          {
+            foreignKeyName: "impact_reports_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "impact_reports_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_public_campaign_progress"
+            referencedColumns: ["campaign_id"]
+          },
+          {
+            foreignKeyName: "impact_reports_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "impact_reports_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
             referencedColumns: ["id"]
           },
         ]
@@ -4763,6 +5273,271 @@ export type Database = {
         }
         Relationships: []
       }
+      scholarship_applications: {
+        Row: {
+          applicant_id: string
+          created_at: string
+          decision_notes: string | null
+          evidence_references: Json
+          id: string
+          organisation_id: string
+          programme_id: string
+          reviewed_at: string | null
+          reviewer_id: string | null
+          statement: string
+          status: Database["public"]["Enums"]["scholarship_application_status"]
+          updated_at: string
+        }
+        Insert: {
+          applicant_id: string
+          created_at?: string
+          decision_notes?: string | null
+          evidence_references?: Json
+          id?: string
+          organisation_id: string
+          programme_id: string
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          statement: string
+          status?: Database["public"]["Enums"]["scholarship_application_status"]
+          updated_at?: string
+        }
+        Update: {
+          applicant_id?: string
+          created_at?: string
+          decision_notes?: string | null
+          evidence_references?: Json
+          id?: string
+          organisation_id?: string
+          programme_id?: string
+          reviewed_at?: string | null
+          reviewer_id?: string | null
+          statement?: string
+          status?: Database["public"]["Enums"]["scholarship_application_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scholarship_applications_applicant_id_fkey"
+            columns: ["applicant_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scholarship_applications_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scholarship_applications_programme_id_fkey"
+            columns: ["programme_id"]
+            isOneToOne: false
+            referencedRelation: "scholarship_programmes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scholarship_applications_reviewer_id_fkey"
+            columns: ["reviewer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scholarship_awards: {
+        Row: {
+          accepted_at: string | null
+          amount_minor_units: number
+          applicant_id: string
+          application_id: string
+          awarded_at: string
+          awarded_by: string | null
+          completion_outcome: string | null
+          course_id: string | null
+          coverage: Database["public"]["Enums"]["scholarship_coverage"]
+          created_at: string
+          currency: string
+          employment_outcome: string | null
+          id: string
+          internship_outcome: string | null
+          organisation_id: string
+          outcome_shareable: boolean
+          programme_id: string
+          status: Database["public"]["Enums"]["scholarship_award_status"]
+          updated_at: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          amount_minor_units: number
+          applicant_id: string
+          application_id: string
+          awarded_at?: string
+          awarded_by?: string | null
+          completion_outcome?: string | null
+          course_id?: string | null
+          coverage?: Database["public"]["Enums"]["scholarship_coverage"]
+          created_at?: string
+          currency?: string
+          employment_outcome?: string | null
+          id?: string
+          internship_outcome?: string | null
+          organisation_id: string
+          outcome_shareable?: boolean
+          programme_id: string
+          status?: Database["public"]["Enums"]["scholarship_award_status"]
+          updated_at?: string
+        }
+        Update: {
+          accepted_at?: string | null
+          amount_minor_units?: number
+          applicant_id?: string
+          application_id?: string
+          awarded_at?: string
+          awarded_by?: string | null
+          completion_outcome?: string | null
+          course_id?: string | null
+          coverage?: Database["public"]["Enums"]["scholarship_coverage"]
+          created_at?: string
+          currency?: string
+          employment_outcome?: string | null
+          id?: string
+          internship_outcome?: string | null
+          organisation_id?: string
+          outcome_shareable?: boolean
+          programme_id?: string
+          status?: Database["public"]["Enums"]["scholarship_award_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scholarship_awards_applicant_id_fkey"
+            columns: ["applicant_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scholarship_awards_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: true
+            referencedRelation: "scholarship_applications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scholarship_awards_awarded_by_fkey"
+            columns: ["awarded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scholarship_awards_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scholarship_awards_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scholarship_awards_programme_id_fkey"
+            columns: ["programme_id"]
+            isOneToOne: false
+            referencedRelation: "scholarship_programmes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scholarship_programmes: {
+        Row: {
+          closes_on: string | null
+          course_id: string | null
+          coverage: Database["public"]["Enums"]["scholarship_coverage"]
+          created_at: string
+          created_by: string | null
+          currency: string
+          description: string | null
+          eligibility: string | null
+          id: string
+          is_public: boolean
+          max_award_minor_units: number
+          name: string
+          opens_on: string
+          organisation_id: string
+          slug: string
+          status: Database["public"]["Enums"]["scholarship_programme_status"]
+          updated_at: string
+        }
+        Insert: {
+          closes_on?: string | null
+          course_id?: string | null
+          coverage?: Database["public"]["Enums"]["scholarship_coverage"]
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          description?: string | null
+          eligibility?: string | null
+          id?: string
+          is_public?: boolean
+          max_award_minor_units: number
+          name: string
+          opens_on?: string
+          organisation_id: string
+          slug: string
+          status?: Database["public"]["Enums"]["scholarship_programme_status"]
+          updated_at?: string
+        }
+        Update: {
+          closes_on?: string | null
+          course_id?: string | null
+          coverage?: Database["public"]["Enums"]["scholarship_coverage"]
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          description?: string | null
+          eligibility?: string | null
+          id?: string
+          is_public?: boolean
+          max_award_minor_units?: number
+          name?: string
+          opens_on?: string
+          organisation_id?: string
+          slug?: string
+          status?: Database["public"]["Enums"]["scholarship_programme_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scholarship_programmes_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scholarship_programmes_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scholarship_programmes_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       service_invoice_counters: {
         Row: {
           last_value: number
@@ -6042,6 +6817,123 @@ export type Database = {
           },
         ]
       }
+      charity_campaign_finance: {
+        Row: {
+          campaign_id: string | null
+          committed_minor_units: number | null
+          currency: string | null
+          disbursed_minor_units: number | null
+          funding_target_minor_units: number | null
+          organisation_id: string | null
+          received_minor_units: number | null
+          title: string | null
+        }
+        Insert: {
+          campaign_id?: string | null
+          committed_minor_units?: never
+          currency?: string | null
+          disbursed_minor_units?: never
+          funding_target_minor_units?: number | null
+          organisation_id?: string | null
+          received_minor_units?: never
+          title?: string | null
+        }
+        Update: {
+          campaign_id?: string | null
+          committed_minor_units?: never
+          currency?: string | null
+          disbursed_minor_units?: never
+          funding_target_minor_units?: number | null
+          organisation_id?: string | null
+          received_minor_units?: never
+          title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "charity_campaigns_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      charity_public_campaign_progress: {
+        Row: {
+          campaign_id: string | null
+          currency: string | null
+          description: string | null
+          donation_count: number | null
+          ends_on: string | null
+          funding_target_minor_units: number | null
+          progress_percent: number | null
+          purpose: string | null
+          received_minor_units: number | null
+          slug: string | null
+          starts_on: string | null
+          title: string | null
+        }
+        Relationships: []
+      }
+      charity_public_donors: {
+        Row: {
+          amount_minor_units: number | null
+          campaign_id: string | null
+          created_at: string | null
+          display_name: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "donations_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_campaign_finance"
+            referencedColumns: ["campaign_id"]
+          },
+          {
+            foreignKeyName: "donations_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "donations_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "charity_public_campaign_progress"
+            referencedColumns: ["campaign_id"]
+          },
+        ]
+      }
+      charity_scholarship_outcomes: {
+        Row: {
+          award_count: number | null
+          awarded_minor_units: number | null
+          completions_recorded: number | null
+          employment_outcomes: number | null
+          internship_outcomes: number | null
+          organisation_id: string | null
+          programme_id: string | null
+          status: Database["public"]["Enums"]["scholarship_award_status"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scholarship_awards_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scholarship_awards_programme_id_fkey"
+            columns: ["programme_id"]
+            isOneToOne: false
+            referencedRelation: "scholarship_programmes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       referral_partner_balances: {
         Row: {
           approved_minor_units: number | null
@@ -6203,6 +7095,9 @@ export type Database = {
         | "rejected"
         | "withdrawn"
       attendance_status: "present" | "absent" | "late" | "excused"
+      campaign_allocation_type: "allocation" | "release"
+      campaign_expense_status: "pending" | "approved" | "paid" | "void"
+      campaign_review_decision: "approved" | "rejected" | "changes_requested"
       care_employment_status: "active" | "on_leave" | "suspended" | "ended"
       care_facility_status: "active" | "inactive"
       care_plan_access: "standard" | "restricted"
@@ -6222,8 +7117,21 @@ export type Database = {
         | "clinical"
         | "other"
       care_task_record_status: "completed" | "refused" | "not_done" | "deferred"
+      charity_campaign_status:
+        | "draft"
+        | "pending_approval"
+        | "approved"
+        | "rejected"
+        | "completed"
+        | "archived"
       course_difficulty: "foundation" | "intermediate" | "advanced"
       course_status: "draft" | "in_review" | "published" | "archived"
+      donation_status:
+        | "pending"
+        | "successful"
+        | "partially_refunded"
+        | "refunded"
+        | "failed"
       employment_type:
         | "full_time"
         | "part_time"
@@ -6376,6 +7284,22 @@ export type Database = {
         | "research"
         | "other"
       resident_status: "active" | "on_leave" | "discharged" | "deceased"
+      scholarship_application_status:
+        | "submitted"
+        | "under_review"
+        | "shortlisted"
+        | "approved"
+        | "rejected"
+        | "withdrawn"
+      scholarship_award_status:
+        | "awarded"
+        | "accepted"
+        | "active"
+        | "completed"
+        | "withdrawn"
+        | "revoked"
+      scholarship_coverage: "full" | "partial"
+      scholarship_programme_status: "draft" | "open" | "closed" | "archived"
       service_invoice_status:
         | "draft"
         | "issued"
@@ -6546,6 +7470,9 @@ export const Constants = {
         "withdrawn",
       ],
       attendance_status: ["present", "absent", "late", "excused"],
+      campaign_allocation_type: ["allocation", "release"],
+      campaign_expense_status: ["pending", "approved", "paid", "void"],
+      campaign_review_decision: ["approved", "rejected", "changes_requested"],
       care_employment_status: ["active", "on_leave", "suspended", "ended"],
       care_facility_status: ["active", "inactive"],
       care_plan_access: ["standard", "restricted"],
@@ -6567,8 +7494,23 @@ export const Constants = {
         "other",
       ],
       care_task_record_status: ["completed", "refused", "not_done", "deferred"],
+      charity_campaign_status: [
+        "draft",
+        "pending_approval",
+        "approved",
+        "rejected",
+        "completed",
+        "archived",
+      ],
       course_difficulty: ["foundation", "intermediate", "advanced"],
       course_status: ["draft", "in_review", "published", "archived"],
+      donation_status: [
+        "pending",
+        "successful",
+        "partially_refunded",
+        "refunded",
+        "failed",
+      ],
       employment_type: [
         "full_time",
         "part_time",
@@ -6738,6 +7680,24 @@ export const Constants = {
         "other",
       ],
       resident_status: ["active", "on_leave", "discharged", "deceased"],
+      scholarship_application_status: [
+        "submitted",
+        "under_review",
+        "shortlisted",
+        "approved",
+        "rejected",
+        "withdrawn",
+      ],
+      scholarship_award_status: [
+        "awarded",
+        "accepted",
+        "active",
+        "completed",
+        "withdrawn",
+        "revoked",
+      ],
+      scholarship_coverage: ["full", "partial"],
+      scholarship_programme_status: ["draft", "open", "closed", "archived"],
       service_invoice_status: [
         "draft",
         "issued",
@@ -6785,6 +7745,8 @@ export type RoleKey =
   | "care_home_owner"
   | "care_home_manager"
   | "care_staff"
+  | "care_medication_staff"
+  | "care_medication_staff"
   | "care_medication_staff"
   | "care_medication_staff"
   | "referral_partner"
@@ -6867,3 +7829,15 @@ export type PurchaseStatus = Database["public"]["Enums"]["purchase_status"];
 export type ExpensePaymentStatus = Database["public"]["Enums"]["expense_payment_status"];
 export type ServiceInvoiceStatus = Database["public"]["Enums"]["service_invoice_status"];
 export type ServicePaymentMethod = Database["public"]["Enums"]["service_payment_method"];
+
+// Phase 8 charity and scholarships ---------------------------------------------
+
+export type CharityCampaignStatus = Database["public"]["Enums"]["charity_campaign_status"];
+export type CampaignReviewDecision = Database["public"]["Enums"]["campaign_review_decision"];
+export type DonationStatus = Database["public"]["Enums"]["donation_status"];
+export type CampaignAllocationType = Database["public"]["Enums"]["campaign_allocation_type"];
+export type CampaignExpenseStatus = Database["public"]["Enums"]["campaign_expense_status"];
+export type ScholarshipCoverage = Database["public"]["Enums"]["scholarship_coverage"];
+export type ScholarshipProgrammeStatus = Database["public"]["Enums"]["scholarship_programme_status"];
+export type ScholarshipApplicationStatus = Database["public"]["Enums"]["scholarship_application_status"];
+export type ScholarshipAwardStatus = Database["public"]["Enums"]["scholarship_award_status"];

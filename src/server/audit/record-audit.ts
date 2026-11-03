@@ -125,7 +125,21 @@ export type AuditAction =
   | "care.invoice.issued"
   | "care.invoice.voided"
   | "care.invoice.payment_recorded"
-  | "care.invoice.refund_recorded";
+  | "care.invoice.refund_recorded"
+  | "charity.campaign.saved"
+  | "charity.campaign.submitted"
+  | "charity.campaign.reviewed"
+  | "charity.allocation.recorded"
+  | "charity.expense.recorded"
+  | "charity.donation.started"
+  | "charity.donation.preference_saved"
+  | "charity.scholarship.programme_saved"
+  | "charity.scholarship.applied"
+  | "charity.scholarship.reviewed"
+  | "charity.scholarship.awarded"
+  | "charity.scholarship.award_status_changed"
+  | "charity.scholarship.outcome_recorded"
+  | "charity.impact.saved";
 
 export type AuditEntry = {
   actorId: string | null;

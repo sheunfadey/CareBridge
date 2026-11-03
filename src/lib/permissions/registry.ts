@@ -33,6 +33,7 @@ export const PERMISSION_CATEGORIES = [
   "payout_approval",
   "charity_campaigns",
   "donor_reporting",
+  "scholarships",
   "compliance_records",
   "audit_logs",
 ] as const;
@@ -98,6 +99,8 @@ export const PERMISSIONS = {
   charity_campaign_manage: "charity_campaigns",
   charity_campaign_approve: "charity_campaigns",
   donor_report_view: "donor_reporting",
+  scholarship_manage: "scholarships",
+  scholarship_review: "scholarships",
 
   // Compliance
   compliance_view: "compliance_records",
@@ -228,6 +231,8 @@ export const ROLE_PERMISSIONS: Record<RoleKey, PermissionKey[]> = {
     "charity_campaign_manage",
     "donor_report_view",
     "financial_report_view",
+    "scholarship_manage",
+    "scholarship_review",
   ],
 
   donor: [],
@@ -251,6 +256,8 @@ export const ROLE_PERMISSIONS: Record<RoleKey, PermissionKey[]> = {
     "organisation_review",
     "audit_log_view",
     "care_report_view",
+    "charity_campaign_approve",
+    "scholarship_review",
   ],
 
   family_member: [],

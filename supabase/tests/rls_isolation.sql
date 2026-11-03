@@ -1,9 +1,9 @@
--- =============================================================================
--- CareBridge — Phase 2: cross-tenant isolation checks
+﻿-- =============================================================================
+-- CareBridge â€” Phase 2: cross-tenant isolation checks
 -- File: supabase/tests/rls_isolation.sql
 --
 -- Run against a disposable database (e.g. a local Supabase instance or a
--- scratch branch) — NOT production. It creates throwaway auth.users rows and
+-- scratch branch) â€” NOT production. It creates throwaway auth.users rows and
 -- asserts that Row Level Security prevents one tenant from reading or writing
 -- another tenant's data.
 --
@@ -751,8 +751,321 @@ begin
   raise notice 'PASS: care operations isolation checks held';
 end $$;
 
+-- =============================================================================
+-- Phase 8: charity, donation and scholarship isolation
+-- =============================================================================
+do $$
+declare
+  v_owner_a uuid := '11111111-1111-1111-1111-111111111111';
+  v_owner_b uuid := '22222222-2222-2222-2222-222222222222';
+  v_donor   uuid := '33333333-3333-4333-8333-333333333333';
+  v_reviewer uuid := '44444444-4444-4444-8444-444444444444';
+  v_charity_a uuid := 'c8a00000-0000-4000-8000-000000000001';
+  v_charity_b uuid := 'c8a00000-0000-4000-8000-000000000002';
+  v_public_campaign uuid := 'c8b00000-0000-4000-8000-000000000001';
+  v_draft_campaign  uuid := 'c8b00000-0000-4000-8000-000000000002';
+  v_programme uuid := 'c8c00000-0000-4000-8000-000000000001';
+  v_application uuid := 'c8d00000-0000-4000-8000-000000000001';
+  v_allocation uuid := 'c8e00000-0000-4000-8000-000000000001';
+  v_expense uuid := 'c8e00000-0000-4000-8000-000000000002';
+  v_donation_c uuid;
+  v_award uuid;
+  v_count int;
+  v_rows int;
+begin
+  insert into auth.users (id, email, encrypted_password, email_confirmed_at, created_at, updated_at)
+  values (v_reviewer, 'reviewer@example.test', crypt('password', gen_salt('bf')), now(), now(), now())
+  on conflict (id) do nothing;
+
+  insert into public.organisations (id, name, slug, type, status, created_by)
+  values
+    (v_charity_a, 'Tenant A Charity', 'tenant-a-charity', 'charity', 'active', v_owner_a),
+    (v_charity_b, 'Tenant B Charity', 'tenant-b-charity', 'charity', 'active', v_owner_b)
+  on conflict (id) do nothing;
+
+  insert into public.organisation_memberships (organisation_id, user_id, status, is_owner, joined_at)
+  values
+    (v_charity_a, v_owner_a, 'active', true, now()),
+    (v_charity_b, v_owner_b, 'active', true, now()),
+    (v_charity_a, v_reviewer, 'active', false, now())
+  on conflict (organisation_id, user_id) do nothing;
+
+  insert into public.user_role_assignments (user_id, role_key, organisation_id)
+  values
+    (v_owner_a, 'charity_admin', v_charity_a),
+    (v_owner_b, 'charity_admin', v_charity_b),
+    (v_reviewer, 'compliance_officer', v_charity_a)
+  on conflict do nothing;
+
+  insert into public.charity_campaigns
+    (id, organisation_id, slug, title, purpose, funding_target_minor_units,
+     currency, starts_on, status, is_public, created_by)
+  values
+    (v_public_campaign, v_charity_a, 'approved-charity-campaign', 'Approved campaign',
+     'Support training access for caregivers.', 1000000, 'NGN', current_date,
+     'approved', true, v_owner_a),
+    (v_draft_campaign, v_charity_a, 'draft-charity-campaign', 'Draft campaign',
+     'A draft campaign used only by the RLS isolation test.', 500000, 'NGN',
+     current_date, 'draft', false, v_owner_a)
+  on conflict (id) do nothing;
+
+  insert into public.scholarship_programmes
+    (id, organisation_id, slug, name, description, eligibility, coverage,
+     max_award_minor_units, currency, opens_on, status, is_public, created_by)
+  values
+    (v_programme, v_charity_a, 'open-scholarship-programme', 'Open programme',
+     'Used only by the RLS isolation test.', 'Applicants must demonstrate financial need for training.',
+     'partial', 500000, 'NGN', current_date, 'open', true, v_owner_a)
+  on conflict (id) do nothing;
+
+  insert into public.scholarship_applications
+    (id, organisation_id, programme_id, applicant_id, statement, status)
+  values
+    (v_application, v_charity_a, v_programme, v_donor,
+     'I need financial support to complete my caregiver training and start work.',
+     'submitted')
+  on conflict (id) do nothing;
+
+  -- Verified donations create donation rows through the payment trigger.
+  insert into public.payment_transactions
+    (id, reference, organisation_id, payer_id, payer_email, purpose, product_type,
+     product_id, amount_minor_units, currency, status, metadata)
+  values
+    ('c8f00000-0000-4000-8000-000000000001', 'rls_phase8_donation_c', v_charity_a,
+     v_donor, 'tenant-c@example.test', 'donation', 'charity_campaign', v_public_campaign,
+     100000, 'NGN', 'initiated', '{"public_acknowledgement": false}'::jsonb),
+    ('c8f00000-0000-4000-8000-000000000002', 'rls_phase8_donation_b', v_charity_a,
+     v_owner_b, 'tenant-b@example.test', 'donation', 'charity_campaign', v_public_campaign,
+     250000, 'NGN', 'initiated',
+     '{"public_acknowledgement": true, "donor_display_name": "Tenant B Donor"}'::jsonb)
+  on conflict (id) do nothing;
+
+  update public.payment_transactions
+  set status = 'successful', paid_at = now()
+  where reference in ('rls_phase8_donation_c', 'rls_phase8_donation_b');
+
+  select id into v_donation_c
+  from public.donations
+  where donor_id = v_donor
+    and campaign_id = v_public_campaign
+  limit 1;
+
+  -- Donor C: public approved campaign only, own donation only.
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_donor, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count from public.charity_campaigns where organisation_id = v_charity_a;
+  if v_count <> 1 then
+    raise exception 'FAIL: donor expected 1 public campaign, saw %', v_count;
+  end if;
+
+  select count(*) into v_count from public.charity_campaigns where id = v_draft_campaign;
+  if v_count <> 0 then
+    raise exception 'FAIL: donor could read a draft campaign';
+  end if;
+
+  select count(*) into v_count from public.donations where campaign_id = v_public_campaign;
+  if v_count <> 1 then
+    raise exception 'FAIL: donor expected 1 own donation, saw %', v_count;
+  end if;
+
+  select count(*) into v_count from public.charity_public_campaign_progress where campaign_id = v_public_campaign;
+  if v_count <> 1 then
+    raise exception 'FAIL: public campaign progress view leaked or hid campaigns';
+  end if;
+
+  select count(*) into v_count from public.charity_public_donors
+  where campaign_id = v_public_campaign and display_name = 'Tenant B Donor';
+  if v_count <> 1 then
+    raise exception 'FAIL: public donor acknowledgement missing';
+  end if;
+
+  select count(*) into v_count from public.charity_public_donors
+  where campaign_id = v_public_campaign and display_name = 'Supporter';
+  if v_count <> 0 then
+    raise exception 'FAIL: private donation was exposed in the public donor list';
+  end if;
+
+  begin
+    insert into public.charity_campaigns
+      (organisation_id, slug, title, purpose, funding_target_minor_units, starts_on)
+    values
+      (v_charity_a, 'donor-injected-campaign', 'Injected', 'Should not be allowed.', 10000, current_date);
+    raise exception 'FAIL: donor could create a campaign';
+  exception
+    when insufficient_privilege then null;
+  end;
+
+  begin
+    update public.donations set amount_minor_units = 1 where id = v_donation_c;
+    raise exception 'FAIL: donor could change a donation amount';
+  exception
+    when others then
+      if sqlerrm not like '%immutable%' then raise; end if;
+  end;
+
+  update public.donations set is_public = true where id = v_donation_c;
+  get diagnostics v_rows = row_count;
+  if v_rows <> 1 then
+    raise exception 'FAIL: donor could not change their acknowledgement preference';
+  end if;
+
+  reset role;
+
+  -- Charity administrator A: sees organisation data, cannot approve unaided.
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_owner_a, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count from public.donations where organisation_id = v_charity_a;
+  if v_count <> 2 then
+    raise exception 'FAIL: charity admin expected 2 donations, saw %', v_count;
+  end if;
+
+  select count(*) into v_count from public.scholarship_applications where organisation_id = v_charity_a;
+  if v_count <> 1 then
+    raise exception 'FAIL: charity admin could not read the application';
+  end if;
+
+  update public.scholarship_applications
+  set status = 'shortlisted', decision_notes = 'Shortlisted by charity admin'
+  where id = v_application;
+
+  update public.scholarship_applications
+  set status = 'approved'
+  where id = v_application;
+  get diagnostics v_rows = row_count;
+  if v_rows <> 1 then
+    raise exception 'FAIL: reviewer could not approve an application';
+  end if;
+
+  insert into public.scholarship_awards
+    (organisation_id, application_id, programme_id, applicant_id, amount_minor_units,
+     coverage, course_id, status, awarded_by)
+  values
+    (v_charity_a, v_application, v_programme, v_donor, 300000,
+     'partial', 'a2000000-0000-4000-8000-000000000001', 'awarded', v_owner_a)
+  returning id into v_award;
+
+  insert into public.campaign_allocations
+    (id, organisation_id, campaign_id, category, amount_minor_units, allocated_by)
+  values
+    (v_allocation, v_charity_a, v_public_campaign, 'Scholarships', 200000, v_owner_a);
+
+  update public.campaign_allocations
+  set amount_minor_units = 1
+  where id = v_allocation;
+  get diagnostics v_rows = row_count;
+  if v_rows <> 0 then
+    raise exception 'FAIL: allocation history could be edited';
+  end if;
+
+  insert into public.campaign_expenses
+    (id, organisation_id, campaign_id, category, amount_minor_units, status, recorded_by)
+  values
+    (v_expense, v_charity_a, v_public_campaign, 'Training fees', 100000, 'approved', v_owner_a);
+
+  delete from public.campaign_expenses where id = v_expense;
+  get diagnostics v_rows = row_count;
+  if v_rows <> 0 then
+    raise exception 'FAIL: campaign expense history could be deleted';
+  end if;
+
+  -- A manager cannot approve their own campaign.
+  update public.charity_campaigns
+  set status = 'pending_approval',
+      is_public = true
+  where id = v_draft_campaign;
+
+  begin
+    update public.charity_campaigns
+    set status = 'approved'
+    where id = v_draft_campaign;
+    raise exception 'FAIL: campaign manager self-approved a campaign';
+  exception
+    when others then
+      if sqlerrm not like '%Not authorised to approve%' then raise; end if;
+  end;
+
+  select count(*) into v_count from public.charity_campaigns where organisation_id = v_charity_b;
+  if v_count <> 0 then
+    raise exception 'FAIL: charity A admin could read charity B campaigns';
+  end if;
+
+  reset role;
+
+  -- Independent reviewer approves.
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_reviewer, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  update public.charity_campaigns
+  set status = 'approved'
+  where id = v_draft_campaign;
+
+  reset role;
+
+  -- Applicant sees the award and approved campaign.
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_donor, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count from public.scholarship_awards where organisation_id = v_charity_a;
+  if v_count <> 1 then
+    raise exception 'FAIL: applicant could not read their award';
+  end if;
+
+  begin
+    update public.scholarship_awards set amount_minor_units = 1 where id = v_award;
+    raise exception 'FAIL: applicant could change an award amount';
+  exception
+    when others then
+      if sqlerrm not like '%immutable%' then raise; end if;
+  end;
+
+  update public.scholarship_awards set status = 'accepted' where id = v_award;
+
+  select count(*) into v_count
+  from public.course_enrolments
+  where user_id = v_donor and source = 'scholarship';
+  if v_count <> 1 then
+    raise exception 'FAIL: accepting an award did not create a scholarship enrolment';
+  end if;
+
+  select count(*) into v_count from public.charity_campaigns where organisation_id = v_charity_a;
+  if v_count <> 2 then
+    raise exception 'FAIL: donor expected 2 approved campaigns, saw %', v_count;
+  end if;
+
+  reset role;
+
+  -- The append-only guards also protect against a trusted service connection
+  -- attempting to rewrite financial history.
+  perform set_config('request.jwt.claims', '', true);
+
+  begin
+    update public.campaign_allocations set amount_minor_units = 1 where id = v_allocation;
+    raise exception 'FAIL: allocation history could be edited by a trusted connection';
+  exception
+    when others then
+      if sqlerrm not like '%append-only%' then raise; end if;
+  end;
+
+  begin
+    delete from public.campaign_expenses where id = v_expense;
+    raise exception 'FAIL: campaign expense history could be deleted by a trusted connection';
+  exception
+    when others then
+      if sqlerrm not like '%append-only%' then raise; end if;
+  end;
+
+  raise notice 'PASS: charity isolation checks held';
+end $$;
+
 rollback;
 
 -- Final, non-transactional confirmation the harness can assert on.
 select 'RLS_ISOLATION_PASS' as result;
+
 

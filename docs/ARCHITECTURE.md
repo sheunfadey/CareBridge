@@ -164,6 +164,39 @@ and write.
   `care_expense_summary` and `care_invoice_ageing` are `security_invoker` views,
   so the caller's RLS applies. Aggregates never expose resident names.
 
+### Charity and scholarships (Phase 8)
+
+- **Workspace model** (`src/server/charity/access.ts`). A charity workspace is an
+  organisation of type `charity`. Campaign and scholarship management is gated by
+  `charity_campaign_manage`, `charity_campaign_approve`, `donor_report_view`,
+  `scholarship_manage` and `scholarship_review`. Donors and applicants do not need
+  to be organisation members; their access is scoped by ownership in RLS.
+- **Campaign approval**. Campaigns are created as drafts, submitted for approval,
+  then approved by a reviewer with `charity_campaign_approve`. The database guard
+  rejects illegal transitions and blocks self-approval by managers. Approved
+  public campaigns are readable without an account.
+- **Donations**. `createDonationCheckout` validates the campaign, currency and
+  amount bounds, creates a `donation` payment transaction and sends the donor to
+  the provider. A donation row is created only by
+  `sync_donation_from_payment`, which reacts to a verified payment transaction.
+  Refunds and partial refunds update the donation through the same trigger.
+- **Donor privacy**. Donation financial fields are immutable to donors; they may
+  only change their public acknowledgement preference, display name and message.
+  Public views expose aggregates and opted-in display names, never donor contact
+  details.
+- **Financial separation**. `charity_campaign_finance` reports received, committed
+  and disbursed amounts separately from commercial revenue. Allocations and
+  campaign expenses are append-only, and donations are never treated as
+  unrestricted company income.
+- **Scholarships**. Programmes define eligibility, coverage and a maximum award.
+  Applicants apply while a programme is open; reviewers record decisions under a
+  guarded status workflow. Awards are created by scholarship managers. The
+  applicant accepts or declines an awarded scholarship; accepting an award with a
+  course creates a `course_enrolments` row with `source = 'scholarship'`.
+- **Impact reporting**. Impact reports are drafts until published and then appear
+  on the public campaign page. Outcome reporting records training completion,
+  internship and employment outcomes only where they can be shared.
+
 ### Cross-tenant isolation
 
 `supabase/tests/rls_isolation.sql` seeds two tenants and asserts — as an

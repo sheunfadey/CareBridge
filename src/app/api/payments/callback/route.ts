@@ -20,13 +20,19 @@ export async function GET(request: NextRequest) {
 
   const result = await verifyPaymentByReference(reference);
 
+  const supabase = await createClient();
+  const { data: transaction } = await supabase
+    .from("payment_transactions")
+    .select("product_id, purpose")
+    .eq("reference", reference)
+    .maybeSingle();
+
   if (result.status === "successful") {
-    const supabase = await createClient();
-    const { data: transaction } = await supabase
-      .from("payment_transactions")
-      .select("product_id, purpose")
-      .eq("reference", reference)
-      .maybeSingle();
+    if (transaction?.purpose === "donation") {
+      return NextResponse.redirect(
+        `${origin}/dashboard/charity?payment=success&reference=${encodeURIComponent(reference)}`,
+      );
+    }
 
     if (
       transaction?.purpose === "course_purchase" &&
@@ -48,6 +54,12 @@ export async function GET(request: NextRequest) {
       : result.status === "mismatch"
         ? "review"
         : "failed";
+
+  if (transaction?.purpose === "donation") {
+    return NextResponse.redirect(
+      `${origin}/dashboard/charity?payment=${status}&reference=${encodeURIComponent(reference)}`,
+    );
+  }
 
   return NextResponse.redirect(
     `${origin}/dashboard/academy/learning?payment=${status}&reference=${encodeURIComponent(reference)}`,

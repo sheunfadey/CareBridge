@@ -3,12 +3,12 @@
 This document tracks features that are incomplete, disabled, or awaiting
 external configuration. It is updated as each phase lands.
 
-## Current state: Phases 2-7 implemented (Phase 7 core modules); Phase 8 not started
+## Current state: Phases 2-8 implemented (Phase 8 core modules); Phase 9 not started
 
 ### Implemented and verified
 
 - **Supabase project** `teejjgzkvvgmsvtblncr` is active and healthy. Migrations
-  `0001`-`0020` are applied and in sync. The earlier project
+  `0001`-`0024` are applied and in sync. The earlier project
   (`ggizvtzlhdciykfmdsjl`) was deleted; this project replaces it.
 - **Identity & multi-tenancy schema**: `profiles`, `organisations`,
   `organisation_memberships`, `roles`, `permissions`, `role_permissions`,
@@ -50,6 +50,13 @@ external configuration. It is updated as each phase lands.
   supervisor review; versioned care plans with approval; medication
   administration; incidents and corrective actions; inventory with append-only
   movements; expenses; invoices, payments and refunds; operational reports.
+- **Charity and scholarships (Phase 8, core modules)**: campaign creation,
+  independent review and approval, public campaign pages, verified donations
+  through the payment abstraction, donor receipts and privacy preferences,
+  append-only fund allocations and campaign expenses, scholarship programmes,
+  applications, reviewer decisions, full/partial awards with course allocation,
+  completion/internship/employment outcomes and published impact reports.
+  Donations are reported separately from commercial revenue.
 - **Notifications**: in-app notification centre and unread counts.
 - **Test runner** (Vitest): `npm test` runs unit tests for the permission
   registry, validation schemas, money and commission calculations, email
@@ -75,7 +82,7 @@ external configuration. It is updated as each phase lands.
   is no structured candidate profile or document upload.
 - **No file uploads / storage buckets.**
 - **No end-to-end browser tests.** Unit tests (Vitest) and the SQL RLS isolation
-  test exist; Playwright is not yet set up. Phase 6 and Phase 7 pages have been
+  test exist; Playwright is not yet set up. Phase 6, 7 and 8 pages have been
   driven with seeded fixtures over authenticated HTTP requests, but not in an
   automated browser session.
 - **Phase 7 remaining polish**:
@@ -89,8 +96,17 @@ external configuration. It is updated as each phase lands.
     delivery provider;
   - shift calendars are rendered as a 14-day grouped list rather than a monthly
     grid.
-- **Charity and analytics** modules are not built. Their dashboard routes show
-  an honest "planned" placeholder, never fabricated data.
+- **Phase 8 remaining polish**:
+  - no recurring donations or offline donation entry UI;
+  - donation receipts are printable HTML, not generated PDFs, and are not tax
+    certificates;
+  - campaign expenses are append-only but have no separate approval workflow;
+  - scholarship evidence and campaign supporting documents are references only;
+    file uploads are not enabled;
+  - no automated notifications for campaign approval or scholarship decisions;
+  - reviewers are recorded automatically when they decide, but there is no
+    workload-based reviewer assignment queue.
+- **Analytics** (Phase 9) is not built.
 - **Profile editing and notification preferences** are not implemented; the
   settings pages are read-only or marked as planned.
 - **Dashboard top-bar search** is not wired to a search backend.
@@ -136,7 +152,7 @@ external configuration. It is updated as each phase lands.
 
 - `npm run lint` - clean
 - `npm run typecheck` - clean
-- `npm test` - 70 unit tests pass (9 files)
+- `npm test` - 79 unit tests pass (10 files)
 - `npm run build` - succeeds (production build)
 - Unauthenticated smoke test - `/`, `/login`, `/register`, `/forgot-password`,
   `/reset-password`, `/verify-email` return HTTP 200; `/dashboard` returns 307 to
@@ -150,11 +166,17 @@ external configuration. It is updated as each phase lands.
   workspace, residents, staff, roster, plans, daily care, medication, incidents,
   inventory, expenses, invoices and reports. Care staff were denied billing,
   staff management and reports; family accounts were denied the staff workspace.
+- Authenticated Phase 8 smoke test (production server, disposable fixtures,
+  removed afterwards) - 16/16 checks passed across the charity hub, campaigns,
+  campaign finance, scholarships, applications/awards, donations, receipts,
+  impact reports, reports and the public campaign pages. Donors were denied the
+  admin campaign workspace; anonymous visitors could read approved campaigns.
+  Award acceptance created a `scholarship` course enrolment.
 - `npm run db:test:rls` - cross-tenant isolation assertions hold for the applied
-  schema through migration `0020`, including Phase 6 payment/commission and
-  Phase 7 resident, medication, invoice and family-link isolation.
-- Phase 7 SQL - migrations `0016`-`0020` apply cleanly, and 34 RLS/invariant
-  assertions pass against both an embedded PostgreSQL instance and the live
+  schema through migration `0024`, including Phase 6 payment/commission, Phase 7
+  care and Phase 8 campaign, donation and scholarship isolation.
+- Phase 7/8 SQL - migrations `0016`-`0024` apply cleanly, and the Phase 7
+  invariants pass against both an embedded PostgreSQL instance and the live
   project.
 
 No feature in later phases is claimed as complete.

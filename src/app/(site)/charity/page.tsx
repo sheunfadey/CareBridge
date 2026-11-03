@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { connection } from "next/server";
 import {
   GraduationCapIcon,
   HeartHandshakeIcon,
@@ -11,12 +12,19 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { formatDate, formatMoney } from "@/lib/format";
+import {
+  listOpenScholarshipProgrammes,
+  listPublicCampaigns,
+} from "@/server/charity/queries";
 
 export const metadata: Metadata = {
   title: "Charity and Scholarships",
   description:
     "Charity campaigns raise funds for training access and scholarships. Scholarship applications are reviewed through a defined process. Awards and fund allocation are recorded transparently. Charity funds are kept separate from commercial operations.",
 };
+
+export const instant = false;
 
 const whatWeSupport = [
   {
@@ -54,7 +62,14 @@ const howDonationsUsed = [
   },
 ];
 
-export default function CharityPage() {
+export default async function CharityPage() {
+  await connection();
+
+  const [campaigns, programmes] = await Promise.all([
+    listPublicCampaigns(6),
+    listOpenScholarshipProgrammes(),
+  ]);
+
   return (
     <>
       <SiteSection tone="ivory">
@@ -125,6 +140,52 @@ export default function CharityPage() {
         </div>
       </SiteSection>
 
+      {campaigns.length > 0 ? (
+        <SiteSection>
+          <SectionHeading
+            eyebrow="Approved campaigns"
+            title="Support a current campaign"
+            description="Every campaign below has been reviewed and approved. Progress shows verified donations, net of refunds."
+          />
+          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {campaigns.map((campaign) => (
+              <div
+                key={campaign.campaignId}
+                className="flex flex-col rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10"
+              >
+                <p className="font-heading text-lg font-semibold text-brand-navy">
+                  {campaign.title}
+                </p>
+                <p className="mt-2 flex-1 text-sm text-muted-foreground">
+                  {campaign.description ?? campaign.purpose}
+                </p>
+                <div className="mt-4 space-y-2">
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>
+                      {formatMoney(campaign.receivedMinorUnits, campaign.currency)} raised
+                    </span>
+                    <span>{campaign.progressPercent}%</span>
+                  </div>
+                  <div className="h-2 overflow-hidden rounded-full bg-muted">
+                    <div
+                      className="h-full rounded-full bg-brand-teal"
+                      style={{ width: `${Math.min(campaign.progressPercent, 100)}%` }}
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Target {formatMoney(campaign.fundingTargetMinorUnits, campaign.currency)}
+                    {campaign.endsOn ? ` · closes ${formatDate(campaign.endsOn)}` : ""}
+                  </p>
+                </div>
+                <Button className="mt-4" asChild>
+                  <Link href={`/charity/${campaign.slug}`}>View campaign</Link>
+                </Button>
+              </div>
+            ))}
+          </div>
+        </SiteSection>
+      ) : null}
+
       <SiteSection tone="sky">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <SectionHeading
@@ -191,6 +252,39 @@ export default function CharityPage() {
           </div>
         </div>
       </SiteSection>
+
+      {programmes.length > 0 ? (
+        <SiteSection>
+          <SectionHeading
+            eyebrow="Open scholarships"
+            title="Programmes accepting applications"
+            description="Applications are reviewed against published eligibility criteria. Sign in to apply and track your application."
+          />
+          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {programmes.map((programme) => (
+              <div
+                key={programme.id}
+                className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10"
+              >
+                <p className="font-heading text-lg font-semibold text-brand-navy">
+                  {programme.name}
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {programme.description ?? programme.eligibility ?? ""}
+                </p>
+                <p className="mt-3 text-xs text-muted-foreground">
+                  {programme.coverage === "full" ? "Full" : "Partial"} award up to{" "}
+                  {formatMoney(programme.maxAwardMinorUnits, programme.currency)}
+                  {programme.closesOn ? ` · closes ${formatDate(programme.closesOn)}` : ""}
+                </p>
+                <Button className="mt-4" variant="outline" asChild>
+                  <Link href="/dashboard/charity">Apply</Link>
+                </Button>
+              </div>
+            ))}
+          </div>
+        </SiteSection>
+      ) : null}
 
       <SiteSection tone="navy">
         <div className="mx-auto max-w-2xl space-y-6 text-center">
