@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { Building2Icon } from "lucide-react";
 
 import { PageHeader } from "@/components/layout/page-header";
+import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card } from "@/components/ui/card";
 import { MemberManager } from "@/features/organisations/components/member-manager";
@@ -63,6 +65,15 @@ export default async function OrganisationDetailPage({
           { label: "Organisation", href: "/dashboard/organisation" },
           { label: detail.summary.name },
         ]}
+        actions={
+          userHasPermission(user, "subscription_view") || user.isSuperAdmin ? (
+            <Button variant="outline" asChild>
+              <Link href={`/dashboard/organisation/${organisationId}/billing`}>
+                Billing & plan
+              </Link>
+            </Button>
+          ) : null
+        }
       />
 
       <div className="grid gap-4 sm:grid-cols-3">

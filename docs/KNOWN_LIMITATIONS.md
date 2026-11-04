@@ -3,12 +3,12 @@
 This document tracks features that are incomplete, disabled, or awaiting
 external configuration. It is updated as each phase lands.
 
-## Current state: Phases 2-8 implemented (Phase 8 core modules); Phase 9 not started
+## Current state: Phases 2-9 implemented (Phase 9 core modules); Phase 10 not started
 
 ### Implemented and verified
 
 - **Supabase project** `teejjgzkvvgmsvtblncr` is active and healthy. Migrations
-  `0001`-`0024` are applied and in sync. The earlier project
+  `0001`-`0028` are applied and in sync. The earlier project
   (`ggizvtzlhdciykfmdsjl`) was deleted; this project replaces it.
 - **Identity & multi-tenancy schema**: `profiles`, `organisations`,
   `organisation_memberships`, `roles`, `permissions`, `role_permissions`,
@@ -57,13 +57,21 @@ external configuration. It is updated as each phase lands.
   applications, reviewer decisions, full/partial awards with course allocation,
   completion/internship/employment outcomes and published impact reports.
   Donations are reported separately from commercial revenue.
+- **Analytics, reports and subscriptions (Phase 9, core modules)**: role-aware
+  dashboards backed by live data; 16 reports across academy, employment,
+  referrals, finance, charity and care operations with date/organisation filters;
+  audited CSV exports limited to 5,000 rows; configurable subscription plans;
+  organisation subscriptions with lifecycle events and separate subscription
+  payments; database-enforced user, facility and module limits; and read-only
+  suspended/expired workspaces that keep records readable and exportable.
 - **Notifications**: in-app notification centre and unread counts.
 - **Test runner** (Vitest): `npm test` runs unit tests for the permission
   registry, validation schemas, money and commission calculations, email
-  templates, admin-service contracts, navigation and care validation.
+  templates, admin-service contracts, navigation, care, charity and billing
+  validation.
 - **Cross-tenant isolation test** (`supabase/tests/rls_isolation.sql`) - passes
-  against the live database for migrations `0001`-`0020`, including care
-  resident, medication, invoice and family-link isolation.
+  against the live database for migrations `0001`-`0028`, including care,
+  charity, scholarship, subscription, read-only and module-limit isolation.
 
 ### Not yet implemented or not yet verified
 
@@ -106,7 +114,17 @@ external configuration. It is updated as each phase lands.
   - no automated notifications for campaign approval or scholarship decisions;
   - reviewers are recorded automatically when they decide, but there is no
     workload-based reviewer assignment queue.
-- **Analytics** (Phase 9) is not built.
+- **Phase 9 remaining polish**:
+  - subscription payments are recorded manually by platform billing; there is no
+    Paystack subscription checkout or automated dunning/retry flow;
+  - plan prices are intentionally unset until configured by the business;
+  - storage allowances are displayed but storage usage is not metered;
+  - reports cover the implemented domains; assessment performance is unavailable
+    because assessment tables are not part of the current schema;
+  - scheduled report delivery and large background exports are not implemented;
+  - feature limits/read-only guards cover the primary academy, employment, care
+    and charity write tables; a few secondary tables still rely on RLS and server
+    action checks rather than a subscription trigger.
 - **Profile editing and notification preferences** are not implemented; the
   settings pages are read-only or marked as planned.
 - **Dashboard top-bar search** is not wired to a search backend.
@@ -152,7 +170,7 @@ external configuration. It is updated as each phase lands.
 
 - `npm run lint` - clean
 - `npm run typecheck` - clean
-- `npm test` - 79 unit tests pass (10 files)
+- `npm test` - 83 unit tests pass (11 files)
 - `npm run build` - succeeds (production build)
 - Unauthenticated smoke test - `/`, `/login`, `/register`, `/forgot-password`,
   `/reset-password`, `/verify-email` return HTTP 200; `/dashboard` returns 307 to
@@ -172,11 +190,17 @@ external configuration. It is updated as each phase lands.
   impact reports, reports and the public campaign pages. Donors were denied the
   admin campaign workspace; anonymous visitors could read approved campaigns.
   Award acceptance created a `scholarship` course enrolment.
+- Authenticated Phase 9 smoke test (production server, disposable fixtures,
+  removed afterwards) - 8/8 page checks passed for the role-aware dashboard,
+  organisation billing, reports catalogue, CSV export, finance dashboard and
+  platform subscription administration. A suspended subscription produced the
+  read-only banner while care data remained readable. A CSV export wrote a
+  `report.exported` audit record containing the filters and timestamp.
 - `npm run db:test:rls` - cross-tenant isolation assertions hold for the applied
-  schema through migration `0024`, including Phase 6 payment/commission, Phase 7
-  care and Phase 8 campaign, donation and scholarship isolation.
-- Phase 7/8 SQL - migrations `0016`-`0024` apply cleanly, and the Phase 7
-  invariants pass against both an embedded PostgreSQL instance and the live
-  project.
+  schema through migration `0028`, including Phase 6 payment/commission, Phase 7
+  care, Phase 8 campaign/donation/scholarship and Phase 9 subscription, read-only
+  and module-limit isolation.
+- Phase 7/8/9 SQL - migrations `0016`-`0028` apply cleanly, and the invariants
+  pass against both an embedded PostgreSQL instance and the live project.
 
 No feature in later phases is claimed as complete.

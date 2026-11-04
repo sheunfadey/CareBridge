@@ -3478,6 +3478,91 @@ export type Database = {
           },
         ]
       }
+      organisation_subscriptions: {
+        Row: {
+          billing_cycle: Database["public"]["Enums"]["subscription_billing_cycle"]
+          cancel_at_period_end: boolean
+          cancelled_at: string | null
+          created_at: string
+          created_by: string | null
+          current_period_end: string
+          current_period_start: string
+          ended_at: string | null
+          grace_ends_at: string | null
+          id: string
+          notes: string | null
+          organisation_id: string
+          plan_id: string
+          started_at: string
+          status: Database["public"]["Enums"]["subscription_status"]
+          suspended_at: string | null
+          trial_ends_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          billing_cycle?: Database["public"]["Enums"]["subscription_billing_cycle"]
+          cancel_at_period_end?: boolean
+          cancelled_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          current_period_end?: string
+          current_period_start?: string
+          ended_at?: string | null
+          grace_ends_at?: string | null
+          id?: string
+          notes?: string | null
+          organisation_id: string
+          plan_id: string
+          started_at?: string
+          status?: Database["public"]["Enums"]["subscription_status"]
+          suspended_at?: string | null
+          trial_ends_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          billing_cycle?: Database["public"]["Enums"]["subscription_billing_cycle"]
+          cancel_at_period_end?: boolean
+          cancelled_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          current_period_end?: string
+          current_period_start?: string
+          ended_at?: string | null
+          grace_ends_at?: string | null
+          id?: string
+          notes?: string | null
+          organisation_id?: string
+          plan_id?: string
+          started_at?: string
+          status?: Database["public"]["Enums"]["subscription_status"]
+          suspended_at?: string | null
+          trial_ends_at?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organisation_subscriptions_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organisation_subscriptions_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: true
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organisation_subscriptions_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "subscription_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organisation_verifications: {
         Row: {
           created_at: string
@@ -6373,6 +6458,201 @@ export type Database = {
           },
         ]
       }
+      subscription_events: {
+        Row: {
+          actor_id: string | null
+          created_at: string
+          event_type: Database["public"]["Enums"]["subscription_event_type"]
+          from_status: Database["public"]["Enums"]["subscription_status"] | null
+          id: string
+          metadata: Json
+          organisation_id: string
+          subscription_id: string
+          to_status: Database["public"]["Enums"]["subscription_status"] | null
+        }
+        Insert: {
+          actor_id?: string | null
+          created_at?: string
+          event_type: Database["public"]["Enums"]["subscription_event_type"]
+          from_status?:
+            | Database["public"]["Enums"]["subscription_status"]
+            | null
+          id?: string
+          metadata?: Json
+          organisation_id: string
+          subscription_id: string
+          to_status?: Database["public"]["Enums"]["subscription_status"] | null
+        }
+        Update: {
+          actor_id?: string | null
+          created_at?: string
+          event_type?: Database["public"]["Enums"]["subscription_event_type"]
+          from_status?:
+            | Database["public"]["Enums"]["subscription_status"]
+            | null
+          id?: string
+          metadata?: Json
+          organisation_id?: string
+          subscription_id?: string
+          to_status?: Database["public"]["Enums"]["subscription_status"] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscription_events_actor_id_fkey"
+            columns: ["actor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscription_events_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscription_events_subscription_id_fkey"
+            columns: ["subscription_id"]
+            isOneToOne: false
+            referencedRelation: "organisation_subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscription_payments: {
+        Row: {
+          amount_minor_units: number
+          created_at: string
+          currency: string
+          id: string
+          notes: string | null
+          organisation_id: string
+          period_end: string
+          period_start: string
+          provider_reference: string | null
+          receipt_reference: string | null
+          recorded_by: string | null
+          status: Database["public"]["Enums"]["subscription_payment_status"]
+          subscription_id: string
+        }
+        Insert: {
+          amount_minor_units: number
+          created_at?: string
+          currency?: string
+          id?: string
+          notes?: string | null
+          organisation_id: string
+          period_end: string
+          period_start: string
+          provider_reference?: string | null
+          receipt_reference?: string | null
+          recorded_by?: string | null
+          status?: Database["public"]["Enums"]["subscription_payment_status"]
+          subscription_id: string
+        }
+        Update: {
+          amount_minor_units?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          notes?: string | null
+          organisation_id?: string
+          period_end?: string
+          period_start?: string
+          provider_reference?: string | null
+          receipt_reference?: string | null
+          recorded_by?: string | null
+          status?: Database["public"]["Enums"]["subscription_payment_status"]
+          subscription_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscription_payments_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscription_payments_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "subscription_payments_subscription_id_fkey"
+            columns: ["subscription_id"]
+            isOneToOne: false
+            referencedRelation: "organisation_subscriptions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscription_plans: {
+        Row: {
+          annual_price_minor_units: number | null
+          code: string
+          created_at: string
+          currency: string
+          description: string | null
+          grace_days: number
+          id: string
+          is_active: boolean
+          max_facilities: number | null
+          max_users: number | null
+          monthly_price_minor_units: number | null
+          name: string
+          permitted_modules: string[]
+          sort_order: number
+          storage_allowance_mb: number | null
+          trial_days: number
+          updated_at: string
+          usage_limits: Json
+        }
+        Insert: {
+          annual_price_minor_units?: number | null
+          code: string
+          created_at?: string
+          currency?: string
+          description?: string | null
+          grace_days?: number
+          id?: string
+          is_active?: boolean
+          max_facilities?: number | null
+          max_users?: number | null
+          monthly_price_minor_units?: number | null
+          name: string
+          permitted_modules?: string[]
+          sort_order?: number
+          storage_allowance_mb?: number | null
+          trial_days?: number
+          updated_at?: string
+          usage_limits?: Json
+        }
+        Update: {
+          annual_price_minor_units?: number | null
+          code?: string
+          created_at?: string
+          currency?: string
+          description?: string | null
+          grace_days?: number
+          id?: string
+          is_active?: boolean
+          max_facilities?: number | null
+          max_users?: number | null
+          monthly_price_minor_units?: number | null
+          name?: string
+          permitted_modules?: string[]
+          sort_order?: number
+          storage_allowance_mb?: number | null
+          trial_days?: number
+          updated_at?: string
+          usage_limits?: Json
+        }
+        Relationships: []
+      }
       suppliers: {
         Row: {
           address: string | null
@@ -7039,6 +7319,22 @@ export type Database = {
         Returns: string
       }
       job_readable: { Args: { p_job: string }; Returns: boolean }
+      organisation_can_add_facility: {
+        Args: { p_organisation: string }
+        Returns: boolean
+      }
+      organisation_can_add_member: {
+        Args: { p_organisation: string }
+        Returns: boolean
+      }
+      organisation_can_write: {
+        Args: { p_organisation: string }
+        Returns: boolean
+      }
+      organisation_has_module: {
+        Args: { p_module: string; p_organisation: string }
+        Returns: boolean
+      }
       record_referral_payout_transfer: {
         Args: {
           p_payout: string
@@ -7065,6 +7361,10 @@ export type Database = {
       review_referral_payout: {
         Args: { p_decision: string; p_payout: string; p_reason?: string }
         Returns: Database["public"]["Enums"]["referral_payout_status"]
+      }
+      subscription_effective_status: {
+        Args: { p_organisation: string }
+        Returns: string
       }
       unread_notification_count: { Args: never; Returns: number }
       verify_referral_payout_account: {
@@ -7321,6 +7621,29 @@ export type Database = {
         | "completed"
         | "cancelled"
       shift_status: "draft" | "published" | "completed" | "cancelled"
+      subscription_billing_cycle: "monthly" | "annual"
+      subscription_event_type:
+        | "created"
+        | "trial_started"
+        | "plan_changed"
+        | "renewed"
+        | "payment_failed"
+        | "past_due"
+        | "grace_started"
+        | "suspended"
+        | "reactivated"
+        | "cancelled"
+        | "expired"
+        | "settings_updated"
+      subscription_payment_status: "recorded" | "void"
+      subscription_status:
+        | "trialing"
+        | "active"
+        | "past_due"
+        | "grace"
+        | "suspended"
+        | "cancelled"
+        | "expired"
       supplier_status: "active" | "inactive"
       verification_status: "unverified" | "pending" | "verified" | "rejected"
     }
@@ -7722,6 +8045,31 @@ export const Constants = {
         "cancelled",
       ],
       shift_status: ["draft", "published", "completed", "cancelled"],
+      subscription_billing_cycle: ["monthly", "annual"],
+      subscription_event_type: [
+        "created",
+        "trial_started",
+        "plan_changed",
+        "renewed",
+        "payment_failed",
+        "past_due",
+        "grace_started",
+        "suspended",
+        "reactivated",
+        "cancelled",
+        "expired",
+        "settings_updated",
+      ],
+      subscription_payment_status: ["recorded", "void"],
+      subscription_status: [
+        "trialing",
+        "active",
+        "past_due",
+        "grace",
+        "suspended",
+        "cancelled",
+        "expired",
+      ],
       supplier_status: ["active", "inactive"],
       verification_status: ["unverified", "pending", "verified", "rejected"],
     },
@@ -7745,6 +8093,7 @@ export type RoleKey =
   | "care_home_owner"
   | "care_home_manager"
   | "care_staff"
+  | "care_medication_staff"
   | "care_medication_staff"
   | "care_medication_staff"
   | "care_medication_staff"
@@ -7841,3 +8190,10 @@ export type ScholarshipCoverage = Database["public"]["Enums"]["scholarship_cover
 export type ScholarshipProgrammeStatus = Database["public"]["Enums"]["scholarship_programme_status"];
 export type ScholarshipApplicationStatus = Database["public"]["Enums"]["scholarship_application_status"];
 export type ScholarshipAwardStatus = Database["public"]["Enums"]["scholarship_award_status"];
+
+// Phase 9 subscriptions and reporting -----------------------------------------
+
+export type SubscriptionStatus = Database["public"]["Enums"]["subscription_status"];
+export type SubscriptionBillingCycle = Database["public"]["Enums"]["subscription_billing_cycle"];
+export type SubscriptionEventType = Database["public"]["Enums"]["subscription_event_type"];
+export type SubscriptionPaymentStatus = Database["public"]["Enums"]["subscription_payment_status"];

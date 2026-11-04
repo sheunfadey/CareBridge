@@ -1,45 +1,131 @@
-import type { ReactNode } from "react";
-import { Suspense } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import {
-  ArrowUpRightIcon,
+  AlertTriangleIcon,
+  BookOpenCheckIcon,
   Building2Icon,
+  CalendarClockIcon,
+  CreditCardIcon,
   GraduationCapIcon,
-  MailIcon,
-  ShieldCheckIcon,
+  HeartHandshakeIcon,
+  ReceiptTextIcon,
+  Share2Icon,
+  ShieldAlertIcon,
   UsersIcon,
+  WalletIcon,
 } from "lucide-react";
 
+import { MetricCard } from "@/components/dashboard/metric-card";
 import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
-import { StatusBadge } from "@/components/ui/status-badge";
-import { Progress } from "@/components/ui/progress";
-import { Skeleton } from "@/components/ui/skeleton";
-import {
-  AlertCard,
-  MetricCard,
-  ProgressCard,
-} from "@/components/dashboard";
-import { brand } from "@/config/brand";
-import { getCurrentUser } from "@/server/auth/current-user";
+import { Card } from "@/components/ui/card";
+import { formatMoney } from "@/lib/format";
+import { ROLE_LABELS } from "@/lib/permissions/registry";
+import { subscriptionStatusLabels } from "@/lib/validation/billing";
+import { getCurrentUser, userHasPermission } from "@/server/auth/current-user";
 import { getDashboardFacts } from "@/server/dashboard/queries";
+import {
+  getAcademySnapshot,
+  getCareDashboardSnapshot,
+  getCharityDashboardSnapshot,
+  getEmployerSnapshot,
+  getFinanceSnapshot,
+  getMyCharitySnapshot,
+  getReferralPartnerSnapshot,
+} from "@/server/dashboard/role-queries";
+import { getBillingSummary } from "@/server/billing/queries";
 
-export default function DashboardPage(): ReactNode {
+export const metadata: Metadata = {
+  title: "Dashboard",
+};
+
+function isTrialEndingSoon(trialEndsAt: string | null | undefined): boolean {
+  if (!trialEndsAt) return false;
+  return new Date(trialEndsAt).getTime() - Date.now() < 7 * 24 * 60 * 60 * 1000;
+}
+
+export default async function DashboardPage() {
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("/login?redirectTo=%2Fdashboard");
+  }
+
+  const [
+    facts,
+    care,
+    charityAdmin,
+    myCharity,
+    referralPartner,
+    employer,
+    academy,
+    finance,
+  ] = await Promise.all([
+    getDashboardFacts(user),
+    getCareDashboardSnapshot(user),
+    getCharityDashboardSnapshot(user),
+    getMyCharitySnapshot(user),
+    getReferralPartnerSnapshot(user),
+    getEmployerSnapshot(user),
+    getAcademySnapshot(user),
+    getFinanceSnapshot(user),
+  ]);
+
+  const primaryOrganisation =
+    user.organisations.find((organisation) => organisation.isOwner) ??
+    user.organisations[0];
+  const canViewBilling =
+    user.isSuperAdmin ||
+    userHasPermission(user, "subscription_view") ||
+    userHasPermission(user, "billing_manage");
+  const billing =
+    primaryOrganisation && canViewBilling
+      ? await getBillingSummary(primaryOrganisation.organisationId)
+      : null;
+
+  const effectiveStatus = billing?.subscription?.effectiveStatus;
+  const readOnly =
+    effectiveStatus !== undefined &&
+    !["active", "trialing", "grace", "cancelled_active", "legacy"].includes(
+      effectiveStatus,
+    );
+  const trialEndsSoon =
+    effectiveStatus === "trialing" &&
+    isTrialEndingSoon(billing?.subscription?.trialEndsAt);
+
+  const firstName = user.fullName?.split(" ")[0] ?? user.email.split("@")[0];
+  const roleNames = user.roles
+    .map((role) => ROLE_LABELS[role])
+    .filter(Boolean)
+    .slice(0, 4);
+
   return (
     <div className="space-y-6">
       <PageHeader
         eyebrow="Overview"
-        title="Welcome to CareBridge"
-        description="Your workspace across training, placements, employment and care operations. Metrics populate only from real data as each phase goes live."
+        title={`Welcome back, ${firstName}`}
+        description={
+          roleNames.length > 0
+            ? `Your workspace as ${roleNames.join(", ")}. Metrics below come from live data only.`
+            : "Your CareBridge workspace. Metrics below come from live data only."
+        }
         breadcrumbs={[{ label: "Dashboard" }]}
         actions={
           <>
-            <Button variant="outline" asChild>
-              <Link href="/dashboard/organisation">
-                Organisations
-                <ArrowUpRightIcon />
-              </Link>
-            </Button>
+            {userHasPermission(user, "report_view") ? (
+              <Button variant="outline" asChild>
+                <Link href="/dashboard/reports">Reports</Link>
+              </Button>
+            ) : null}
+            {canViewBilling && primaryOrganisation ? (
+              <Button variant="outline" asChild>
+                <Link
+                  href={`/dashboard/organisation/${primaryOrganisation.organisationId}/billing`}
+                >
+                  Billing
+                </Link>
+              </Button>
+            ) : null}
             <Button asChild>
               <Link href="/dashboard/organisation">Manage workspace</Link>
             </Button>
@@ -47,104 +133,312 @@ export default function DashboardPage(): ReactNode {
         }
       />
 
-      <Suspense fallback={<DashboardFactsSkeleton />}>
-        <DashboardFacts />
-      </Suspense>
-
-      <AlertCard
-        tone="info"
-        title="Phase 2 — authentication & multi-tenancy"
-        description={`Accounts, organisations, roles, invitations and row-level security are live. No fabricated metrics and no live ${brand.currency} transactions are shown.`}
-      />
-
-      <section aria-label="Implementation status" className="space-y-4">
-        <div className="flex items-center justify-between gap-3">
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
-            Implementation status
-          </h2>
-          <StatusBadge status="in_progress" />
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <ProgressCard title="Phase 1 — Brand & design system" value={100} />
-          <ProgressCard title="Phase 2 — Auth & multi-tenancy" value={70} />
-          <ProgressCard title="Phase 3 — Public site & admin" value={0} />
-          <ProgressCard title="Phase 4 — Academy" value={40} />
-        </div>
-        <div className="rounded-xl bg-card p-5 ring-1 ring-foreground/10">
-          <h3 className="font-heading text-sm font-semibold text-brand-navy">
-            Delivery progress
-          </h3>
-          <div className="mt-4 flex items-center gap-4">
-            <Progress value={35} aria-label="Overall build progress: 35 percent" />
-            <span className="text-sm font-semibold tabular-nums text-brand-teal">
-              35%
-            </span>
+      {readOnly ? (
+        <Card className="border-brand-warning/50 bg-brand-warning/5 p-5">
+          <div className="flex items-start gap-3">
+            <AlertTriangleIcon className="mt-0.5 size-5 text-brand-warning" aria-hidden="true" />
+            <div>
+              <h2 className="font-heading text-base font-semibold text-brand-navy">
+                Workspace is read-only
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                The subscription is{" "}
+                {effectiveStatus
+                  ? subscriptionStatusLabels[
+                      effectiveStatus as keyof typeof subscriptionStatusLabels
+                    ] ?? effectiveStatus.replaceAll("_", " ")
+                  : "inactive"}
+                . Existing records remain readable and exportable. New records are
+                blocked until billing is resolved.
+              </p>
+              {primaryOrganisation ? (
+                <Button className="mt-3" size="sm" asChild>
+                  <Link
+                    href={`/dashboard/organisation/${primaryOrganisation.organisationId}/billing`}
+                  >
+                    Review billing
+                  </Link>
+                </Button>
+              ) : null}
+            </div>
           </div>
-          <p className="mt-3 text-xs text-muted-foreground">
-            Phases are built and verified in order. A phase is never marked
-            complete before its core workflow works against the real database.
-          </p>
+        </Card>
+      ) : null}
+
+      {trialEndsSoon ? (
+        <Card className="border-brand-sky bg-brand-sky/40 p-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="font-heading text-base font-semibold text-brand-navy">
+                Your trial ends soon
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Review the plan and limits before the trial expires to avoid a
+                read-only workspace.
+              </p>
+            </div>
+            {primaryOrganisation ? (
+              <Button size="sm" asChild>
+                <Link
+                  href={`/dashboard/organisation/${primaryOrganisation.organisationId}/billing`}
+                >
+                  View plan
+                </Link>
+              </Button>
+            ) : null}
+          </div>
+        </Card>
+      ) : null}
+
+      {care ? (
+        <section className="space-y-4" aria-label="Care operations">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              Care operations · {care.workspaceName}
+            </h2>
+            <Button size="sm" variant="outline" asChild>
+              <Link href={`/dashboard/care-homes?organisation=${care.organisationId}`}>
+                Open workspace
+              </Link>
+            </Button>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <MetricCard
+              label="Active residents"
+              value={care.activeResidents}
+              hint={`${care.onLeaveResidents} on leave`}
+              icon={<UsersIcon aria-hidden="true" />}
+            />
+            <MetricCard
+              label="Shifts today"
+              value={care.shiftsToday}
+              hint={`${care.coverageGaps} coverage gaps`}
+              icon={<CalendarClockIcon aria-hidden="true" />}
+            />
+            <MetricCard
+              label="Open incidents"
+              value={care.openIncidents}
+              hint="Requires review or closure"
+              icon={<ShieldAlertIcon aria-hidden="true" />}
+            />
+            <MetricCard
+              label="Outstanding invoices"
+              value={formatMoney(care.outstandingMinorUnits, "NGN")}
+              hint={`${care.facilities} facilities`}
+              icon={<ReceiptTextIcon aria-hidden="true" />}
+            />
+          </div>
+        </section>
+      ) : null}
+
+      {charityAdmin ? (
+        <section className="space-y-4" aria-label="Charity">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              Charity · {charityAdmin.workspaceName}
+            </h2>
+            <Button size="sm" variant="outline" asChild>
+              <Link href={`/dashboard/charity?organisation=${charityAdmin.organisationId}`}>
+                Open workspace
+              </Link>
+            </Button>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <MetricCard
+              label="Active campaigns"
+              value={charityAdmin.activeCampaigns}
+              hint="Approved and public"
+              icon={<HeartHandshakeIcon aria-hidden="true" />}
+            />
+            <MetricCard
+              label="Donations received"
+              value={formatMoney(charityAdmin.receivedMinorUnits, "NGN")}
+              hint="Net of refunds"
+              icon={<WalletIcon aria-hidden="true" />}
+            />
+            <MetricCard
+              label="Committed funds"
+              value={formatMoney(charityAdmin.committedMinorUnits, "NGN")}
+              hint="Allocated to campaign purposes"
+              icon={<ReceiptTextIcon aria-hidden="true" />}
+            />
+            <MetricCard
+              label="Scholarships"
+              value={charityAdmin.awardsCount}
+              hint={`${charityAdmin.studentsSponsored} students sponsored`}
+              icon={<GraduationCapIcon aria-hidden="true" />}
+            />
+          </div>
+        </section>
+      ) : null}
+
+      {referralPartner ? (
+        <section className="space-y-4" aria-label="Referral partner">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              Referral partner · {referralPartner.code}
+            </h2>
+            <Button size="sm" variant="outline" asChild>
+              <Link href="/dashboard/referrals">Open referrals</Link>
+            </Button>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <MetricCard
+              label="Approved balance"
+              value={formatMoney(referralPartner.approvedMinorUnits, "NGN")}
+              hint="Available to request"
+              icon={<WalletIcon aria-hidden="true" />}
+            />
+            <MetricCard
+              label="Pending commissions"
+              value={formatMoney(referralPartner.pendingMinorUnits, "NGN")}
+              hint="Awaiting eligibility or approval"
+              icon={<CalendarClockIcon aria-hidden="true" />}
+            />
+            <MetricCard
+              label="In payout"
+              value={formatMoney(referralPartner.inPayoutMinorUnits, "NGN")}
+              hint="Held against a payout request"
+              icon={<CreditCardIcon aria-hidden="true" />}
+            />
+            <MetricCard
+              label="Paid to date"
+              value={formatMoney(referralPartner.paidMinorUnits, "NGN")}
+              hint="Confirmed transfers"
+              icon={<Share2Icon aria-hidden="true" />}
+            />
+          </div>
+        </section>
+      ) : null}
+
+      {employer ? (
+        <section className="space-y-4" aria-label="Employer">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              Employment
+            </h2>
+            <Button size="sm" variant="outline" asChild>
+              <Link href="/dashboard/jobs/manage">Manage jobs</Link>
+            </Button>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <MetricCard label="Published jobs" value={employer.publishedJobs} hint={`${employer.draftJobs} drafts`} icon={<Building2Icon />} />
+            <MetricCard label="Applications" value={employer.applications} hint="Across your roles" icon={<UsersIcon />} />
+            <MetricCard label="Shortlisted" value={employer.shortlisted} hint="Awaiting interview or offer" icon={<BookOpenCheckIcon />} />
+            <MetricCard label="Hired" value={employer.hired} hint="Recorded outcomes" icon={<GraduationCapIcon />} />
+          </div>
+        </section>
+      ) : null}
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        <section className="space-y-4" aria-label="Academy">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              Academy
+            </h2>
+            <Button size="sm" variant="outline" asChild>
+              <Link href="/dashboard/academy">Open academy</Link>
+            </Button>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <MetricCard label="Active enrolments" value={academy.myEnrolments} hint="Your learning" icon={<BookOpenCheckIcon />} />
+            <MetricCard label="Completed courses" value={academy.myCompleted} hint={`${academy.myCertificates} certificates`} icon={<GraduationCapIcon />} />
+            {academy.managedCourses > 0 ? (
+              <MetricCard label="Managed courses" value={academy.managedCourses} hint={`${academy.publishedCourses} published`} icon={<BookOpenCheckIcon />} />
+            ) : null}
+          </div>
+        </section>
+
+        {finance ? (
+          <section className="space-y-4" aria-label="Finance">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h2 className="font-heading text-lg font-semibold text-brand-navy">
+                Finance
+              </h2>
+              <Button size="sm" variant="outline" asChild>
+                <Link href="/dashboard/admin/payments">Review payments</Link>
+              </Button>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <MetricCard label="Payments pending" value={finance.pendingPayments} hint="Awaiting provider verification" icon={<CreditCardIcon />} />
+              <MetricCard label="Reconciliation mismatches" value={finance.mismatches} hint="Flagged for review" icon={<AlertTriangleIcon />} />
+              <MetricCard label="Refunds in progress" value={finance.refundsInProgress} hint="Requested or processing" icon={<ReceiptTextIcon />} />
+              <MetricCard label="Payouts awaiting action" value={finance.pendingPayouts} hint="Pending or approved" icon={<WalletIcon />} />
+            </div>
+          </section>
+        ) : null}
+      </div>
+
+      {myCharity.donationsCount > 0 ||
+      myCharity.applicationsCount > 0 ||
+      myCharity.awardsCount > 0 ? (
+        <section className="space-y-4" aria-label="My charity activity">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              My charity and scholarships
+            </h2>
+            <Button size="sm" variant="outline" asChild>
+              <Link href="/dashboard/charity">Open charity</Link>
+            </Button>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <MetricCard label="Donations" value={myCharity.donationsCount} hint={formatMoney(myCharity.donatedMinorUnits, "NGN")} icon={<HeartHandshakeIcon />} />
+            <MetricCard label="Scholarship applications" value={myCharity.applicationsCount} hint="Submitted" icon={<BookOpenCheckIcon />} />
+            <MetricCard label="Awards" value={myCharity.awardsCount} hint={`${myCharity.pendingAwards} awaiting response`} icon={<GraduationCapIcon />} />
+          </div>
+        </section>
+      ) : null}
+
+      <section className="space-y-4" aria-label="Your organisations">
+        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          Your organisations
+        </h2>
+        {user.organisations.length === 0 ? (
+          <Card className="p-5 text-sm text-muted-foreground">
+            You are not a member of an organisation yet.{" "}
+            <Link href="/dashboard/organisation" className="font-medium text-brand-teal hover:underline">
+              Create or join a workspace
+            </Link>
+            .
+          </Card>
+        ) : (
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {user.organisations.map((organisation) => (
+              <Card key={organisation.organisationId} className="space-y-2 p-5">
+                <p className="font-heading text-base font-semibold text-brand-navy">
+                  {organisation.organisationName}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {organisation.roles
+                    .map((role) => ROLE_LABELS[role])
+                    .join(", ") || "Member"}
+                </p>
+                <div className="flex flex-wrap gap-2 pt-1">
+                  <Button size="sm" variant="outline" asChild>
+                    <Link href={`/dashboard/organisation/${organisation.organisationId}`}>
+                      Open
+                    </Link>
+                  </Button>
+                  {canViewBilling ? (
+                    <Button size="sm" variant="ghost" asChild>
+                      <Link
+                        href={`/dashboard/organisation/${organisation.organisationId}/billing`}
+                      >
+                        Billing
+                      </Link>
+                    </Button>
+                  ) : null}
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
+        <div className="grid gap-4 sm:grid-cols-3">
+          <MetricCard label="Organisations" value={facts.organisationCount} hint="Workspaces you belong to" icon={<Building2Icon />} />
+          <MetricCard label="Active members" value={facts.activeMembershipCount} hint="Across your organisations" icon={<UsersIcon />} />
+          <MetricCard label="Pending invitations" value={facts.pendingInvitationCount} hint="Awaiting acceptance" icon={<UsersIcon />} />
         </div>
       </section>
-    </div>
-  );
-}
-
-async function DashboardFacts() {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    return null;
-  }
-
-  const facts = await getDashboardFacts(user);
-
-  return (
-    <section
-      aria-label="Your workspace"
-      className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
-    >
-      <MetricCard
-        label="Organisations"
-        value={String(facts.organisationCount)}
-        hint="Workspaces you belong to"
-        icon={<Building2Icon />}
-      />
-      <MetricCard
-        label="Active members"
-        value={String(facts.activeMembershipCount)}
-        hint="Across your organisations"
-        icon={<UsersIcon />}
-      />
-      <MetricCard
-        label="Pending invitations"
-        value={String(facts.pendingInvitationCount)}
-        hint="Awaiting acceptance"
-        icon={<MailIcon />}
-      />
-      <MetricCard
-        label="Academy"
-        value="Live"
-        hint="Browse and learn"
-        icon={<GraduationCapIcon />}
-      />
-      <MetricCard
-        label="Verifications"
-        value="—"
-        hint="Organisation review, Phase 3"
-        icon={<ShieldCheckIcon />}
-        empty
-      />
-    </section>
-  );
-}
-
-function DashboardFactsSkeleton() {
-  return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {Array.from({ length: 4 }).map((_, index) => (
-        <Skeleton key={index} className="h-28 rounded-xl" />
-      ))}
     </div>
   );
 }

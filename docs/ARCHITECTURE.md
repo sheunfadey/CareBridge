@@ -197,6 +197,38 @@ and write.
   on the public campaign page. Outcome reporting records training completion,
   internship and employment outcomes only where they can be shared.
 
+### Analytics, reporting and subscriptions (Phase 9)
+
+- **Role-aware dashboard** (`src/app/dashboard/page.tsx`). The dashboard resolves
+  live snapshots for care operations, charity, referral partners, employers,
+  academy learners/managers and finance staff. It also surfaces subscription
+  read-only/ending-trial warnings and the user's organisations.
+- **Reporting** (`src/server/reports/registry.ts`). Reports are declarative
+  definitions with columns, permissions and date/organisation filters. The
+  catalogue covers enrolments, course completions, internships, employment
+  outcomes, employer activity, referrals, commission liabilities, payment
+  reconciliation, refunds, charity campaign finance, scholarship allocation, care
+  occupancy, incidents, inventory, invoices and expenses.
+- **CSV exports** (`/api/reports/[report]/export`). Exports require
+  `report_export`, are capped at 5,000 rows and write a `report.exported` audit
+  record with the report key, filters, row count and timestamp.
+- **Subscription plans** (`subscription_plans`). Plans are configuration: modules,
+  user/facility limits, storage allowance, trial and grace days. Prices are null
+  until the business configures them; the application never invents a price.
+- **Organisation subscriptions** (`organisation_subscriptions`). New
+  organisations start a trial on a plan suited to their type (professional for
+  care providers, enterprise for charities, starter otherwise). Existing
+  organisations are backfilled as legacy/active.
+- **Billing lifecycle**. `subscription_events` records creation, plan changes,
+  renewals, cancellation and status changes. `subscription_payments` is a separate
+  append-only ledger from training purchases, donations and referral payouts.
+  Platform billing staff record payments and set statuses; organisation owners can
+  change plan/cycle and cancel/resume but cannot alter status or periods.
+- **Feature limits**. Database functions and triggers enforce member limits,
+  facility limits, module access and read-only states on the primary write tables.
+  Suspended or expired subscriptions block writes but never hide resident/care
+  records; reads and CSV exports remain available.
+
 ### Cross-tenant isolation
 
 `supabase/tests/rls_isolation.sql` seeds two tenants and asserts — as an

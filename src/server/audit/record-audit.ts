@@ -139,7 +139,14 @@ export type AuditAction =
   | "charity.scholarship.awarded"
   | "charity.scholarship.award_status_changed"
   | "charity.scholarship.outcome_recorded"
-  | "charity.impact.saved";
+  | "charity.impact.saved"
+  | "billing.plan_saved"
+  | "billing.subscription_plan_changed"
+  | "billing.subscription_cancelled"
+  | "billing.subscription_resumed"
+  | "billing.payment_recorded"
+  | "billing.status_changed"
+  | "report.exported";
 
 export type AuditEntry = {
   actorId: string | null;

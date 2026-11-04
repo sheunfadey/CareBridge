@@ -86,6 +86,18 @@ export const primaryNav: NavGroup[] = [
           "payout_approve",
         ],
       },
+      {
+        label: "Subscriptions",
+        href: "/dashboard/admin/subscriptions",
+        icon: "CreditCard",
+        permissions: ["billing_manage"],
+      },
+      {
+        label: "Reports",
+        href: "/dashboard/reports",
+        icon: "BarChart3",
+        permissions: ["report_view"],
+      },
     ],
   },
   {

@@ -23,7 +23,7 @@ mobile-first).
 | 6 | Payments & referral management | Complete |
 | 7 | Care-home operations | Complete (core modules) |
 | 8 | Charity & scholarships | Complete (core modules) |
-| 9 | Analytics & subscriptions | Not started |
+| 9 | Analytics & subscriptions | Complete (core modules) |
 | 10 | QA & production readiness | Not started |
 
 ## Tech stack
@@ -132,6 +132,13 @@ non-super-admins from escalating themselves.
   reviewer decisions, full/partial awards with course allocation, outcome
   tracking and published impact reports. Donations are reported separately from
   commercial revenue.
+- **Analytics, subscriptions and feature limits (Phase 9, core modules complete)** -
+  role-aware dashboards, a 16-report catalogue with date/organisation filters,
+  audited CSV exports, configurable subscription plans, organisation
+  subscriptions with lifecycle events, separate subscription payments, and
+  database-enforced user, facility and module limits. Suspended or expired
+  subscriptions make a workspace read-only while keeping records readable and
+  exportable.
 - **Theme & responsiveness** - light/dark theme toggle, mobile navigation and
   responsive dashboard layouts.
 
@@ -152,6 +159,10 @@ non-super-admins from escalating themselves.
 | `/dashboard/care-homes/*` | Residents, staff, roster, daily care, plans, medication, incidents, inventory, expenses, invoices and reports |
 | `/charity`, `/charity/[slug]` | Public charity campaigns and donation pages |
 | `/dashboard/charity/*` | Campaigns, donations, scholarships, impact reports and charity reporting |
+| `/dashboard/reports` | Role-appropriate report catalogue and filters |
+| `/api/reports/[report]/export` | Audited CSV report export |
+| `/dashboard/organisation/[organisationId]/billing` | Organisation plan, limits and billing history |
+| `/dashboard/admin/subscriptions` | Platform plans, subscriptions and payment recording |
 | `/dashboard/admin/payments/*` | Finance payment review and refunds |
 | `/dashboard/admin/reconciliation` | Provider reconciliation |
 | `/dashboard/admin/referrals` | Partner, commission and payout administration |

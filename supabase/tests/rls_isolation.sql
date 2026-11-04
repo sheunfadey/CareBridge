@@ -1063,9 +1063,137 @@ begin
   raise notice 'PASS: charity isolation checks held';
 end $$;
 
+-- =============================================================================
+-- Phase 9: subscription isolation, read-only and module limits
+-- =============================================================================
+do $$
+declare
+  v_owner_a uuid := '11111111-1111-1111-1111-111111111111';
+  v_org_a uuid := 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+  v_org_b uuid := 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb';
+  v_facility_a uuid := 'f7a00000-0000-4000-8000-000000000001';
+  v_plan_professional uuid;
+  v_plan_starter uuid;
+  v_count int;
+  v_flag boolean;
+begin
+  select id into v_plan_professional from public.subscription_plans where code = 'professional';
+  select id into v_plan_starter from public.subscription_plans where code = 'starter';
+
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_owner_a, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count from public.organisation_subscriptions where organisation_id = v_org_a;
+  if v_count <> 1 then
+    raise exception 'FAIL: owner expected 1 own subscription, saw %', v_count;
+  end if;
+
+  select count(*) into v_count
+  from public.organisation_subscriptions
+  where organisation_id = v_org_b;
+  if v_count <> 0 then
+    raise exception 'FAIL: owner could read another organisation subscription';
+  end if;
+
+  update public.organisation_subscriptions
+  set plan_id = v_plan_professional,
+      billing_cycle = 'annual'
+  where organisation_id = v_org_a;
+  get diagnostics v_count = row_count;
+  if v_count <> 1 then
+    raise exception 'FAIL: owner could not change their plan';
+  end if;
+
+  begin
+    update public.organisation_subscriptions
+    set status = 'suspended'
+    where organisation_id = v_org_a;
+    raise exception 'FAIL: owner could suspend their own subscription';
+  exception
+    when others then
+      if sqlerrm not like '%Only platform billing%' then raise; end if;
+  end;
+
+  begin
+    update public.organisation_subscriptions
+    set current_period_end = now() + interval '10 years'
+    where organisation_id = v_org_a;
+    raise exception 'FAIL: owner could extend their subscription period';
+  exception
+    when others then
+      if sqlerrm not like '%Only platform billing%' then raise; end if;
+  end;
+
+  reset role;
+
+  -- Suspend as a trusted connection, then verify the workspace is read-only.
+  perform set_config('request.jwt.claims', '', true);
+  update public.organisation_subscriptions
+  set status = 'suspended',
+      suspended_at = now()
+  where organisation_id = v_org_a;
+
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_owner_a, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  begin
+    insert into public.residents (facility_id, reference, first_name, last_name)
+    values (v_facility_a, 'P9-READONLY', 'Test', 'Resident');
+    raise exception 'FAIL: suspended workspace accepted a new resident';
+  exception
+    when others then
+      if sqlerrm not like '%read-only%' then raise; end if;
+  end;
+
+  select public.organisation_can_write(v_org_a) into v_flag;
+
+  reset role;
+
+  perform set_config('request.jwt.claims', '', true);
+  update public.organisation_subscriptions
+  set status = 'active',
+      suspended_at = null,
+      trial_ends_at = null,
+      current_period_end = now() + interval '1 year',
+      plan_id = v_plan_starter
+  where organisation_id = v_org_a;
+
+  if v_flag then
+    raise exception 'FAIL: organisation_can_write returned true while suspended';
+  end if;
+
+  -- Starter excludes care: writes to care records must be rejected by the module guard.
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_owner_a, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  begin
+    insert into public.residents (facility_id, reference, first_name, last_name)
+    values (v_facility_a, 'P9-MODULE', 'Test', 'Resident');
+    raise exception 'FAIL: starter plan accepted a care record';
+  exception
+    when others then
+      if sqlerrm not like '%does not include the care module%' then raise; end if;
+  end;
+
+  reset role;
+
+  perform set_config('request.jwt.claims', '', true);
+  update public.organisation_subscriptions
+  set plan_id = v_plan_professional,
+      status = 'active',
+      current_period_end = now() + interval '1 year'
+  where organisation_id = v_org_a;
+
+  raise notice 'PASS: subscription isolation checks held';
+end $$;
+
 rollback;
 
 -- Final, non-transactional confirmation the harness can assert on.
 select 'RLS_ISOLATION_PASS' as result;
+
 
 

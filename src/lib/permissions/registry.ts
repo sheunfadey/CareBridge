@@ -34,6 +34,8 @@ export const PERMISSION_CATEGORIES = [
   "charity_campaigns",
   "donor_reporting",
   "scholarships",
+  "billing",
+  "reporting",
   "compliance_records",
   "audit_logs",
 ] as const;
@@ -102,6 +104,13 @@ export const PERMISSIONS = {
   scholarship_manage: "scholarships",
   scholarship_review: "scholarships",
 
+  // Billing and reporting
+  subscription_view: "billing",
+  subscription_manage: "billing",
+  billing_manage: "billing",
+  report_view: "reporting",
+  report_export: "reporting",
+
   // Compliance
   compliance_view: "compliance_records",
   audit_log_view: "audit_logs",
@@ -125,6 +134,7 @@ export const ROLE_PERMISSIONS: Record<RoleKey, PermissionKey[]> = {
     "incident_view",
     "compliance_view",
     "audit_log_view",
+    "subscription_view",
   ],
 
   training_admin: [
@@ -139,6 +149,10 @@ export const ROLE_PERMISSIONS: Record<RoleKey, PermissionKey[]> = {
     "practical_assessment_record",
     "internship_manage",
     "financial_report_view",
+    "subscription_view",
+    "subscription_manage",
+    "report_view",
+    "report_export",
   ],
 
   instructor: [
@@ -157,7 +171,15 @@ export const ROLE_PERMISSIONS: Record<RoleKey, PermissionKey[]> = {
     "incident_manage",
   ],
 
-  employer: ["job_manage", "candidate_view", "user_view"],
+  employer: [
+    "job_manage",
+    "candidate_view",
+    "user_view",
+    "subscription_view",
+    "subscription_manage",
+    "report_view",
+    "report_export",
+  ],
 
   care_home_owner: [
     "user_view",
@@ -183,6 +205,10 @@ export const ROLE_PERMISSIONS: Record<RoleKey, PermissionKey[]> = {
     "invoice_view",
     "invoice_manage",
     "care_report_view",
+    "subscription_view",
+    "subscription_manage",
+    "report_view",
+    "report_export",
   ],
 
   care_home_manager: [
@@ -204,6 +230,9 @@ export const ROLE_PERMISSIONS: Record<RoleKey, PermissionKey[]> = {
     "invoice_view",
     "invoice_manage",
     "care_report_view",
+    "subscription_view",
+    "report_view",
+    "report_export",
   ],
 
   care_staff: [
@@ -233,6 +262,10 @@ export const ROLE_PERMISSIONS: Record<RoleKey, PermissionKey[]> = {
     "financial_report_view",
     "scholarship_manage",
     "scholarship_review",
+    "subscription_view",
+    "subscription_manage",
+    "report_view",
+    "report_export",
   ],
 
   donor: [],
@@ -248,6 +281,10 @@ export const ROLE_PERMISSIONS: Record<RoleKey, PermissionKey[]> = {
     "invoice_view",
     "expense_approve",
     "care_report_view",
+    "billing_manage",
+    "subscription_view",
+    "report_view",
+    "report_export",
   ],
 
   compliance_officer: [
@@ -258,6 +295,8 @@ export const ROLE_PERMISSIONS: Record<RoleKey, PermissionKey[]> = {
     "care_report_view",
     "charity_campaign_approve",
     "scholarship_review",
+    "report_view",
+    "report_export",
   ],
 
   family_member: [],

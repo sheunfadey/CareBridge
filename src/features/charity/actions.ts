@@ -83,6 +83,18 @@ function lines(value: string | undefined): string[] {
 
 function friendlyDbMessage(message: string): string {
   const value = message.toLowerCase();
+  if (value.includes("read-only because the subscription")) {
+    return "This workspace is read-only because the subscription is suspended or expired. Existing records remain readable and exportable.";
+  }
+  if (value.includes("does not include the")) {
+    return message;
+  }
+  if (value.includes("user limit for this plan")) {
+    return "This plan's user limit has been reached. Upgrade the plan to add more members.";
+  }
+  if (value.includes("facility limit for this plan")) {
+    return "This plan's facility limit has been reached. Upgrade the plan to add more facilities.";
+  }
   if (value.includes("duplicate key") && value.includes("slug")) {
     return "That URL slug is already in use. Choose another one.";
   }

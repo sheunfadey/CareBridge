@@ -245,6 +245,20 @@ export async function inviteMemberAction(input: {
       .single();
 
     if (error || !invitation) {
+      if (error?.message.toLowerCase().includes("user limit for this plan")) {
+        return {
+          ok: false,
+          message:
+            "This plan's user limit has been reached. Upgrade the subscription to invite more members.",
+        };
+      }
+      if (error?.message.toLowerCase().includes("read-only because the subscription")) {
+        return {
+          ok: false,
+          message:
+            "This workspace is read-only because the subscription is suspended or expired.",
+        };
+      }
       return { ok: false, message: "We could not create the invitation." };
     }
 
