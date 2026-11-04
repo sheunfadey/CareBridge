@@ -20,6 +20,7 @@ Vitest lives in `tests/` and runs with `vitest.config.mts`.
 | `validation.test.ts` | Core validation schemas |
 | `employment-validation.test.ts` | Jobs, internships and placements |
 | `payments.test.ts` | Money parsing, referral commission maths and payment schemas |
+| `academy.test.ts` | Course assessment settings, question types and answer normalisation |
 | `care.test.ts` | Care dates, residents, staff availability, shifts, incidents, inventory and invoices |
 | `charity.test.ts` | Campaigns, donations, scholarships and impact reports |
 | `billing.test.ts` | Subscription labels, plan changes and payment schemas |
@@ -28,7 +29,7 @@ Vitest lives in `tests/` and runs with `vitest.config.mts`.
 | `organisation-validation.test.ts` | Organisation validation |
 | `site-navigation.test.ts` | Public navigation |
 
-Current result: **85 tests passing across 11 files**.
+Current result: **95 tests passing across 12 files**.
 
 Unit tests do not touch the database and never fabricate financial outcomes.
 
@@ -41,6 +42,7 @@ users, asserts isolation and rolls back. It covers:
 - Phase 6 payments, commissions, attributions and partner isolation;
 - Phase 7 residents, family links, staff/medication/invoice restrictions, and
   family summary/full portal access;
+- Academy assessment answer-key secrecy, attempt isolation and server grading;
 - Phase 8 campaigns, donations, scholarships and award acceptance;
 - Phase 9 subscriptions, read-only states, module limits and billing guards.
 

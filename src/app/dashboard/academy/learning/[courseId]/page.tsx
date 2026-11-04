@@ -5,6 +5,7 @@ import {
   BookOpenIcon,
   CheckCircle2Icon,
   CircleIcon,
+  ClipboardCheckIcon,
   FileTextIcon,
   PlayCircleIcon,
 } from "lucide-react";
@@ -14,8 +15,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getCurrentUser } from "@/server/auth/current-user";
-import { getCourseForLearning } from "@/server/academy/queries";
+import { getCourseForLearning, listCourseAssessments } from "@/server/academy/queries";
 import { LessonCompleteButton } from "@/features/academy/components/lesson-complete-button";
+import { AssessmentRunner } from "@/features/academy/components/assessment-runner";
 
 type LearningCoursePageProps = {
   params: Promise<{ courseId: string }>;
@@ -46,6 +48,8 @@ export default async function LearningCoursePage({
   if (!course) {
     notFound();
   }
+
+  const assessments = await listCourseAssessments(courseId, user.id);
 
   const progress = course.totalLessons
     ? Math.round((course.completedLessons / course.totalLessons) * 100)
@@ -95,6 +99,47 @@ export default async function LearningCoursePage({
             />
           </div>
         </div>
+      </Card>
+
+      <Card className="overflow-hidden p-0">
+        <div className="flex items-center gap-2 border-b p-5">
+          <ClipboardCheckIcon className="size-5 text-brand-teal" aria-hidden="true" />
+          <div>
+            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              Assessments
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Required assessments must be passed before the course completes.
+              Answers are graded on the server.
+            </p>
+          </div>
+        </div>
+        {assessments.length === 0 ? (
+          <p className="p-5 text-sm text-muted-foreground">
+            No assessments have been published for this course yet.
+          </p>
+        ) : (
+          <div className="divide-y divide-border">
+            {assessments.map((assessment) => (
+              <div key={assessment.id} className="p-5">
+                <AssessmentRunner
+                  assessmentId={assessment.id}
+                  title={assessment.title}
+                  instructions={assessment.instructions}
+                  passMarkPercent={assessment.passMarkPercent}
+                  maxAttempts={assessment.maxAttempts}
+                  timeLimitMinutes={assessment.timeLimitMinutes}
+                  attemptsUsed={assessment.attemptsUsed}
+                  attemptsRemaining={assessment.attemptsRemaining}
+                  bestScorePercent={assessment.bestScorePercent}
+                  passed={assessment.passed}
+                  inProgress={assessment.inProgress}
+                  isRequired={assessment.isRequired}
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </Card>
 
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">

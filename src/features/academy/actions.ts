@@ -4,12 +4,17 @@ import { revalidatePath } from "next/cache";
 
 import { createClient } from "@/lib/supabase/server";
 import {
+  createAssessmentQuestionSchema,
+  createAssessmentSchema,
   createCourseSchema,
   createLessonSchema,
   createModuleSchema,
   linesToArray,
+  parseCorrectOptionIds,
   slugify,
   updateCourseSchema,
+  type CreateAssessmentInput,
+  type CreateAssessmentQuestionInput,
   type CreateCourseInput,
   type CreateLessonInput,
   type CreateModuleInput,
@@ -555,6 +560,397 @@ export async function enrolAction(
   }
 }
 
+export type AssessmentAttemptQuestion = {
+  id: string;
+  prompt: string;
+  questionType: "single_choice" | "multiple_choice" | "true_false";
+  options: { id: string; label: string }[];
+  points: number;
+  position: number;
+};
+
+export type AssessmentAttemptStart = {
+  attemptId: string;
+  attemptNumber: number;
+  startedAt: string;
+  expiresAt: string | null;
+  passMarkPercent: number;
+  maxAttempts: number;
+  questions: AssessmentAttemptQuestion[];
+};
+
+export type AssessmentAttemptSubmission = {
+  scorePoints: number;
+  maxPoints: number;
+  scorePercent: number;
+  passed: boolean;
+  passMarkPercent: number;
+  results: {
+    questionId: string;
+    correctOptionIds: string[];
+    isCorrect: boolean;
+    awardedPoints: number;
+    explanation: string | null;
+  }[];
+  courseCompleted: boolean;
+  certificateId: string | null;
+};
+
+export type StartAssessmentResult =
+  | { ok: true; attempt: AssessmentAttemptStart }
+  | { ok: false; message: string };
+
+export type SubmitAssessmentResult =
+  | { ok: true; result: AssessmentAttemptSubmission }
+  | { ok: false; message: string };
+
+function assessmentFriendlyMessage(message: string, fallback: string): string {
+  const lower = message.toLowerCase();
+  if (lower.includes("no questions")) {
+    return "This assessment has no questions yet. Contact your instructor.";
+  }
+  if (lower.includes("no attempts")) {
+    return "No attempts remain for this assessment. Contact your instructor if you need another attempt.";
+  }
+  if (lower.includes("not open")) {
+    return "This assessment is not open.";
+  }
+  if (lower.includes("enrol")) {
+    return "Enrol in this course before taking its assessments.";
+  }
+  if (lower.includes("expired") || lower.includes("time limit")) {
+    return "The time limit for this attempt has expired. Start a new attempt if you have one remaining.";
+  }
+  if (lower.includes("already been submitted")) {
+    return "This attempt has already been submitted.";
+  }
+  return fallback;
+}
+
+export async function createAssessmentAction(
+  input: CreateAssessmentInput,
+): Promise<AcademyActionResult> {
+  const parsed = createAssessmentSchema.safeParse(input);
+  if (!parsed.success) {
+    return {
+      ok: false,
+      message: "Please correct the highlighted fields.",
+      fieldErrors: fieldErrorsFromZod(parsed.error.issues),
+    };
+  }
+
+  try {
+    const user = await requireUser();
+    const supabase = await createClient();
+    const course = await loadCourseForManagement(
+      supabase,
+      parsed.data.courseId,
+    );
+
+    await assertCanManageCourse(course.id);
+    await assertPermission(
+      user.id,
+      "assessment_manage",
+      course.organisation_id,
+    );
+
+    const { data: assessment, error } = await supabase
+      .from("assessments")
+      .insert({
+        course_id: course.id,
+        title: parsed.data.title,
+        instructions: parsed.data.instructions || null,
+        kind: parsed.data.kind,
+        pass_mark_percent: parsed.data.passMarkPercent,
+        max_attempts: parsed.data.maxAttempts,
+        time_limit_minutes: parsed.data.timeLimitMinutes ?? null,
+        is_required: parsed.data.isRequired,
+        status: "draft",
+        created_by: user.id,
+      })
+      .select("id")
+      .single();
+
+    if (error || !assessment) {
+      return { ok: false, message: "We could not create the assessment." };
+    }
+
+    await recordAudit({
+      actorId: user.id,
+      organisationId: course.organisation_id,
+      action: "course.assessment.created",
+      entityType: "assessment",
+      entityId: assessment.id,
+      metadata: { courseId: course.id, title: parsed.data.title },
+    });
+
+    revalidatePath(`/dashboard/academy/manage/${course.id}`);
+    return {
+      ok: true,
+      message: "Assessment created as a draft.",
+      redirectTo: `/dashboard/academy/manage/${course.id}/assessments/${assessment.id}`,
+    };
+  } catch (error) {
+    return toFriendlyError(error);
+  }
+}
+
+function buildQuestionPayload(input: CreateAssessmentQuestionInput) {
+  if (input.questionType === "true_false") {
+    return {
+      options: [
+        { id: "true", label: "True" },
+        { id: "false", label: "False" },
+      ],
+      correctAnswer: [input.correctAnswer.trim().toLowerCase()],
+    };
+  }
+
+  const candidates = [
+    { id: "a", label: input.optionA?.trim() ?? "" },
+    { id: "b", label: input.optionB?.trim() ?? "" },
+    { id: "c", label: input.optionC?.trim() ?? "" },
+    { id: "d", label: input.optionD?.trim() ?? "" },
+  ].filter((option) => option.label.length > 0);
+
+  return {
+    options: candidates,
+    correctAnswer: parseCorrectOptionIds(input.correctAnswer),
+  };
+}
+
+export async function addAssessmentQuestionAction(
+  input: CreateAssessmentQuestionInput,
+): Promise<AcademyActionResult> {
+  const parsed = createAssessmentQuestionSchema.safeParse(input);
+  if (!parsed.success) {
+    return {
+      ok: false,
+      message: "Please correct the highlighted fields.",
+      fieldErrors: fieldErrorsFromZod(parsed.error.issues),
+    };
+  }
+
+  try {
+    const user = await requireUser();
+    const supabase = await createClient();
+    const { data: assessment, error: assessmentError } = await supabase
+      .from("assessments")
+      .select("id, course_id, organisation_id, status")
+      .eq("id", parsed.data.assessmentId)
+      .maybeSingle();
+
+    if (assessmentError || !assessment) {
+      return { ok: false, message: "That assessment is not available." };
+    }
+
+    await assertCanManageCourse(assessment.course_id);
+    await assertPermission(
+      user.id,
+      "assessment_manage",
+      assessment.organisation_id,
+    );
+
+    const { data: lastQuestion } = await supabase
+      .from("assessment_questions")
+      .select("position")
+      .eq("assessment_id", assessment.id)
+      .order("position", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const payload = buildQuestionPayload(parsed.data);
+    const { data: question, error } = await supabase
+      .from("assessment_questions")
+      .insert({
+        assessment_id: assessment.id,
+        prompt: parsed.data.prompt,
+        question_type: parsed.data.questionType,
+        options: payload.options,
+        correct_answer: payload.correctAnswer,
+        points: parsed.data.points,
+        explanation: parsed.data.explanation || null,
+        position: (lastQuestion?.position ?? 0) + 1,
+      })
+      .select("id")
+      .single();
+
+    if (error || !question) {
+      return { ok: false, message: "We could not add the question." };
+    }
+
+    await recordAudit({
+      actorId: user.id,
+      organisationId: assessment.organisation_id,
+      action: "course.assessment.question.created",
+      entityType: "assessment_question",
+      entityId: question.id,
+      metadata: { assessmentId: assessment.id },
+    });
+
+    revalidatePath(
+      `/dashboard/academy/manage/${assessment.course_id}/assessments/${assessment.id}`,
+    );
+    return { ok: true, message: "Question added." };
+  } catch (error) {
+    return toFriendlyError(error);
+  }
+}
+
+export async function setAssessmentPublicationAction(
+  assessmentId: string,
+  publish: boolean,
+): Promise<AcademyActionResult> {
+  try {
+    const user = await requireUser();
+    const supabase = await createClient();
+    const { data: assessment, error: assessmentError } = await supabase
+      .from("assessments")
+      .select("id, course_id, organisation_id, status, published_at")
+      .eq("id", assessmentId)
+      .maybeSingle();
+
+    if (assessmentError || !assessment) {
+      return { ok: false, message: "That assessment is not available." };
+    }
+
+    await assertCanManageCourse(assessment.course_id);
+    await assertPermission(
+      user.id,
+      "assessment_manage",
+      assessment.organisation_id,
+    );
+
+    if (publish) {
+      const { count } = await supabase
+        .from("assessment_questions")
+        .select("id", { count: "exact", head: true })
+        .eq("assessment_id", assessment.id);
+
+      if (!count) {
+        return {
+          ok: false,
+          message: "Add at least one question before publishing.",
+        };
+      }
+    }
+
+    const { error } = await supabase
+      .from("assessments")
+      .update({
+        status: publish ? "published" : "draft",
+        published_at:
+          publish && !assessment.published_at
+            ? new Date().toISOString()
+            : assessment.published_at,
+      })
+      .eq("id", assessment.id);
+
+    if (error) {
+      return {
+        ok: false,
+        message: publish
+          ? "We could not publish the assessment."
+          : "We could not return the assessment to draft.",
+      };
+    }
+
+    await recordAudit({
+      actorId: user.id,
+      organisationId: assessment.organisation_id,
+      action: publish
+        ? "course.assessment.published"
+        : "course.assessment.unpublished",
+      entityType: "assessment",
+      entityId: assessment.id,
+    });
+
+    revalidatePath(`/dashboard/academy/manage/${assessment.course_id}`);
+    revalidatePath(
+      `/dashboard/academy/manage/${assessment.course_id}/assessments/${assessment.id}`,
+    );
+    revalidatePath(`/dashboard/academy/learning/${assessment.course_id}`);
+
+    return {
+      ok: true,
+      message: publish
+        ? "Assessment published."
+        : "Assessment returned to draft.",
+    };
+  } catch (error) {
+    return toFriendlyError(error);
+  }
+}
+
+export async function startAssessmentAttemptAction(
+  assessmentId: string,
+): Promise<StartAssessmentResult> {
+  try {
+    await requireUser();
+    const supabase = await createClient();
+    const { data, error } = await supabase.rpc("start_assessment_attempt", {
+      p_assessment: assessmentId,
+    });
+
+    if (error || !data || typeof data !== "object" || Array.isArray(data)) {
+      return {
+        ok: false,
+        message: assessmentFriendlyMessage(
+          error?.message ?? "",
+          "We could not start this assessment. Try again.",
+        ),
+      };
+    }
+
+    return { ok: true, attempt: data as unknown as AssessmentAttemptStart };
+  } catch (error) {
+    return toFriendlyError(error) as StartAssessmentResult;
+  }
+}
+
+export async function submitAssessmentAttemptAction(input: {
+  attemptId: string;
+  answers: Record<string, string[]>;
+}): Promise<SubmitAssessmentResult> {
+  try {
+    const user = await requireUser();
+    const supabase = await createClient();
+    const { data, error } = await supabase.rpc("submit_assessment_attempt", {
+      p_attempt: input.attemptId,
+      p_answers: input.answers,
+    });
+
+    if (error || !data || typeof data !== "object" || Array.isArray(data)) {
+      return {
+        ok: false,
+        message: assessmentFriendlyMessage(
+          error?.message ?? "",
+          "We could not submit this attempt. Try again.",
+        ),
+      };
+    }
+
+    const result = data as unknown as AssessmentAttemptSubmission;
+
+    await recordAudit({
+      actorId: user.id,
+      action: "assessment.attempt.submitted",
+      entityType: "assessment_attempt",
+      entityId: input.attemptId,
+      metadata: {
+        scorePercent: result.scorePercent,
+        passed: result.passed,
+        courseCompleted: result.courseCompleted,
+      },
+    });
+
+    revalidatePath("/dashboard/academy/learning");
+    return { ok: true, result };
+  } catch (error) {
+    return toFriendlyError(error) as SubmitAssessmentResult;
+  }
+}
+
 export async function completeLessonAction(
   lessonId: string,
 ): Promise<CompleteLessonResult> {
@@ -576,10 +972,10 @@ export async function completeLessonAction(
     }
 
     const result = data as Record<string, Json | undefined>;
-    const courseCompleted = result.course_completed === true;
+    const courseCompleted = result.courseCompleted === true;
     const certificateId =
-      typeof result.certificate_id === "string"
-        ? result.certificate_id
+      typeof result.certificateId === "string"
+        ? result.certificateId
         : null;
 
     if (courseCompleted) {
@@ -598,11 +994,11 @@ export async function completeLessonAction(
       ok: true,
       courseCompleted,
       completedLessons:
-        typeof result.completed_lessons === "number"
-          ? result.completed_lessons
+        typeof result.completedLessons === "number"
+          ? result.completedLessons
           : 0,
       totalLessons:
-        typeof result.total_lessons === "number" ? result.total_lessons : 0,
+        typeof result.requiredLessons === "number" ? result.requiredLessons : 0,
       certificateId,
     };
   } catch (error) {

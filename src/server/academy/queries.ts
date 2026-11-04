@@ -3,6 +3,10 @@ import "server-only";
 import { createClient } from "@/lib/supabase/server";
 import type { CurrentUser } from "@/server/auth/current-user";
 import type {
+  AssessmentAttemptStatus,
+  AssessmentKind,
+  AssessmentQuestionType,
+  AssessmentStatus,
   CourseDifficulty,
   CourseStatus,
   EnrolmentStatus,
@@ -101,6 +105,89 @@ export type MyLearningCourse = {
   totalLessons: number;
   completedLessons: number;
 };
+
+export type CourseAssessment = {
+  id: string;
+  title: string;
+  instructions: string | null;
+  kind: AssessmentKind;
+  passMarkPercent: number;
+  maxAttempts: number;
+  timeLimitMinutes: number | null;
+  isRequired: boolean;
+  questionCount: number;
+  attemptsUsed: number;
+  attemptsRemaining: number;
+  bestScorePercent: number | null;
+  passed: boolean;
+  inProgress: boolean;
+};
+
+export type ManagedAssessment = {
+  id: string;
+  title: string;
+  kind: AssessmentKind;
+  status: AssessmentStatus;
+  isRequired: boolean;
+  passMarkPercent: number;
+  maxAttempts: number;
+  timeLimitMinutes: number | null;
+  questionCount: number;
+  totalPoints: number;
+  attemptCount: number;
+};
+
+export type ManagedAssessmentDetail = ManagedAssessment & {
+  courseId: string;
+  courseTitle: string;
+  instructions: string | null;
+  questions: {
+    id: string;
+    prompt: string;
+    questionType: AssessmentQuestionType;
+    options: { id: string; label: string }[];
+    correctOptionIds: string[];
+    points: number;
+    explanation: string | null;
+    position: number;
+  }[];
+  attempts: {
+    id: string;
+    attemptNumber: number;
+    status: AssessmentAttemptStatus;
+    startedAt: string;
+    submittedAt: string | null;
+    scorePoints: number | null;
+    maxPoints: number | null;
+    passed: boolean | null;
+    learnerName: string;
+  }[];
+};
+
+function optionList(value: unknown): { id: string; label: string }[] {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((option) => {
+    if (
+      !option ||
+      typeof option !== "object" ||
+      typeof (option as { id?: unknown }).id !== "string" ||
+      typeof (option as { label?: unknown }).label !== "string"
+    ) {
+      return [];
+    }
+    return [
+      {
+        id: (option as { id: string }).id,
+        label: (option as { label: string }).label,
+      },
+    ];
+  });
+}
+
+function answerList(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((item): item is string => typeof item === "string");
+}
 
 export type ManagedCourse = {
   id: string;
@@ -596,6 +683,226 @@ export async function listManagedCourses(
       updatedAt: course.updated_at,
     };
   });
+}
+
+export async function listCourseAssessments(
+  courseId: string,
+  userId: string,
+): Promise<CourseAssessment[]> {
+  const enrolment = await getEnrolment(courseId, userId);
+  if (!enrolment || enrolment.status === "withdrawn") return [];
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("assessments")
+    .select(
+      "id, title, instructions, kind, pass_mark_percent, max_attempts, time_limit_minutes, is_required, assessment_questions(id)",
+    )
+    .eq("course_id", courseId)
+    .eq("status", "published")
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("[academy] could not load assessments", error);
+    return [];
+  }
+
+  const assessments = data ?? [];
+  if (assessments.length === 0) return [];
+
+  const { data: attempts } = await supabase
+    .from("assessment_attempts")
+    .select(
+      "assessment_id, status, score_points, max_points, passed, submitted_at",
+    )
+    .eq("enrolment_id", enrolment.id)
+    .in(
+      "assessment_id",
+      assessments.map((assessment) => assessment.id),
+    );
+
+  const attemptsByAssessment = new Map<
+    string,
+    {
+      status: AssessmentAttemptStatus;
+      scorePoints: number | null;
+      maxPoints: number | null;
+      passed: boolean | null;
+    }[]
+  >();
+  for (const attempt of attempts ?? []) {
+    const list = attemptsByAssessment.get(attempt.assessment_id) ?? [];
+    list.push({
+      status: attempt.status,
+      scorePoints: attempt.score_points,
+      maxPoints: attempt.max_points,
+      passed: attempt.passed,
+    });
+    attemptsByAssessment.set(attempt.assessment_id, list);
+  }
+
+  return assessments.map((assessment) => {
+    const rows = attemptsByAssessment.get(assessment.id) ?? [];
+    const used = rows.filter(
+      (row) => row.status === "submitted" || row.status === "expired",
+    ).length;
+    const scores = rows.flatMap((row) =>
+      row.status === "submitted" &&
+      row.scorePoints !== null &&
+      row.maxPoints !== null &&
+      row.maxPoints > 0
+        ? [Math.round((row.scorePoints * 100) / row.maxPoints)]
+        : [],
+    );
+
+    return {
+      id: assessment.id,
+      title: assessment.title,
+      instructions: assessment.instructions,
+      kind: assessment.kind,
+      passMarkPercent: assessment.pass_mark_percent,
+      maxAttempts: assessment.max_attempts,
+      timeLimitMinutes: assessment.time_limit_minutes,
+      isRequired: assessment.is_required,
+      questionCount: assessment.assessment_questions?.length ?? 0,
+      attemptsUsed: used,
+      attemptsRemaining: Math.max(0, assessment.max_attempts - used),
+      bestScorePercent: scores.length ? Math.max(...scores) : null,
+      passed: rows.some((row) => row.passed === true),
+      inProgress: rows.some((row) => row.status === "in_progress"),
+    };
+  });
+}
+
+export async function listManagedAssessments(
+  courseId: string,
+): Promise<ManagedAssessment[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("assessments")
+    .select(
+      "id, title, kind, status, is_required, pass_mark_percent, max_attempts, time_limit_minutes, assessment_questions(id, points), assessment_attempts(id)",
+    )
+    .eq("course_id", courseId)
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("[academy] could not load managed assessments", error);
+    return [];
+  }
+
+  return (data ?? []).map((assessment) => ({
+    id: assessment.id,
+    title: assessment.title,
+    kind: assessment.kind,
+    status: assessment.status,
+    isRequired: assessment.is_required,
+    passMarkPercent: assessment.pass_mark_percent,
+    maxAttempts: assessment.max_attempts,
+    timeLimitMinutes: assessment.time_limit_minutes,
+    questionCount: assessment.assessment_questions?.length ?? 0,
+    totalPoints: (assessment.assessment_questions ?? []).reduce(
+      (total, question) => total + question.points,
+      0,
+    ),
+    attemptCount: assessment.assessment_attempts?.length ?? 0,
+  }));
+}
+
+export async function getManagedAssessmentDetail(
+  courseId: string,
+  assessmentId: string,
+  user: CurrentUser,
+): Promise<ManagedAssessmentDetail | null> {
+  if (
+    !user.isSuperAdmin &&
+    !user.permissions.has("course_manage") &&
+    !user.permissions.has("assessment_manage")
+  ) {
+    return null;
+  }
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("assessments")
+    .select(
+      "id, course_id, title, instructions, kind, status, is_required, pass_mark_percent, max_attempts, time_limit_minutes, courses(id, title, organisation_id), assessment_questions(id, prompt, question_type, options, correct_answer, points, explanation, position)",
+    )
+    .eq("id", assessmentId)
+    .eq("course_id", courseId)
+    .maybeSingle();
+
+  if (error || !data) {
+    if (error) console.error("[academy] could not load assessment", error);
+    return null;
+  }
+
+  const course = singleRelation(data.courses);
+  if (!course) return null;
+
+  if (!user.isSuperAdmin && course.organisation_id) {
+    const allowed = user.organisations.some(
+      (org) =>
+        org.organisationId === course.organisation_id &&
+        (org.roles.includes("training_admin") ||
+          org.roles.includes("instructor")),
+    );
+    if (!allowed) return null;
+  }
+
+  const { data: attempts } = await supabase
+    .from("assessment_attempts")
+    .select(
+      "id, attempt_number, status, started_at, submitted_at, score_points, max_points, passed, profiles(full_name, email)",
+    )
+    .eq("assessment_id", assessmentId)
+    .order("submitted_at", { ascending: false });
+
+  const questions = [...(data.assessment_questions ?? [])].sort(
+    (a, b) => a.position - b.position,
+  );
+
+  return {
+    id: data.id,
+    courseId: data.course_id,
+    courseTitle: course.title,
+    title: data.title,
+    instructions: data.instructions,
+    kind: data.kind,
+    status: data.status,
+    isRequired: data.is_required,
+    passMarkPercent: data.pass_mark_percent,
+    maxAttempts: data.max_attempts,
+    timeLimitMinutes: data.time_limit_minutes,
+    questionCount: questions.length,
+    totalPoints: questions.reduce((total, question) => total + question.points, 0),
+    attemptCount: attempts?.length ?? 0,
+    questions: questions.map((question) => ({
+      id: question.id,
+      prompt: question.prompt,
+      questionType: question.question_type,
+      options: optionList(question.options),
+      correctOptionIds: answerList(question.correct_answer),
+      points: question.points,
+      explanation: question.explanation,
+      position: question.position,
+    })),
+    attempts: (attempts ?? []).map((attempt) => {
+      const profile = singleRelation(attempt.profiles);
+      return {
+        id: attempt.id,
+        attemptNumber: attempt.attempt_number,
+        status: attempt.status,
+        startedAt: attempt.started_at,
+        submittedAt: attempt.submitted_at,
+        scorePoints: attempt.score_points,
+        maxPoints: attempt.max_points,
+        passed: attempt.passed,
+        learnerName:
+          profile?.full_name ?? profile?.email ?? "Learner",
+      };
+    }),
+  };
 }
 
 export async function listProgrammeOptions(): Promise<ProgrammeOption[]> {

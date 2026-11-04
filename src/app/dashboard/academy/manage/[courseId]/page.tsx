@@ -9,11 +9,18 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { getCurrentUser } from "@/server/auth/current-user";
-import { getManagedCourseDetail } from "@/server/academy/queries";
-import { courseDifficultyLabels } from "@/lib/validation/academy";
+import {
+  getManagedCourseDetail,
+  listManagedAssessments,
+} from "@/server/academy/queries";
+import {
+  assessmentStatusLabels,
+  courseDifficultyLabels,
+} from "@/lib/validation/academy";
 import { AddModuleDialog } from "@/features/academy/components/add-module-dialog";
 import { AddLessonDialog } from "@/features/academy/components/add-lesson-dialog";
 import { PublishCourseButton } from "@/features/academy/components/publish-course-button";
+import { CreateAssessmentDialog } from "@/features/academy/components/create-assessment-dialog";
 
 type ManageCoursePageProps = {
   params: Promise<{ courseId: string }>;
@@ -44,12 +51,16 @@ export default async function ManageCoursePage({
     notFound();
   }
 
+  const assessments = await listManagedAssessments(course.id);
+
   const canEdit =
     user.isSuperAdmin || user.permissions.has("course_manage");
   const canPublish =
     user.isSuperAdmin || user.permissions.has("course_publish");
   const canAddContent =
     user.isSuperAdmin || user.permissions.has("learning_material_manage");
+  const canManageAssessments =
+    user.isSuperAdmin || user.permissions.has("assessment_manage");
 
   return (
     <div className="space-y-6">
@@ -92,6 +103,71 @@ export default async function ManageCoursePage({
           {course.estimatedMinutes} min
         </span>
       </div>
+
+      <Card className="overflow-hidden p-0">
+        <div className="flex flex-wrap items-start justify-between gap-3 border-b p-5">
+          <div>
+            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              Assessments
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Auto-graded quizzes and exams. Required assessments gate course
+              completion.
+            </p>
+          </div>
+          {canManageAssessments ? (
+            <CreateAssessmentDialog courseId={course.id}>
+              <Button variant="outline" size="sm">
+                <PlusIcon />
+                New assessment
+              </Button>
+            </CreateAssessmentDialog>
+          ) : null}
+        </div>
+        {assessments.length === 0 ? (
+          <p className="p-5 text-sm text-muted-foreground">
+            No assessments yet. Create one, add questions, then publish it.
+          </p>
+        ) : (
+          <ul className="divide-y divide-border">
+            {assessments.map((assessment) => (
+              <li key={assessment.id}>
+                <Link
+                  href={`/dashboard/academy/manage/${course.id}/assessments/${assessment.id}`}
+                  className="flex flex-wrap items-center justify-between gap-3 p-5 text-sm transition hover:bg-muted/50"
+                >
+                  <div>
+                    <p className="font-medium text-brand-navy">
+                      {assessment.title}
+                    </p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      {assessment.questionCount} question
+                      {assessment.questionCount === 1 ? "" : "s"} ·{" "}
+                      {assessment.totalPoints} point
+                      {assessment.totalPoints === 1 ? "" : "s"} ·{" "}
+                      {assessment.attemptCount} attempt
+                      {assessment.attemptCount === 1 ? "" : "s"} · Pass mark{" "}
+                      {assessment.passMarkPercent}%
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    {assessment.isRequired ? (
+                      <Badge variant="secondary">Required</Badge>
+                    ) : null}
+                    <StatusBadge
+                      status={assessment.status}
+                      label={assessmentStatusLabels[assessment.status]}
+                    />
+                    <span className="text-xs text-muted-foreground">
+                      Manage →
+                    </span>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Card>
 
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="space-y-4">

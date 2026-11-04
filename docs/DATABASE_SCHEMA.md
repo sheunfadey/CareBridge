@@ -24,6 +24,7 @@ preserved.
 | `0021`–`0024` | Charity: campaigns, reviews, donations, allocations, expenses, scholarship programmes/applications/awards, impact reports |
 | `0025`–`0029` | Subscriptions, plans, lifecycle events, subscription payments, feature limits, read-only guards and immediate-cancellation correction |
 | `0030` | Family portal access levels: `family_resident_summaries()` RPC and summary/full `can_access_resident` enforcement |
+| `0031` | Academy assessments: questions, attempts, server-side grading, attempt limits and assessment-gated completion |
 
 ## Core tenancy
 
@@ -109,6 +110,9 @@ Helper functions: `subscription_effective_status`, `organisation_can_write`,
    triggers; suspended workspaces are read-only but records remain readable.
 9. Immediate subscription cancellation is immediately effective
    (`0029_cancelled_effective_status.sql`).
+10. Assessment answer keys are readable only by course managers. Learners receive
+    questions without the key, grading runs on the server, and submitted attempts
+    and answers are immutable.
 
 ## Changing the schema
 

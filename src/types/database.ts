@@ -14,6 +14,241 @@ export type Database = {
   }
   public: {
     Tables: {
+      assessment_attempt_answers: {
+        Row: {
+          answer: Json
+          attempt_id: string
+          awarded_points: number
+          created_at: string
+          id: string
+          is_correct: boolean
+          question_id: string
+        }
+        Insert: {
+          answer?: Json
+          attempt_id: string
+          awarded_points?: number
+          created_at?: string
+          id?: string
+          is_correct?: boolean
+          question_id: string
+        }
+        Update: {
+          answer?: Json
+          attempt_id?: string
+          awarded_points?: number
+          created_at?: string
+          id?: string
+          is_correct?: boolean
+          question_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessment_attempt_answers_attempt_id_fkey"
+            columns: ["attempt_id"]
+            isOneToOne: false
+            referencedRelation: "assessment_attempts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assessment_attempt_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "assessment_questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assessment_attempts: {
+        Row: {
+          assessment_id: string
+          attempt_number: number
+          enrolment_id: string
+          expires_at: string | null
+          id: string
+          max_points: number | null
+          passed: boolean | null
+          score_points: number | null
+          started_at: string
+          status: Database["public"]["Enums"]["assessment_attempt_status"]
+          submitted_at: string | null
+          user_id: string
+        }
+        Insert: {
+          assessment_id: string
+          attempt_number: number
+          enrolment_id: string
+          expires_at?: string | null
+          id?: string
+          max_points?: number | null
+          passed?: boolean | null
+          score_points?: number | null
+          started_at?: string
+          status?: Database["public"]["Enums"]["assessment_attempt_status"]
+          submitted_at?: string | null
+          user_id: string
+        }
+        Update: {
+          assessment_id?: string
+          attempt_number?: number
+          enrolment_id?: string
+          expires_at?: string | null
+          id?: string
+          max_points?: number | null
+          passed?: boolean | null
+          score_points?: number | null
+          started_at?: string
+          status?: Database["public"]["Enums"]["assessment_attempt_status"]
+          submitted_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessment_attempts_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "assessments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assessment_attempts_enrolment_id_fkey"
+            columns: ["enrolment_id"]
+            isOneToOne: false
+            referencedRelation: "course_enrolments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assessment_attempts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assessment_questions: {
+        Row: {
+          assessment_id: string
+          correct_answer: Json
+          created_at: string
+          explanation: string | null
+          id: string
+          options: Json
+          points: number
+          position: number
+          prompt: string
+          question_type: Database["public"]["Enums"]["assessment_question_type"]
+        }
+        Insert: {
+          assessment_id: string
+          correct_answer: Json
+          created_at?: string
+          explanation?: string | null
+          id?: string
+          options?: Json
+          points?: number
+          position?: number
+          prompt: string
+          question_type?: Database["public"]["Enums"]["assessment_question_type"]
+        }
+        Update: {
+          assessment_id?: string
+          correct_answer?: Json
+          created_at?: string
+          explanation?: string | null
+          id?: string
+          options?: Json
+          points?: number
+          position?: number
+          prompt?: string
+          question_type?: Database["public"]["Enums"]["assessment_question_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessment_questions_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "assessments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assessments: {
+        Row: {
+          course_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          instructions: string | null
+          is_required: boolean
+          kind: Database["public"]["Enums"]["assessment_kind"]
+          max_attempts: number
+          organisation_id: string | null
+          pass_mark_percent: number
+          published_at: string | null
+          status: Database["public"]["Enums"]["assessment_status"]
+          time_limit_minutes: number | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          course_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          instructions?: string | null
+          is_required?: boolean
+          kind?: Database["public"]["Enums"]["assessment_kind"]
+          max_attempts?: number
+          organisation_id?: string | null
+          pass_mark_percent?: number
+          published_at?: string | null
+          status?: Database["public"]["Enums"]["assessment_status"]
+          time_limit_minutes?: number | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          course_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          instructions?: string | null
+          is_required?: boolean
+          kind?: Database["public"]["Enums"]["assessment_kind"]
+          max_attempts?: number
+          organisation_id?: string | null
+          pass_mark_percent?: number
+          published_at?: string | null
+          status?: Database["public"]["Enums"]["assessment_status"]
+          time_limit_minutes?: number | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assessments_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assessments_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "assessments_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audit_logs: {
         Row: {
           action: string
@@ -7280,6 +7515,14 @@ export type Database = {
       }
       complete_lesson: { Args: { p_lesson: string }; Returns: Json }
       course_readable: { Args: { p_course: string }; Returns: boolean }
+      course_required_assessments_complete: {
+        Args: { p_enrolment: string }
+        Returns: boolean
+      }
+      course_required_lessons_complete: {
+        Args: { p_enrolment: string }
+        Returns: boolean
+      }
       current_organisation_ids: { Args: never; Returns: string[] }
       enrol_in_course: { Args: { p_course: string }; Returns: string }
       family_resident_summaries: {
@@ -7297,6 +7540,10 @@ export type Database = {
           room_number: string
           status: Database["public"]["Enums"]["resident_status"]
         }[]
+      }
+      finalise_course_completion: {
+        Args: { p_enrolment: string }
+        Returns: Json
       }
       get_public_certificate: {
         Args: { p_code: string }
@@ -7378,6 +7625,14 @@ export type Database = {
         Args: { p_decision: string; p_payout: string; p_reason?: string }
         Returns: Database["public"]["Enums"]["referral_payout_status"]
       }
+      start_assessment_attempt: {
+        Args: { p_assessment: string }
+        Returns: Json
+      }
+      submit_assessment_attempt: {
+        Args: { p_answers: Json; p_attempt: string }
+        Returns: Json
+      }
       subscription_effective_status: {
         Args: { p_organisation: string }
         Returns: string
@@ -7410,6 +7665,13 @@ export type Database = {
         | "hired"
         | "rejected"
         | "withdrawn"
+      assessment_attempt_status: "in_progress" | "submitted" | "expired"
+      assessment_kind: "quiz" | "exam"
+      assessment_question_type:
+        | "single_choice"
+        | "multiple_choice"
+        | "true_false"
+      assessment_status: "draft" | "published" | "archived"
       attendance_status: "present" | "absent" | "late" | "excused"
       campaign_allocation_type: "allocation" | "release"
       campaign_expense_status: "pending" | "approved" | "paid" | "void"
@@ -7808,6 +8070,14 @@ export const Constants = {
         "rejected",
         "withdrawn",
       ],
+      assessment_attempt_status: ["in_progress", "submitted", "expired"],
+      assessment_kind: ["quiz", "exam"],
+      assessment_question_type: [
+        "single_choice",
+        "multiple_choice",
+        "true_false",
+      ],
+      assessment_status: ["draft", "published", "archived"],
       attendance_status: ["present", "absent", "late", "excused"],
       campaign_allocation_type: ["allocation", "release"],
       campaign_expense_status: ["pending", "approved", "paid", "void"],
@@ -8127,6 +8397,12 @@ export type CourseStatus = Database["public"]["Enums"]["course_status"];
 export type EnrolmentStatus = Database["public"]["Enums"]["enrolment_status"];
 export type LearningResourceKind =
   Database["public"]["Enums"]["learning_resource_kind"];
+export type AssessmentKind = Database["public"]["Enums"]["assessment_kind"];
+export type AssessmentStatus = Database["public"]["Enums"]["assessment_status"];
+export type AssessmentQuestionType =
+  Database["public"]["Enums"]["assessment_question_type"];
+export type AssessmentAttemptStatus =
+  Database["public"]["Enums"]["assessment_attempt_status"];
 
 export type EmploymentType = Database["public"]["Enums"]["employment_type"];
 export type JobStatus = Database["public"]["Enums"]["job_status"];

@@ -75,6 +75,6 @@ and the user's organisations, with no fabricated metrics.
 
 Manual subscription payment recording (no Paystack subscription checkout or
 dunning), unmetered storage usage, no scheduled report delivery, assessment
-performance unavailable (no assessment tables), and a few secondary tables rely
+performance not yet included in reports, and a few secondary tables rely
 on RLS/action checks rather than subscription triggers. See
 `docs/KNOWN_LIMITATIONS.md`.

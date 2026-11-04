@@ -100,7 +100,8 @@ non-super-admins from escalating themselves.
 - **Public website & admin** - marketing pages, Academy catalogue, verified
   certificate lookup and a super-admin platform console.
 - **Academy (Phase 4)** - programmes, courses, modules, lessons, enrolments,
-  progress, certificates and a course management workspace for providers.
+  progress, certificates, a course management workspace and auto-graded
+  assessments with attempt limits, pass marks and completion gating.
 - **Internships (Phase 5, complete)** - placement provider profiles, open
   placement listings, applications with status tracking, provider review,
   placements, supervision, weekly logbooks, attendance, evaluations, incidents,
@@ -152,7 +153,7 @@ non-super-admins from escalating themselves.
 | `/verify-certificate` | Public certificate verification |
 | `/login`, `/register`, `/forgot-password`, `/reset-password` | Authentication |
 | `/dashboard` | Authenticated overview |
-| `/dashboard/academy/*` | Learning, management and certificates |
+| `/dashboard/academy/*` | Learning, assessments, management and certificates |
 | `/dashboard/internships/*` | Placement browse, apply and management |
 | `/dashboard/jobs/*` | Job browse, apply, applications and employer management |
 | `/dashboard/referrals` | Referral partner dashboard and payouts |

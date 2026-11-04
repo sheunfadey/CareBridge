@@ -1260,6 +1260,182 @@ begin
   raise notice 'PASS: family portal access checks held';
 end $$;
 
+-- =============================================================================
+-- Academy assessment engine: answer keys and attempts stay private
+-- =============================================================================
+do $$
+declare
+  v_owner_a uuid := '11111111-1111-1111-1111-111111111111';
+  v_user_b uuid := '22222222-2222-2222-2222-222222222222';
+  v_org_a uuid := 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+  v_programme uuid := 'a3100000-0000-4000-8000-000000000001';
+  v_course uuid := 'a3100000-0000-4000-8000-000000000002';
+  v_enrolment uuid := 'a3100000-0000-4000-8000-000000000003';
+  v_assessment uuid := 'a3100000-0000-4000-8000-000000000004';
+  v_question uuid := 'a3100000-0000-4000-8000-000000000005';
+  v_attempt uuid;
+  v_result jsonb;
+  v_count int;
+begin
+  insert into public.programmes (id, organisation_id, title, slug, status, created_by)
+  values (v_programme, v_org_a, 'Assessment test programme', 'assessment-test-programme', 'active', v_owner_a)
+  on conflict (id) do nothing;
+
+  insert into public.courses (
+    id, programme_id, organisation_id, title, slug, summary, status,
+    is_public, certificate_enabled, version, created_by
+  )
+  values (
+    v_course, v_programme, v_org_a, 'Assessment test course',
+    'assessment-test-course', 'Draft course used by the RLS assessment test.',
+    'draft', true, true, 1, v_owner_a
+  )
+  on conflict (id) do nothing;
+
+  insert into public.assessments (
+    id, course_id, title, kind, pass_mark_percent, max_attempts,
+    is_required, status, published_at, created_by
+  )
+  values (
+    v_assessment, v_course, 'Assessment answer-key test', 'quiz', 70, 3,
+    true, 'published', now(), v_owner_a
+  )
+  on conflict (id) do nothing;
+
+  insert into public.assessment_questions (
+    id, assessment_id, prompt, question_type, options, correct_answer,
+    points, explanation, position
+  )
+  values (
+    v_question, v_assessment, 'Which option is correct?', 'single_choice',
+    '[{"id":"a","label":"Correct option"},{"id":"b","label":"Wrong option"}]'::jsonb,
+    '["a"]'::jsonb, 5, 'Option A is correct.', 1
+  )
+  on conflict (id) do nothing;
+
+  insert into public.course_enrolments (
+    id, course_id, user_id, organisation_id, status, source
+  )
+  values (v_enrolment, v_course, v_owner_a, v_org_a, 'active', 'self')
+  on conflict (id) do nothing;
+
+  -- Learner A is enrolled and can read the assessment metadata, but never the
+  -- answer key.
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_owner_a, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count
+  from public.assessments
+  where id = v_assessment;
+  if v_count <> 1 then
+    raise exception 'FAIL: enrolled learner could not read the assessment';
+  end if;
+
+  select count(*) into v_count
+  from public.assessment_questions
+  where assessment_id = v_assessment;
+  if v_count <> 0 then
+    raise exception 'FAIL: learner could read assessment answer keys';
+  end if;
+
+  v_result := public.start_assessment_attempt(v_assessment);
+  v_attempt := (v_result->>'attemptId')::uuid;
+
+  if v_attempt is null then
+    raise exception 'FAIL: learner could not start an assessment attempt';
+  end if;
+
+  if v_result::text like '%correctOption%'
+     or v_result::text like '%correct_answer%'
+     or v_result::text like '%Option A is correct%' then
+    raise exception 'FAIL: assessment start response leaked the answer key';
+  end if;
+
+  v_result := public.submit_assessment_attempt(
+    v_attempt,
+    jsonb_build_object(v_question::text, jsonb_build_array('a'))
+  );
+
+  if (v_result->>'passed')::boolean is not true then
+    raise exception 'FAIL: correct assessment answers did not pass';
+  end if;
+
+  if (v_result->>'courseCompleted')::boolean is not true then
+    raise exception 'FAIL: passing a required assessment did not complete the course';
+  end if;
+
+  select count(*) into v_count
+  from public.assessment_attempts
+  where id = v_attempt
+    and status = 'submitted'
+    and passed;
+  if v_count <> 1 then
+    raise exception 'FAIL: submitted assessment attempt was not recorded';
+  end if;
+
+  select count(*) into v_count
+  from public.assessment_attempt_answers
+  where attempt_id = v_attempt
+    and is_correct;
+  if v_count <> 1 then
+    raise exception 'FAIL: graded assessment answer was not recorded';
+  end if;
+
+  select count(*) into v_count
+  from public.certificates
+  where user_id = v_owner_a
+    and course_id = v_course;
+  if v_count <> 1 then
+    raise exception 'FAIL: passing the required assessment did not issue a certificate';
+  end if;
+
+  reset role;
+
+  -- Submitted attempts are immutable even for trusted connections.
+  perform set_config('request.jwt.claims', '', true);
+  begin
+    update public.assessment_attempts
+    set passed = false
+    where id = v_attempt;
+    raise exception 'FAIL: submitted assessment attempt could be changed';
+  exception
+    when others then
+      if sqlerrm not like '%immutable%' then raise; end if;
+  end;
+
+  -- Learner B is not enrolled and must not see the draft course assessment.
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_user_b, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count
+  from public.assessments
+  where id = v_assessment;
+  if v_count <> 0 then
+    raise exception 'FAIL: unrelated learner could read a draft course assessment';
+  end if;
+
+  select count(*) into v_count
+  from public.assessment_attempts
+  where assessment_id = v_assessment;
+  if v_count <> 0 then
+    raise exception 'FAIL: unrelated learner could read assessment attempts';
+  end if;
+
+  begin
+    perform public.start_assessment_attempt(v_assessment);
+    raise exception 'FAIL: unrelated learner could start an assessment';
+  exception
+    when others then
+      if sqlerrm not like '%Enrol in this course%' then raise; end if;
+  end;
+
+  reset role;
+  perform set_config('request.jwt.claims', '', true);
+  raise notice 'PASS: academy assessment checks held';
+end $$;
+
 rollback;
 
 -- Final, non-transactional confirmation the harness can assert on.

@@ -8,7 +8,7 @@ external configuration. It is updated as each phase lands.
 ### Implemented and verified
 
 - **Supabase project** `teejjgzkvvgmsvtblncr` is active and healthy. Migrations
-  `0001`-`0030` are applied and in sync. The earlier project
+  `0001`-`0031` are applied and in sync. The earlier project
   (`ggizvtzlhdciykfmdsjl`) was deleted; this project replaces it.
 - **Identity & multi-tenancy schema**: `profiles`, `organisations`,
   `organisation_memberships`, `roles`, `permissions`, `role_permissions`,
@@ -72,7 +72,7 @@ external configuration. It is updated as each phase lands.
   templates, admin-service contracts, navigation, care, charity and billing
   validation.
 - **Cross-tenant isolation test** (`supabase/tests/rls_isolation.sql`) - passes
-  against the live database for migrations `0001`-`0030`, including care,
+  against the live database for migrations `0001`-`0031`, including care,
   charity, scholarship, subscription, read-only and module-limit isolation.
 
 ### Not yet implemented or not yet verified
@@ -90,9 +90,10 @@ external configuration. It is updated as each phase lands.
   `EMAIL_PROVIDER_API_KEY` and a verified `EMAIL_FROM_ADDRESS` to deliver.
 - **Candidate profiles / CVs**: applications capture a cover letter only; there
   is no structured candidate profile or document upload.
-- **Academy assessments**: the schema covers programmes, courses, lessons,
-  progress, completion and certificates, but there is no separate assessment or
-  attempt engine. Course completion is based on lesson progress.
+- **Academy assessments** are auto-graded objective questions (single choice,
+  multiple choice and true/false). There is no free-text or manually graded
+  assessment, no question-bank reuse across courses, and no per-question partial
+  credit. Course completion can require published assessments to be passed.
 - **Messaging**: `/dashboard/messages` is a placeholder; there is no direct
   messaging service.
 - **No file uploads / storage buckets.**
@@ -122,8 +123,8 @@ external configuration. It is updated as each phase lands.
     Paystack subscription checkout or automated dunning/retry flow;
   - plan prices are intentionally unset until configured by the business;
   - storage allowances are displayed but storage usage is not metered;
-  - reports cover the implemented domains; assessment performance is unavailable
-    because assessment tables are not part of the current schema;
+  - reports cover the implemented domains; assessment performance is not yet
+    included in reporting views;
   - scheduled report delivery and large background exports are not implemented;
   - feature limits/read-only guards cover the primary academy, employment, care
     and charity write tables; a few secondary tables still rely on RLS and server
@@ -173,7 +174,7 @@ external configuration. It is updated as each phase lands.
 
 - `npm run lint` - clean
 - `npm run typecheck` - clean
-- `npm test` - 85 unit tests pass (11 files)
+- `npm test` - 95 unit tests pass (12 files)
 - `npm run build` - succeeds (production build)
 - Unauthenticated smoke test - `/`, `/login`, `/register`, `/forgot-password`,
   `/reset-password`, `/verify-email` return HTTP 200; `/dashboard` returns 307 to
@@ -211,10 +212,10 @@ external configuration. It is updated as each phase lands.
   referrer, permissions, HSTS) were present and the server log contained no
   runtime errors.
 - `npm run db:test:rls` - cross-tenant isolation assertions hold for the applied
-  schema through migration `0030`, including Phase 6 payment/commission, Phase 7
-  care, Phase 8 campaign/donation/scholarship and Phase 9 subscription, read-only
-  and module-limit isolation.
-- Phase 7/8/9/10 SQL - migrations `0016`-`0030` apply cleanly, and the invariants
+  schema through migration `0031`, including Phase 6 payment/commission, Phase 7
+  care, Phase 8 campaign/donation/scholarship, Phase 9 subscription/read-only and
+  module-limit isolation, and academy assessment answer-key/attempt isolation.
+- Phase 7/8/9/10 SQL - migrations `0016`-`0031` apply cleanly, and the invariants
   pass against both an embedded PostgreSQL instance and the live project.
 
 Live provider-dependent flows (Paystack checkout/webhooks/refunds/transfers,
