@@ -88,6 +88,11 @@ external configuration. It is updated as each phase lands.
   `EMAIL_PROVIDER_API_KEY` and a verified `EMAIL_FROM_ADDRESS` to deliver.
 - **Candidate profiles / CVs**: applications capture a cover letter only; there
   is no structured candidate profile or document upload.
+- **Academy assessments**: the schema covers programmes, courses, lessons,
+  progress, completion and certificates, but there is no separate assessment or
+  attempt engine. Course completion is based on lesson progress.
+- **Messaging**: `/dashboard/messages` is a placeholder; there is no direct
+  messaging service.
 - **No file uploads / storage buckets.**
 - **No end-to-end browser tests.** Unit tests (Vitest) and the SQL RLS isolation
   test exist; Playwright is not yet set up. Phase 6, 7 and 8 pages have been
