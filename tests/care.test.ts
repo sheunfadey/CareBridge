@@ -40,6 +40,7 @@ import {
   shiftAssignmentStatusLabels,
   shiftSchema,
   shiftStatusLabels,
+  staffAvailabilitySchema,
 } from "@/lib/validation/care";
 
 describe("care date validation", () => {
@@ -229,5 +230,28 @@ describe("care money records", () => {
         items: [{ description: "Care fee", quantity: 1, unitPrice: "5000" }],
       }).success,
     ).toBe(true);
+  });
+});
+
+describe("staff availability", () => {
+  const base = {
+    staffId: "11111111-1111-4111-8111-111111111111",
+    monday: "08:00-16:00",
+  };
+
+  it("accepts weekly availability windows", () => {
+    expect(staffAvailabilitySchema.safeParse(base).success).toBe(true);
+    expect(
+      staffAvailabilitySchema.safeParse({ ...base, sunday: "10:30-18:00" }).success,
+    ).toBe(true);
+  });
+
+  it("rejects malformed times", () => {
+    expect(
+      staffAvailabilitySchema.safeParse({ ...base, monday: "8-4" }).success,
+    ).toBe(false);
+    expect(
+      staffAvailabilitySchema.safeParse({ ...base, monday: "08:00-25:00" }).success,
+    ).toBe(false);
   });
 });

@@ -23,6 +23,7 @@ preserved.
 | `0016`–`0020` | Care operations: permissions, residents, staff, shifts, care plans, medication, incidents, inventory, purchases, expenses, invoices and reporting views |
 | `0021`–`0024` | Charity: campaigns, reviews, donations, allocations, expenses, scholarship programmes/applications/awards, impact reports |
 | `0025`–`0029` | Subscriptions, plans, lifecycle events, subscription payments, feature limits, read-only guards and immediate-cancellation correction |
+| `0030` | Family portal access levels: `family_resident_summaries()` RPC and summary/full `can_access_resident` enforcement |
 
 ## Core tenancy
 

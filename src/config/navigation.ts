@@ -57,6 +57,7 @@ export const primaryNav: NavGroup[] = [
     label: "Account",
     items: [
       { label: "Organisation", href: "/dashboard/organisation", icon: "Building2" },
+      { label: "Family portal", href: "/dashboard/family", icon: "HeartHandshake" },
       { label: "Settings", href: "/dashboard/settings", icon: "Settings" },
       { label: "Help Centre", href: "/dashboard/help", icon: "LifeBuoy" },
     ],

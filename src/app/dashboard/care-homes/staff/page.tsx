@@ -17,6 +17,7 @@ import {
 import {
   DocumentDialogForm,
   QualificationDialogForm,
+  StaffAvailabilityDialogForm,
   StaffDialogForm,
   TrainingDialogForm,
 } from "@/features/care/components/care-forms";
@@ -138,6 +139,11 @@ export default async function StaffPage({
                     </TableCell>
                     <TableCell>
                       <div className="flex flex-wrap justify-end gap-2">
+                        <StaffAvailabilityDialogForm
+                          organisationId={context.workspace.organisationId}
+                          staffId={member.id}
+                          availability={member.availability}
+                        />
                         <QualificationDialogForm
                           organisationId={context.workspace.organisationId}
                           staffId={member.id}

@@ -453,6 +453,29 @@ export const staffDocumentSchema = z.object({
   notes: optionalText(),
 });
 
+const availabilityDaySchema = z
+  .string()
+  .trim()
+  .optional()
+  .default("")
+  .refine(
+    (value) =>
+      !value ||
+      /^([01]\d|2[0-3]):[0-5]\d-([01]\d|2[0-3]):[0-5]\d$/.test(value),
+    "Use HH:MM-HH:MM",
+  );
+
+export const staffAvailabilitySchema = z.object({
+  staffId: z.string().uuid(),
+  monday: availabilityDaySchema,
+  tuesday: availabilityDaySchema,
+  wednesday: availabilityDaySchema,
+  thursday: availabilityDaySchema,
+  friday: availabilityDaySchema,
+  saturday: availabilityDaySchema,
+  sunday: availabilityDaySchema,
+});
+
 export const shiftSchema = z.object({
   facilityId: z.string().uuid("Choose a facility"),
   shiftId: z.string().uuid().optional(),

@@ -45,7 +45,7 @@ values reach the browser.
    npx supabase db push --include-all
    ```
 
-3. Confirm the migration history is current (`0001`-`0029` at the time of
+3. Confirm the migration history is current (`0001`-`0030` at the time of
    writing).
 4. Run the cross-tenant isolation suite against a disposable database or branch:
 

@@ -118,13 +118,13 @@ non-super-admins from escalating themselves.
   payout requests, finance approval and a guarded transfer workflow. Provider
   transfers are disabled unless `PAYSTACK_TRANSFERS_ENABLED=true`.
 - **Care-home operations (Phase 7, core modules complete)** - facility and
-  resident records, contacts and consents, family links, staff qualifications and
-  compliance, shift rosters with overlap/qualification guards, daily care records
-  and supervisor review, versioned care plans with approval, medication
-  administration records, incidents and corrective actions, inventory with
-  append-only movements, expenses, invoices/payments/refunds and operational
-  reports. Family accounts are linked per resident; the dedicated family portal is
-  still pending.
+  resident records, contacts and consents, a consent-aware family portal, staff
+  qualifications, availability and compliance, shift rosters with
+  overlap/qualification guards, daily care records and supervisor review,
+  versioned care plans with approval, medication administration records,
+  incidents and corrective actions, inventory with append-only movements,
+  purchase requests, expenses, invoices/payments/refunds, resident access history
+  and operational reports.
 - **Charity and scholarships (Phase 8, core modules complete)** - reviewed
   campaigns with funding targets, verified donations through the payment
   abstraction, donor receipts and privacy preferences, append-only fund
@@ -157,6 +157,7 @@ non-super-admins from escalating themselves.
 | `/dashboard/jobs/*` | Job browse, apply, applications and employer management |
 | `/dashboard/referrals` | Referral partner dashboard and payouts |
 | `/dashboard/care-homes/*` | Residents, staff, roster, daily care, plans, medication, incidents, inventory, expenses, invoices and reports |
+| `/dashboard/family` | Family portal for linked residents (summary/full access) |
 | `/charity`, `/charity/[slug]` | Public charity campaigns and donation pages |
 | `/dashboard/charity/*` | Campaigns, donations, scholarships, impact reports and charity reporting |
 | `/dashboard/reports` | Role-appropriate report catalogue and filters |

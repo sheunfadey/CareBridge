@@ -36,6 +36,7 @@ import {
   staffQualificationSchema,
   staffSchema,
   staffTrainingSchema,
+  staffAvailabilitySchema,
   supplierSchema,
 } from "@/lib/validation/care";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -772,6 +773,71 @@ export async function saveStaffDocumentAction(input: {
     });
     revalidatePath("/dashboard/care-homes/staff");
     return { ok: true, message: "Document record saved." };
+  } catch (error) {
+    return friendlyError(error);
+  }
+}
+
+export async function saveStaffAvailabilityAction(input: {
+  organisationId: string;
+  staffId: string;
+  monday?: string;
+  tuesday?: string;
+  wednesday?: string;
+  thursday?: string;
+  friday?: string;
+  saturday?: string;
+  sunday?: string;
+}): Promise<CareActionResult> {
+  try {
+    const { user } = await requireAction(input.organisationId, "staff_manage");
+    const parsed = staffAvailabilitySchema.safeParse(input);
+    if (!parsed.success) return invalid(parsed.error);
+    const data = parsed.data;
+
+    const days = [
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+      "sunday",
+    ] as const;
+
+    const availability: Record<string, { start: string; end: string }> = {};
+    for (const day of days) {
+      const value = data[day];
+      if (!value) continue;
+      const [start, end] = value.split("-");
+      if (start >= end) {
+        return {
+          ok: false,
+          message: `The ${day} end time must be after the start time.`,
+          fieldErrors: { [day]: ["The end time must be after the start time."] },
+        };
+      }
+      availability[day] = { start, end };
+    }
+
+    const supabase = await createClient();
+    const { error } = await supabase
+      .from("care_staff_profiles")
+      .update({ availability })
+      .eq("id", data.staffId)
+      .eq("organisation_id", input.organisationId);
+    if (error) return { ok: false, message: friendlyDbMessage(error.message) };
+
+    await recordAudit({
+      actorId: user.id,
+      organisationId: input.organisationId,
+      action: "care.staff.saved",
+      entityType: "care_staff_profile",
+      entityId: data.staffId,
+      metadata: { availability: true },
+    });
+    revalidatePath("/dashboard/care-homes/staff");
+    return { ok: true, message: "Staff availability saved." };
   } catch (error) {
     return friendlyError(error);
   }

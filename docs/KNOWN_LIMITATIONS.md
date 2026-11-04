@@ -8,7 +8,7 @@ external configuration. It is updated as each phase lands.
 ### Implemented and verified
 
 - **Supabase project** `teejjgzkvvgmsvtblncr` is active and healthy. Migrations
-  `0001`-`0029` are applied and in sync. The earlier project
+  `0001`-`0030` are applied and in sync. The earlier project
   (`ggizvtzlhdciykfmdsjl`) was deleted; this project replaces it.
 - **Identity & multi-tenancy schema**: `profiles`, `organisations`,
   `organisation_memberships`, `roles`, `permissions`, `role_permissions`,
@@ -45,11 +45,13 @@ external configuration. It is updated as each phase lands.
   requests, finance approval, beneficiary verification and a guarded transfer
   workflow.
 - **Care-home operations (Phase 7, core modules)**: facilities, residents,
-  contacts, consents and family links; staff qualifications, training and
-  document expiry; rosters with overlap and qualification guards; daily care and
-  supervisor review; versioned care plans with approval; medication
+  contacts, consents and family links; a consent-aware family portal with
+  summary/full access levels; staff qualifications, training, document expiry and
+  weekly availability; rosters with overlap and qualification guards; daily care
+  and supervisor review; versioned care plans with approval; medication
   administration; incidents and corrective actions; inventory with append-only
-  movements; expenses; invoices, payments and refunds; operational reports.
+  movements; purchase requests; expenses; invoices, payments and refunds;
+  resident access history; operational reports.
 - **Charity and scholarships (Phase 8, core modules)**: campaign creation,
   independent review and approval, public campaign pages, verified donations
   through the payment abstraction, donor receipts and privacy preferences,
@@ -70,7 +72,7 @@ external configuration. It is updated as each phase lands.
   templates, admin-service contracts, navigation, care, charity and billing
   validation.
 - **Cross-tenant isolation test** (`supabase/tests/rls_isolation.sql`) - passes
-  against the live database for migrations `0001`-`0029`, including care,
+  against the live database for migrations `0001`-`0030`, including care,
   charity, scholarship, subscription, read-only and module-limit isolation.
 
 ### Not yet implemented or not yet verified
@@ -99,16 +101,12 @@ external configuration. It is updated as each phase lands.
   driven with seeded fixtures over authenticated HTTP requests, but not in an
   automated browser session.
 - **Phase 7 remaining polish**:
-  - no dedicated family/resident portal; family accounts are linked per resident
-    but cannot yet sign in to view a summary;
-  - purchase requests can be created/reviewed through server actions but have no
-    dedicated UI page;
-  - staff availability is stored as JSON but has no editor;
-  - resident access history is recorded but not displayed in the UI;
   - shift reminders and incident escalation notifications are not wired to a
     delivery provider;
   - shift calendars are rendered as a 14-day grouped list rather than a monthly
-    grid.
+    grid;
+  - the family portal shows a resident summary; a full family-facing care-plan
+    workspace is not built.
 - **Phase 8 remaining polish**:
   - no recurring donations or offline donation entry UI;
   - donation receipts are printable HTML, not generated PDFs, and are not tax
@@ -175,7 +173,7 @@ external configuration. It is updated as each phase lands.
 
 - `npm run lint` - clean
 - `npm run typecheck` - clean
-- `npm test` - 83 unit tests pass (11 files)
+- `npm test` - 85 unit tests pass (11 files)
 - `npm run build` - succeeds (production build)
 - Unauthenticated smoke test - `/`, `/login`, `/register`, `/forgot-password`,
   `/reset-password`, `/verify-email` return HTTP 200; `/dashboard` returns 307 to
@@ -201,6 +199,11 @@ external configuration. It is updated as each phase lands.
   platform subscription administration. A suspended subscription produced the
   read-only banner while care data remained readable. A CSV export wrote a
   `report.exported` audit record containing the filters and timestamp.
+- Family portal and care workflow smoke test (production server, disposable
+  fixtures, removed afterwards) - 10/10 checks passed. A full-access family
+  account saw its linked resident; a summary-access account saw only its summary
+  and could not open the staff resident record; owners saw access history,
+  staff availability and purchase requests.
 - Phase 10 route crawl (production server, disposable super admin, removed
   afterwards) - 61/61 checks passed: every public page and authenticated
   admin/learner route returned 200, anonymous `/dashboard` redirected, and
@@ -208,10 +211,10 @@ external configuration. It is updated as each phase lands.
   referrer, permissions, HSTS) were present and the server log contained no
   runtime errors.
 - `npm run db:test:rls` - cross-tenant isolation assertions hold for the applied
-  schema through migration `0029`, including Phase 6 payment/commission, Phase 7
+  schema through migration `0030`, including Phase 6 payment/commission, Phase 7
   care, Phase 8 campaign/donation/scholarship and Phase 9 subscription, read-only
   and module-limit isolation.
-- Phase 7/8/9/10 SQL - migrations `0016`-`0029` apply cleanly, and the invariants
+- Phase 7/8/9/10 SQL - migrations `0016`-`0030` apply cleanly, and the invariants
   pass against both an embedded PostgreSQL instance and the live project.
 
 Live provider-dependent flows (Paystack checkout/webhooks/refunds/transfers,

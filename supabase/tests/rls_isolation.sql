@@ -1190,6 +1190,76 @@ begin
   raise notice 'PASS: subscription isolation checks held';
 end $$;
 
+-- =============================================================================
+-- Phase 7 completion: family summary access must not expose full records
+-- =============================================================================
+do $$
+declare
+  v_family uuid := 'f7f00000-0000-4000-8000-000000000001';
+  v_summary_user uuid := '33333333-3333-4333-8333-333333333333';
+  v_org_a uuid := 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+  v_res_a1 uuid := 'f7b00000-0000-4000-8000-000000000001';
+  v_res_a2 uuid := 'f7b00000-0000-4000-8000-000000000002';
+  v_count int;
+begin
+  insert into public.resident_contacts
+    (organisation_id, resident_id, name, relationship, is_emergency)
+  values (v_org_a, v_res_a1, 'Full Access Contact', 'Daughter', true)
+  on conflict do nothing;
+
+  insert into public.resident_relationships
+    (resident_id, user_id, relationship, access_level)
+  values (v_res_a2, v_summary_user, 'Nephew', 'summary')
+  on conflict (resident_id, user_id) do nothing;
+
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_summary_user, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count from public.residents;
+  if v_count <> 0 then
+    raise exception 'FAIL: summary family account could read full resident rows';
+  end if;
+
+  select count(*) into v_count from public.family_resident_summaries();
+  if v_count <> 1 then
+    raise exception 'FAIL: summary family account expected 1 portal summary, saw %', v_count;
+  end if;
+
+  select count(*) into v_count
+  from public.resident_contacts
+  where resident_id = v_res_a2;
+  if v_count <> 0 then
+    raise exception 'FAIL: summary family account could read resident contacts';
+  end if;
+
+  reset role;
+
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_family, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count from public.residents;
+  if v_count <> 1 then
+    raise exception 'FAIL: full family account expected 1 resident row, saw %', v_count;
+  end if;
+
+  select count(*) into v_count from public.family_resident_summaries();
+  if v_count <> 1 then
+    raise exception 'FAIL: full family account expected 1 portal summary, saw %', v_count;
+  end if;
+
+  select count(*) into v_count
+  from public.resident_contacts
+  where resident_id = v_res_a1;
+  if v_count <> 1 then
+    raise exception 'FAIL: full family account could not read linked resident contacts';
+  end if;
+
+  reset role;
+  raise notice 'PASS: family portal access checks held';
+end $$;
+
 rollback;
 
 -- Final, non-transactional confirmation the harness can assert on.

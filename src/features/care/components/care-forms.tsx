@@ -18,6 +18,7 @@ import {
   assignStaffToShiftAction,
   changeCarePlanStatusAction,
   createInvoiceAction,
+  createPurchaseRequestAction,
   issueInvoiceAction,
   linkResidentFamilyAction,
   recordCareAction,
@@ -40,6 +41,7 @@ import {
   saveResidentAction,
   saveShiftAction,
   saveStaffAction,
+  saveStaffAvailabilityAction,
   saveStaffDocumentAction,
   saveStaffQualificationAction,
   saveStaffTrainingAction,
@@ -471,6 +473,53 @@ export function DocumentDialogForm({ organisationId, staffId }: { organisationId
       action={(values) =>
         saveStaffDocumentAction(
           cast<typeof saveStaffDocumentAction>(values, { organisationId, staffId }),
+        )
+      }
+    />
+  );
+}
+
+export function StaffAvailabilityDialogForm({
+  organisationId,
+  staffId,
+  availability,
+}: {
+  organisationId: string;
+  staffId: string;
+  availability: unknown;
+}) {
+  const dayValue = (day: string) => {
+    if (!availability || typeof availability !== "object") return "";
+    const value = (availability as Record<string, { start?: string; end?: string }>)[
+      day
+    ];
+    return value?.start && value?.end ? `${value.start}-${value.end}` : "";
+  };
+
+  const fields: CareField[] = (
+    ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] as const
+  ).map((day) => ({
+    name: day,
+    label: day.charAt(0).toUpperCase() + day.slice(1),
+    placeholder: "08:00-16:00",
+    defaultValue: dayValue(day),
+    help: "Leave blank if unavailable. Use HH:MM-HH:MM.",
+  }));
+
+  return (
+    <CareDialogForm
+      trigger="Availability"
+      triggerVariant="ghost"
+      title="Staff availability"
+      description="Weekly availability is used when planning shifts. It is advisory; assignments still pass the qualification and overlap guards."
+      submitLabel="Save availability"
+      fields={fields}
+      action={(values) =>
+        saveStaffAvailabilityAction(
+          cast<typeof saveStaffAvailabilityAction>(values, {
+            organisationId,
+            staffId,
+          }),
         )
       }
     />
@@ -1213,6 +1262,60 @@ export function ExpenseDialogForm({
       fields={fields}
       action={(values) =>
         recordExpenseAction(cast<typeof recordExpenseAction>(values, { organisationId }))
+      }
+    />
+  );
+}
+
+export function PurchaseRequestDialogForm({
+  organisationId,
+  facilityId,
+  currency = "NGN",
+}: {
+  organisationId: string;
+  facilityId: string;
+  currency?: string;
+}) {
+  const fields: CareField[] = [
+    {
+      name: "facilityId",
+      label: "Facility",
+      type: "select",
+      required: true,
+      defaultValue: facilityId,
+      options: [{ value: facilityId, label: "Current facility" }],
+    },
+    { name: "description", label: "Item description", required: true },
+    { name: "quantity", label: "Quantity", type: "number", required: true, min: 0.001, step: "0.001", defaultValue: 1 },
+    { name: "estimatedUnitCost", label: `Estimated unit cost (${currency})`, required: true, placeholder: "0.00" },
+    { name: "neededBy", label: "Needed by", type: "date" },
+    { name: "notes", label: "Notes", type: "textarea" },
+  ];
+  return (
+    <CareDialogForm
+      trigger="New purchase request"
+      title="Create a purchase request"
+      description="Requests are reviewed by someone with expense approval permission. This form creates a single-line request."
+      submitLabel="Submit request"
+      fields={fields}
+      action={(values) =>
+        createPurchaseRequestAction(
+          cast<typeof createPurchaseRequestAction>(
+            {
+              facilityId: values.facilityId,
+              neededBy: values.neededBy,
+              notes: values.notes,
+              items: [
+                {
+                  description: values.description,
+                  quantity: Number(values.quantity),
+                  estimatedUnitCost: values.estimatedUnitCost,
+                },
+              ],
+            },
+            { organisationId },
+          ),
+        )
       }
     />
   );

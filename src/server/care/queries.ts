@@ -581,6 +581,44 @@ export async function getResidentRecord(
   };
 }
 
+export type ResidentAccessEvent = {
+  id: string;
+  userName: string | null;
+  action: string;
+  createdAt: string;
+};
+
+export async function listResidentAccessEvents(
+  residentId: string,
+): Promise<ResidentAccessEvent[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("resident_access_events")
+    .select("id, user_id, action, created_at")
+    .eq("resident_id", residentId)
+    .order("created_at", { ascending: false })
+    .limit(20);
+
+  if (error || !data) return [];
+
+  const userIds = Array.from(
+    new Set(data.map((row) => row.user_id).filter(Boolean)),
+  ) as string[];
+  const { data: profiles } = userIds.length
+    ? await supabase.from("profiles").select("id, full_name, email").in("id", userIds)
+    : { data: [] as { id: string; full_name: string | null; email: string }[] };
+  const nameMap = new Map(
+    (profiles ?? []).map((row) => [row.id, row.full_name ?? row.email]),
+  );
+
+  return data.map((row) => ({
+    id: row.id,
+    userName: row.user_id ? nameMap.get(row.user_id) ?? null : null,
+    action: row.action,
+    createdAt: row.created_at,
+  }));
+}
+
 export type StaffListItem = {
   id: string;
   userId: string;
@@ -590,6 +628,7 @@ export type StaffListItem = {
   employmentStatus: string;
   startDate: string | null;
   endDate: string | null;
+  availability: unknown;
   qualifications: number;
   expiringQualifications: number;
   expiredTraining: number;
@@ -602,7 +641,7 @@ export async function listStaff(
   const supabase = await createClient();
   const { data: staff, error } = await supabase
     .from("care_staff_profiles")
-    .select("id, user_id, job_title, employment_status, start_date, end_date")
+    .select("id, user_id, job_title, employment_status, start_date, end_date, availability")
     .eq("organisation_id", workspace.organisationId)
     .order("created_at");
 
@@ -646,6 +685,7 @@ export async function listStaff(
       employmentStatus: row.employment_status,
       startDate: row.start_date,
       endDate: row.end_date,
+      availability: row.availability,
       qualifications: quals.length,
       expiringQualifications: quals.filter(
         (item) =>
@@ -1224,6 +1264,94 @@ export async function listSuppliers(
     phone: row.phone,
     status: row.status,
   }));
+}
+
+export type PurchaseRequestListItem = {
+  id: string;
+  facilityId: string;
+  status: string;
+  neededBy: string | null;
+  notes: string | null;
+  createdAt: string;
+  requestedByName: string | null;
+  estimatedTotalMinorUnits: number;
+  items: {
+    description: string;
+    quantity: number;
+    estimatedUnitCostMinorUnits: number;
+  }[];
+};
+
+export async function listPurchaseRequests(
+  workspace: CareWorkspace,
+  facilityId?: string | null,
+): Promise<PurchaseRequestListItem[]> {
+  const supabase = await createClient();
+  let query = supabase
+    .from("purchase_requests")
+    .select("id, facility_id, status, needed_by, notes, created_at, requested_by")
+    .eq("organisation_id", workspace.organisationId)
+    .order("created_at", { ascending: false })
+    .limit(100);
+  if (facilityId) query = query.eq("facility_id", facilityId);
+
+  const { data, error } = await query;
+  if (error || !data) return [];
+
+  const requestIds = data.map((row) => row.id);
+  const requesterIds = Array.from(
+    new Set(data.map((row) => row.requested_by).filter(Boolean)),
+  ) as string[];
+
+  const [{ data: items }, { data: profiles }] = await Promise.all([
+    requestIds.length
+      ? supabase
+          .from("purchase_request_items")
+          .select(
+            "request_id, description, quantity, estimated_unit_cost_minor_units",
+          )
+          .in("request_id", requestIds)
+      : Promise.resolve({
+          data: [] as {
+            request_id: string;
+            description: string;
+            quantity: number;
+            estimated_unit_cost_minor_units: number;
+          }[],
+        }),
+    requesterIds.length
+      ? supabase.from("profiles").select("id, full_name").in("id", requesterIds)
+      : Promise.resolve({ data: [] as { id: string; full_name: string | null }[] }),
+  ]);
+
+  const nameMap = new Map((profiles ?? []).map((row) => [row.id, row.full_name]));
+
+  return data.map((row) => {
+    const requestItems = (items ?? [])
+      .filter((item) => item.request_id === row.id)
+      .map((item) => ({
+        description: item.description,
+        quantity: Number(item.quantity),
+        estimatedUnitCostMinorUnits: Number(item.estimated_unit_cost_minor_units),
+      }));
+    return {
+      id: row.id,
+      facilityId: row.facility_id,
+      status: row.status,
+      neededBy: row.needed_by,
+      notes: row.notes,
+      createdAt: row.created_at,
+      requestedByName: row.requested_by
+        ? nameMap.get(row.requested_by) ?? null
+        : null,
+      estimatedTotalMinorUnits: requestItems.reduce(
+        (sum, item) =>
+          sum + Math.round(item.quantity * item.estimatedUnitCostMinorUnits),
+        0,
+      ),
+      items: requestItems,
+    };
+  });
 }
 
 export type ExpenseListItem = {

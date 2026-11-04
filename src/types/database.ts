@@ -7282,6 +7282,22 @@ export type Database = {
       course_readable: { Args: { p_course: string }; Returns: boolean }
       current_organisation_ids: { Args: never; Returns: string[] }
       enrol_in_course: { Args: { p_course: string }; Returns: string }
+      family_resident_summaries: {
+        Args: never
+        Returns: {
+          access_level: Database["public"]["Enums"]["resident_access_level"]
+          admission_date: string
+          care_level: string
+          facility_name: string
+          first_name: string
+          last_name: string
+          preferred_name: string
+          relationship: string
+          resident_id: string
+          room_number: string
+          status: Database["public"]["Enums"]["resident_status"]
+        }[]
+      }
       get_public_certificate: {
         Args: { p_code: string }
         Returns: {
@@ -8093,10 +8109,6 @@ export type RoleKey =
   | "care_home_owner"
   | "care_home_manager"
   | "care_staff"
-  | "care_medication_staff"
-  | "care_medication_staff"
-  | "care_medication_staff"
-  | "care_medication_staff"
   | "care_medication_staff"
   | "referral_partner"
   | "charity_admin"

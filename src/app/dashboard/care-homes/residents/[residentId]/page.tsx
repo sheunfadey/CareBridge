@@ -37,7 +37,7 @@ import {
 } from "@/lib/validation/care";
 import { userHasPermission } from "@/server/auth/current-user";
 import { requireCarePage } from "@/server/care/access";
-import { getResidentRecord } from "@/server/care/queries";
+import { getResidentRecord, listResidentAccessEvents } from "@/server/care/queries";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
@@ -76,6 +76,9 @@ export default async function ResidentRecordPage({
   const canPlan = userHasPermission(context.user, "care_plan_manage");
   const canMedication = userHasPermission(context.user, "medication_manage");
   const canRecord = userHasPermission(context.user, "care_record_manage");
+  const accessEvents = canManage
+    ? await listResidentAccessEvents(resident.id)
+    : [];
 
   return (
     <div className="space-y-6">
@@ -443,6 +446,38 @@ export default async function ResidentRecordPage({
           ) : null}
         </Card>
       </div>
+
+      {canManage ? (
+        <Card className="space-y-3 p-5">
+          <div>
+            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              Access history
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Resident record views are logged for authorised staff. Only the
+              latest 20 events are shown.
+            </p>
+          </div>
+          {accessEvents.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              No access events recorded yet.
+            </p>
+          ) : (
+            <ul className="divide-y divide-border">
+              {accessEvents.map((event) => (
+                <li key={event.id} className="flex items-center justify-between gap-3 py-2.5 text-sm">
+                  <span className="text-brand-navy">
+                    {event.userName ?? "Staff member"} · {event.action}
+                  </span>
+                  <span className="whitespace-nowrap text-xs text-muted-foreground">
+                    {formatDateTime(event.createdAt)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </Card>
+      ) : null}
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="space-y-3 p-5">
