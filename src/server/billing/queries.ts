@@ -37,6 +37,7 @@ export function computeEffectiveStatus(subscription: {
   trial_ends_at: string | null;
   current_period_end: string;
   grace_ends_at: string | null;
+  ended_at?: string | null;
 }): EffectiveSubscriptionStatus {
   const now = Date.now();
   if (subscription.status === "trialing") {
@@ -56,6 +57,7 @@ export function computeEffectiveStatus(subscription: {
       : "suspended";
   }
   if (subscription.status === "cancelled") {
+    if (subscription.ended_at) return "expired";
     return new Date(subscription.current_period_end).getTime() >= now
       ? "cancelled_active"
       : "expired";
@@ -229,6 +231,7 @@ export async function getBillingSummary(
         trial_ends_at: subscription.trial_ends_at,
         current_period_end: subscription.current_period_end,
         grace_ends_at: subscription.grace_ends_at,
+        ended_at: subscription.ended_at,
       })
     : "legacy";
 
@@ -354,6 +357,7 @@ export async function listPlatformSubscriptions(): Promise<
             trial_ends_at: subscription.trial_ends_at,
             current_period_end: subscription.current_period_end,
             grace_ends_at: subscription.grace_ends_at,
+            ended_at: subscription.ended_at,
           })
         : "legacy",
       billingCycle:
@@ -394,7 +398,7 @@ export async function getPlatformBillingSummary(): Promise<PlatformBillingSummar
       admin
         .from("organisation_subscriptions")
         .select(
-          "status, trial_ends_at, current_period_end, grace_ends_at",
+          "status, trial_ends_at, current_period_end, grace_ends_at, ended_at",
         ),
       admin
         .from("subscription_payments")
@@ -412,6 +416,7 @@ export async function getPlatformBillingSummary(): Promise<PlatformBillingSummar
       trial_ends_at: row.trial_ends_at,
       current_period_end: row.current_period_end,
       grace_ends_at: row.grace_ends_at,
+      ended_at: row.ended_at,
     });
     if (effective === "active" || effective === "trialing" || effective === "grace" || effective === "cancelled_active") {
       activeOrTrial += 1;

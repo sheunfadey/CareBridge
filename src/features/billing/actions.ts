@@ -244,6 +244,7 @@ export async function resumeSubscriptionAction(input: {
         status: nextStatus,
         cancel_at_period_end: false,
         cancelled_at: null,
+        ended_at: null,
       })
       .eq("organisation_id", input.organisationId);
     if (error) return { ok: false, message: error.message };

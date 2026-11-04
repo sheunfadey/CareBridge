@@ -174,8 +174,19 @@ non-super-admins from escalating themselves.
 ## Documentation
 
 - [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md)
-- [`docs/DESIGN_SYSTEM.md`](./docs/DESIGN_SYSTEM.md)
+- [`docs/DATABASE_SCHEMA.md`](./docs/DATABASE_SCHEMA.md)
+- [`docs/ROLE_PERMISSION_MATRIX.md`](./docs/ROLE_PERMISSION_MATRIX.md)
+- [`docs/RLS_POLICIES.md`](./docs/RLS_POLICIES.md)
+- [`docs/PAYMENTS_AND_WEBHOOKS.md`](./docs/PAYMENTS_AND_WEBHOOKS.md)
+- [`docs/REFERRAL_COMMISSION_RULES.md`](./docs/REFERRAL_COMMISSION_RULES.md)
+- [`docs/CARE_HOME_WORKFLOWS.md`](./docs/CARE_HOME_WORKFLOWS.md)
+- [`docs/INTERNSHIP_WORKFLOWS.md`](./docs/INTERNSHIP_WORKFLOWS.md)
+- [`docs/SECURITY_AND_PRIVACY.md`](./docs/SECURITY_AND_PRIVACY.md)
+- [`docs/BACKUP_AND_RECOVERY.md`](./docs/BACKUP_AND_RECOVERY.md)
+- [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md)
+- [`docs/TESTING.md`](./docs/TESTING.md)
 - [`docs/KNOWN_LIMITATIONS.md`](./docs/KNOWN_LIMITATIONS.md)
+- [`docs/DESIGN_SYSTEM.md`](./docs/DESIGN_SYSTEM.md)
 - [`AGENTS.md`](./AGENTS.md) — conventions and commands for coding agents
 
 ## Security notes

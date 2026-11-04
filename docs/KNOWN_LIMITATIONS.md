@@ -3,12 +3,12 @@
 This document tracks features that are incomplete, disabled, or awaiting
 external configuration. It is updated as each phase lands.
 
-## Current state: Phases 2-9 implemented (Phase 9 core modules); Phase 10 not started
+## Current state: Phases 2-9 complete; Phase 10 QA and production readiness (provider-dependent flows pending)
 
 ### Implemented and verified
 
 - **Supabase project** `teejjgzkvvgmsvtblncr` is active and healthy. Migrations
-  `0001`-`0028` are applied and in sync. The earlier project
+  `0001`-`0029` are applied and in sync. The earlier project
   (`ggizvtzlhdciykfmdsjl`) was deleted; this project replaces it.
 - **Identity & multi-tenancy schema**: `profiles`, `organisations`,
   `organisation_memberships`, `roles`, `permissions`, `role_permissions`,
@@ -70,7 +70,7 @@ external configuration. It is updated as each phase lands.
   templates, admin-service contracts, navigation, care, charity and billing
   validation.
 - **Cross-tenant isolation test** (`supabase/tests/rls_isolation.sql`) - passes
-  against the live database for migrations `0001`-`0028`, including care,
+  against the live database for migrations `0001`-`0029`, including care,
   charity, scholarship, subscription, read-only and module-limit isolation.
 
 ### Not yet implemented or not yet verified
@@ -196,11 +196,19 @@ external configuration. It is updated as each phase lands.
   platform subscription administration. A suspended subscription produced the
   read-only banner while care data remained readable. A CSV export wrote a
   `report.exported` audit record containing the filters and timestamp.
+- Phase 10 route crawl (production server, disposable super admin, removed
+  afterwards) - 61/61 checks passed: every public page and authenticated
+  admin/learner route returned 200, anonymous `/dashboard` redirected, and
+  `/api/health` returned `status: ok`. Security headers (nosniff, frame,
+  referrer, permissions, HSTS) were present and the server log contained no
+  runtime errors.
 - `npm run db:test:rls` - cross-tenant isolation assertions hold for the applied
-  schema through migration `0028`, including Phase 6 payment/commission, Phase 7
+  schema through migration `0029`, including Phase 6 payment/commission, Phase 7
   care, Phase 8 campaign/donation/scholarship and Phase 9 subscription, read-only
   and module-limit isolation.
-- Phase 7/8/9 SQL - migrations `0016`-`0028` apply cleanly, and the invariants
+- Phase 7/8/9/10 SQL - migrations `0016`-`0029` apply cleanly, and the invariants
   pass against both an embedded PostgreSQL instance and the live project.
 
-No feature in later phases is claimed as complete.
+Live provider-dependent flows (Paystack checkout/webhooks/refunds/transfers,
+Resend delivery, file uploads) remain pending credentials and are not claimed as
+verified.
