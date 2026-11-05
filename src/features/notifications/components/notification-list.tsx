@@ -23,6 +23,7 @@ const categoryLabels: Record<string, string> = {
   charity: "Charity",
   care_operations: "Care operations",
   platform: "Platform",
+  message: "Message",
 };
 
 export function NotificationList({

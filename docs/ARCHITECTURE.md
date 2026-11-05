@@ -229,6 +229,20 @@ and write.
   Suspended or expired subscriptions block writes but never hide resident/care
   records; reads and CSV exports remain available.
 
+### Direct messaging
+
+- **Scope**. Conversations belong to one organisation and may include up to 20
+  active members of that organisation. There are no cross-organisation threads.
+- **Access**. `is_conversation_participant()` backs RLS on conversations,
+  participants and messages, so non-participants see no rows even inside the
+  same organisation.
+- **Writes**. `start_conversation()` and `send_message()` are security-definer
+  RPCs: they validate recipients, insert the message and create in-app
+  notifications for recipients. `mark_conversation_read()` updates the caller's
+  read receipt.
+- **History**. Messages are append-only; corrections are new messages. No direct
+  insert, update or delete policies exist on messages.
+
 ### Cross-tenant isolation
 
 `supabase/tests/rls_isolation.sql` seeds two tenants and asserts — as an

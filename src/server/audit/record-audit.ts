@@ -45,6 +45,8 @@ export type AuditAction =
   | "course.assessment.published"
   | "course.assessment.unpublished"
   | "assessment.attempt.submitted"
+  | "message.conversation.started"
+  | "message.sent"
   | "certificate.issued"
   | "job.created"
   | "job.updated"

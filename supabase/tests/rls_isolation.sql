@@ -1436,6 +1436,199 @@ begin
   raise notice 'PASS: academy assessment checks held';
 end $$;
 
+-- =============================================================================
+-- Direct messaging: participants only, same-tenant recipients
+-- =============================================================================
+do $$
+declare
+  v_user_a uuid := '11111111-1111-1111-1111-111111111111';
+  v_user_b uuid := '22222222-2222-2222-2222-222222222222';
+  v_user_c uuid := '33333333-3333-4333-8333-333333333333';
+  v_org_a uuid := 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+  v_conversation uuid;
+  v_first_message uuid;
+  v_count int;
+  v_read_at timestamptz;
+begin
+  insert into public.organisation_memberships
+    (organisation_id, user_id, status, is_owner)
+  values (v_org_a, v_user_b, 'active', false)
+  on conflict (organisation_id, user_id) do nothing;
+
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_user_a, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  v_conversation := public.start_conversation(
+    v_org_a,
+    array[v_user_b],
+    'Messaging isolation check',
+    'Hello from tenant A'
+  );
+
+  if v_conversation is null then
+    raise exception 'FAIL: participant could not start a conversation';
+  end if;
+
+  select count(*) into v_count
+  from public.conversations
+  where id = v_conversation;
+  if v_count <> 1 then
+    raise exception 'FAIL: creator could not read their conversation';
+  end if;
+
+  select count(*) into v_count
+  from public.conversation_participants
+  where conversation_id = v_conversation;
+  if v_count <> 2 then
+    raise exception 'FAIL: expected two conversation participants, saw %', v_count;
+  end if;
+
+  select id into v_first_message
+  from public.messages
+  where conversation_id = v_conversation
+  limit 1;
+
+  if v_first_message is null then
+    raise exception 'FAIL: starting a conversation did not create the first message';
+  end if;
+
+  reset role;
+
+  -- A user outside the organisation cannot read the conversation or start one.
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_user_c, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count
+  from public.conversations
+  where id = v_conversation;
+  if v_count <> 0 then
+    raise exception 'FAIL: unrelated user could read another tenant conversation';
+  end if;
+
+  select count(*) into v_count
+  from public.messages
+  where conversation_id = v_conversation;
+  if v_count <> 0 then
+    raise exception 'FAIL: unrelated user could read another tenant messages';
+  end if;
+
+  begin
+    perform public.send_message(v_conversation, 'Unauthorised reply');
+    raise exception 'FAIL: unrelated user could send a message';
+  exception
+    when others then
+      if sqlerrm not like '%not found%' then raise; end if;
+  end;
+
+  begin
+    perform public.start_conversation(
+      v_org_a,
+      array[v_user_b],
+      'Unauthorised conversation',
+      'This should not be allowed'
+    );
+    raise exception 'FAIL: non-member could start a conversation';
+  exception
+    when others then
+      if sqlerrm not like '%not a member%' then raise; end if;
+  end;
+
+  reset role;
+
+  -- A participant cannot add somebody outside the organisation.
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_user_a, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  begin
+    perform public.start_conversation(
+      v_org_a,
+      array[v_user_c],
+      'Cross-tenant conversation',
+      'This should not be allowed'
+    );
+    raise exception 'FAIL: participant could add a user outside the organisation';
+  exception
+    when others then
+      if sqlerrm not like '%active member%' then raise; end if;
+  end;
+
+  reset role;
+
+  select count(*) into v_count
+  from public.notifications
+  where user_id = v_user_b
+    and category = 'message'
+    and metadata->>'conversationId' = v_conversation::text;
+
+  if v_count <> 1 then
+    raise exception 'FAIL: new-message notification was not created';
+  end if;
+
+  -- The recipient can read and reply.
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_user_b, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+  perform public.send_message(v_conversation, 'Reply from tenant A member');
+
+  select count(*) into v_count
+  from public.messages
+  where conversation_id = v_conversation;
+  if v_count <> 2 then
+    raise exception 'FAIL: participant reply was not recorded';
+  end if;
+
+  select count(*) into v_count
+  from public.conversations
+  where id = v_conversation
+    and last_message_preview = 'Reply from tenant A member';
+  if v_count <> 1 then
+    raise exception 'FAIL: conversation preview was not updated';
+  end if;
+
+  reset role;
+
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_user_a, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count
+  from public.notifications
+  where user_id = v_user_a
+    and category = 'message'
+    and metadata->>'conversationId' = v_conversation::text;
+  if v_count <> 1 then
+    raise exception 'FAIL: reply notification was not created';
+  end if;
+
+  perform public.mark_conversation_read(v_conversation);
+  reset role;
+
+  select last_read_at into v_read_at
+  from public.conversation_participants
+  where conversation_id = v_conversation
+    and user_id = v_user_a;
+  if v_read_at is null then
+    raise exception 'FAIL: read receipt was not recorded';
+  end if;
+
+  -- Messages are append-only even for trusted connections.
+  perform set_config('request.jwt.claims', '', true);
+  begin
+    update public.messages
+    set body = 'Changed history'
+    where id = v_first_message;
+    raise exception 'FAIL: message history could be changed';
+  exception
+    when others then
+      if sqlerrm not like '%append-only%' then raise; end if;
+  end;
+
+  raise notice 'PASS: direct messaging checks held';
+end $$;
+
 rollback;
 
 -- Final, non-transactional confirmation the harness can assert on.

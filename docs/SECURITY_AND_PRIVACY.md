@@ -39,6 +39,7 @@ enforced by database triggers.
 | Scholarship applications | Applicant and scholarship reviewers only |
 | Subscription billing | `subscription_view`/`subscription_manage`; platform status/period changes only by `billing_manage` |
 | Staff documents | `staff_manage` or the staff member themselves |
+| Direct messages | Conversation participants only; recipients must be active members of the same organisation; messages append-only |
 
 Resident record views are written to `resident_access_events` through a
 security-definer RPC after the caller's access is checked.

@@ -1325,6 +1325,106 @@ export type Database = {
           },
         ]
       }
+      conversation_participants: {
+        Row: {
+          conversation_id: string
+          created_at: string
+          id: string
+          is_muted: boolean
+          last_read_at: string | null
+          user_id: string
+        }
+        Insert: {
+          conversation_id: string
+          created_at?: string
+          id?: string
+          is_muted?: boolean
+          last_read_at?: string | null
+          user_id: string
+        }
+        Update: {
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          is_muted?: boolean
+          last_read_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversation_participants_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "conversation_participants_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conversations: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          last_message_at: string
+          last_message_preview: string | null
+          last_message_sender_id: string | null
+          organisation_id: string
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          last_message_at?: string
+          last_message_preview?: string | null
+          last_message_sender_id?: string | null
+          organisation_id: string
+          subject: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          last_message_at?: string
+          last_message_preview?: string | null
+          last_message_sender_id?: string | null
+          organisation_id?: string
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversations_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "conversations_last_message_sender_id_fkey"
+            columns: ["last_message_sender_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "conversations_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       course_enrolments: {
         Row: {
           completed_at: string | null
@@ -3474,6 +3574,45 @@ export type Database = {
           {
             foreignKeyName: "medication_records_witnessed_by_fkey"
             columns: ["witnessed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      messages: {
+        Row: {
+          body: string
+          conversation_id: string
+          created_at: string
+          id: string
+          sender_id: string
+        }
+        Insert: {
+          body: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          sender_id: string
+        }
+        Update: {
+          body?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_sender_id_fkey"
+            columns: ["sender_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
@@ -7574,6 +7713,10 @@ export type Database = {
         Args: { p_listing: string }
         Returns: boolean
       }
+      is_conversation_participant: {
+        Args: { p_conversation: string }
+        Returns: boolean
+      }
       is_enrolled: { Args: { p_course: string }; Returns: boolean }
       is_org_member: { Args: { p_organisation: string }; Returns: boolean }
       is_super_admin: { Args: never; Returns: boolean }
@@ -7582,6 +7725,10 @@ export type Database = {
         Returns: string
       }
       job_readable: { Args: { p_job: string }; Returns: boolean }
+      mark_conversation_read: {
+        Args: { p_conversation: string }
+        Returns: boolean
+      }
       organisation_can_add_facility: {
         Args: { p_organisation: string }
         Returns: boolean
@@ -7625,9 +7772,22 @@ export type Database = {
         Args: { p_decision: string; p_payout: string; p_reason?: string }
         Returns: Database["public"]["Enums"]["referral_payout_status"]
       }
+      send_message: {
+        Args: { p_body: string; p_conversation: string }
+        Returns: string
+      }
       start_assessment_attempt: {
         Args: { p_assessment: string }
         Returns: Json
+      }
+      start_conversation: {
+        Args: {
+          p_body: string
+          p_organisation: string
+          p_participant_ids: string[]
+          p_subject: string
+        }
+        Returns: string
       }
       submit_assessment_attempt: {
         Args: { p_answers: Json; p_attempt: string }
@@ -7783,6 +7943,7 @@ export type Database = {
         | "charity"
         | "care_operations"
         | "platform"
+        | "message"
       notification_priority: "low" | "normal" | "high"
       offer_status: "sent" | "accepted" | "declined" | "withdrawn" | "expired"
       organisation_status: "pending" | "active" | "suspended" | "disabled"
@@ -8200,6 +8361,7 @@ export const Constants = {
         "charity",
         "care_operations",
         "platform",
+        "message",
       ],
       notification_priority: ["low", "normal", "high"],
       offer_status: ["sent", "accepted", "declined", "withdrawn", "expired"],

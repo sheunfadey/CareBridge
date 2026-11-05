@@ -102,6 +102,8 @@ non-super-admins from escalating themselves.
 - **Academy (Phase 4)** - programmes, courses, modules, lessons, enrolments,
   progress, certificates, a course management workspace and auto-graded
   assessments with attempt limits, pass marks and completion gating.
+- **Messaging** - organisation-scoped conversations between active members,
+  append-only messages, read receipts and in-app notifications.
 - **Internships (Phase 5, complete)** - placement provider profiles, open
   placement listings, applications with status tracking, provider review,
   placements, supervision, weekly logbooks, attendance, evaluations, incidents,
@@ -154,6 +156,7 @@ non-super-admins from escalating themselves.
 | `/login`, `/register`, `/forgot-password`, `/reset-password` | Authentication |
 | `/dashboard` | Authenticated overview |
 | `/dashboard/academy/*` | Learning, assessments, management and certificates |
+| `/dashboard/messages` | Organisation-scoped conversations, read receipts and replies |
 | `/dashboard/internships/*` | Placement browse, apply and management |
 | `/dashboard/jobs/*` | Job browse, apply, applications and employer management |
 | `/dashboard/referrals` | Referral partner dashboard and payouts |
