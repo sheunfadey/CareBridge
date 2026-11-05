@@ -58,6 +58,15 @@ describe("permission registry", () => {
     expect(permissions.has("resident_view")).toBe(true);
   });
 
+  it("lets organisation owners and instructors create and publish courses", () => {
+    for (const role of ["care_home_owner", "instructor"] as const) {
+      const permissions = permissionsForRoles([role]);
+      expect(permissions.has("course_view")).toBe(true);
+      expect(permissions.has("course_manage")).toBe(true);
+      expect(permissions.has("course_publish")).toBe(true);
+    }
+  });
+
   it("maps each permission to a known category", () => {
     for (const permission of ALL_PERMISSIONS) {
       expect(typeof PERMISSIONS[permission]).toBe("string");

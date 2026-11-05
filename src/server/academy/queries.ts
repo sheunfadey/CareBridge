@@ -1,6 +1,7 @@
 import "server-only";
 
 import { createClient } from "@/lib/supabase/server";
+import { ROLE_PERMISSIONS } from "@/lib/permissions/registry";
 import type { CurrentUser } from "@/server/auth/current-user";
 import type {
   AssessmentAttemptStatus,
@@ -275,6 +276,14 @@ type Relation<T> = T | T[] | null;
 function singleRelation<T>(relation: Relation<T>): T | null {
   if (Array.isArray(relation)) return relation[0] ?? null;
   return relation;
+}
+
+function canManageAcademyForOrganisation(
+  organisation: CurrentUser["organisations"][number],
+): boolean {
+  return organisation.roles.some((role) =>
+    (ROLE_PERMISSIONS[role] ?? []).includes("course_manage"),
+  );
 }
 
 function normaliseModules(
@@ -637,11 +646,7 @@ export async function listManagedCourses(
   const managedOrganisations = user.isSuperAdmin
     ? []
     : user.organisations
-        .filter(
-          (org) =>
-            org.roles.includes("training_admin") ||
-            org.roles.includes("instructor"),
-        )
+        .filter(canManageAcademyForOrganisation)
         .map((org) => org.organisationId);
 
   if (!user.isSuperAdmin && managedOrganisations.length === 0) {
@@ -844,8 +849,7 @@ export async function getManagedAssessmentDetail(
     const allowed = user.organisations.some(
       (org) =>
         org.organisationId === course.organisation_id &&
-        (org.roles.includes("training_admin") ||
-          org.roles.includes("instructor")),
+        canManageAcademyForOrganisation(org),
     );
     if (!allowed) return null;
   }
@@ -935,10 +939,7 @@ export function managedOrganisationOptions(
     }));
   }
   return user.organisations
-    .filter(
-      (org) =>
-        org.roles.includes("training_admin") || org.roles.includes("instructor"),
-    )
+    .filter(canManageAcademyForOrganisation)
     .map((org) => ({
       id: org.organisationId,
       name: org.organisationName,
@@ -1003,7 +1004,7 @@ export async function getManagedCourseDetail(
     const allowed = user.organisations.some(
       (org) =>
         org.organisationId === data.organisation_id &&
-        (org.roles.includes("training_admin") || org.roles.includes("instructor")),
+        canManageAcademyForOrganisation(org),
     );
     if (!allowed) return null;
   }
@@ -1069,11 +1070,7 @@ export async function listIssuedCertificates(
     query = query.eq("user_id", user.id);
   } else if (!user.isSuperAdmin) {
     const orgs = user.organisations
-      .filter(
-        (org) =>
-          org.roles.includes("training_admin") ||
-          org.roles.includes("instructor"),
-      )
+      .filter(canManageAcademyForOrganisation)
       .map((org) => org.organisationId);
 
     if (orgs.length === 0) return [];

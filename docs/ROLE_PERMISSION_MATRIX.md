@@ -32,11 +32,11 @@ check.
 | `super_admin` | All permissions; platform administration, all tenants and billing |
 | `platform_support` | Read-oriented support: users, organisations, courses, incidents, compliance, audit, subscription view |
 | `training_admin` | Academy management and publishing, assessments, internships, financial reporting, organisation subscription and reports |
-| `instructor` | Course view, learning materials, assessment grading, practical assessment recording |
+| `instructor` | Course creation, management and publishing, learning materials, assessments and practical assessment recording |
 | `caregiver` | Course view and job applications |
 | `internship_supervisor` | Internship supervision/management, incident view/manage |
 | `employer` | Job management, candidate view, user view, organisation subscription and reports |
-| `care_home_owner` | Full care workspace (residents, plans, staff, shifts, care records, medication, incidents, inventory, expenses, invoices), referrals, payments review, subscription management and reports |
+| `care_home_owner` | Full care workspace (residents, plans, staff, shifts, care records, medication, incidents, inventory, expenses, invoices), academy course management for the organisation, referrals, payments review, subscription management and reports |
 | `care_home_manager` | Care operations except expense approval and platform billing; subscription view and reports |
 | `care_staff` | Resident view, incident view/manage, shift view, care recording |
 | `care_medication_staff` | Care staff permissions plus medication administration |

@@ -157,7 +157,10 @@ export const ROLE_PERMISSIONS: Record<RoleKey, PermissionKey[]> = {
 
   instructor: [
     "course_view",
+    "course_manage",
+    "course_publish",
     "learning_material_manage",
+    "assessment_manage",
     "assessment_grade",
     "practical_assessment_record",
   ],
@@ -185,6 +188,11 @@ export const ROLE_PERMISSIONS: Record<RoleKey, PermissionKey[]> = {
     "user_view",
     "user_invite",
     "user_role_assign",
+    "course_view",
+    "course_manage",
+    "course_publish",
+    "learning_material_manage",
+    "assessment_manage",
     "resident_view",
     "resident_manage",
     "care_plan_manage",

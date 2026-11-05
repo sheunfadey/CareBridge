@@ -8,7 +8,7 @@ external configuration. It is updated as each phase lands.
 ### Implemented and verified
 
 - **Supabase project** `teejjgzkvvgmsvtblncr` is active and healthy. Migrations
-  `0001`-`0032` are applied and in sync. The earlier project
+  `0001`-`0034` are applied and in sync. The earlier project
   (`ggizvtzlhdciykfmdsjl`) was deleted; this project replaces it.
 - **Identity & multi-tenancy schema**: `profiles`, `organisations`,
   `organisation_memberships`, `roles`, `permissions`, `role_permissions`,
@@ -72,7 +72,7 @@ external configuration. It is updated as each phase lands.
   templates, admin-service contracts, navigation, care, charity and billing
   validation.
 - **Cross-tenant isolation test** (`supabase/tests/rls_isolation.sql`) - passes
-  against the live database for migrations `0001`-`0032`, including care,
+  against the live database for migrations `0001`-`0034`, including care,
   charity, scholarship, subscription, read-only and module-limit isolation.
 
 ### Not yet implemented or not yet verified
@@ -176,7 +176,7 @@ external configuration. It is updated as each phase lands.
 
 - `npm run lint` - clean
 - `npm run typecheck` - clean
-- `npm test` - 102 unit tests pass (13 files)
+- `npm test` - 103 unit tests pass (13 files)
 - `npm run build` - succeeds (production build)
 - Unauthenticated smoke test - `/`, `/login`, `/register`, `/forgot-password`,
   `/reset-password`, `/verify-email` return HTTP 200; `/dashboard` returns 307 to
@@ -214,11 +214,11 @@ external configuration. It is updated as each phase lands.
   referrer, permissions, HSTS) were present and the server log contained no
   runtime errors.
 - `npm run db:test:rls` - cross-tenant isolation assertions hold for the applied
-  schema through migration `0032`, including Phase 6 payment/commission, Phase 7
+  schema through migration `0034`, including Phase 6 payment/commission, Phase 7
   care, Phase 8 campaign/donation/scholarship, Phase 9 subscription/read-only,
-  module-limit isolation, academy assessment answer-key/attempt isolation and
-  organisation-scoped messaging.
-- Phase 7/8/9/10 SQL - migrations `0016`-`0032` apply cleanly, and the invariants
+  module-limit isolation, academy assessment answer-key/attempt isolation,
+  academy course management permissions and organisation-scoped messaging.
+- Phase 7/8/9/10 SQL - migrations `0016`-`0034` apply cleanly, and the invariants
   pass against both an embedded PostgreSQL instance and the live project.
 
 Live provider-dependent flows (Paystack checkout/webhooks/refunds/transfers,

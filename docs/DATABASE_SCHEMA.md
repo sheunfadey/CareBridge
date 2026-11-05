@@ -26,6 +26,8 @@ preserved.
 | `0030` | Family portal access levels: `family_resident_summaries()` RPC and summary/full `can_access_resident` enforcement |
 | `0031` | Academy assessments: questions, attempts, server-side grading, attempt limits and assessment-gated completion |
 | `0032` | Direct messaging: organisation-scoped conversations, participants, append-only messages, read receipts and message notifications |
+| `0033` | Academy course permissions for organisation owners and instructors |
+| `0034` | Course creator select policy so new drafts are readable with `INSERT ... RETURNING` |
 
 ## Core tenancy
 

@@ -16,7 +16,7 @@ Vitest lives in `tests/` and runs with `vitest.config.mts`.
 
 | File | Covers |
 | --- | --- |
-| `permissions.test.ts` | Permission registry, role mappings and privileged roles |
+| `permissions.test.ts` | Permission registry, role mappings, course-management roles and privileged roles |
 | `validation.test.ts` | Core validation schemas |
 | `employment-validation.test.ts` | Jobs, internships and placements |
 | `payments.test.ts` | Money parsing, referral commission maths and payment schemas |
@@ -30,7 +30,7 @@ Vitest lives in `tests/` and runs with `vitest.config.mts`.
 | `organisation-validation.test.ts` | Organisation validation |
 | `site-navigation.test.ts` | Public navigation |
 
-Current result: **102 tests passing across 13 files**.
+Current result: **103 tests passing across 13 files**.
 
 Unit tests do not touch the database and never fabricate financial outcomes.
 
@@ -44,6 +44,7 @@ users, asserts isolation and rolls back. It covers:
 - Phase 7 residents, family links, staff/medication/invoice restrictions, and
   family summary/full portal access;
 - Academy assessment answer-key secrecy, attempt isolation and server grading;
+- Academy course creation for organisation owners and instructors;
 - Direct messaging participant isolation, same-tenant recipients and
   append-only message history;
 - Phase 8 campaigns, donations, scholarships and award acceptance;

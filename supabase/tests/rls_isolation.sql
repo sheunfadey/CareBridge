@@ -1267,6 +1267,7 @@ do $$
 declare
   v_owner_a uuid := '11111111-1111-1111-1111-111111111111';
   v_user_b uuid := '22222222-2222-2222-2222-222222222222';
+  v_learner uuid := '33333333-3333-4333-8333-333333333333';
   v_org_a uuid := 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
   v_programme uuid := 'a3100000-0000-4000-8000-000000000001';
   v_course uuid := 'a3100000-0000-4000-8000-000000000002';
@@ -1316,13 +1317,14 @@ begin
   insert into public.course_enrolments (
     id, course_id, user_id, organisation_id, status, source
   )
-  values (v_enrolment, v_course, v_owner_a, v_org_a, 'active', 'self')
+  values (v_enrolment, v_course, v_learner, v_org_a, 'active', 'self')
   on conflict (id) do nothing;
 
-  -- Learner A is enrolled and can read the assessment metadata, but never the
-  -- answer key.
+  -- An enrolled learner can read the assessment metadata, but never the answer
+  -- key. Use a non-manager learner so course-management permissions do not
+  -- accidentally make the answer key readable.
   perform set_config('request.jwt.claims',
-    json_build_object('sub', v_owner_a, 'role', 'authenticated')::text, true);
+    json_build_object('sub', v_learner, 'role', 'authenticated')::text, true);
   set local role authenticated;
 
   select count(*) into v_count
@@ -1384,7 +1386,7 @@ begin
 
   select count(*) into v_count
   from public.certificates
-  where user_id = v_owner_a
+  where user_id = v_learner
     and course_id = v_course;
   if v_count <> 1 then
     raise exception 'FAIL: passing the required assessment did not issue a certificate';
@@ -1627,6 +1629,66 @@ begin
   end;
 
   raise notice 'PASS: direct messaging checks held';
+end $$;
+
+-- =============================================================================
+-- Academy course management for organisation owners and instructors
+-- =============================================================================
+do $$
+declare
+  v_user_a uuid := '11111111-1111-1111-1111-111111111111';
+  v_user_b uuid := '22222222-2222-2222-2222-222222222222';
+  v_org_a uuid := 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+  v_programme uuid := 'a1000000-0000-4000-8000-000000000001';
+  v_course uuid;
+begin
+  insert into public.user_role_assignments (user_id, role_key, organisation_id)
+  values (v_user_b, 'instructor', v_org_a)
+  on conflict do nothing;
+
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_user_a, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  if not public.has_permission('course_manage', v_org_a)
+     or not public.has_permission('course_publish', v_org_a) then
+    raise exception 'FAIL: organisation owner lacks course management permissions';
+  end if;
+
+  insert into public.courses
+    (programme_id, organisation_id, title, slug, status, certificate_enabled, version, created_by)
+  values
+    (v_programme, v_org_a, 'Owner course permission test', 'owner-course-permission-test', 'draft', true, 1, v_user_a)
+  returning id into v_course;
+
+  if v_course is null then
+    raise exception 'FAIL: organisation owner could not create a course';
+  end if;
+
+  reset role;
+
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_user_b, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  if not public.has_permission('course_manage', v_org_a)
+     or not public.has_permission('course_publish', v_org_a) then
+    raise exception 'FAIL: instructor lacks course management permissions';
+  end if;
+
+  insert into public.courses
+    (programme_id, organisation_id, title, slug, status, certificate_enabled, version, created_by)
+  values
+    (v_programme, v_org_a, 'Trainer course permission test', 'trainer-course-permission-test', 'draft', true, 1, v_user_b)
+  returning id into v_course;
+
+  if v_course is null then
+    raise exception 'FAIL: instructor could not create a course';
+  end if;
+
+  reset role;
+  perform set_config('request.jwt.claims', '', true);
+  raise notice 'PASS: academy course management checks held';
 end $$;
 
 rollback;
