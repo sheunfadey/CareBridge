@@ -12,15 +12,18 @@ import { getCurrentUser } from "@/server/auth/current-user";
 import {
   getManagedCourseDetail,
   listManagedAssessments,
+  listManagedResources,
 } from "@/server/academy/queries";
 import {
   assessmentStatusLabels,
   courseDifficultyLabels,
+  learningResourceKindLabels,
 } from "@/lib/validation/academy";
 import { AddModuleDialog } from "@/features/academy/components/add-module-dialog";
 import { AddLessonDialog } from "@/features/academy/components/add-lesson-dialog";
 import { PublishCourseButton } from "@/features/academy/components/publish-course-button";
 import { CreateAssessmentDialog } from "@/features/academy/components/create-assessment-dialog";
+import { AddResourceDialog } from "@/features/academy/components/add-resource-dialog";
 
 type ManageCoursePageProps = {
   params: Promise<{ courseId: string }>;
@@ -52,6 +55,14 @@ export default async function ManageCoursePage({
   }
 
   const assessments = await listManagedAssessments(course.id);
+  const resources = await listManagedResources(course.id);
+  const lessons = course.modules.flatMap((module) =>
+    module.lessons.map((lesson) => ({
+      id: lesson.id,
+      title: lesson.title,
+      moduleTitle: `Module ${module.position}`,
+    })),
+  );
 
   const canEdit =
     user.isSuperAdmin || user.permissions.has("course_manage");
@@ -165,6 +176,80 @@ export default async function ManageCoursePage({
                 </Link>
               </li>
             ))}
+          </ul>
+        )}
+      </Card>
+
+      <Card className="overflow-hidden p-0">
+        <div className="flex flex-wrap items-start justify-between gap-3 border-b p-4">
+          <div>
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
+              Learning resources
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              PDFs, documents, presentations, audio, video, images and links
+              attached to the course or a lesson.
+            </p>
+          </div>
+          {canAddContent ? (
+            <AddResourceDialog courseId={course.id} lessons={lessons}>
+              <Button variant="outline" size="sm">
+                <PlusIcon />
+                Add resource
+              </Button>
+            </AddResourceDialog>
+          ) : null}
+        </div>
+        {resources.length === 0 ? (
+          <p className="p-4 text-sm text-muted-foreground">
+            No learning resources yet. Add a URL for a PDF, document, audio,
+            video, image or external link.
+          </p>
+        ) : (
+          <ul className="divide-y divide-border">
+            {resources.map((resource) => {
+              const lesson = resource.lessonId
+                ? lessons.find((item) => item.id === resource.lessonId)
+                : null;
+              return (
+                <li
+                  key={resource.id}
+                  className="flex flex-wrap items-center justify-between gap-3 p-4 text-sm"
+                >
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="font-medium text-brand-strong">
+                        {resource.title}
+                      </p>
+                      <Badge variant="outline">
+                        {learningResourceKindLabels[resource.kind]}
+                      </Badge>
+                      {resource.isPrivate ? (
+                        <Badge variant="secondary">Enrolled learners</Badge>
+                      ) : (
+                        <Badge variant="secondary">Public</Badge>
+                      )}
+                    </div>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      {lesson
+                        ? `${lesson.moduleTitle} · ${lesson.title}`
+                        : "Course-wide resource"}
+                      {resource.mimeType ? ` · ${resource.mimeType}` : ""}
+                    </p>
+                  </div>
+                  {resource.externalUrl ? (
+                    <a
+                      href={resource.externalUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs font-medium text-brand-teal hover:underline"
+                    >
+                      Open resource
+                    </a>
+                  ) : null}
+                </li>
+              );
+            })}
           </ul>
         )}
       </Card>

@@ -79,6 +79,7 @@ export const createCourseSchema = z.object({
     .min(40, "Add a description of at least 40 characters")
     .max(8000),
   category: optionalText(80),
+  categoryId: z.string().uuid().optional().or(z.literal("")),
   difficulty: z.enum(COURSE_DIFFICULTIES),
   estimatedMinutes: z.coerce
     .number()
@@ -92,6 +93,21 @@ export const createCourseSchema = z.object({
 });
 
 export type CreateCourseInput = z.infer<typeof createCourseSchema>;
+
+export const createCourseCategorySchema = z.object({
+  organisationId: z.string().uuid().optional().or(z.literal("")),
+  name: z
+    .string()
+    .trim()
+    .min(2, "Enter a category name")
+    .max(80, "Keep the category name under 80 characters"),
+  description: optionalText(500),
+  sortOrder: z.coerce.number().int().min(0).max(999).default(100),
+});
+
+export type CreateCourseCategoryInput = z.infer<
+  typeof createCourseCategorySchema
+>;
 
 export const updateCourseSchema = z.object({
   courseId: z.string().uuid(),
@@ -141,6 +157,62 @@ export const certificateVerificationSchema = z.object({
     .min(6, "Enter the verification code printed on the certificate")
     .max(64),
 });
+
+// Learning resources -----------------------------------------------------------
+
+export const LEARNING_RESOURCE_KINDS = [
+  "document",
+  "pdf",
+  "presentation",
+  "audio",
+  "video",
+  "image",
+  "link",
+  "other",
+] as const;
+
+export const learningResourceKindLabels: Record<
+  (typeof LEARNING_RESOURCE_KINDS)[number],
+  string
+> = {
+  document: "Document",
+  pdf: "PDF",
+  presentation: "Presentation",
+  audio: "Audio",
+  video: "Video",
+  image: "Image",
+  link: "Link",
+  other: "Other",
+};
+
+export const learningResourceSchema = z.object({
+  courseId: z.string().uuid(),
+  lessonId: z.string().uuid().optional().or(z.literal("")),
+  title: z
+    .string()
+    .trim()
+    .min(2, "Enter a resource title")
+    .max(160, "Keep the title under 160 characters"),
+  kind: z.enum(LEARNING_RESOURCE_KINDS).default("document"),
+  externalUrl: z
+    .string()
+    .trim()
+    .max(800)
+    .optional()
+    .or(z.literal(""))
+    .refine(
+      (value) =>
+        !value ||
+        value.startsWith("http://") ||
+        value.startsWith("https://") ||
+        value.startsWith("/"),
+      "Use an http(s) link or a site path",
+    ),
+  mimeType: optionalText(120),
+  isPrivate: z.boolean().default(true),
+});
+
+export type LearningResourceInput = z.infer<typeof learningResourceSchema>;
 
 // Assessments -----------------------------------------------------------------
 

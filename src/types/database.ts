@@ -1425,6 +1425,60 @@ export type Database = {
           },
         ]
       }
+      course_categories: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          organisation_id: string | null
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          organisation_id?: string | null
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          organisation_id?: string | null
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_categories_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "course_categories_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       course_enrolments: {
         Row: {
           completed_at: string | null
@@ -1530,6 +1584,7 @@ export type Database = {
       courses: {
         Row: {
           category: string | null
+          category_id: string | null
           certificate_enabled: boolean
           certificate_issuer: string
           completion_criteria: Json
@@ -1560,6 +1615,7 @@ export type Database = {
         }
         Insert: {
           category?: string | null
+          category_id?: string | null
           certificate_enabled?: boolean
           certificate_issuer?: string
           completion_criteria?: Json
@@ -1590,6 +1646,7 @@ export type Database = {
         }
         Update: {
           category?: string | null
+          category_id?: string | null
           certificate_enabled?: boolean
           certificate_issuer?: string
           completion_criteria?: Json
@@ -1619,6 +1676,13 @@ export type Database = {
           version?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "courses_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "course_categories"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "courses_created_by_fkey"
             columns: ["created_by"]

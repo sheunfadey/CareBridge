@@ -28,6 +28,7 @@ preserved.
 | `0032` | Direct messaging: organisation-scoped conversations, participants, append-only messages, read receipts and message notifications |
 | `0033` | Academy course permissions for organisation owners and instructors |
 | `0034` | Course creator select policy so new drafts are readable with `INSERT ... RETURNING` |
+| `0035` | Course categories and typed learning resources |
 
 ## Core tenancy
 
@@ -119,6 +120,9 @@ Helper functions: `subscription_effective_status`, `organisation_can_write`,
 11. Conversations and messages are readable only by their participants. Messages
     are append-only and recipients must be active members of the same
     organisation.
+12. A course category must be global or belong to the course's organisation.
+    Courses may use platform or organisation categories; archived categories
+    remain attached but are hidden from new selections.
 
 ## Changing the schema
 

@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest";
 import {
   createAssessmentQuestionSchema,
   createAssessmentSchema,
+  createCourseCategorySchema,
+  learningResourceSchema,
   parseCorrectOptionIds,
 } from "@/lib/validation/academy";
 
@@ -133,5 +135,91 @@ describe("assessment question validation", () => {
   it("normalises correct option ids", () => {
     expect(parseCorrectOptionIds(" A, c ,a")).toEqual(["a", "c"]);
     expect(parseCorrectOptionIds("")).toEqual([]);
+  });
+});
+
+describe("course category validation", () => {
+  it("accepts an organisation category", () => {
+    expect(
+      createCourseCategorySchema.safeParse({
+        organisationId: assessmentId,
+        name: "Safeguarding",
+        description: "Safeguarding courses",
+        sortOrder: 20,
+      }).success,
+    ).toBe(true);
+  });
+
+  it("accepts a platform category", () => {
+    expect(
+      createCourseCategorySchema.safeParse({
+        organisationId: "",
+        name: "Care foundations",
+        sortOrder: 10,
+      }).success,
+    ).toBe(true);
+  });
+
+  it("rejects short names", () => {
+    expect(
+      createCourseCategorySchema.safeParse({
+        organisationId: "",
+        name: "A",
+      }).success,
+    ).toBe(false);
+  });
+});
+
+describe("learning resource validation", () => {
+  const base = {
+    courseId: assessmentId,
+    lessonId: "",
+    title: "Person-centred care handout",
+    kind: "pdf" as const,
+    externalUrl: "https://example.com/handout.pdf",
+    mimeType: "application/pdf",
+    isPrivate: true,
+  };
+
+  it("accepts the supported resource types", () => {
+    for (const kind of [
+      "document",
+      "pdf",
+      "presentation",
+      "audio",
+      "video",
+      "image",
+      "link",
+      "other",
+    ] as const) {
+      expect(
+        learningResourceSchema.safeParse({ ...base, kind }).success,
+        kind,
+      ).toBe(true);
+    }
+  });
+
+  it("rejects an invalid URL scheme", () => {
+    expect(
+      learningResourceSchema.safeParse({
+        ...base,
+        externalUrl: "javascript:alert(1)",
+      }).success,
+    ).toBe(false);
+  });
+
+  it("accepts site-relative links", () => {
+    expect(
+      learningResourceSchema.safeParse({
+        ...base,
+        externalUrl: "/resources/handout.pdf",
+      }).success,
+    ).toBe(true);
+  });
+
+  it("requires a title", () => {
+    expect(
+      learningResourceSchema.safeParse({ ...base, title: "" }).success,
+    ).toBe(false);
   });
 });

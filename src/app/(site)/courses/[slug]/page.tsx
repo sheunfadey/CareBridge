@@ -64,6 +64,9 @@ export default async function CourseDetailPage({
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="space-y-6">
             <div className="flex flex-wrap items-center gap-2">
+              {course.category ? (
+                <Badge variant="outline">{course.category}</Badge>
+              ) : null}
               <Badge variant="outline">
                 {courseDifficultyLabels[course.difficulty]}
               </Badge>

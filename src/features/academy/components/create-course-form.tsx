@@ -27,6 +27,7 @@ import {
   type CreateCourseInput,
 } from "@/lib/validation/academy";
 import type {
+  CourseCategory,
   OrganisationOption,
   ProgrammeOption,
 } from "@/server/academy/queries";
@@ -34,11 +35,13 @@ import type {
 type CreateCourseFormProps = {
   programmes: ProgrammeOption[];
   organisations: OrganisationOption[];
+  categories: CourseCategory[];
 };
 
 export function CreateCourseForm({
   programmes,
   organisations,
+  categories,
 }: CreateCourseFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -60,6 +63,7 @@ export function CreateCourseForm({
       summary: "",
       description: "",
       category: "",
+      categoryId: "",
       difficulty: "foundation",
       estimatedMinutes: 60,
       learningOutcomes: "",
@@ -71,6 +75,7 @@ export function CreateCourseForm({
 
   const programmeId = useWatch({ control, name: "programmeId" });
   const organisationId = useWatch({ control, name: "organisationId" });
+  const categoryId = useWatch({ control, name: "categoryId" });
   const difficulty = useWatch({ control, name: "difficulty" });
   const scholarshipEligible = useWatch({
     control,
@@ -80,6 +85,12 @@ export function CreateCourseForm({
     control,
     name: "certificateEnabled",
   });
+
+  const categoryOptions = categories.filter(
+    (category) =>
+      category.isActive &&
+      (!category.organisationId || category.organisationId === organisationId),
+  );
 
   const onSubmit = (values: CreateCourseInput) => {
     setError(null);
@@ -140,11 +151,12 @@ export function CreateCourseForm({
           <Label htmlFor="course-owner">Owner</Label>
           <Select
             value={organisationId || "platform"}
-            onValueChange={(value) =>
+            onValueChange={(value) => {
               setValue("organisationId", value === "platform" ? "" : value, {
                 shouldValidate: true,
-              })
-            }
+              });
+              setValue("categoryId", "", { shouldValidate: true });
+            }}
           >
             <SelectTrigger id="course-owner" className="w-full">
               <SelectValue placeholder="Select an owner" />
@@ -216,8 +228,36 @@ export function CreateCourseForm({
 
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="space-y-2">
-          <Label htmlFor="course-category">Category (optional)</Label>
-          <Input id="course-category" {...register("category")} />
+          <div className="flex items-center justify-between gap-2">
+            <Label htmlFor="course-category">Category (optional)</Label>
+            <Link
+              href="/dashboard/academy/manage/categories"
+              className="text-xs font-medium text-brand-teal hover:underline"
+            >
+              Manage
+            </Link>
+          </div>
+          <Select
+            value={categoryId || "none"}
+            onValueChange={(value) =>
+              setValue("categoryId", value === "none" ? "" : value, {
+                shouldValidate: true,
+              })
+            }
+          >
+            <SelectTrigger id="course-category" className="w-full">
+              <SelectValue placeholder="No category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="none">No category</SelectItem>
+              {categoryOptions.map((category) => (
+                <SelectItem key={category.id} value={category.id}>
+                  {category.name}
+                  {category.organisationId ? "" : " · Platform"}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <div className="space-y-2">
           <Label htmlFor="course-difficulty">Difficulty</Label>

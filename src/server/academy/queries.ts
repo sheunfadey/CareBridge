@@ -124,6 +124,18 @@ export type CourseAssessment = {
   inProgress: boolean;
 };
 
+export type ManagedLearningResource = {
+  id: string;
+  lessonId: string | null;
+  title: string;
+  kind: LearningResourceKind;
+  externalUrl: string | null;
+  mimeType: string | null;
+  isPrivate: boolean;
+  position: number;
+  createdAt: string;
+};
+
 export type ManagedAssessment = {
   id: string;
   title: string;
@@ -200,6 +212,7 @@ export type ManagedCourse = {
   organisationId: string | null;
   organisationName: string | null;
   programmeTitle: string;
+  categoryName: string | null;
   moduleCount: number;
   enrolmentCount: number;
   updatedAt: string;
@@ -214,6 +227,18 @@ export type ProgrammeOption = {
 export type OrganisationOption = {
   id: string;
   name: string;
+};
+
+export type CourseCategory = {
+  id: string;
+  name: string;
+  slug: string;
+  description: string | null;
+  organisationId: string | null;
+  organisationName: string | null;
+  sortOrder: number;
+  isActive: boolean;
+  canManage: boolean;
 };
 
 export type ManagedCourseDetail = {
@@ -656,7 +681,7 @@ export async function listManagedCourses(
   let query = supabase
     .from("courses")
     .select(
-      "id, title, slug, status, difficulty, is_public, organisation_id, updated_at, programmes(title), organisations(name), course_modules(id), course_enrolments(id)",
+      "id, title, slug, status, difficulty, is_public, organisation_id, category, updated_at, course_categories(name), programmes(title), organisations(name), course_modules(id), course_enrolments(id)",
     )
     .order("updated_at", { ascending: false });
 
@@ -673,6 +698,7 @@ export async function listManagedCourses(
   return (data ?? []).map((course) => {
     const programme = singleRelation(course.programmes);
     const organisation = singleRelation(course.organisations);
+    const category = singleRelation(course.course_categories);
     return {
       id: course.id,
       title: course.title,
@@ -683,6 +709,7 @@ export async function listManagedCourses(
       organisationId: course.organisation_id,
       organisationName: organisation?.name ?? null,
       programmeTitle: programme?.title ?? "CareBridge Academy",
+      categoryName: category?.name ?? course.category,
       moduleCount: course.course_modules?.length ?? 0,
       enrolmentCount: course.course_enrolments?.length ?? 0,
       updatedAt: course.updated_at,
@@ -777,6 +804,36 @@ export async function listCourseAssessments(
       inProgress: rows.some((row) => row.status === "in_progress"),
     };
   });
+}
+
+export async function listManagedResources(
+  courseId: string,
+): Promise<ManagedLearningResource[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("learning_resources")
+    .select(
+      "id, lesson_id, title, kind, external_url, mime_type, is_private, position, created_at",
+    )
+    .eq("course_id", courseId)
+    .order("position", { ascending: true });
+
+  if (error) {
+    console.error("[academy] could not load learning resources", error);
+    return [];
+  }
+
+  return (data ?? []).map((resource) => ({
+    id: resource.id,
+    lessonId: resource.lesson_id,
+    title: resource.title,
+    kind: resource.kind,
+    externalUrl: resource.external_url,
+    mimeType: resource.mime_type,
+    isPrivate: resource.is_private,
+    position: resource.position,
+    createdAt: resource.created_at,
+  }));
 }
 
 export async function listManagedAssessments(
@@ -907,6 +964,49 @@ export async function getManagedAssessmentDetail(
       };
     }),
   };
+}
+
+export async function listCourseCategories(
+  user: CurrentUser,
+): Promise<CourseCategory[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("course_categories")
+    .select(
+      "id, name, slug, description, organisation_id, sort_order, is_active, organisations(name)",
+    )
+    .order("sort_order", { ascending: true })
+    .order("name", { ascending: true });
+
+  if (error) {
+    console.error("[academy] could not load course categories", error);
+    return [];
+  }
+
+  return (data ?? []).map((category) => {
+    const organisation = singleRelation(category.organisations);
+    const canManage = user.isSuperAdmin
+      ? true
+      : category.organisation_id
+        ? user.organisations.some(
+            (org) =>
+              org.organisationId === category.organisation_id &&
+              canManageAcademyForOrganisation(org),
+          )
+        : false;
+
+    return {
+      id: category.id,
+      name: category.name,
+      slug: category.slug,
+      description: category.description,
+      organisationId: category.organisation_id,
+      organisationName: organisation?.name ?? null,
+      sortOrder: category.sort_order,
+      isActive: category.is_active,
+      canManage,
+    };
+  });
 }
 
 export async function listProgrammeOptions(): Promise<ProgrammeOption[]> {

@@ -1691,6 +1691,73 @@ begin
   raise notice 'PASS: academy course management checks held';
 end $$;
 
+-- =============================================================================
+-- Course categories and typed learning resources
+-- =============================================================================
+do $$
+declare
+  v_user_a uuid := '11111111-1111-1111-1111-111111111111';
+  v_user_c uuid := '33333333-3333-4333-8333-333333333333';
+  v_org_a uuid := 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
+  v_category uuid;
+  v_course uuid;
+  v_resource uuid;
+  v_count int;
+begin
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_user_a, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  insert into public.course_categories
+    (organisation_id, name, slug, is_active, created_by)
+  values
+    (v_org_a, 'Private category test', 'private-category-test', false, v_user_a)
+  returning id into v_category;
+
+  if v_category is null then
+    raise exception 'FAIL: course manager could not create a category';
+  end if;
+
+  select id into v_course
+  from public.courses
+  where slug = 'owner-course-permission-test';
+
+  insert into public.learning_resources
+    (course_id, title, kind, external_url, is_private, created_by)
+  values
+    (v_course, 'Assessment PDF handout', 'pdf',
+     'https://example.com/handout.pdf', true, v_user_a)
+  returning id into v_resource;
+
+  if v_resource is null then
+    raise exception 'FAIL: course manager could not add a learning resource';
+  end if;
+
+  reset role;
+
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', v_user_c, 'role', 'authenticated')::text, true);
+  set local role authenticated;
+
+  select count(*) into v_count
+  from public.course_categories
+  where id = v_category;
+  if v_count <> 0 then
+    raise exception 'FAIL: unrelated user could read an inactive organisation category';
+  end if;
+
+  select count(*) into v_count
+  from public.learning_resources
+  where id = v_resource;
+  if v_count <> 0 then
+    raise exception 'FAIL: unrelated user could read a private draft-course resource';
+  end if;
+
+  reset role;
+  perform set_config('request.jwt.claims', '', true);
+  raise notice 'PASS: course category and resource checks held';
+end $$;
+
 rollback;
 
 -- Final, non-transactional confirmation the harness can assert on.

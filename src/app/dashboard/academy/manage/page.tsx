@@ -47,12 +47,19 @@ export default async function ManageCoursesPage() {
         ]}
         actions={
           canCreate ? (
-            <Button asChild>
-              <Link href="/dashboard/academy/manage/new">
-                <PlusIcon />
-                New course
-              </Link>
-            </Button>
+            <>
+              <Button variant="outline" asChild>
+                <Link href="/dashboard/academy/manage/categories">
+                  Categories
+                </Link>
+              </Button>
+              <Button asChild>
+                <Link href="/dashboard/academy/manage/new">
+                  <PlusIcon />
+                  New course
+                </Link>
+              </Button>
+            </>
           ) : undefined
         }
       />
@@ -91,7 +98,8 @@ export default async function ManageCoursesPage() {
                   <td className="px-4 py-3">
                     <p className="font-medium text-brand-strong">{course.title}</p>
                     <p className="text-xs text-muted-foreground">
-                      {course.organisationName ?? "Platform"}
+                      {course.organisationName ?? "Platform"} ·{" "}
+                      {course.categoryName ?? "No category"}
                     </p>
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">

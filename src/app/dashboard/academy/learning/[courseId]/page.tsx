@@ -16,6 +16,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { getCurrentUser } from "@/server/auth/current-user";
 import { getCourseForLearning, listCourseAssessments } from "@/server/academy/queries";
+import { learningResourceKindLabels } from "@/lib/validation/academy";
 import { LessonCompleteButton } from "@/features/academy/components/lesson-complete-button";
 import { AssessmentRunner } from "@/features/academy/components/assessment-runner";
 
@@ -236,9 +237,14 @@ export default async function LearningCoursePage({
                   <li key={resource.id} className="flex items-start gap-2 text-sm">
                     <FileTextIcon className="mt-0.5 size-4 text-brand-teal" />
                     <div>
-                      <p className="font-medium text-brand-strong">
-                        {resource.title}
-                      </p>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="font-medium text-brand-strong">
+                          {resource.title}
+                        </p>
+                        <Badge variant="outline">
+                          {learningResourceKindLabels[resource.kind]}
+                        </Badge>
+                      </div>
                       {resource.externalUrl ? (
                         <a
                           href={resource.externalUrl}

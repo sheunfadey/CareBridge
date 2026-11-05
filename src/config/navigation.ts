@@ -32,6 +32,7 @@ export const primaryNav: NavGroup[] = [
       { label: "My Learning", href: "/dashboard/academy/learning", icon: "BookOpen" },
       { label: "Browse Courses", href: "/courses", icon: "BookOpenCheck" },
       { label: "Manage Courses", href: "/dashboard/academy/manage", icon: "FileCog", permissions: ["course_manage"] },
+      { label: "Categories", href: "/dashboard/academy/manage/categories", icon: "Tags", permissions: ["course_manage"] },
       { label: "Certificates", href: "/dashboard/academy/certificates", icon: "ShieldCheck" },
     ],
   },

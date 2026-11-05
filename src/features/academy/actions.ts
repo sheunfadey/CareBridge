@@ -6,18 +6,22 @@ import { createClient } from "@/lib/supabase/server";
 import {
   createAssessmentQuestionSchema,
   createAssessmentSchema,
+  createCourseCategorySchema,
   createCourseSchema,
   createLessonSchema,
   createModuleSchema,
+  learningResourceSchema,
   linesToArray,
   parseCorrectOptionIds,
   slugify,
   updateCourseSchema,
   type CreateAssessmentInput,
   type CreateAssessmentQuestionInput,
+  type CreateCourseCategoryInput,
   type CreateCourseInput,
   type CreateLessonInput,
   type CreateModuleInput,
+  type LearningResourceInput,
   type UpdateCourseInput,
 } from "@/lib/validation/academy";
 import { getCurrentUser, type CurrentUser } from "@/server/auth/current-user";
@@ -158,6 +162,34 @@ export async function createCourseAction(
       };
     }
 
+    let categoryId: string | null = null;
+    let categoryName = parsed.data.category || null;
+
+    if (parsed.data.categoryId) {
+      const { data: category, error: categoryError } = await supabase
+        .from("course_categories")
+        .select("id, name, organisation_id, is_active")
+        .eq("id", parsed.data.categoryId)
+        .maybeSingle();
+
+      if (categoryError || !category || !category.is_active) {
+        return { ok: false, message: "That course category is not available." };
+      }
+
+      if (
+        category.organisation_id &&
+        category.organisation_id !== organisationId
+      ) {
+        return {
+          ok: false,
+          message: "That category belongs to another organisation.",
+        };
+      }
+
+      categoryId = category.id;
+      categoryName = category.name;
+    }
+
     const slug = await uniqueCourseSlug(supabase, parsed.data.title);
     const organisationName =
       user.organisations.find((org) => org.organisationId === organisationId)
@@ -172,7 +204,8 @@ export async function createCourseAction(
         slug,
         summary: parsed.data.summary,
         description: parsed.data.description,
-        category: parsed.data.category || null,
+        category: categoryName,
+        category_id: categoryId,
         learning_outcomes: linesToArray(parsed.data.learningOutcomes),
         prerequisites: linesToArray(parsed.data.prerequisites),
         difficulty: parsed.data.difficulty,
@@ -206,7 +239,7 @@ export async function createCourseAction(
       action: "course.created",
       entityType: "course",
       entityId: course.id,
-      metadata: { title: parsed.data.title, slug },
+      metadata: { title: parsed.data.title, slug, categoryId },
     });
 
     revalidatePath("/dashboard/academy");
@@ -216,6 +249,151 @@ export async function createCourseAction(
       ok: true,
       message: "Course created as a draft.",
       redirectTo: `/dashboard/academy/manage/${course.id}`,
+    };
+  } catch (error) {
+    return toFriendlyError(error);
+  }
+}
+
+export async function createCourseCategoryAction(
+  input: CreateCourseCategoryInput,
+): Promise<AcademyActionResult> {
+  const parsed = createCourseCategorySchema.safeParse(input);
+  if (!parsed.success) {
+    return {
+      ok: false,
+      message: "Please correct the highlighted fields.",
+      fieldErrors: fieldErrorsFromZod(parsed.error.issues),
+    };
+  }
+
+  try {
+    const user = await requireUser();
+    const organisationId = parsed.data.organisationId || null;
+
+    if (organisationId) {
+      await assertPermission(user.id, "course_manage", organisationId);
+    } else if (!user.isSuperAdmin) {
+      return {
+        ok: false,
+        message: "Only a platform administrator can create global categories.",
+      };
+    }
+
+    const supabase = await createClient();
+    const slug = slugify(parsed.data.name) || "category";
+
+    let duplicateQuery = supabase
+      .from("course_categories")
+      .select("id")
+      .eq("slug", slug);
+    duplicateQuery = organisationId
+      ? duplicateQuery.eq("organisation_id", organisationId)
+      : duplicateQuery.is("organisation_id", null);
+
+    const { data: duplicate } = await duplicateQuery.maybeSingle();
+    if (duplicate) {
+      return {
+        ok: false,
+        message: "A category with that name already exists.",
+      };
+    }
+
+    const { data: category, error } = await supabase
+      .from("course_categories")
+      .insert({
+        organisation_id: organisationId,
+        name: parsed.data.name,
+        slug,
+        description: parsed.data.description || null,
+        sort_order: parsed.data.sortOrder,
+        created_by: user.id,
+      })
+      .select("id")
+      .single();
+
+    if (error || !category) {
+      return {
+        ok: false,
+        message:
+          error?.code === "23505"
+            ? "A category with that name already exists."
+            : "We could not create the category.",
+      };
+    }
+
+    await recordAudit({
+      actorId: user.id,
+      organisationId,
+      action: "course.category.created",
+      entityType: "course_category",
+      entityId: category.id,
+      metadata: { name: parsed.data.name, slug },
+    });
+
+    revalidatePath("/dashboard/academy/manage");
+    revalidatePath("/dashboard/academy/manage/categories");
+    revalidatePath("/dashboard/academy/manage/new");
+    return { ok: true, message: "Category created." };
+  } catch (error) {
+    return toFriendlyError(error);
+  }
+}
+
+export async function setCourseCategoryActiveAction(
+  categoryId: string,
+  active: boolean,
+): Promise<AcademyActionResult> {
+  try {
+    const user = await requireUser();
+    const supabase = await createClient();
+    const { data: category, error: categoryError } = await supabase
+      .from("course_categories")
+      .select("id, name, organisation_id")
+      .eq("id", categoryId)
+      .maybeSingle();
+
+    if (categoryError || !category) {
+      return { ok: false, message: "That category is not available." };
+    }
+
+    if (category.organisation_id) {
+      await assertPermission(
+        user.id,
+        "course_manage",
+        category.organisation_id,
+      );
+    } else if (!user.isSuperAdmin) {
+      return {
+        ok: false,
+        message: "Only a platform administrator can change global categories.",
+      };
+    }
+
+    const { error } = await supabase
+      .from("course_categories")
+      .update({ is_active: active })
+      .eq("id", category.id);
+
+    if (error) {
+      return { ok: false, message: "We could not update the category." };
+    }
+
+    await recordAudit({
+      actorId: user.id,
+      organisationId: category.organisation_id,
+      action: "course.category.updated",
+      entityType: "course_category",
+      entityId: category.id,
+      metadata: { name: category.name, active },
+    });
+
+    revalidatePath("/dashboard/academy/manage");
+    revalidatePath("/dashboard/academy/manage/categories");
+    revalidatePath("/dashboard/academy/manage/new");
+    return {
+      ok: true,
+      message: active ? "Category activated." : "Category archived.",
     };
   } catch (error) {
     return toFriendlyError(error);
@@ -502,6 +680,102 @@ export async function addLessonAction(
 
     revalidatePath(`/dashboard/academy/manage/${course.id}`);
     return { ok: true, message: "Lesson added." };
+  } catch (error) {
+    return toFriendlyError(error);
+  }
+}
+
+export async function addLearningResourceAction(
+  input: LearningResourceInput,
+): Promise<AcademyActionResult> {
+  const parsed = learningResourceSchema.safeParse(input);
+  if (!parsed.success) {
+    return {
+      ok: false,
+      message: "Please correct the highlighted fields.",
+      fieldErrors: fieldErrorsFromZod(parsed.error.issues),
+    };
+  }
+
+  try {
+    const user = await requireUser();
+    const supabase = await createClient();
+    const course = await loadCourseForManagement(
+      supabase,
+      parsed.data.courseId,
+    );
+
+    await assertCanManageCourse(course.id);
+    await assertPermission(
+      user.id,
+      "learning_material_manage",
+      course.organisation_id,
+    );
+
+    if (!parsed.data.externalUrl) {
+      return {
+        ok: false,
+        message: "Add a link to the document, audio, video or resource.",
+      };
+    }
+
+    if (parsed.data.lessonId) {
+      const { data: lesson } = await supabase
+        .from("lessons")
+        .select("id, course_modules(course_id)")
+        .eq("id", parsed.data.lessonId)
+        .maybeSingle();
+
+      const lessonModule = lesson ? singleCourse(lesson.course_modules) : null;
+      if (!lesson || lessonModule?.course_id !== course.id) {
+        return { ok: false, message: "That lesson is not part of this course." };
+      }
+    }
+
+    const { data: lastResource } = await supabase
+      .from("learning_resources")
+      .select("position")
+      .eq("course_id", course.id)
+      .order("position", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const { data: resource, error } = await supabase
+      .from("learning_resources")
+      .insert({
+        course_id: course.id,
+        lesson_id: parsed.data.lessonId || null,
+        title: parsed.data.title,
+        kind: parsed.data.kind,
+        external_url: parsed.data.externalUrl,
+        mime_type: parsed.data.mimeType || null,
+        is_private: parsed.data.isPrivate,
+        position: (lastResource?.position ?? 0) + 1,
+        created_by: user.id,
+      })
+      .select("id")
+      .single();
+
+    if (error || !resource) {
+      return { ok: false, message: "We could not add that resource." };
+    }
+
+    await recordAudit({
+      actorId: user.id,
+      organisationId: course.organisation_id,
+      action: "course.resource.created",
+      entityType: "learning_resource",
+      entityId: resource.id,
+      metadata: {
+        courseId: course.id,
+        kind: parsed.data.kind,
+        lessonId: parsed.data.lessonId || null,
+      },
+    });
+
+    revalidatePath(`/dashboard/academy/manage/${course.id}`);
+    revalidatePath(`/dashboard/academy/learning/${course.id}`);
+    return { ok: true, message: "Resource added." };
   } catch (error) {
     return toFriendlyError(error);
   }

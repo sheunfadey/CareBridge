@@ -132,6 +132,9 @@ export default async function CoursesPage() {
               >
                 <div className="flex-1 space-y-4 p-6">
                   <div className="flex flex-wrap items-center gap-2">
+                    {course.category ? (
+                      <Badge variant="outline">{course.category}</Badge>
+                    ) : null}
                     <Badge variant="outline">
                       {courseDifficultyLabels[course.difficulty]}
                     </Badge>

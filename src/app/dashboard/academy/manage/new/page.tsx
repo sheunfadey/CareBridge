@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { getCurrentUser } from "@/server/auth/current-user";
 import {
+  listCourseCategories,
   listProgrammeOptions,
   managedOrganisationOptions,
 } from "@/server/academy/queries";
@@ -28,10 +29,11 @@ export default async function NewCoursePage() {
     redirect("/dashboard/academy");
   }
 
-  const [programmes, organisations] = await Promise.all([
+  const [programmes, categories] = await Promise.all([
     listProgrammeOptions(),
-    Promise.resolve(managedOrganisationOptions(user)),
+    listCourseCategories(user),
   ]);
+  const organisations = managedOrganisationOptions(user);
 
   return (
     <div className="space-y-4 lg:space-y-5">
@@ -67,6 +69,7 @@ export default async function NewCoursePage() {
         <CreateCourseForm
           programmes={programmes}
           organisations={organisations}
+          categories={categories}
         />
       </Card>
     </div>
