@@ -6,6 +6,7 @@ import {
   createCourseCategorySchema,
   learningResourceSchema,
   parseCorrectOptionIds,
+  updateCourseCategorySchema,
 } from "@/lib/validation/academy";
 
 const assessmentId = "11111111-1111-4111-8111-111111111111";
@@ -165,6 +166,23 @@ describe("course category validation", () => {
       createCourseCategorySchema.safeParse({
         organisationId: "",
         name: "A",
+      }).success,
+    ).toBe(false);
+  });
+
+  it("validates category edits", () => {
+    expect(
+      updateCourseCategorySchema.safeParse({
+        categoryId: assessmentId,
+        name: "Updated category",
+        description: "Updated description",
+        sortOrder: 30,
+      }).success,
+    ).toBe(true);
+    expect(
+      updateCourseCategorySchema.safeParse({
+        categoryId: "not-a-uuid",
+        name: "Updated category",
       }).success,
     ).toBe(false);
   });

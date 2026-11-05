@@ -19,7 +19,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { FormAlert, FormFieldError } from "@/features/auth/components/auth-ui";
-import { addLearningResourceAction } from "@/features/academy/actions";
+import {
+  addLearningResourceAction,
+  addLearningResourceUploadAction,
+} from "@/features/academy/actions";
 import {
   LEARNING_RESOURCE_KINDS,
   learningResourceKindLabels,
@@ -53,6 +56,7 @@ export function AddResourceDialog({
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
 
   const {
     register,
@@ -71,6 +75,34 @@ export function AddResourceDialog({
 
   const onSubmit = (values: LearningResourceInput) => {
     setError(null);
+    if (file && values.kind !== "link") {
+      const formData = new FormData();
+      formData.set("courseId", courseId);
+      formData.set("lessonId", values.lessonId || "");
+      formData.set("title", values.title);
+      formData.set("kind", values.kind);
+      formData.set("isPrivate", String(values.isPrivate));
+      formData.set("file", file);
+
+      startTransition(async () => {
+        const result = await addLearningResourceUploadAction(formData);
+        if (result.ok) {
+          reset(defaults(courseId));
+          setFile(null);
+          setOpen(false);
+          router.refresh();
+        } else {
+          setError(result.message);
+        }
+      });
+      return;
+    }
+
+    if (!values.externalUrl) {
+      setError("Choose a file to upload or enter an external URL.");
+      return;
+    }
+
     startTransition(async () => {
       const result = await addLearningResourceAction({
         ...values,
@@ -81,6 +113,7 @@ export function AddResourceDialog({
       });
       if (result.ok) {
         reset(defaults(courseId));
+        setFile(null);
         setOpen(false);
         router.refresh();
       } else {
@@ -96,8 +129,8 @@ export function AddResourceDialog({
         <DialogHeader>
           <DialogTitle>Add learning resource</DialogTitle>
           <DialogDescription>
-            Attach a PDF, document, presentation, audio, video, image or link.
-            File uploads are not enabled yet, so use a stable external URL.
+            Upload a PDF, document, presentation, audio, video or image up to 50
+            MB, or attach an external URL. Link resources use a URL only.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
@@ -150,7 +183,7 @@ export function AddResourceDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="resource-url">URL</Label>
+            <Label htmlFor="resource-url">External URL</Label>
             <Input
               id="resource-url"
               type="url"
@@ -171,7 +204,45 @@ export function AddResourceDialog({
                   : undefined
               }
             />
+            <p className="text-xs text-muted-foreground">
+              Use either an upload or an external URL. An upload takes priority.
+            </p>
           </div>
+
+          {kind !== "link" ? (
+            <div className="space-y-2">
+              <Label htmlFor="resource-file">Upload file (optional)</Label>
+              <Input
+                id="resource-file"
+                type="file"
+                accept={
+                  kind === "pdf"
+                    ? ".pdf,application/pdf"
+                    : kind === "document"
+                      ? ".doc,.docx,.odt,.rtf,.txt,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                      : kind === "presentation"
+                        ? ".ppt,.pptx,.odp,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                        : kind === "audio"
+                          ? "audio/*"
+                          : kind === "video"
+                            ? "video/*"
+                            : kind === "image"
+                              ? "image/*"
+                              : undefined
+                }
+                onChange={(event) => setFile(event.target.files?.[0] ?? null)}
+              />
+              <p className="text-xs text-muted-foreground">
+                Maximum 50 MB. Uploaded files are private to enrolled learners
+                unless you allow public access.
+              </p>
+              {file ? (
+                <p className="text-xs text-brand-teal">
+                  Selected: {file.name} ({Math.round(file.size / 1024)} KB)
+                </p>
+              ) : null}
+            </div>
+          ) : null}
 
           <div className="space-y-2">
             <Label htmlFor="resource-mime">MIME type (optional)</Label>

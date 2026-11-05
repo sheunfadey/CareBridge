@@ -76,6 +76,8 @@ export type CourseResource = {
   title: string;
   kind: LearningResourceKind;
   externalUrl: string | null;
+  storagePath: string | null;
+  downloadUrl: string | null;
   isPrivate: boolean;
 };
 
@@ -130,6 +132,8 @@ export type ManagedLearningResource = {
   title: string;
   kind: LearningResourceKind;
   externalUrl: string | null;
+  storagePath: string | null;
+  downloadUrl: string | null;
   mimeType: string | null;
   isPrivate: boolean;
   position: number;
@@ -311,6 +315,28 @@ function canManageAcademyForOrganisation(
   );
 }
 
+async function createSignedResourceUrls(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  paths: string[],
+): Promise<Map<string, string>> {
+  if (paths.length === 0) return new Map();
+
+  const { data, error } = await supabase.storage
+    .from("course-resources")
+    .createSignedUrls(paths, 60 * 60);
+
+  if (error) {
+    console.error("[academy] could not sign resource URLs", error);
+    return new Map();
+  }
+
+  return new Map(
+    (data ?? []).flatMap((item) =>
+      item.path && item.signedUrl ? [[item.path, item.signedUrl]] : [],
+    ),
+  );
+}
+
 function normaliseModules(
   modules: {
     id: string;
@@ -359,7 +385,7 @@ export async function getPublishedCourses(): Promise<{
   const { data, error } = await supabase
     .from("courses")
     .select(
-      "id, title, slug, summary, category, difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, programmes(title), organisations(name), course_modules(id)",
+      "id, title, slug, summary, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, programmes(title), organisations(name), course_modules(id)",
     )
     .eq("status", "published")
     .eq("is_public", true)
@@ -375,12 +401,13 @@ export async function getPublishedCourses(): Promise<{
     courses: (data ?? []).map((course) => {
       const programme = singleRelation(course.programmes);
       const organisation = singleRelation(course.organisations);
+      const category = singleRelation(course.course_categories);
       return {
         id: course.id,
         title: course.title,
         slug: course.slug,
         summary: course.summary,
-        category: course.category,
+        category: category?.name ?? course.category,
         difficulty: course.difficulty,
         estimatedMinutes: course.estimated_minutes,
         priceMinorUnits: course.price_minor_units,
@@ -402,7 +429,7 @@ export async function getPublishedCourseSyllabus(
   const { data, error } = await supabase
     .from("courses")
     .select(
-      "id, title, slug, summary, description, category, difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, learning_outcomes, prerequisites, version, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, estimated_minutes, position, is_required, is_preview))",
+      "id, title, slug, summary, description, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, learning_outcomes, prerequisites, version, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, estimated_minutes, position, is_required, is_preview))",
     )
     .eq("slug", slug)
     .eq("status", "published")
@@ -424,7 +451,7 @@ export async function getPublishedCourseSyllabus(
     slug: data.slug,
     summary: data.summary,
     description: data.description,
-    category: data.category,
+    category: singleRelation(data.course_categories)?.name ?? data.category,
     difficulty: data.difficulty,
     estimatedMinutes: data.estimated_minutes,
     priceMinorUnits: data.price_minor_units,
@@ -479,7 +506,7 @@ export async function getCourseForLearning(
   const { data, error } = await supabase
     .from("courses")
     .select(
-      "id, title, slug, summary, description, category, difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, learning_outcomes, prerequisites, version, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, content, video_url, estimated_minutes, position, is_required, is_preview))",
+      "id, title, slug, summary, description, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, learning_outcomes, prerequisites, version, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, content, video_url, estimated_minutes, position, is_required, is_preview))",
     )
     .eq("id", courseId)
     .maybeSingle();
@@ -501,7 +528,7 @@ export async function getCourseForLearning(
       .eq("enrolment_id", enrolment.id),
     supabase
       .from("learning_resources")
-      .select("id, lesson_id, title, kind, external_url, is_private")
+      .select("id, lesson_id, title, kind, external_url, storage_path, is_private")
       .eq("course_id", courseId)
       .order("position", { ascending: true }),
   ]);
@@ -541,6 +568,13 @@ export async function getCourseForLearning(
     }
   }
 
+  const signedResourceUrls = await createSignedResourceUrls(
+    supabase,
+    (resources ?? []).flatMap((resource) =>
+      resource.storage_path ? [resource.storage_path] : [],
+    ),
+  );
+
   const programme = singleRelation(data.programmes);
   const organisation = singleRelation(data.organisations);
 
@@ -550,7 +584,7 @@ export async function getCourseForLearning(
     slug: data.slug,
     summary: data.summary,
     description: data.description,
-    category: data.category,
+    category: singleRelation(data.course_categories)?.name ?? data.category,
     difficulty: data.difficulty,
     estimatedMinutes: data.estimated_minutes,
     priceMinorUnits: data.price_minor_units,
@@ -578,6 +612,10 @@ export async function getCourseForLearning(
       title: resource.title,
       kind: resource.kind,
       externalUrl: resource.external_url,
+      storagePath: resource.storage_path,
+      downloadUrl: resource.storage_path
+        ? signedResourceUrls.get(resource.storage_path) ?? null
+        : null,
       isPrivate: resource.is_private,
     })),
   };
@@ -813,7 +851,7 @@ export async function listManagedResources(
   const { data, error } = await supabase
     .from("learning_resources")
     .select(
-      "id, lesson_id, title, kind, external_url, mime_type, is_private, position, created_at",
+      "id, lesson_id, title, kind, external_url, storage_path, mime_type, size_bytes, is_private, position, created_at",
     )
     .eq("course_id", courseId)
     .order("position", { ascending: true });
@@ -823,12 +861,23 @@ export async function listManagedResources(
     return [];
   }
 
+  const signedUrls = await createSignedResourceUrls(
+    supabase,
+    (data ?? []).flatMap((resource) =>
+      resource.storage_path ? [resource.storage_path] : [],
+    ),
+  );
+
   return (data ?? []).map((resource) => ({
     id: resource.id,
     lessonId: resource.lesson_id,
     title: resource.title,
     kind: resource.kind,
     externalUrl: resource.external_url,
+    storagePath: resource.storage_path,
+    downloadUrl: resource.storage_path
+      ? signedUrls.get(resource.storage_path) ?? null
+      : null,
     mimeType: resource.mime_type,
     isPrivate: resource.is_private,
     position: resource.position,
@@ -1090,7 +1139,7 @@ export async function getManagedCourseDetail(
   const { data, error } = await supabase
     .from("courses")
     .select(
-      "id, title, slug, summary, description, category, difficulty, estimated_minutes, learning_outcomes, prerequisites, scholarship_eligible, certificate_enabled, status, is_public, organisation_id, programme_id, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, content, video_url, estimated_minutes, position, is_required, is_preview))",
+      "id, title, slug, summary, description, category, course_categories(name), difficulty, estimated_minutes, learning_outcomes, prerequisites, scholarship_eligible, certificate_enabled, status, is_public, organisation_id, programme_id, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, content, video_url, estimated_minutes, position, is_required, is_preview))",
     )
     .eq("id", courseId)
     .maybeSingle();
@@ -1133,7 +1182,7 @@ export async function getManagedCourseDetail(
     slug: data.slug,
     summary: data.summary,
     description: data.description,
-    category: data.category,
+    category: singleRelation(data.course_categories)?.name ?? data.category,
     difficulty: data.difficulty,
     estimatedMinutes: data.estimated_minutes,
     learningOutcomes: data.learning_outcomes,

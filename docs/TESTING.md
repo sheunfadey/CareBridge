@@ -30,7 +30,7 @@ Vitest lives in `tests/` and runs with `vitest.config.mts`.
 | `organisation-validation.test.ts` | Organisation validation |
 | `site-navigation.test.ts` | Public navigation |
 
-Current result: **110 tests passing across 13 files**.
+Current result: **111 tests passing across 13 files**.
 
 Unit tests do not touch the database and never fabricate financial outcomes.
 
@@ -46,6 +46,7 @@ users, asserts isolation and rolls back. It covers:
 - Academy assessment answer-key secrecy, attempt isolation and server grading;
 - Academy course creation for organisation owners and instructors;
 - Course category scope and private learning-resource access;
+- Course resource upload/signing through the private storage bucket (live check);
 - Direct messaging participant isolation, same-tenant recipients and
   append-only message history;
 - Phase 8 campaigns, donations, scholarships and award acceptance;

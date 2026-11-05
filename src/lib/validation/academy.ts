@@ -109,6 +109,21 @@ export type CreateCourseCategoryInput = z.infer<
   typeof createCourseCategorySchema
 >;
 
+export const updateCourseCategorySchema = z.object({
+  categoryId: z.string().uuid(),
+  name: z
+    .string()
+    .trim()
+    .min(2, "Enter a category name")
+    .max(80, "Keep the category name under 80 characters"),
+  description: optionalText(500),
+  sortOrder: z.coerce.number().int().min(0).max(999).default(100),
+});
+
+export type UpdateCourseCategoryInput = z.infer<
+  typeof updateCourseCategorySchema
+>;
+
 export const updateCourseSchema = z.object({
   courseId: z.string().uuid(),
   title: z.string().trim().min(3).max(160),

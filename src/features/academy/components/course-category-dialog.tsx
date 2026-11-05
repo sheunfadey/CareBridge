@@ -19,12 +19,18 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { FormAlert, FormFieldError } from "@/features/auth/components/auth-ui";
-import { createCourseCategoryAction } from "@/features/academy/actions";
+import {
+  createCourseCategoryAction,
+  updateCourseCategoryAction,
+} from "@/features/academy/actions";
 import {
   createCourseCategorySchema,
   type CreateCourseCategoryInput,
 } from "@/lib/validation/academy";
-import type { OrganisationOption } from "@/server/academy/queries";
+import type {
+  CourseCategory,
+  OrganisationOption,
+} from "@/server/academy/queries";
 
 const selectClass =
   "flex h-9 w-full rounded-lg border border-input bg-transparent px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
@@ -32,18 +38,31 @@ const selectClass =
 export function CourseCategoryDialog({
   organisations,
   isSuperAdmin,
+  category,
   children,
 }: {
   organisations: OrganisationOption[];
   isSuperAdmin: boolean;
+  category?: CourseCategory;
   children: ReactNode;
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const isEditing = Boolean(category);
 
-  const firstScope = organisations[0]?.id ?? (isSuperAdmin ? "" : "");
+  const firstScope =
+    category?.organisationId ??
+    organisations[0]?.id ??
+    (isSuperAdmin ? "" : "");
+
+  const defaults = {
+    organisationId: firstScope,
+    name: category?.name ?? "",
+    description: category?.description ?? "",
+    sortOrder: category?.sortOrder ?? 100,
+  };
 
   const {
     register,
@@ -52,29 +71,26 @@ export function CourseCategoryDialog({
     formState: { errors },
   } = useForm<CreateCourseCategoryInput>({
     resolver: zodResolver(createCourseCategorySchema),
-    defaultValues: {
-      organisationId: firstScope,
-      name: "",
-      description: "",
-      sortOrder: 100,
-    },
+    defaultValues: defaults,
   } as never);
 
   const onSubmit = (values: CreateCourseCategoryInput) => {
     setError(null);
     startTransition(async () => {
-      const result = await createCourseCategoryAction({
-        ...values,
-        organisationId: values.organisationId || undefined,
-        description: values.description || undefined,
-      });
+      const result = category
+        ? await updateCourseCategoryAction({
+            categoryId: category.id,
+            name: values.name,
+            description: values.description,
+            sortOrder: values.sortOrder,
+          })
+        : await createCourseCategoryAction({
+            ...values,
+            organisationId: values.organisationId || undefined,
+            description: values.description || undefined,
+          });
       if (result.ok) {
-        reset({
-          organisationId: firstScope,
-          name: "",
-          description: "",
-          sortOrder: 100,
-        });
+        reset(defaults);
         setOpen(false);
         router.refresh();
       } else {
@@ -88,11 +104,13 @@ export function CourseCategoryDialog({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>New course category</DialogTitle>
+          <DialogTitle>
+            {isEditing ? "Edit course category" : "New course category"}
+          </DialogTitle>
           <DialogDescription>
-            Categories group courses in the catalogue. Organisation categories
-            are visible to your team; platform categories are managed by the
-            platform.
+            {isEditing
+              ? "Rename the category or update its description and sort order. Courses stay attached."
+              : "Categories group courses in the catalogue. Organisation categories are visible to your team; platform categories are managed by the platform."}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
@@ -103,6 +121,7 @@ export function CourseCategoryDialog({
             <select
               id="category-scope"
               className={selectClass}
+              disabled={isEditing}
               {...register("organisationId")}
             >
               {isSuperAdmin ? (
@@ -160,7 +179,11 @@ export function CourseCategoryDialog({
               Cancel
             </Button>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Creating..." : "Create category"}
+              {isPending
+                ? "Saving..."
+                : isEditing
+                  ? "Save changes"
+                  : "Create category"}
             </Button>
           </DialogFooter>
         </form>

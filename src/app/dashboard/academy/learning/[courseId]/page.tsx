@@ -245,9 +245,11 @@ export default async function LearningCoursePage({
                           {learningResourceKindLabels[resource.kind]}
                         </Badge>
                       </div>
-                      {resource.externalUrl ? (
+                      {resource.downloadUrl ?? resource.externalUrl ? (
                         <a
-                          href={resource.externalUrl}
+                          href={
+                            (resource.downloadUrl ?? resource.externalUrl) as string
+                          }
                           target="_blank"
                           rel="noreferrer"
                           className="text-xs text-brand-teal underline"

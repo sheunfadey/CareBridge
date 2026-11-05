@@ -211,6 +211,7 @@ export default async function ManageCoursePage({
               const lesson = resource.lessonId
                 ? lessons.find((item) => item.id === resource.lessonId)
                 : null;
+              const resourceUrl = resource.downloadUrl ?? resource.externalUrl;
               return (
                 <li
                   key={resource.id}
@@ -237,9 +238,9 @@ export default async function ManageCoursePage({
                       {resource.mimeType ? ` · ${resource.mimeType}` : ""}
                     </p>
                   </div>
-                  {resource.externalUrl ? (
+                  {resourceUrl ? (
                     <a
-                      href={resource.externalUrl}
+                      href={resourceUrl}
                       target="_blank"
                       rel="noreferrer"
                       className="text-xs font-medium text-brand-teal hover:underline"

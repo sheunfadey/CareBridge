@@ -14,6 +14,7 @@ import {
   linesToArray,
   parseCorrectOptionIds,
   slugify,
+  updateCourseCategorySchema,
   updateCourseSchema,
   type CreateAssessmentInput,
   type CreateAssessmentQuestionInput,
@@ -22,6 +23,7 @@ import {
   type CreateLessonInput,
   type CreateModuleInput,
   type LearningResourceInput,
+  type UpdateCourseCategoryInput,
   type UpdateCourseInput,
 } from "@/lib/validation/academy";
 import { getCurrentUser, type CurrentUser } from "@/server/auth/current-user";
@@ -335,6 +337,100 @@ export async function createCourseCategoryAction(
     revalidatePath("/dashboard/academy/manage/categories");
     revalidatePath("/dashboard/academy/manage/new");
     return { ok: true, message: "Category created." };
+  } catch (error) {
+    return toFriendlyError(error);
+  }
+}
+
+export async function updateCourseCategoryAction(
+  input: UpdateCourseCategoryInput,
+): Promise<AcademyActionResult> {
+  const parsed = updateCourseCategorySchema.safeParse(input);
+  if (!parsed.success) {
+    return {
+      ok: false,
+      message: "Please correct the highlighted fields.",
+      fieldErrors: fieldErrorsFromZod(parsed.error.issues),
+    };
+  }
+
+  try {
+    const user = await requireUser();
+    const supabase = await createClient();
+    const { data: category, error: categoryError } = await supabase
+      .from("course_categories")
+      .select("id, name, organisation_id")
+      .eq("id", parsed.data.categoryId)
+      .maybeSingle();
+
+    if (categoryError || !category) {
+      return { ok: false, message: "That category is not available." };
+    }
+
+    if (category.organisation_id) {
+      await assertPermission(
+        user.id,
+        "course_manage",
+        category.organisation_id,
+      );
+    } else if (!user.isSuperAdmin) {
+      return {
+        ok: false,
+        message: "Only a platform administrator can edit global categories.",
+      };
+    }
+
+    const slug = slugify(parsed.data.name) || "category";
+    let duplicateQuery = supabase
+      .from("course_categories")
+      .select("id")
+      .eq("slug", slug)
+      .neq("id", category.id);
+    duplicateQuery = category.organisation_id
+      ? duplicateQuery.eq("organisation_id", category.organisation_id)
+      : duplicateQuery.is("organisation_id", null);
+
+    const { data: duplicate } = await duplicateQuery.maybeSingle();
+    if (duplicate) {
+      return {
+        ok: false,
+        message: "A category with that name already exists.",
+      };
+    }
+
+    const { error } = await supabase
+      .from("course_categories")
+      .update({
+        name: parsed.data.name,
+        slug,
+        description: parsed.data.description || null,
+        sort_order: parsed.data.sortOrder,
+      })
+      .eq("id", category.id);
+
+    if (error) {
+      return {
+        ok: false,
+        message:
+          error.code === "23505"
+            ? "A category with that name already exists."
+            : "We could not update the category.",
+      };
+    }
+
+    await recordAudit({
+      actorId: user.id,
+      organisationId: category.organisation_id,
+      action: "course.category.updated",
+      entityType: "course_category",
+      entityId: category.id,
+      metadata: { name: parsed.data.name, slug },
+    });
+
+    revalidatePath("/dashboard/academy/manage");
+    revalidatePath("/dashboard/academy/manage/categories");
+    revalidatePath("/dashboard/academy/manage/new");
+    return { ok: true, message: "Category updated." };
   } catch (error) {
     return toFriendlyError(error);
   }
@@ -776,6 +872,156 @@ export async function addLearningResourceAction(
     revalidatePath(`/dashboard/academy/manage/${course.id}`);
     revalidatePath(`/dashboard/academy/learning/${course.id}`);
     return { ok: true, message: "Resource added." };
+  } catch (error) {
+    return toFriendlyError(error);
+  }
+}
+
+export async function addLearningResourceUploadAction(
+  formData: FormData,
+): Promise<AcademyActionResult> {
+  try {
+    const user = await requireUser();
+    const courseId = String(formData.get("courseId") ?? "");
+    const lessonId = String(formData.get("lessonId") ?? "");
+    const title = String(formData.get("title") ?? "").trim();
+    const kind = String(formData.get("kind") ?? "document");
+    const isPrivate = String(formData.get("isPrivate") ?? "true") === "true";
+    const file = formData.get("file");
+
+    const parsed = learningResourceSchema.safeParse({
+      courseId,
+      lessonId,
+      title,
+      kind,
+      externalUrl: "",
+      isPrivate,
+    });
+
+    if (!parsed.success) {
+      return {
+        ok: false,
+        message: "Please correct the highlighted fields.",
+        fieldErrors: fieldErrorsFromZod(parsed.error.issues),
+      };
+    }
+
+    if (parsed.data.kind === "link") {
+      return {
+        ok: false,
+        message: "Links use an external URL rather than a file upload.",
+      };
+    }
+
+    if (!(file instanceof File) || file.size === 0) {
+      return { ok: false, message: "Choose a file to upload." };
+    }
+
+    if (file.size > 50 * 1024 * 1024) {
+      return { ok: false, message: "Files must be 50 MB or smaller." };
+    }
+
+    const mime = file.type || "application/octet-stream";
+    const kindMismatch =
+      (parsed.data.kind === "pdf" && mime !== "application/pdf") ||
+      (parsed.data.kind === "audio" && !mime.startsWith("audio/")) ||
+      (parsed.data.kind === "video" && !mime.startsWith("video/")) ||
+      (parsed.data.kind === "image" && !mime.startsWith("image/"));
+
+    if (kindMismatch) {
+      return {
+        ok: false,
+        message: "The selected file does not match the resource type.",
+      };
+    }
+
+    const supabase = await createClient();
+    const course = await loadCourseForManagement(supabase, parsed.data.courseId);
+
+    await assertCanManageCourse(course.id);
+    await assertPermission(
+      user.id,
+      "learning_material_manage",
+      course.organisation_id,
+    );
+
+    if (parsed.data.lessonId) {
+      const { data: lesson } = await supabase
+        .from("lessons")
+        .select("id, course_modules(course_id)")
+        .eq("id", parsed.data.lessonId)
+        .maybeSingle();
+
+      const lessonModule = lesson ? singleCourse(lesson.course_modules) : null;
+      if (!lesson || lessonModule?.course_id !== course.id) {
+        return { ok: false, message: "That lesson is not part of this course." };
+      }
+    }
+
+    const safeName = file.name
+      .replace(/[^a-zA-Z0-9._-]+/g, "-")
+      .slice(0, 120);
+    const storagePath = `course/${course.id}/${crypto.randomUUID()}-${safeName}`;
+    const storage = supabase.storage.from("course-resources");
+    const { error: uploadError } = await storage.upload(storagePath, file, {
+      contentType: mime,
+      upsert: false,
+    });
+
+    if (uploadError) {
+      return {
+        ok: false,
+        message: "We could not upload that file. Check the size and try again.",
+      };
+    }
+
+    const { data: lastResource } = await supabase
+      .from("learning_resources")
+      .select("position")
+      .eq("course_id", course.id)
+      .order("position", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const { data: resource, error } = await supabase
+      .from("learning_resources")
+      .insert({
+        course_id: course.id,
+        lesson_id: parsed.data.lessonId || null,
+        title: parsed.data.title,
+        kind: parsed.data.kind,
+        storage_path: storagePath,
+        mime_type: mime,
+        size_bytes: file.size,
+        is_private: parsed.data.isPrivate,
+        position: (lastResource?.position ?? 0) + 1,
+        created_by: user.id,
+      })
+      .select("id")
+      .single();
+
+    if (error || !resource) {
+      await storage.remove([storagePath]);
+      return { ok: false, message: "We could not save that resource." };
+    }
+
+    await recordAudit({
+      actorId: user.id,
+      organisationId: course.organisation_id,
+      action: "course.resource.created",
+      entityType: "learning_resource",
+      entityId: resource.id,
+      metadata: {
+        courseId: course.id,
+        kind: parsed.data.kind,
+        lessonId: parsed.data.lessonId || null,
+        uploaded: true,
+      },
+    });
+
+    revalidatePath(`/dashboard/academy/manage/${course.id}`);
+    revalidatePath(`/dashboard/academy/learning/${course.id}`);
+    return { ok: true, message: "Resource uploaded." };
   } catch (error) {
     return toFriendlyError(error);
   }

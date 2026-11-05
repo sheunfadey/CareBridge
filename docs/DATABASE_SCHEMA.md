@@ -29,6 +29,7 @@ preserved.
 | `0033` | Academy course permissions for organisation owners and instructors |
 | `0034` | Course creator select policy so new drafts are readable with `INSERT ... RETURNING` |
 | `0035` | Course categories and typed learning resources |
+| `0036` | Private Supabase Storage bucket and policies for uploaded course resources |
 
 ## Core tenancy
 
@@ -123,6 +124,9 @@ Helper functions: `subscription_effective_status`, `organisation_can_write`,
 12. A course category must be global or belong to the course's organisation.
     Courses may use platform or organisation categories; archived categories
     remain attached but are hidden from new selections.
+13. Uploaded course resources live in the private `course-resources` storage
+    bucket under `course/<course_id>/`. Course managers can upload/delete;
+    enrolled learners can read, with signed URLs generated on demand.
 
 ## Changing the schema
 

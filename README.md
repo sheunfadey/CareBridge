@@ -101,8 +101,9 @@ non-super-admins from escalating themselves.
   certificate lookup and a super-admin platform console.
 - **Academy (Phase 4)** - programmes, courses, modules, lessons, enrolments,
   progress, certificates, course creation and management for organisation owners,
-  training admins and instructors, shared/organisation course categories, typed
-  learning resources (PDF, document, audio, video, image, link), and auto-graded
+  training admins and instructors, shared/organisation course categories,
+  editable category metadata, typed learning resources with file uploads or
+  external links (PDF, document, audio, video, image, link), and auto-graded
   assessments with attempt limits, pass marks and completion gating.
 - **Messaging** - organisation-scoped conversations between active members,
   append-only messages, read receipts and in-app notifications.

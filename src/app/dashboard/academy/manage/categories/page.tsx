@@ -114,10 +114,21 @@ export default async function CourseCategoriesPage() {
                   </p>
                 </div>
                 {category.canManage ? (
-                  <CourseCategoryToggle
-                    categoryId={category.id}
-                    active={category.isActive}
-                  />
+                  <div className="flex flex-wrap items-center gap-2">
+                    <CourseCategoryDialog
+                      organisations={organisations}
+                      isSuperAdmin={user.isSuperAdmin}
+                      category={category}
+                    >
+                      <Button variant="outline" size="sm">
+                        Edit
+                      </Button>
+                    </CourseCategoryDialog>
+                    <CourseCategoryToggle
+                      categoryId={category.id}
+                      active={category.isActive}
+                    />
+                  </div>
                 ) : null}
               </li>
             ))}

@@ -8,7 +8,7 @@ external configuration. It is updated as each phase lands.
 ### Implemented and verified
 
 - **Supabase project** `teejjgzkvvgmsvtblncr` is active and healthy. Migrations
-  `0001`-`0035` are applied and in sync. The earlier project
+  `0001`-`0036` are applied and in sync. The earlier project
   (`ggizvtzlhdciykfmdsjl`) was deleted; this project replaces it.
 - **Identity & multi-tenancy schema**: `profiles`, `organisations`,
   `organisation_memberships`, `roles`, `permissions`, `role_permissions`,
@@ -72,7 +72,7 @@ external configuration. It is updated as each phase lands.
   templates, admin-service contracts, navigation, care, charity and billing
   validation.
 - **Cross-tenant isolation test** (`supabase/tests/rls_isolation.sql`) - passes
-  against the live database for migrations `0001`-`0035`, including care,
+  against the live database for migrations `0001`-`0036`, including care,
   charity, scholarship, subscription, read-only and module-limit isolation.
 
 ### Not yet implemented or not yet verified
@@ -94,14 +94,16 @@ external configuration. It is updated as each phase lands.
   multiple choice and true/false). There is no free-text or manually graded
   assessment, no question-bank reuse across courses, and no per-question partial
   credit. Course completion can require published assessments to be passed.
-- **Learning resources** are typed URL references (document, PDF, presentation,
-  audio, video, image, link, other). File uploads are not enabled, so the URL must
-  point to an externally hosted file.
+- **Learning resources** are typed (document, PDF, presentation, audio, video,
+  image, link, other). Files up to 50 MB can be uploaded to the private
+  `course-resources` bucket, or attached as external URLs. Other uploads (CVs,
+  staff documents, charity evidence, campaign documents) remain references only.
 - **Messaging** is organisation-scoped plain text. There are no attachments,
   cross-organisation conversations, message editing/deletion, retention
   automation or moderator export. Messages are permanent, and notification
   delivery is in-app only until an email provider is configured.
-- **No file uploads / storage buckets.**
+- **File uploads** are enabled only for course learning resources. Other
+  document-heavy areas still use references rather than uploaded files.
 - **No end-to-end browser tests.** Unit tests (Vitest) and the SQL RLS isolation
   test exist; Playwright is not yet set up. Phase 6, 7 and 8 pages have been
   driven with seeded fixtures over authenticated HTTP requests, but not in an
@@ -119,7 +121,7 @@ external configuration. It is updated as each phase lands.
     certificates;
   - campaign expenses are append-only but have no separate approval workflow;
   - scholarship evidence and campaign supporting documents are references only;
-    file uploads are not enabled;
+    file uploads are not enabled outside course resources;
   - no automated notifications for campaign approval or scholarship decisions;
   - reviewers are recorded automatically when they decide, but there is no
     workload-based reviewer assignment queue.
@@ -179,7 +181,7 @@ external configuration. It is updated as each phase lands.
 
 - `npm run lint` - clean
 - `npm run typecheck` - clean
-- `npm test` - 110 unit tests pass (13 files)
+- `npm test` - 111 unit tests pass (13 files)
 - `npm run build` - succeeds (production build)
 - Unauthenticated smoke test - `/`, `/login`, `/register`, `/forgot-password`,
   `/reset-password`, `/verify-email` return HTTP 200; `/dashboard` returns 307 to
@@ -217,14 +219,14 @@ external configuration. It is updated as each phase lands.
   referrer, permissions, HSTS) were present and the server log contained no
   runtime errors.
 - `npm run db:test:rls` - cross-tenant isolation assertions hold for the applied
-  schema through migration `0035`, including Phase 6 payment/commission, Phase 7
+  schema through migration `0036`, including Phase 6 payment/commission, Phase 7
   care, Phase 8 campaign/donation/scholarship, Phase 9 subscription/read-only,
   module-limit isolation, academy assessment answer-key/attempt isolation,
   academy course management and category/resource scope, and
   organisation-scoped messaging.
-- Phase 7/8/9/10 SQL - migrations `0016`-`0035` apply cleanly, and the invariants
+- Phase 7/8/9/10 SQL - migrations `0016`-`0036` apply cleanly, and the invariants
   pass against both an embedded PostgreSQL instance and the live project.
 
 Live provider-dependent flows (Paystack checkout/webhooks/refunds/transfers,
-Resend delivery, file uploads) remain pending credentials and are not claimed as
-verified.
+Resend delivery, and non-course file uploads) remain pending credentials and are
+not claimed as verified.
