@@ -22,7 +22,7 @@ export default function RefundPolicyPage() {
             description={`What can be refunded on ${brand.name}, how to ask for a refund and how long it takes to get your money back.`}
           />
           <div className="rounded-xl border border-brand-warning/30 bg-brand-sky p-5">
-            <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-navy">
+            <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-strong">
               <InfoIcon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
               Working draft
             </p>
@@ -40,7 +40,7 @@ export default function RefundPolicyPage() {
       <SiteSection>
         <div className="max-w-3xl space-y-8">
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               What this policy covers
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -73,7 +73,7 @@ export default function RefundPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               When a refund can be requested
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -113,7 +113,7 @@ export default function RefundPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Request windows
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -154,7 +154,7 @@ export default function RefundPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               How to request a refund
             </h2>
             <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-muted-foreground">
@@ -185,7 +185,7 @@ export default function RefundPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               How refunds are processed
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -221,7 +221,7 @@ export default function RefundPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               What is not refundable
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -270,7 +270,7 @@ export default function RefundPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Donations and charitable contributions
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -292,7 +292,7 @@ export default function RefundPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               How refund status is communicated
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -308,7 +308,7 @@ export default function RefundPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Disputes
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -321,7 +321,7 @@ export default function RefundPolicyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Contact
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">

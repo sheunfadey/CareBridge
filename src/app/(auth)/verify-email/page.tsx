@@ -29,7 +29,7 @@ export default function VerifyEmailPage() {
             aria-hidden="true"
             className="mt-0.5 size-5 shrink-0 text-brand-teal"
           />
-          <p className="text-sm text-brand-navy">
+          <p className="text-sm text-brand-strong">
             Open the link in that email to activate your account. Verification
             links expire, so request a new one if needed.
           </p>

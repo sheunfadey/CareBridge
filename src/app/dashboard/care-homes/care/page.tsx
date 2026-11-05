@@ -121,19 +121,19 @@ export default async function DailyCarePage({
       <div className="grid gap-4 sm:grid-cols-3">
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Records</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {records.length}
           </p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Awaiting review</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {needsReview.length}
           </p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Completed / refused / deferred</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {records.filter((record) => record.status === "completed").length} /{" "}
             {records.filter((record) => record.status === "refused").length} /{" "}
             {records.filter((record) => record.status === "deferred").length}
@@ -166,7 +166,7 @@ export default async function DailyCarePage({
                   <TableCell>
                     <Link
                       href={`/dashboard/care-homes/residents/${record.residentId}`}
-                      className="text-sm font-medium text-brand-navy hover:text-brand-teal"
+                      className="text-sm font-medium text-brand-strong hover:text-brand-teal"
                     >
                       {record.residentName ?? "Resident"}
                     </Link>

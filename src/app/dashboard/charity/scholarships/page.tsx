@@ -99,7 +99,7 @@ export default async function ScholarshipsAdminPage({
                   <TableCell>
                     <Link
                       href={`/dashboard/charity/scholarships/${programme.id}`}
-                      className="font-medium text-brand-navy hover:text-brand-teal"
+                      className="font-medium text-brand-strong hover:text-brand-teal"
                     >
                       {programme.name}
                     </Link>
@@ -113,7 +113,7 @@ export default async function ScholarshipsAdminPage({
                   <TableCell className="text-sm text-muted-foreground">
                     {scholarshipCoverageLabels[programme.coverage]}
                   </TableCell>
-                  <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                  <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                     {formatMoney(programme.maxAwardMinorUnits, programme.currency)}
                   </TableCell>
                   <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
@@ -123,7 +123,7 @@ export default async function ScholarshipsAdminPage({
                   <TableCell className="text-right text-sm tabular-nums text-muted-foreground">
                     {programme.applicantCount}
                   </TableCell>
-                  <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                  <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                     {formatMoney(programme.awardedMinorUnits, programme.currency)}
                     <p className="text-xs text-muted-foreground">
                       {programme.awardedCount} award{programme.awardedCount === 1 ? "" : "s"}

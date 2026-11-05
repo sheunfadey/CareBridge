@@ -78,28 +78,28 @@ export default async function CharityReportsPage({
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Donations received</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(received, "NGN")}
           </p>
           <p className="text-xs text-muted-foreground">Net of refunds</p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Committed</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(committed, "NGN")}
           </p>
           <p className="text-xs text-muted-foreground">Allocated to campaign purposes</p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Disbursed</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(disbursed, "NGN")}
           </p>
           <p className="text-xs text-muted-foreground">Approved and paid expenses</p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Scholarships awarded</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(awarded, "NGN")}
           </p>
         </Card>
@@ -107,7 +107,7 @@ export default async function CharityReportsPage({
 
       <Card className="overflow-hidden p-0">
         <div className="border-b border-border p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Campaign finance
           </h2>
         </div>
@@ -131,13 +131,13 @@ export default async function CharityReportsPage({
             <TableBody>
               {reports.campaigns.map((campaign) => (
                 <TableRow key={campaign.id}>
-                  <TableCell className="text-sm font-medium text-brand-navy">
+                  <TableCell className="text-sm font-medium text-brand-strong">
                     {campaign.title}
                   </TableCell>
                   <TableCell className="text-right text-sm tabular-nums text-muted-foreground">
                     {formatMoney(campaign.fundingTargetMinorUnits, campaign.currency)}
                   </TableCell>
-                  <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                  <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                     {formatMoney(campaign.receivedMinorUnits, campaign.currency)}
                   </TableCell>
                   <TableCell className="text-right text-sm tabular-nums text-muted-foreground">
@@ -146,7 +146,7 @@ export default async function CharityReportsPage({
                   <TableCell className="text-right text-sm tabular-nums text-muted-foreground">
                     {formatMoney(campaign.disbursedMinorUnits, campaign.currency)}
                   </TableCell>
-                  <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                  <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                     {formatMoney(
                       campaign.receivedMinorUnits - campaign.committedMinorUnits,
                       campaign.currency,
@@ -161,7 +161,7 @@ export default async function CharityReportsPage({
 
       <Card className="overflow-hidden p-0">
         <div className="border-b border-border p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Scholarship outcomes
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -190,7 +190,7 @@ export default async function CharityReportsPage({
             <TableBody>
               {reports.outcomes.map((row, index) => (
                 <TableRow key={`${row.programmeId}-${row.status}-${index}`}>
-                  <TableCell className="text-sm font-medium text-brand-navy">
+                  <TableCell className="text-sm font-medium text-brand-strong">
                     {row.programmeName}
                   </TableCell>
                   <TableCell>
@@ -202,7 +202,7 @@ export default async function CharityReportsPage({
                   <TableCell className="text-right text-sm tabular-nums text-muted-foreground">
                     {row.awardCount}
                   </TableCell>
-                  <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                  <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                     {formatMoney(row.awardedMinorUnits, "NGN")}
                   </TableCell>
                   <TableCell className="text-right text-sm tabular-nums text-muted-foreground">

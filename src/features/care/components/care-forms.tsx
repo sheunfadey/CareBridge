@@ -1365,7 +1365,7 @@ export function InvoiceDialogForm({
       {open ? (
         <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 p-4">
           <div className="mt-10 w-full max-w-3xl rounded-lg border border-border bg-background p-6 shadow-xl">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">Create an invoice</h2>
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">Create an invoice</h2>
             <p className="mt-1 text-sm text-muted-foreground">
               Invoices are created as drafts. Issue the invoice when the lines are correct.
             </p>
@@ -1471,7 +1471,7 @@ export function InvoiceDialogForm({
               <Input value={notes} onChange={(event) => setNotes(event.target.value)} />
             </div>
 
-            <p className="mt-3 text-sm font-medium text-brand-navy">
+            <p className="mt-3 text-sm font-medium text-brand-strong">
               Total: {formatMoney(totalMinor, "NGN")}
             </p>
 

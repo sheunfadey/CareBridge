@@ -42,7 +42,7 @@ export default async function AdminOrganisationsPage() {
       />
 
       <section className="space-y-3">
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Approval queue
         </h2>
         {!pending.ok ? (
@@ -71,7 +71,7 @@ export default async function AdminOrganisationsPage() {
                 {pending.data.map((org) => (
                   <TableRow key={org.id}>
                     <TableCell>
-                      <span className="block text-sm font-medium text-brand-navy">
+                      <span className="block text-sm font-medium text-brand-strong">
                         {org.name}
                       </span>
                       <span className="block text-xs text-muted-foreground">
@@ -102,7 +102,7 @@ export default async function AdminOrganisationsPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           All organisations
         </h2>
         {!all.ok ? (
@@ -132,7 +132,7 @@ export default async function AdminOrganisationsPage() {
                 {all.data.map((org) => (
                   <TableRow key={org.id}>
                     <TableCell>
-                      <span className="block text-sm font-medium text-brand-navy">
+                      <span className="block text-sm font-medium text-brand-strong">
                         {org.name}
                       </span>
                       <span className="block text-xs text-muted-foreground">

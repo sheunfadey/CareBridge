@@ -70,7 +70,7 @@ export default async function ManageJobsPage() {
               <div className="min-w-0">
                 <Link
                   href={`/dashboard/jobs/manage/${job.id}`}
-                  className="font-heading font-semibold text-brand-navy hover:text-brand-teal"
+                  className="font-heading font-semibold text-brand-strong hover:text-brand-teal"
                 >
                   {job.title}
                 </Link>

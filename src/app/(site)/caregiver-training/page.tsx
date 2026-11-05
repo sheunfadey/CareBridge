@@ -148,7 +148,7 @@ export default function CaregiverTrainingPage() {
               <ClipboardCheckIcon className="size-3.5" aria-hidden="true" />
               Learn. Practise. Qualify.
             </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-navy sm:text-5xl">
+            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
               Caregiver training that ends in capability
               <span className="text-gradient-care block">
                 You can show, not just claim.
@@ -207,7 +207,7 @@ export default function CaregiverTrainingPage() {
                 >
                   <card.icon className="size-5" />
                 </span>
-                <p className="mt-4 font-heading font-semibold text-brand-navy">
+                <p className="mt-4 font-heading font-semibold text-brand-strong">
                   {card.title}
                 </p>
                 <p className="mt-1.5 text-sm text-muted-foreground">{card.body}</p>
@@ -235,7 +235,7 @@ export default function CaregiverTrainingPage() {
               >
                 <topic.icon className="size-5" />
               </span>
-              <p className="mt-4 font-heading font-semibold text-brand-navy">
+              <p className="mt-4 font-heading font-semibold text-brand-strong">
                 {topic.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">{topic.body}</p>
@@ -265,7 +265,7 @@ export default function CaregiverTrainingPage() {
               >
                 <step.icon className="size-5" />
               </span>
-              <p className="mt-4 font-heading text-lg font-semibold text-brand-navy">
+              <p className="mt-4 font-heading text-lg font-semibold text-brand-strong">
                 {step.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">{step.body}</p>
@@ -299,7 +299,7 @@ export default function CaregiverTrainingPage() {
                   <point.icon className="size-5" />
                 </span>
                 <div>
-                  <p className="font-heading font-semibold text-brand-navy">
+                  <p className="font-heading font-semibold text-brand-strong">
                     {point.title}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">{point.body}</p>
@@ -326,7 +326,7 @@ export default function CaregiverTrainingPage() {
                 className="size-6 text-brand-green"
                 aria-hidden="true"
               />
-              <p className="mt-4 font-heading font-semibold text-brand-navy">
+              <p className="mt-4 font-heading font-semibold text-brand-strong">
                 {point.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">{point.body}</p>

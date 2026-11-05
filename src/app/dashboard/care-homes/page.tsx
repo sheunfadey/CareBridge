@@ -90,7 +90,7 @@ export default async function CareHomesPage({
       {facilities.length === 0 ? (
         <Card className="space-y-4 p-6">
           <div>
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Set up your first facility
             </h2>
             <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
@@ -158,7 +158,7 @@ export default async function CareHomesPage({
           <div className="grid gap-6 lg:grid-cols-2">
             <Card className="p-5">
               <div className="flex items-center justify-between gap-2">
-                <h2 className="font-heading text-lg font-semibold text-brand-navy">
+                <h2 className="font-heading text-lg font-semibold text-brand-strong">
                   Occupancy
                 </h2>
                 <BedDoubleIcon className="size-5 text-brand-teal" aria-hidden="true" />
@@ -172,7 +172,7 @@ export default async function CareHomesPage({
                   {dashboard.occupancy.map((row) => (
                     <li key={row.facilityId} className="space-y-1">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="font-medium text-brand-navy">{row.facilityName}</span>
+                        <span className="font-medium text-brand-strong">{row.facilityName}</span>
                         <span className="tabular-nums text-muted-foreground">
                           {row.activeResidents}
                           {row.capacity ? ` / ${row.capacity}` : ""}
@@ -197,7 +197,7 @@ export default async function CareHomesPage({
 
             <Card className="p-5">
               <div className="flex items-center justify-between gap-2">
-                <h2 className="font-heading text-lg font-semibold text-brand-navy">
+                <h2 className="font-heading text-lg font-semibold text-brand-strong">
                   Today&apos;s shifts
                 </h2>
                 <CalendarClockIcon className="size-5 text-brand-teal" aria-hidden="true" />
@@ -211,7 +211,7 @@ export default async function CareHomesPage({
                   {dashboard.upcomingShifts.map((shift) => (
                     <li key={shift.id} className="flex items-start justify-between gap-3 py-2.5">
                       <div>
-                        <p className="text-sm font-medium text-brand-navy">
+                        <p className="text-sm font-medium text-brand-strong">
                           {shift.title ?? "Shift"}
                         </p>
                         <p className="text-xs text-muted-foreground">
@@ -236,7 +236,7 @@ export default async function CareHomesPage({
 
           <div className="grid gap-6 lg:grid-cols-3">
             <Card className="p-5">
-              <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Incidents needing attention
               </h2>
               {dashboard.recentIncidents.length === 0 ? (
@@ -249,7 +249,7 @@ export default async function CareHomesPage({
                     <li key={incident.id} className="py-2.5">
                       <Link
                         href={`/dashboard/care-homes/incidents/${incident.id}`}
-                        className="text-sm font-medium text-brand-navy hover:text-brand-teal"
+                        className="text-sm font-medium text-brand-strong hover:text-brand-teal"
                       >
                         {careIncidentCategoryLabels[incident.category]}
                       </Link>
@@ -269,7 +269,7 @@ export default async function CareHomesPage({
             </Card>
 
             <Card className="p-5">
-              <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Low stock
               </h2>
               {dashboard.lowStock.length === 0 ? (
@@ -280,7 +280,7 @@ export default async function CareHomesPage({
                 <ul className="mt-3 divide-y divide-border">
                   {dashboard.lowStock.map((item) => (
                     <li key={item.itemId} className="flex items-center justify-between py-2.5 text-sm">
-                      <span className="font-medium text-brand-navy">{item.name}</span>
+                      <span className="font-medium text-brand-strong">{item.name}</span>
                       <span className="tabular-nums text-muted-foreground">
                         {item.currentQuantity} / {item.reorderLevel} {item.unit}
                       </span>
@@ -297,7 +297,7 @@ export default async function CareHomesPage({
             </Card>
 
             <Card className="p-5">
-              <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Outstanding invoices
               </h2>
               {dashboard.outstandingInvoices.length === 0 ? (
@@ -311,14 +311,14 @@ export default async function CareHomesPage({
                       <div>
                         <Link
                           href={`/dashboard/care-homes/invoices/${invoice.invoiceId}`}
-                          className="font-medium text-brand-navy hover:text-brand-teal"
+                          className="font-medium text-brand-strong hover:text-brand-teal"
                         >
                           {invoice.invoiceNumber}
                         </Link>
                         <p className="text-xs text-muted-foreground">{invoice.payerName}</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-medium tabular-nums text-brand-navy">
+                        <p className="font-medium tabular-nums text-brand-strong">
                           {formatMoney(invoice.outstandingMinorUnits, "NGN")}
                         </p>
                         {invoice.daysOverdue > 0 ? (
@@ -339,7 +339,7 @@ export default async function CareHomesPage({
               <div className="flex items-start gap-3">
                 <AlertTriangleIcon className="mt-0.5 size-5 text-brand-warning" aria-hidden="true" />
                 <div>
-                  <h2 className="font-heading text-base font-semibold text-brand-navy">
+                  <h2 className="font-heading text-base font-semibold text-brand-strong">
                     {dashboard.expiringCompliance} staff records need attention
                   </h2>
                   <p className="mt-1 text-sm text-muted-foreground">

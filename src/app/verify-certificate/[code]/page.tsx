@@ -32,7 +32,7 @@ export default async function VerifyCodePage({ params }: VerifyCodePageProps) {
           <span className="mx-auto flex size-12 items-center justify-center rounded-full bg-brand-error/10 text-brand-error">
             <ShieldXIcon className="size-6" />
           </span>
-          <h1 className="font-heading text-3xl font-semibold text-brand-navy">
+          <h1 className="font-heading text-3xl font-semibold text-brand-strong">
             Certificate not found
           </h1>
           <p className="text-muted-foreground">
@@ -64,7 +64,7 @@ export default async function VerifyCodePage({ params }: VerifyCodePageProps) {
               <CheckCircle2Icon className="size-6" />
             )}
           </span>
-          <h1 className="mt-4 font-heading text-3xl font-semibold text-brand-navy">
+          <h1 className="mt-4 font-heading text-3xl font-semibold text-brand-strong">
             {certificate.revoked
               ? "Certificate revoked"
               : "Certificate verified"}
@@ -82,13 +82,13 @@ export default async function VerifyCodePage({ params }: VerifyCodePageProps) {
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-teal">
                 Certificate of completion
               </p>
-              <p className="mt-2 font-heading text-2xl font-semibold text-brand-navy">
+              <p className="mt-2 font-heading text-2xl font-semibold text-brand-strong">
                 {certificate.learnerName}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
                 has completed
               </p>
-              <p className="mt-1 font-heading text-lg font-semibold text-brand-navy">
+              <p className="mt-1 font-heading text-lg font-semibold text-brand-strong">
                 {certificate.courseTitle}
               </p>
             </div>
@@ -102,7 +102,7 @@ export default async function VerifyCodePage({ params }: VerifyCodePageProps) {
               <dt className="text-xs uppercase tracking-wide text-muted-foreground">
                 Certificate number
               </dt>
-              <dd className="mt-1 font-medium text-brand-navy">
+              <dd className="mt-1 font-medium text-brand-strong">
                 {certificate.certificateNumber}
               </dd>
             </div>
@@ -110,7 +110,7 @@ export default async function VerifyCodePage({ params }: VerifyCodePageProps) {
               <dt className="text-xs uppercase tracking-wide text-muted-foreground">
                 Issued by
               </dt>
-              <dd className="mt-1 font-medium text-brand-navy">
+              <dd className="mt-1 font-medium text-brand-strong">
                 {certificate.issuerName}
               </dd>
             </div>
@@ -118,7 +118,7 @@ export default async function VerifyCodePage({ params }: VerifyCodePageProps) {
               <dt className="text-xs uppercase tracking-wide text-muted-foreground">
                 Issued on
               </dt>
-              <dd className="mt-1 font-medium text-brand-navy">
+              <dd className="mt-1 font-medium text-brand-strong">
                 {new Date(certificate.issuedAt).toLocaleDateString("en-NG", {
                   day: "numeric",
                   month: "long",
@@ -130,7 +130,7 @@ export default async function VerifyCodePage({ params }: VerifyCodePageProps) {
               <dt className="text-xs uppercase tracking-wide text-muted-foreground">
                 Scope
               </dt>
-              <dd className="mt-1 text-brand-navy">
+              <dd className="mt-1 text-brand-strong">
                 {certificate.credentialScope}
               </dd>
             </div>

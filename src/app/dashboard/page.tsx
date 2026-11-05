@@ -138,7 +138,7 @@ export default async function DashboardPage() {
           <div className="flex items-start gap-3">
             <AlertTriangleIcon className="mt-0.5 size-5 text-brand-warning" aria-hidden="true" />
             <div>
-              <h2 className="font-heading text-base font-semibold text-brand-navy">
+              <h2 className="font-heading text-base font-semibold text-brand-strong">
                 Workspace is read-only
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -169,7 +169,7 @@ export default async function DashboardPage() {
         <Card className="border-brand-sky bg-brand-sky/40 p-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <h2 className="font-heading text-base font-semibold text-brand-navy">
+              <h2 className="font-heading text-base font-semibold text-brand-strong">
                 Your trial ends soon
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -193,7 +193,7 @@ export default async function DashboardPage() {
       {care ? (
         <section className="space-y-4" aria-label="Care operations">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Care operations · {care.workspaceName}
             </h2>
             <Button size="sm" variant="outline" asChild>
@@ -234,7 +234,7 @@ export default async function DashboardPage() {
       {charityAdmin ? (
         <section className="space-y-4" aria-label="Charity">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Charity · {charityAdmin.workspaceName}
             </h2>
             <Button size="sm" variant="outline" asChild>
@@ -275,7 +275,7 @@ export default async function DashboardPage() {
       {referralPartner ? (
         <section className="space-y-4" aria-label="Referral partner">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Referral partner · {referralPartner.code}
             </h2>
             <Button size="sm" variant="outline" asChild>
@@ -314,7 +314,7 @@ export default async function DashboardPage() {
       {employer ? (
         <section className="space-y-4" aria-label="Employer">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Employment
             </h2>
             <Button size="sm" variant="outline" asChild>
@@ -333,7 +333,7 @@ export default async function DashboardPage() {
       <div className="grid gap-6 lg:grid-cols-2">
         <section className="space-y-4" aria-label="Academy">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Academy
             </h2>
             <Button size="sm" variant="outline" asChild>
@@ -352,7 +352,7 @@ export default async function DashboardPage() {
         {finance ? (
           <section className="space-y-4" aria-label="Finance">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Finance
               </h2>
               <Button size="sm" variant="outline" asChild>
@@ -374,7 +374,7 @@ export default async function DashboardPage() {
       myCharity.awardsCount > 0 ? (
         <section className="space-y-4" aria-label="My charity activity">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               My charity and scholarships
             </h2>
             <Button size="sm" variant="outline" asChild>
@@ -390,7 +390,7 @@ export default async function DashboardPage() {
       ) : null}
 
       <section className="space-y-4" aria-label="Your organisations">
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Your organisations
         </h2>
         {user.organisations.length === 0 ? (
@@ -405,7 +405,7 @@ export default async function DashboardPage() {
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {user.organisations.map((organisation) => (
               <Card key={organisation.organisationId} className="space-y-2 p-5">
-                <p className="font-heading text-base font-semibold text-brand-navy">
+                <p className="font-heading text-base font-semibold text-brand-strong">
                   {organisation.organisationName}
                 </p>
                 <p className="text-xs text-muted-foreground">

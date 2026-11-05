@@ -29,7 +29,7 @@ export function RecentActivityCard({
 }) {
   return (
     <Card className={cn("p-5", className)}>
-      <h2 className="font-heading text-base font-semibold text-brand-navy">
+      <h2 className="font-heading text-base font-semibold text-brand-strong">
         {title}
       </h2>
       {items.length === 0 ? (
@@ -48,7 +48,7 @@ export function RecentActivityCard({
                 )}
               />
               <div className="min-w-0 flex-1">
-                <p className="text-sm text-brand-navy">{item.title}</p>
+                <p className="text-sm text-brand-strong">{item.title}</p>
                 <p className="mt-0.5 flex flex-wrap items-center gap-x-2 text-xs text-muted-foreground">
                   {item.meta ? <span>{item.meta}</span> : null}
                   {item.meta && item.time ? <span aria-hidden="true">·</span> : null}

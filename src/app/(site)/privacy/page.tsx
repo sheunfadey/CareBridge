@@ -22,7 +22,7 @@ export default function PrivacyPage() {
             description={`This policy explains what personal data ${brand.name} collects, why we collect it, who we share it with, how long we keep it and the choices available to you.`}
           />
           <div className="rounded-xl border border-brand-warning/30 bg-brand-sky p-5">
-            <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-navy">
+            <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-strong">
               <InfoIcon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
               Working draft
             </p>
@@ -40,7 +40,7 @@ export default function PrivacyPage() {
       <SiteSection>
         <div className="max-w-3xl space-y-8">
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Who we are and what this policy covers
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -63,7 +63,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Information we collect
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -139,7 +139,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Why we use your information and on what grounds
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -194,7 +194,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Cookies and similar technologies
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -214,7 +214,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Who we share information with
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -274,7 +274,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               How long we keep information
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -298,7 +298,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Your rights
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -340,7 +340,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               How we protect information
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -402,7 +402,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Children and safeguarding-related data
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -430,7 +430,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Transfers and service providers outside Nigeria
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -443,7 +443,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Changes to this policy
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -456,7 +456,7 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Contact us
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">

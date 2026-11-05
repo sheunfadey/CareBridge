@@ -71,7 +71,7 @@ export default async function ManageInternshipsPage() {
               <div className="min-w-0">
                 <Link
                   href={`/dashboard/internships/manage/${listing.id}`}
-                  className="font-heading font-semibold text-brand-navy hover:text-brand-teal"
+                  className="font-heading font-semibold text-brand-strong hover:text-brand-teal"
                 >
                   {listing.title}
                 </Link>

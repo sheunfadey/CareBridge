@@ -56,8 +56,8 @@ export function CareNav({
           className={cn(
             "rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
             active === item.segment
-              ? "border-brand-teal bg-brand-teal/10 text-brand-navy"
-              : "border-border text-muted-foreground hover:border-brand-teal/40 hover:text-brand-navy",
+              ? "border-brand-teal bg-brand-teal/10 text-brand-strong"
+              : "border-border text-muted-foreground hover:border-brand-teal/40 hover:text-brand-strong",
           )}
         >
           {item.label}

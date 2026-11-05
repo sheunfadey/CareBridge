@@ -69,7 +69,7 @@ export default async function ReferralsPage() {
         <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <Card className="space-y-4 p-6">
             <div>
-              <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Join the referral programme
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -84,7 +84,7 @@ export default async function ReferralsPage() {
           </Card>
 
           <Card className="space-y-4 p-6">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               How it works
             </h2>
             <ol className="space-y-3 text-sm text-muted-foreground">
@@ -105,7 +105,7 @@ export default async function ReferralsPage() {
       {partner && partner.status !== "approved" ? (
         <Card className="space-y-4 p-6">
           <div className="flex flex-wrap items-center gap-3">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Application status
             </h2>
             <StatusBadge
@@ -125,17 +125,17 @@ export default async function ReferralsPage() {
           <dl className="grid gap-3 text-sm sm:grid-cols-3">
             <div>
               <dt className="text-muted-foreground">Applied</dt>
-              <dd className="font-medium text-brand-navy">
+              <dd className="font-medium text-brand-strong">
                 {formatDateTime(partner.appliedAt)}
               </dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Partner code</dt>
-              <dd className="font-mono text-brand-navy">{partner.code}</dd>
+              <dd className="font-mono text-brand-strong">{partner.code}</dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Display name</dt>
-              <dd className="font-medium text-brand-navy">
+              <dd className="font-medium text-brand-strong">
                 {partner.displayName ?? "—"}
               </dd>
             </div>
@@ -179,7 +179,7 @@ export default async function ReferralsPage() {
                   className="size-5 text-brand-teal"
                   aria-hidden="true"
                 />
-                <h2 className="font-heading text-lg font-semibold text-brand-navy">
+                <h2 className="font-heading text-lg font-semibold text-brand-strong">
                   Your referral link
                 </h2>
               </div>
@@ -192,7 +192,7 @@ export default async function ReferralsPage() {
                   className="size-5 text-brand-teal"
                   aria-hidden="true"
                 />
-                <h2 className="font-heading text-lg font-semibold text-brand-navy">
+                <h2 className="font-heading text-lg font-semibold text-brand-strong">
                   Request a payout
                 </h2>
               </div>
@@ -207,7 +207,7 @@ export default async function ReferralsPage() {
 
           <Card className="space-y-4 p-6">
             <div>
-              <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Payout details
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -220,7 +220,7 @@ export default async function ReferralsPage() {
 
           <Card className="overflow-hidden p-0">
             <div className="border-b border-border p-5">
-              <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Commission ledger
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -255,7 +255,7 @@ export default async function ReferralsPage() {
                       <TableCell className="text-sm tabular-nums text-muted-foreground">
                         {formatMoney(commission.grossMinorUnits, commission.currency)}
                       </TableCell>
-                      <TableCell className="text-sm font-medium tabular-nums text-brand-navy">
+                      <TableCell className="text-sm font-medium tabular-nums text-brand-strong">
                         {formatMoney(commission.amountMinorUnits, commission.currency)}
                       </TableCell>
                       <TableCell>
@@ -273,7 +273,7 @@ export default async function ReferralsPage() {
 
           <Card className="overflow-hidden p-0">
             <div className="border-b border-border p-5">
-              <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Payout requests
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -303,7 +303,7 @@ export default async function ReferralsPage() {
                       <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
                         {formatDateTime(payout.requestedAt)}
                       </TableCell>
-                      <TableCell className="text-sm font-medium tabular-nums text-brand-navy">
+                      <TableCell className="text-sm font-medium tabular-nums text-brand-strong">
                         {formatMoney(payout.amountMinorUnits, payout.currency)}
                       </TableCell>
                       <TableCell>
@@ -330,7 +330,7 @@ export default async function ReferralsPage() {
           <div className="grid gap-6 lg:grid-cols-2">
             <Card className="overflow-hidden p-0">
               <div className="border-b border-border p-5">
-                <h2 className="font-heading text-lg font-semibold text-brand-navy">
+                <h2 className="font-heading text-lg font-semibold text-brand-strong">
                   Referral activity
                 </h2>
                 <p className="mt-1 text-sm text-muted-foreground">
@@ -356,7 +356,7 @@ export default async function ReferralsPage() {
                   <TableBody>
                     {data.attributions.map((attribution) => (
                       <TableRow key={attribution.id}>
-                        <TableCell className="font-mono text-sm text-brand-navy">
+                        <TableCell className="font-mono text-sm text-brand-strong">
                           {attribution.referralCode}
                         </TableCell>
                         <TableCell>
@@ -378,7 +378,7 @@ export default async function ReferralsPage() {
             <Card className="space-y-4 p-6">
               <div className="flex items-center gap-2">
                 <UsersIcon className="size-5 text-brand-teal" aria-hidden="true" />
-                <h2 className="font-heading text-lg font-semibold text-brand-navy">
+                <h2 className="font-heading text-lg font-semibold text-brand-strong">
                   Published policy
                 </h2>
               </div>
@@ -392,7 +392,7 @@ export default async function ReferralsPage() {
                   {data.policies.map((policy) => (
                     <li key={policy.id} className="space-y-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <p className="font-medium text-brand-navy">
+                        <p className="font-medium text-brand-strong">
                           {policy.name}
                         </p>
                         {policy.isActive ? (

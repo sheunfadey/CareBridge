@@ -64,7 +64,7 @@ export default async function AdminUsersPage() {
               {result.data.map((profile) => (
                 <TableRow key={profile.id}>
                   <TableCell>
-                    <span className="block text-sm font-medium text-brand-navy">
+                    <span className="block text-sm font-medium text-brand-strong">
                       {profile.full_name ?? "—"}
                     </span>
                     <span className="block text-xs text-muted-foreground">

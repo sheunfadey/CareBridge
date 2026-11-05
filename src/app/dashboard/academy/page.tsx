@@ -71,7 +71,7 @@ export default async function AcademyPage() {
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Active enrolments
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-navy">
+          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
             {facts.activeEnrolments}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
@@ -82,7 +82,7 @@ export default async function AcademyPage() {
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Completed
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-navy">
+          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
             {facts.completedCourses}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
@@ -93,7 +93,7 @@ export default async function AcademyPage() {
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Certificates
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-navy">
+          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
             {facts.certificates}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
@@ -104,7 +104,7 @@ export default async function AcademyPage() {
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Catalogue
           </p>
-          <p className="mt-2 flex items-center gap-2 font-heading text-lg font-semibold text-brand-navy">
+          <p className="mt-2 flex items-center gap-2 font-heading text-lg font-semibold text-brand-strong">
             <GraduationCapIcon className="size-5" />
             Browse courses
           </p>
@@ -116,7 +116,7 @@ export default async function AcademyPage() {
 
       <section className="space-y-4">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             Continue learning
           </h2>
           <Button variant="outline" size="sm" asChild>
@@ -126,7 +126,7 @@ export default async function AcademyPage() {
         {active.length === 0 ? (
           <Card className="p-6 text-center">
             <BookOpenIcon className="mx-auto size-8 text-muted-foreground" />
-            <p className="mt-2 font-heading font-semibold text-brand-navy">
+            <p className="mt-2 font-heading font-semibold text-brand-strong">
               No courses in progress
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -148,7 +148,7 @@ export default async function AcademyPage() {
                 <Card key={course.enrolmentId} className="p-5">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <p className="font-heading font-semibold text-brand-navy">
+                      <p className="font-heading font-semibold text-brand-strong">
                         {course.title}
                       </p>
                       <p className="mt-1 text-sm text-muted-foreground">
@@ -186,7 +186,7 @@ export default async function AcademyPage() {
       {completed.length > 0 ? (
         <section className="space-y-4">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="font-heading text-base font-semibold text-brand-navy">
+            <h2 className="font-heading text-base font-semibold text-brand-strong">
               Completed courses
             </h2>
           </div>
@@ -195,7 +195,7 @@ export default async function AcademyPage() {
               <Card key={course.enrolmentId} className="p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="font-heading font-semibold text-brand-navy">
+                    <p className="font-heading font-semibold text-brand-strong">
                       {course.title}
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">

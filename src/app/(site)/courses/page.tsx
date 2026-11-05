@@ -56,7 +56,7 @@ export default async function CoursesPage() {
               <BookOpenIcon className="size-3.5" aria-hidden="true" />
               Academy catalogue
             </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-navy sm:text-5xl">
+            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
               Courses for every stage of care work
               <span className="text-gradient-care block">
                 Start where you are.
@@ -90,7 +90,7 @@ export default async function CoursesPage() {
                   <feature.icon className="size-5" />
                 </span>
                 <div>
-                  <p className="font-heading font-semibold text-brand-navy">
+                  <p className="font-heading font-semibold text-brand-strong">
                     {feature.title}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
@@ -116,7 +116,7 @@ export default async function CoursesPage() {
         ) : courses.length === 0 ? (
           <Card className="mt-8 p-6 text-center">
             <BookOpenIcon className="mx-auto size-8 text-muted-foreground" />
-            <p className="mt-2 font-heading font-semibold text-brand-navy">
+            <p className="mt-2 font-heading font-semibold text-brand-strong">
               No published courses yet
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -143,7 +143,7 @@ export default async function CoursesPage() {
                     ) : null}
                   </div>
                   <div>
-                    <p className="font-heading text-lg font-semibold text-brand-navy">
+                    <p className="font-heading text-lg font-semibold text-brand-strong">
                       {course.title}
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
@@ -197,7 +197,7 @@ export default async function CoursesPage() {
               >
                 <BookOpenIcon className="size-5" />
               </span>
-              <p className="mt-4 font-heading text-lg font-semibold text-brand-navy">
+              <p className="mt-4 font-heading text-lg font-semibold text-brand-strong">
                 {programme.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">

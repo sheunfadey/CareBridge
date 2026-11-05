@@ -100,7 +100,7 @@ export default async function CarePlanDetailPage({
 
       {canManage ? (
         <Card className="space-y-3 p-5">
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             Approval workflow
           </h2>
           <p className="text-sm text-muted-foreground">
@@ -118,7 +118,7 @@ export default async function CarePlanDetailPage({
 
       {plan.summary ? (
         <Card className="p-5">
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             Summary
           </h2>
           <p className="mt-2 whitespace-pre-line text-sm text-muted-foreground">
@@ -128,7 +128,7 @@ export default async function CarePlanDetailPage({
       ) : null}
 
       <Card className="p-5">
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Version history
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -144,7 +144,7 @@ export default async function CarePlanDetailPage({
             {detail.versions.map((version) => (
               <li key={version.id} className="rounded-lg border border-border p-4">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <h3 className="font-medium text-brand-navy">
+                  <h3 className="font-medium text-brand-strong">
                     Version {version.versionNumber}
                   </h3>
                   <p className="text-xs text-muted-foreground">
@@ -172,7 +172,7 @@ export default async function CarePlanDetailPage({
                         <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                           {label}
                         </dt>
-                        <dd className="mt-1 whitespace-pre-line text-brand-navy">
+                        <dd className="mt-1 whitespace-pre-line text-brand-strong">
                           {String(value)}
                         </dd>
                       </div>
@@ -186,7 +186,7 @@ export default async function CarePlanDetailPage({
       </Card>
 
       <Card className="p-5">
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Assigned responsibilities
         </h2>
         {detail.assignments.length === 0 ? (
@@ -198,7 +198,7 @@ export default async function CarePlanDetailPage({
             {detail.assignments.map((assignment) => (
               <li key={assignment.id} className="flex flex-wrap items-center justify-between gap-2 py-2.5 text-sm">
                 <div>
-                  <p className="font-medium text-brand-navy">{assignment.responsibility}</p>
+                  <p className="font-medium text-brand-strong">{assignment.responsibility}</p>
                   <p className="text-xs text-muted-foreground">
                     {assignment.staffName ?? "Staff member"}
                     {assignment.dueOn ? ` · due ${formatDate(assignment.dueOn)}` : ""}

@@ -147,7 +147,7 @@ export function CareForm({
                   onChange={(event) => setValue(field.name, event.target.checked)}
                 />
                 <span>
-                  <span className="font-medium text-brand-navy">{field.label}</span>
+                  <span className="font-medium text-brand-strong">{field.label}</span>
                   {field.help ? (
                     <span className="block text-xs text-muted-foreground">{field.help}</span>
                   ) : null}

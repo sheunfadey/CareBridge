@@ -52,7 +52,7 @@ export function MetricCard({
       ) : (
         <>
           <div className="mt-3 flex items-center gap-2">
-            <p className="font-heading text-3xl font-semibold tabular-nums text-brand-navy">
+            <p className="font-heading text-3xl font-semibold tabular-nums text-brand-strong">
               {empty ? "—" : value}
             </p>
             {trend ? (

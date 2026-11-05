@@ -114,20 +114,20 @@ export default async function CampaignDetailPage({
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Funding target</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(campaign.fundingTargetMinorUnits, campaign.currency)}
           </p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Received (net)</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(campaign.receivedMinorUnits, campaign.currency)}
           </p>
           <p className="text-xs text-muted-foreground">{progress}% of target</p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Committed</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(campaign.committedMinorUnits, campaign.currency)}
           </p>
           <p className="text-xs text-muted-foreground">
@@ -136,7 +136,7 @@ export default async function CampaignDetailPage({
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Uncommitted</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(available, campaign.currency)}
           </p>
         </Card>
@@ -145,7 +145,7 @@ export default async function CampaignDetailPage({
       {canApprove && campaign.status === "pending_approval" ? (
         <Card className="space-y-4 border-brand-warning/40 p-5">
           <div>
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Review this campaign
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -165,7 +165,7 @@ export default async function CampaignDetailPage({
         <Card className="space-y-3 p-5">
           {campaign.description ? (
             <div>
-              <h2 className="font-heading text-base font-semibold text-brand-navy">
+              <h2 className="font-heading text-base font-semibold text-brand-strong">
                 About this campaign
               </h2>
               <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground">
@@ -178,7 +178,7 @@ export default async function CampaignDetailPage({
               <h3 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Beneficiary criteria
               </h3>
-              <p className="mt-1 whitespace-pre-line text-sm text-brand-navy">
+              <p className="mt-1 whitespace-pre-line text-sm text-brand-strong">
                 {campaign.beneficiaryCriteria}
               </p>
             </div>
@@ -187,7 +187,7 @@ export default async function CampaignDetailPage({
       ) : null}
 
       <Card className="p-5">
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Review history
         </h2>
         {detail.reviews.length === 0 ? (
@@ -199,7 +199,7 @@ export default async function CampaignDetailPage({
             {detail.reviews.map((review) => (
               <li key={review.id} className="flex items-start justify-between gap-3 py-2.5 text-sm">
                 <div>
-                  <p className="font-medium text-brand-navy">
+                  <p className="font-medium text-brand-strong">
                     {campaignReviewDecisionLabels[review.decision]}
                   </p>
                   <p className="text-xs text-muted-foreground">{review.notes}</p>
@@ -216,7 +216,7 @@ export default async function CampaignDetailPage({
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="overflow-hidden p-0">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-5">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Donations
             </h2>
             <p className="text-xs text-muted-foreground">
@@ -238,13 +238,13 @@ export default async function CampaignDetailPage({
               <TableBody>
                 {detail.donations.map((donation) => (
                   <TableRow key={donation.id}>
-                    <TableCell className="text-sm text-brand-navy">
+                    <TableCell className="text-sm text-brand-strong">
                       {donation.donorLabel}
                       {donation.isPublic ? (
                         <p className="text-xs text-muted-foreground">Public acknowledgement</p>
                       ) : null}
                     </TableCell>
-                    <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                    <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                       {formatMoney(donation.amountMinorUnits, campaign.currency)}
                     </TableCell>
                     <TableCell>
@@ -265,7 +265,7 @@ export default async function CampaignDetailPage({
 
         <Card className="overflow-hidden p-0">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-5">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Allocations
             </h2>
             {canManage ? (
@@ -285,13 +285,13 @@ export default async function CampaignDetailPage({
               {detail.allocations.map((allocation) => (
                 <li key={allocation.id} className="flex items-center justify-between gap-3 p-4 text-sm">
                   <div>
-                    <p className="font-medium text-brand-navy">{allocation.category}</p>
+                    <p className="font-medium text-brand-strong">{allocation.category}</p>
                     <p className="text-xs text-muted-foreground">
                       {campaignAllocationTypeLabels[allocation.allocationType]} ·{" "}
                       {formatDateTime(allocation.createdAt)}
                     </p>
                   </div>
-                  <span className="tabular-nums text-brand-navy">
+                  <span className="tabular-nums text-brand-strong">
                     {formatMoney(allocation.amountMinorUnits, campaign.currency)}
                   </span>
                 </li>
@@ -304,7 +304,7 @@ export default async function CampaignDetailPage({
       <Card className="overflow-hidden p-0">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-5">
           <div>
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Campaign expenses
             </h2>
             <p className="text-xs text-muted-foreground">
@@ -336,7 +336,7 @@ export default async function CampaignDetailPage({
             <TableBody>
               {detail.expenses.map((expense) => (
                 <TableRow key={expense.id}>
-                  <TableCell className="text-sm text-brand-navy">
+                  <TableCell className="text-sm text-brand-strong">
                     {expense.category}
                     {expense.description ? (
                       <p className="text-xs text-muted-foreground">{expense.description}</p>
@@ -348,7 +348,7 @@ export default async function CampaignDetailPage({
                   <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
                     {formatDate(expense.incurredOn)}
                   </TableCell>
-                  <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                  <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                     {formatMoney(expense.amountMinorUnits, campaign.currency)}
                   </TableCell>
                   <TableCell>
@@ -370,7 +370,7 @@ export default async function CampaignDetailPage({
       <Card className="p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Impact reports
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -393,7 +393,7 @@ export default async function CampaignDetailPage({
             {detail.impactReports.map((report) => (
               <li key={report.id} className="flex items-center justify-between gap-3 py-2.5 text-sm">
                 <div>
-                  <p className="font-medium text-brand-navy">{report.title}</p>
+                  <p className="font-medium text-brand-strong">{report.title}</p>
                   <p className="text-xs text-muted-foreground">
                     {report.isPublished
                       ? `Published ${formatDateTime(report.publishedAt)}`

@@ -32,7 +32,7 @@ export function StatusCard({
   return (
     <Card className={cn("p-5", className)}>
       <div className="flex items-center justify-between gap-3">
-        <h2 className="font-heading text-base font-semibold text-brand-navy">
+        <h2 className="font-heading text-base font-semibold text-brand-strong">
           {title}
         </h2>
         {status ? <StatusBadge status={status.status} tone={status.tone} /> : null}
@@ -60,7 +60,7 @@ export function StatusCard({
                 className="flex items-center justify-between gap-4 py-2.5 first:pt-0 last:pb-0"
               >
                 <dt className="text-sm text-muted-foreground">{record.label}</dt>
-                <dd className="text-sm font-medium tabular-nums text-brand-navy">
+                <dd className="text-sm font-medium tabular-nums text-brand-strong">
                   {record.value}
                 </dd>
               </div>

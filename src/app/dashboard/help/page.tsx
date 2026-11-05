@@ -57,7 +57,7 @@ export default function DashboardHelpPage() {
             <span className="flex size-10 items-center justify-center rounded-full bg-brand-sky text-brand-teal">
               <LifeBuoyIcon className="size-5" />
             </span>
-            <h2 className="mt-3 font-heading font-semibold text-brand-navy">
+            <h2 className="mt-3 font-heading font-semibold text-brand-strong">
               {link.title}
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -71,7 +71,7 @@ export default function DashboardHelpPage() {
       </div>
 
       <Card className="p-5">
-        <h2 className="font-heading text-base font-semibold text-brand-navy">
+        <h2 className="font-heading text-base font-semibold text-brand-strong">
           Need more help?
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">

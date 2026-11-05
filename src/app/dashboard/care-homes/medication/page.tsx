@@ -100,12 +100,12 @@ export default async function MedicationPage({
                   <TableCell>
                     <Link
                       href={`/dashboard/care-homes/residents/${record.residentId}`}
-                      className="text-sm font-medium text-brand-navy hover:text-brand-teal"
+                      className="text-sm font-medium text-brand-strong hover:text-brand-teal"
                     >
                       {record.residentName ?? "Resident"}
                     </Link>
                   </TableCell>
-                  <TableCell className="text-sm text-brand-navy">
+                  <TableCell className="text-sm text-brand-strong">
                     {record.medicationName}
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
@@ -139,7 +139,7 @@ export default async function MedicationPage({
       </Card>
 
       <Card className="p-5">
-        <h2 className="font-heading text-base font-semibold text-brand-navy">
+        <h2 className="font-heading text-base font-semibold text-brand-strong">
           Safeguards
         </h2>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">

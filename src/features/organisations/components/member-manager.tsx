@@ -88,7 +88,7 @@ export function MemberManager({
 
       <section className="space-y-3">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             Members ({activeMembers.length})
           </h2>
           {canManage ? (
@@ -115,7 +115,7 @@ export function MemberManager({
                 <TableRow key={member.membershipId}>
                   <TableCell>
                     <div className="flex flex-col">
-                      <span className="font-medium text-brand-navy">
+                      <span className="font-medium text-brand-strong">
                         {member.fullName ?? member.email}
                       </span>
                       <span className="text-xs text-muted-foreground">
@@ -196,7 +196,7 @@ export function MemberManager({
 
       {canManage && invitations.length > 0 ? (
         <section className="space-y-3">
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             Pending invitations ({invitations.length})
           </h2>
           <ul className="space-y-2">
@@ -206,7 +206,7 @@ export function MemberManager({
                 className="flex items-center justify-between gap-3 rounded-lg bg-card p-3 ring-1 ring-foreground/10"
               >
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium text-brand-navy">
+                  <span className="text-sm font-medium text-brand-strong">
                     {invitation.email}
                   </span>
                   <span className="text-xs text-muted-foreground">

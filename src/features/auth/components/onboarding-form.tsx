@@ -90,7 +90,7 @@ export function OnboardingForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
       <header className="space-y-1.5">
-        <h1 className="font-heading text-2xl font-semibold text-brand-navy">
+        <h1 className="font-heading text-2xl font-semibold text-brand-strong">
           Set up your account
         </h1>
         <p className="text-sm text-muted-foreground">
@@ -104,7 +104,7 @@ export function OnboardingForm({
       ) : null}
 
       <fieldset className="space-y-3">
-        <legend className="text-sm font-medium text-brand-navy">
+        <legend className="text-sm font-medium text-brand-strong">
           I am joining as
         </legend>
         <div className="grid gap-3 sm:grid-cols-2">
@@ -137,7 +137,7 @@ export function OnboardingForm({
                 >
                   <Icon className="size-4.5" />
                 </span>
-                <span className="text-sm font-medium text-brand-navy">
+                <span className="text-sm font-medium text-brand-strong">
                   {accountTypeLabels[type]}
                 </span>
               </button>

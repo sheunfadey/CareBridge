@@ -101,7 +101,7 @@ export default async function ProgrammeDetailPage({
 
       <Card className="space-y-3 p-5">
         <div>
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             Eligibility
           </h2>
           <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground">
@@ -113,7 +113,7 @@ export default async function ProgrammeDetailPage({
             <h3 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
               About the programme
             </h3>
-            <p className="mt-1 whitespace-pre-line text-sm text-brand-navy">
+            <p className="mt-1 whitespace-pre-line text-sm text-brand-strong">
               {programme.description}
             </p>
           </div>
@@ -122,7 +122,7 @@ export default async function ProgrammeDetailPage({
 
       <Card className="overflow-hidden p-0">
         <div className="border-b border-border p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Applications
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -140,7 +140,7 @@ export default async function ProgrammeDetailPage({
               <div key={application.id} className="space-y-3 p-5">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
-                    <p className="font-medium text-brand-navy">
+                    <p className="font-medium text-brand-strong">
                       {application.applicantName ?? "Applicant"}
                     </p>
                     <p className="text-xs text-muted-foreground">
@@ -208,7 +208,7 @@ export default async function ProgrammeDetailPage({
 
       <Card className="overflow-hidden p-0">
         <div className="border-b border-border p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Awards
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -233,10 +233,10 @@ export default async function ProgrammeDetailPage({
             <TableBody>
               {detail.awards.map((award) => (
                 <TableRow key={award.id}>
-                  <TableCell className="text-sm font-medium text-brand-navy">
+                  <TableCell className="text-sm font-medium text-brand-strong">
                     {award.applicantName ?? "Learner"}
                   </TableCell>
-                  <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                  <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                     {formatMoney(award.amountMinorUnits, award.currency)}
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">

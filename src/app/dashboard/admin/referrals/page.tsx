@@ -75,7 +75,7 @@ export default async function AdminReferralsPage() {
             aria-hidden="true"
           />
           <div className="text-sm text-muted-foreground">
-            <p className="font-medium text-brand-navy">
+            <p className="font-medium text-brand-strong">
               Provider transfers are disabled
             </p>
             <p>
@@ -91,7 +91,7 @@ export default async function AdminReferralsPage() {
       ) : null}
 
       <section className="space-y-3">
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Partner applications
         </h2>
         <Card className="overflow-hidden p-0">
@@ -114,7 +114,7 @@ export default async function AdminReferralsPage() {
                 {pendingPartners.map((partner) => (
                   <TableRow key={partner.id}>
                     <TableCell>
-                      <span className="block text-sm font-medium text-brand-navy">
+                      <span className="block text-sm font-medium text-brand-strong">
                         {partner.displayName ?? partner.fullName ?? "Unnamed partner"}
                       </span>
                       <span className="block text-xs text-muted-foreground">
@@ -122,7 +122,7 @@ export default async function AdminReferralsPage() {
                         {partner.phone ?? "No phone"}
                       </span>
                     </TableCell>
-                    <TableCell className="font-mono text-xs text-brand-navy">
+                    <TableCell className="font-mono text-xs text-brand-strong">
                       {partner.code}
                     </TableCell>
                     <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
@@ -146,7 +146,7 @@ export default async function AdminReferralsPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           All partners
         </h2>
         <Card className="overflow-hidden p-0">
@@ -170,7 +170,7 @@ export default async function AdminReferralsPage() {
                 {data.partners.map((partner) => (
                   <TableRow key={partner.id}>
                     <TableCell>
-                      <span className="block text-sm font-medium text-brand-navy">
+                      <span className="block text-sm font-medium text-brand-strong">
                         {partner.displayName ?? partner.fullName ?? "Unnamed partner"}
                       </span>
                       <span className="block text-xs text-muted-foreground">
@@ -182,7 +182,7 @@ export default async function AdminReferralsPage() {
                         </span>
                       ) : null}
                     </TableCell>
-                    <TableCell className="font-mono text-xs text-brand-navy">
+                    <TableCell className="font-mono text-xs text-brand-strong">
                       {partner.code}
                     </TableCell>
                     <TableCell>
@@ -212,7 +212,7 @@ export default async function AdminReferralsPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Commission review
         </h2>
         <Card className="overflow-hidden p-0">
@@ -237,7 +237,7 @@ export default async function AdminReferralsPage() {
                 {reviewableCommissions.map((commission) => (
                   <TableRow key={commission.id}>
                     <TableCell>
-                      <span className="block text-sm font-medium text-brand-navy">
+                      <span className="block text-sm font-medium text-brand-strong">
                         {commission.partnerName ?? "Unknown partner"}
                       </span>
                       <span className="block font-mono text-xs text-muted-foreground">
@@ -247,7 +247,7 @@ export default async function AdminReferralsPage() {
                     <TableCell className="text-sm tabular-nums text-muted-foreground">
                       {formatMoney(commission.grossMinorUnits, commission.currency)}
                     </TableCell>
-                    <TableCell className="text-sm font-medium tabular-nums text-brand-navy">
+                    <TableCell className="text-sm font-medium tabular-nums text-brand-strong">
                       {formatMoney(commission.amountMinorUnits, commission.currency)}
                     </TableCell>
                     <TableCell>
@@ -274,7 +274,7 @@ export default async function AdminReferralsPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Payout requests
         </h2>
         <Card className="overflow-hidden p-0">
@@ -299,14 +299,14 @@ export default async function AdminReferralsPage() {
                 {pendingPayouts.map((payout) => (
                   <TableRow key={payout.id}>
                     <TableCell>
-                      <span className="block text-sm font-medium text-brand-navy">
+                      <span className="block text-sm font-medium text-brand-strong">
                         {payout.partnerName ?? "Unknown partner"}
                       </span>
                       <span className="block font-mono text-xs text-muted-foreground">
                         {payout.partnerCode ?? "—"}
                       </span>
                     </TableCell>
-                    <TableCell className="text-sm font-medium tabular-nums text-brand-navy">
+                    <TableCell className="text-sm font-medium tabular-nums text-brand-strong">
                       {formatMoney(payout.amountMinorUnits, payout.currency)}
                     </TableCell>
                     <TableCell>
@@ -347,7 +347,7 @@ export default async function AdminReferralsPage() {
 
       <section className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Commission policies
           </h2>
           <PolicyDialog triggerLabel="New policy" />
@@ -374,7 +374,7 @@ export default async function AdminReferralsPage() {
                 {data.policies.map((policy) => (
                   <TableRow key={policy.id}>
                     <TableCell>
-                      <span className="block text-sm font-medium text-brand-navy">
+                      <span className="block text-sm font-medium text-brand-strong">
                         {policy.name}
                       </span>
                       <span className="block text-xs text-muted-foreground">

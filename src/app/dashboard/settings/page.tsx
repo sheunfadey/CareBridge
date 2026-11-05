@@ -31,23 +31,23 @@ export default async function SettingsPage() {
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card className="space-y-3 p-5">
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             Profile
           </h2>
           <dl className="space-y-2 text-sm">
             <div className="flex justify-between gap-4">
               <dt className="text-muted-foreground">Full name</dt>
-              <dd className="font-medium text-brand-navy">
+              <dd className="font-medium text-brand-strong">
                 {user.fullName ?? "Not set"}
               </dd>
             </div>
             <div className="flex justify-between gap-4">
               <dt className="text-muted-foreground">Email</dt>
-              <dd className="font-medium text-brand-navy">{user.email}</dd>
+              <dd className="font-medium text-brand-strong">{user.email}</dd>
             </div>
             <div className="flex justify-between gap-4">
               <dt className="text-muted-foreground">Role</dt>
-              <dd className="font-medium capitalize text-brand-navy">
+              <dd className="font-medium capitalize text-brand-strong">
                 {user.roles.map((role) => role.replaceAll("_", " ")).join(", ") ||
                   "Caregiver"}
               </dd>
@@ -60,7 +60,7 @@ export default async function SettingsPage() {
         </Card>
 
         <Card className="space-y-3 p-5">
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             Organisations
           </h2>
           {user.organisations.length === 0 ? (
@@ -75,7 +75,7 @@ export default async function SettingsPage() {
                   key={organisation.organisationId}
                   className="flex items-center justify-between gap-3 rounded-lg border p-3"
                 >
-                  <span className="font-medium text-brand-navy">
+                  <span className="font-medium text-brand-strong">
                     {organisation.organisationName}
                   </span>
                   <span className="text-xs capitalize text-muted-foreground">
@@ -93,7 +93,7 @@ export default async function SettingsPage() {
         </Card>
 
         <Card className="space-y-3 p-5 lg:col-span-2">
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             Notifications
           </h2>
           <p className="text-sm text-muted-foreground">

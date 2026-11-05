@@ -157,7 +157,7 @@ export default async function ResidentsPage({
                   <TableCell>
                     <Link
                       href={`/dashboard/care-homes/residents/${resident.id}`}
-                      className="font-medium text-brand-navy hover:text-brand-teal"
+                      className="font-medium text-brand-strong hover:text-brand-teal"
                     >
                       {resident.firstName} {resident.lastName}
                     </Link>

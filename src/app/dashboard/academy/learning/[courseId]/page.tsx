@@ -77,7 +77,7 @@ export default async function LearningCoursePage({
       <Card className="p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <p className="font-heading font-semibold text-brand-navy">
+            <p className="font-heading font-semibold text-brand-strong">
               Progress
             </p>
             <p className="text-sm text-muted-foreground">
@@ -105,7 +105,7 @@ export default async function LearningCoursePage({
         <div className="flex items-center gap-2 border-b p-5">
           <ClipboardCheckIcon className="size-5 text-brand-teal" aria-hidden="true" />
           <div>
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Assessments
             </h2>
             <p className="text-sm text-muted-foreground">
@@ -147,7 +147,7 @@ export default async function LearningCoursePage({
           {course.modules.map((module) => (
             <Card key={module.id} className="overflow-hidden">
               <div className="border-b p-5">
-                <p className="font-heading font-semibold text-brand-navy">
+                <p className="font-heading font-semibold text-brand-strong">
                   Module {module.position}: {module.title}
                 </p>
                 {module.summary ? (
@@ -173,7 +173,7 @@ export default async function LearningCoursePage({
                             <CircleIcon className="size-5 text-muted-foreground" />
                           )}
                           <div>
-                            <p className="text-sm font-medium text-brand-navy">
+                            <p className="text-sm font-medium text-brand-strong">
                               {lesson.title}
                             </p>
                             <p className="text-xs text-muted-foreground">
@@ -223,7 +223,7 @@ export default async function LearningCoursePage({
         </div>
         <div className="space-y-4">
           <Card className="p-5">
-            <p className="font-heading font-semibold text-brand-navy">
+            <p className="font-heading font-semibold text-brand-strong">
               Resources
             </p>
             {course.resources.length === 0 ? (
@@ -236,7 +236,7 @@ export default async function LearningCoursePage({
                   <li key={resource.id} className="flex items-start gap-2 text-sm">
                     <FileTextIcon className="mt-0.5 size-4 text-brand-teal" />
                     <div>
-                      <p className="font-medium text-brand-navy">
+                      <p className="font-medium text-brand-strong">
                         {resource.title}
                       </p>
                       {resource.externalUrl ? (
@@ -258,7 +258,7 @@ export default async function LearningCoursePage({
           {course.completedAt ? (
             <Card className="p-5 text-center">
               <PlayCircleIcon className="mx-auto size-8 text-brand-green" />
-              <p className="mt-2 font-heading font-semibold text-brand-navy">
+              <p className="mt-2 font-heading font-semibold text-brand-strong">
                 Course completed
               </p>
               <p className="mt-1 text-sm text-muted-foreground">

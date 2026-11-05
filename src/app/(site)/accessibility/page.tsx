@@ -22,7 +22,7 @@ export default function AccessibilityPage() {
             description={`Our commitment to making ${brand.name} usable by everyone, what we have done so far, and what we are still working on.`}
           />
           <div className="rounded-xl border border-brand-warning/30 bg-brand-sky p-5">
-            <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-navy">
+            <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-strong">
               <InfoIcon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
               Working draft
             </p>
@@ -40,7 +40,7 @@ export default function AccessibilityPage() {
       <SiteSection>
         <div className="max-w-3xl space-y-8">
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Our commitment
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -63,7 +63,7 @@ export default function AccessibilityPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Measures we have taken
             </h2>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-muted-foreground">
@@ -134,7 +134,7 @@ export default function AccessibilityPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Known limitations
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -175,7 +175,7 @@ export default function AccessibilityPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Reporting an accessibility issue
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -215,7 +215,7 @@ export default function AccessibilityPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Continuous improvement
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -243,7 +243,7 @@ export default function AccessibilityPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Contact
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">

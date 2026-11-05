@@ -88,13 +88,13 @@ export default async function CarePlansPage({
             <TableBody>
               {plans.map((plan) => (
                 <TableRow key={plan.id}>
-                  <TableCell className="font-medium text-brand-navy">
+                  <TableCell className="font-medium text-brand-strong">
                     {plan.title}
                   </TableCell>
                   <TableCell>
                     <Link
                       href={`/dashboard/care-homes/residents/${plan.residentId}`}
-                      className="text-sm text-brand-navy hover:text-brand-teal"
+                      className="text-sm text-brand-strong hover:text-brand-teal"
                     >
                       {plan.residentName ?? "Resident"}
                     </Link>

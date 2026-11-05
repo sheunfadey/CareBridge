@@ -57,7 +57,7 @@ export default function AboutPage() {
               >
                 <item.icon className="size-5" />
               </span>
-              <p className="mt-4 font-heading text-lg font-semibold text-brand-navy">
+              <p className="mt-4 font-heading text-lg font-semibold text-brand-strong">
                 {item.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">{item.body}</p>

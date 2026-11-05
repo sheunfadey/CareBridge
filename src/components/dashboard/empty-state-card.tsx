@@ -19,7 +19,7 @@ export function EmptyStateCard({ items }: { items?: StatItem[] }) {
           <dt className="text-xs font-medium text-muted-foreground">
             {item.label}
           </dt>
-          <dd className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-navy">
+          <dd className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong">
             {item.value}
           </dd>
           {item.hint ? (

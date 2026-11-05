@@ -105,19 +105,19 @@ export default async function InvoicesPage({
       <div className="grid gap-4 sm:grid-cols-3">
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Total billed</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(billed, "NGN")}
           </p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Outstanding</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(outstanding, "NGN")}
           </p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Invoices</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {invoices.length}
           </p>
         </Card>
@@ -177,10 +177,10 @@ export default async function InvoicesPage({
             <TableBody>
               {invoices.map((invoice) => (
                 <TableRow key={invoice.id}>
-                  <TableCell className="font-mono text-xs text-brand-navy">
+                  <TableCell className="font-mono text-xs text-brand-strong">
                     {invoice.invoiceNumber}
                   </TableCell>
-                  <TableCell className="text-sm font-medium text-brand-navy">
+                  <TableCell className="text-sm font-medium text-brand-strong">
                     {invoice.payerName}
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
@@ -192,10 +192,10 @@ export default async function InvoicesPage({
                   <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
                     {formatDate(invoice.dueDate)}
                   </TableCell>
-                  <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                  <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                     {formatMoney(invoice.totalMinorUnits, "NGN")}
                   </TableCell>
-                  <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                  <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                     {formatMoney(invoice.outstandingMinorUnits, "NGN")}
                   </TableCell>
                   <TableCell>

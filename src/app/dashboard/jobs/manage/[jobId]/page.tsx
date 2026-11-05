@@ -75,7 +75,7 @@ export default async function ManageJobPage({ params }: ManageJobPageProps) {
 
       <section className="space-y-4">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             Applicants
           </h2>
           <span className="text-xs text-muted-foreground">
@@ -98,7 +98,7 @@ export default async function ManageJobPage({ params }: ManageJobPageProps) {
                   <div className="min-w-0 space-y-1">
                     <Link
                       href={`/dashboard/jobs/manage/applications/${applicant.id}`}
-                      className="font-heading font-semibold text-brand-navy hover:text-brand-teal"
+                      className="font-heading font-semibold text-brand-strong hover:text-brand-teal"
                     >
                       {applicant.applicantName}
                     </Link>

@@ -76,25 +76,25 @@ export default async function ReportsPage({
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Active residents</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {reports.occupancy.reduce((sum, row) => sum + row.activeResidents, 0)}
           </p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Shifts with gaps</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {reports.staffing.filter((row) => row.coverageGap > 0).length}
           </p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Expenses</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(totalExpenses, "NGN")}
           </p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Outstanding invoices</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(outstanding, "NGN")}
           </p>
         </Card>
@@ -102,11 +102,11 @@ export default async function ReportsPage({
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">Occupancy</h2>
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">Occupancy</h2>
           <ul className="mt-3 divide-y divide-border">
             {reports.occupancy.map((row) => (
               <li key={row.facilityId} className="flex items-center justify-between py-2.5 text-sm">
-                <span className="text-brand-navy">{row.facilityName}</span>
+                <span className="text-brand-strong">{row.facilityName}</span>
                 <span className="tabular-nums text-muted-foreground">
                   {row.activeResidents}
                   {row.capacity ? ` / ${row.capacity}` : ""}
@@ -118,7 +118,7 @@ export default async function ReportsPage({
         </Card>
 
         <Card className="p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Upcoming staffing coverage
           </h2>
           {reports.staffing.length === 0 ? (
@@ -140,7 +140,7 @@ export default async function ReportsPage({
 
       <Card className="overflow-hidden p-0">
         <div className="border-b border-border p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Training and document compliance
           </h2>
         </div>
@@ -163,7 +163,7 @@ export default async function ReportsPage({
             <TableBody>
               {reports.compliance.map((row) => (
                 <TableRow key={row.staffId}>
-                  <TableCell className="text-sm font-medium text-brand-navy">
+                  <TableCell className="text-sm font-medium text-brand-strong">
                     {row.staffName ?? "Staff member"}
                   </TableCell>
                   <TableCell className="text-right text-sm tabular-nums text-muted-foreground">
@@ -188,7 +188,7 @@ export default async function ReportsPage({
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="overflow-hidden p-0">
           <div className="border-b border-border p-5">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Incident summary
             </h2>
           </div>
@@ -207,7 +207,7 @@ export default async function ReportsPage({
               <TableBody>
                 {reports.incidents.map((row, index) => (
                   <TableRow key={`${row.category}-${row.severity}-${row.status}-${index}`}>
-                    <TableCell className="text-sm text-brand-navy">
+                    <TableCell className="text-sm text-brand-strong">
                       {careIncidentCategoryLabels[row.category]}
                     </TableCell>
                     <TableCell>
@@ -222,7 +222,7 @@ export default async function ReportsPage({
                         label={careIncidentStatusLabels[row.status]}
                       />
                     </TableCell>
-                    <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                    <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                       {row.incidentCount}
                     </TableCell>
                   </TableRow>
@@ -234,7 +234,7 @@ export default async function ReportsPage({
 
         <Card className="overflow-hidden p-0">
           <div className="border-b border-border p-5">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Invoice ageing
             </h2>
           </div>
@@ -253,11 +253,11 @@ export default async function ReportsPage({
               <TableBody>
                 {reports.ageing.map((row) => (
                   <TableRow key={row.invoiceId}>
-                    <TableCell className="font-mono text-xs text-brand-navy">
+                    <TableCell className="font-mono text-xs text-brand-strong">
                       {row.invoiceNumber}
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">{row.payerName}</TableCell>
-                    <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                    <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                       {formatMoney(row.outstandingMinorUnits, "NGN")}
                     </TableCell>
                     <TableCell className="text-right text-sm tabular-nums text-muted-foreground">

@@ -144,7 +144,7 @@ export function Topbar({
                 </AvatarFallback>
               </Avatar>
               <span className="hidden text-left leading-tight sm:block">
-                <span className="block text-xs font-medium text-brand-navy">
+                <span className="block text-xs font-medium text-brand-strong">
                   {user.name}
                 </span>
                 {user.organisation ? (

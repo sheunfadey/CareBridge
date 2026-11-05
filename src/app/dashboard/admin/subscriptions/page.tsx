@@ -72,25 +72,25 @@ export default async function AdminSubscriptionsPage() {
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Organisations</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {summary.organisations}
           </p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Active / trial / grace</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {summary.activeOrTrial}
           </p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Past due</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {summary.pastDue}
           </p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Recorded subscription payments</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(summary.recordedPaymentsMinorUnits, "NGN")}
           </p>
           <p className="text-xs text-muted-foreground">
@@ -102,7 +102,7 @@ export default async function AdminSubscriptionsPage() {
 
       <Card className="overflow-hidden p-0">
         <div className="border-b border-border p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Plans
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -124,7 +124,7 @@ export default async function AdminSubscriptionsPage() {
             {plans.map((plan) => (
               <TableRow key={plan.id}>
                 <TableCell>
-                  <p className="font-medium text-brand-navy">{plan.name}</p>
+                  <p className="font-medium text-brand-strong">{plan.name}</p>
                   <p className="font-mono text-xs text-muted-foreground">{plan.code}</p>
                 </TableCell>
                 <TableCell className="max-w-80 text-xs text-muted-foreground">
@@ -145,7 +145,7 @@ export default async function AdminSubscriptionsPage() {
                     ? "Unlimited facilities"
                     : `${plan.maxFacilities} facilities`}
                 </TableCell>
-                <TableCell className="text-sm text-brand-navy">
+                <TableCell className="text-sm text-brand-strong">
                   {plan.monthlyPriceMinorUnits === null
                     ? "Contact us"
                     : `${formatMoney(plan.monthlyPriceMinorUnits, plan.currency)}/mo`}
@@ -167,7 +167,7 @@ export default async function AdminSubscriptionsPage() {
 
       <Card className="overflow-hidden p-0">
         <div className="border-b border-border p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Organisation subscriptions
           </h2>
         </div>
@@ -186,7 +186,7 @@ export default async function AdminSubscriptionsPage() {
             {subscriptions.map((row) => (
               <TableRow key={row.organisationId}>
                 <TableCell>
-                  <p className="font-medium text-brand-navy">{row.organisationName}</p>
+                  <p className="font-medium text-brand-strong">{row.organisationName}</p>
                   <p className="font-mono text-xs text-muted-foreground">
                     {row.organisationSlug}
                   </p>

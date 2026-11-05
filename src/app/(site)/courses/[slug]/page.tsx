@@ -75,7 +75,7 @@ export default async function CourseDetailPage({
               ) : null}
             </div>
             <div className="space-y-4">
-              <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-navy sm:text-5xl">
+              <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
                 {course.title}
               </h1>
               <p className="max-w-2xl text-lg text-muted-foreground">
@@ -112,7 +112,7 @@ export default async function CourseDetailPage({
             </div>
           </div>
           <Card className="p-6">
-            <p className="font-heading font-semibold text-brand-navy">
+            <p className="font-heading font-semibold text-brand-strong">
               What you get
             </p>
             <ul className="mt-4 space-y-3 text-sm">
@@ -152,7 +152,7 @@ export default async function CourseDetailPage({
         />
         <div className="mt-8 grid gap-8 lg:grid-cols-2">
           <Card className="p-6">
-            <p className="font-heading font-semibold text-brand-navy">
+            <p className="font-heading font-semibold text-brand-strong">
               Description
             </p>
             <p className="mt-3 whitespace-pre-wrap text-sm text-muted-foreground">
@@ -161,7 +161,7 @@ export default async function CourseDetailPage({
           </Card>
           <div className="space-y-6">
             <Card className="p-6">
-              <p className="font-heading font-semibold text-brand-navy">
+              <p className="font-heading font-semibold text-brand-strong">
                 Learning outcomes
               </p>
               {course.learningOutcomes.length === 0 ? (
@@ -180,7 +180,7 @@ export default async function CourseDetailPage({
               )}
             </Card>
             <Card className="p-6">
-              <p className="font-heading font-semibold text-brand-navy">
+              <p className="font-heading font-semibold text-brand-strong">
                 Prerequisites
               </p>
               {course.prerequisites.length === 0 ? (
@@ -213,7 +213,7 @@ export default async function CourseDetailPage({
             <Card key={module.id} className="p-6">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="font-heading font-semibold text-brand-navy">
+                  <p className="font-heading font-semibold text-brand-strong">
                     Module {module.position}: {module.title}
                   </p>
                   {module.summary ? (
@@ -238,7 +238,7 @@ export default async function CourseDetailPage({
                         {lesson.position}
                       </span>
                       <div>
-                        <p className="text-sm font-medium text-brand-navy">
+                        <p className="text-sm font-medium text-brand-strong">
                           {lesson.title}
                         </p>
                         <p className="text-xs text-muted-foreground">

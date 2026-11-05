@@ -70,7 +70,7 @@ function Section({
   return (
     <section className="space-y-4">
       <div>
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           {title}
         </h2>
         {description ? (
@@ -108,14 +108,14 @@ export function DesignSystemShowcase() {
           <Card className="flex items-center justify-center bg-brand-navy p-8">
             <CareBridgeLogo variant="full" size="lg" tone="onDark" />
           </Card>
-          <Card className="flex items-center justify-center p-8 text-brand-navy">
+          <Card className="flex items-center justify-center p-8 text-brand-strong">
             <CareBridgeLogo variant="stacked" size="md" tone="mono" />
           </Card>
         </div>
 
         <div className="grid gap-4 md:grid-cols-[1fr_1.2fr]">
           <Card className="flex flex-col items-center justify-center gap-4 p-8">
-            <div className="flex items-end gap-6 text-brand-navy">
+            <div className="flex items-end gap-6 text-brand-strong">
               <LogoMark size={20} />
               <LogoMark size={28} />
               <LogoMark size={40} />
@@ -147,7 +147,7 @@ export function DesignSystemShowcase() {
                 style={{ backgroundColor: hex }}
               />
               <div className="min-w-0">
-                <p className="text-sm font-medium text-brand-navy">{label}</p>
+                <p className="text-sm font-medium text-brand-strong">{label}</p>
                 <p className="truncate text-xs text-muted-foreground">
                   {hex} · {token}
                 </p>
@@ -167,7 +167,7 @@ export function DesignSystemShowcase() {
               <span className="w-32 shrink-0 text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 {row.name}
               </span>
-              <span className={`${row.className} text-brand-navy`}>
+              <span className={`${row.className} text-brand-strong`}>
                 {row.sample}
               </span>
             </div>
@@ -263,7 +263,7 @@ export function DesignSystemShowcase() {
           </Card>
         </div>
         <Card className="p-5">
-          <p className="mb-4 text-sm font-medium text-brand-navy">
+          <p className="mb-4 text-sm font-medium text-brand-strong">
             Page loading skeleton
           </p>
           <PageLoadingSkeleton cards={4} rows={3} />

@@ -105,7 +105,7 @@ export default function HelpPage() {
               <BookOpenIcon className="size-3.5" aria-hidden="true" />
               Help centre
             </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-navy sm:text-5xl">
+            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
               Help centre
               <span className="text-gradient-care block">
                 find your answer without waiting
@@ -127,7 +127,7 @@ export default function HelpPage() {
           </div>
 
           <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-navy">
+            <p className="font-heading text-lg font-semibold text-brand-strong">
               How the help centre works
             </p>
             <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
@@ -175,7 +175,7 @@ export default function HelpPage() {
               >
                 <topic.icon className="size-5" />
               </span>
-              <p className="mt-4 font-heading text-lg font-semibold text-brand-navy">
+              <p className="mt-4 font-heading text-lg font-semibold text-brand-strong">
                 {topic.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">{topic.body}</p>
@@ -218,7 +218,7 @@ export default function HelpPage() {
             >
               <LifeBuoyIcon className="size-5" />
             </span>
-            <p className="mt-4 font-heading text-lg font-semibold text-brand-navy">
+            <p className="mt-4 font-heading text-lg font-semibold text-brand-strong">
               Support is available
             </p>
             <p className="mt-2 text-sm text-muted-foreground">

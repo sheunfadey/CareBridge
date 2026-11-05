@@ -12,6 +12,7 @@
   --font-heading: var(--font-inter);
 
   --color-brand-navy: var(--brand-navy);
+  --color-brand-strong: var(--brand-strong);
   --color-brand-teal: var(--brand-teal);
   --color-brand-green: var(--brand-green);
   --color-brand-coral: var(--brand-coral);
@@ -65,6 +66,7 @@
 
 :root {
   --brand-navy: #12304a;
+  --brand-strong: #12304a;
   --brand-teal: #0f8b8d;
   --brand-green: #2e9d68;
   --brand-coral: #f28c75;
@@ -114,6 +116,11 @@
 }
 
 .dark {
+  color-scheme: dark;
+  --brand-sky: #143344;
+  --brand-ivory: #0d1926;
+  --brand-slate: #a6b7c6;
+  --brand-strong: #e6eef4;
   --background: var(--brand-dark);
   --foreground: #e6eef4;
   --card: var(--brand-dark-surface);
@@ -182,7 +189,7 @@
   h2,
   h3,
   h4 {
-    @apply font-heading text-balance text-brand-navy;
+    @apply font-heading text-balance text-brand-strong;
     letter-spacing: -0.02em;
   }
 
@@ -191,7 +198,7 @@
   }
 
   ::selection {
-    @apply bg-brand-teal/20 text-brand-navy;
+    @apply bg-brand-teal/20 text-brand-strong;
   }
 }
 
@@ -214,6 +221,16 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  .dark .text-gradient-care {
+    background-image: linear-gradient(
+      100deg,
+      var(--brand-strong) 0%,
+      var(--brand-teal) 50%,
+      var(--brand-green) 80%,
+      var(--brand-coral) 100%
+    );
   }
 
   .animate-float {

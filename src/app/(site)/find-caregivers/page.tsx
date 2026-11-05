@@ -66,7 +66,7 @@ export default function FindCaregiversPage() {
               <UserRoundSearchIcon className="size-3.5" aria-hidden="true" />
               For families and individuals
             </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-navy sm:text-5xl">
+            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
               Find caregivers you can
               <span className="text-gradient-care block">
                 actually check.
@@ -90,7 +90,7 @@ export default function FindCaregiversPage() {
           </div>
 
           <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-navy">
+            <p className="font-heading text-lg font-semibold text-brand-strong">
               Who this service is for
             </p>
             <ul className="mt-4 space-y-3">
@@ -134,7 +134,7 @@ export default function FindCaregiversPage() {
               >
                 <step.icon className="size-5" />
               </span>
-              <p className="mt-4 font-heading text-lg font-semibold text-brand-navy">
+              <p className="mt-4 font-heading text-lg font-semibold text-brand-strong">
                 {step.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">{step.body}</p>
@@ -163,7 +163,7 @@ export default function FindCaregiversPage() {
                   <point.icon className="size-5" />
                 </span>
                 <div>
-                  <p className="font-heading font-semibold text-brand-navy">
+                  <p className="font-heading font-semibold text-brand-strong">
                     {point.title}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">{point.body}</p>
@@ -173,7 +173,7 @@ export default function FindCaregiversPage() {
           </div>
         </div>
         <div className="mt-10 rounded-xl border border-brand-teal/20 bg-card p-6 shadow-card">
-          <p className="font-heading font-semibold text-brand-navy">
+          <p className="font-heading font-semibold text-brand-strong">
             What verification is not
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -212,7 +212,7 @@ export default function FindCaregiversPage() {
                 key={item.title}
                 className="rounded-xl bg-card p-5 shadow-card ring-1 ring-foreground/10"
               >
-                <p className="font-heading font-semibold text-brand-navy">
+                <p className="font-heading font-semibold text-brand-strong">
                   {item.title}
                 </p>
                 <p className="mt-1 text-sm text-muted-foreground">{item.body}</p>

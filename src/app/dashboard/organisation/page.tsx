@@ -40,7 +40,7 @@ export default async function OrganisationListPage() {
             <Building2Icon className="size-6" aria-hidden="true" />
           </span>
           <div className="space-y-1">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               No organisation yet
             </h2>
             <p className="text-sm text-muted-foreground">
@@ -69,7 +69,7 @@ export default async function OrganisationListPage() {
                   </span>
                   <StatusBadge status={org.status} />
                 </div>
-                <h2 className="mt-4 font-heading text-base font-semibold text-brand-navy">
+                <h2 className="mt-4 font-heading text-base font-semibold text-brand-strong">
                   {org.name}
                 </h2>
                 <p className="text-sm text-muted-foreground">

@@ -8,13 +8,13 @@ const alertVariants = cva(
     variants: {
       variant: {
         default: "bg-card text-card-foreground",
-        info: "border-brand-teal/20 bg-brand-sky text-brand-navy *:data-[slot=alert-description]:text-brand-navy/80 *:[svg]:text-brand-teal",
+        info: "border-brand-teal/20 bg-brand-sky text-brand-strong *:data-[slot=alert-description]:text-brand-strong/80 *:[svg]:text-brand-teal",
         success:
-          "border-brand-success/20 bg-brand-success/5 text-brand-navy *:data-[slot=alert-description]:text-brand-navy/80 *:[svg]:text-brand-success",
+          "border-brand-success/20 bg-brand-success/5 text-brand-strong *:data-[slot=alert-description]:text-brand-strong/80 *:[svg]:text-brand-success",
         warning:
-          "border-brand-warning/25 bg-brand-warning/5 text-brand-navy *:data-[slot=alert-description]:text-brand-navy/80 *:[svg]:text-brand-warning",
+          "border-brand-warning/25 bg-brand-warning/5 text-brand-strong *:data-[slot=alert-description]:text-brand-strong/80 *:[svg]:text-brand-warning",
         destructive:
-          "border-brand-error/20 bg-brand-error/5 text-brand-navy *:data-[slot=alert-description]:text-brand-navy/80 *:[svg]:text-brand-error",
+          "border-brand-error/20 bg-brand-error/5 text-brand-strong *:data-[slot=alert-description]:text-brand-strong/80 *:[svg]:text-brand-error",
       },
     },
     defaultVariants: {

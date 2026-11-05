@@ -61,7 +61,7 @@ export function AlertCard({
           <Icon className="size-5" />
         </span>
         <div className="min-w-0 flex-1">
-          <p className="font-heading text-sm font-semibold text-brand-navy">
+          <p className="font-heading text-sm font-semibold text-brand-strong">
             {title}
           </p>
           {description ? (

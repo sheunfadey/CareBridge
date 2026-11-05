@@ -58,14 +58,14 @@ export default async function PlacementsPage() {
         <section className="space-y-3">
           <div className="flex items-center gap-2">
             <UsersIcon className="size-4 text-brand-teal" aria-hidden="true" />
-            <h2 className="font-heading text-base font-semibold text-brand-navy">
+            <h2 className="font-heading text-base font-semibold text-brand-strong">
               Accepted applications awaiting a placement
             </h2>
           </div>
           <div className="grid gap-3 md:grid-cols-2">
             {ready.map((application) => (
               <Card key={application.applicationId} className="p-4">
-                <p className="font-heading font-semibold text-brand-navy">
+                <p className="font-heading font-semibold text-brand-strong">
                   {application.applicantName}
                 </p>
                 <p className="text-sm text-muted-foreground">
@@ -110,7 +110,7 @@ export default async function PlacementsPage() {
                 <div className="flex flex-wrap items-center gap-2">
                   <Link
                     href={`/dashboard/internships/placements/${placement.id}`}
-                    className="font-heading font-semibold text-brand-navy hover:text-brand-teal"
+                    className="font-heading font-semibold text-brand-strong hover:text-brand-teal"
                   >
                     {placement.listingTitle}
                   </Link>

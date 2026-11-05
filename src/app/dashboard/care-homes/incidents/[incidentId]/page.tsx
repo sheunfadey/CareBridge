@@ -85,10 +85,10 @@ export default async function IncidentDetailPage({
       <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
         <Card className="space-y-4 p-5">
           <div>
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               What happened
             </h2>
-            <p className="mt-2 whitespace-pre-line text-sm text-brand-navy">
+            <p className="mt-2 whitespace-pre-line text-sm text-brand-strong">
               {incident.description}
             </p>
           </div>
@@ -97,7 +97,7 @@ export default async function IncidentDetailPage({
               <h3 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Immediate action
               </h3>
-              <p className="mt-1 whitespace-pre-line text-sm text-brand-navy">
+              <p className="mt-1 whitespace-pre-line text-sm text-brand-strong">
                 {incident.immediateAction}
               </p>
             </div>
@@ -107,19 +107,19 @@ export default async function IncidentDetailPage({
               <h3 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 External reference
               </h3>
-              <p className="mt-1 text-sm text-brand-navy">{incident.externalReference}</p>
+              <p className="mt-1 text-sm text-brand-strong">{incident.externalReference}</p>
             </div>
           ) : null}
           <dl className="grid gap-4 border-t border-border pt-4 text-sm sm:grid-cols-2">
             <div>
               <dt className="text-muted-foreground">Reviewer</dt>
-              <dd className="font-medium text-brand-navy">
+              <dd className="font-medium text-brand-strong">
                 {incident.assignedReviewer ?? "Unassigned"}
               </dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Closed</dt>
-              <dd className="font-medium text-brand-navy">
+              <dd className="font-medium text-brand-strong">
                 {incident.closedAt ? formatDateTime(incident.closedAt) : "Open"}
               </dd>
             </div>
@@ -129,7 +129,7 @@ export default async function IncidentDetailPage({
               <h3 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Closure notes
               </h3>
-              <p className="mt-1 whitespace-pre-line text-sm text-brand-navy">
+              <p className="mt-1 whitespace-pre-line text-sm text-brand-strong">
                 {incident.closureNotes}
               </p>
             </div>
@@ -139,7 +139,7 @@ export default async function IncidentDetailPage({
         {canManage ? (
           <Card className="space-y-4 p-5">
             <div>
-              <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Investigation
               </h2>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -160,7 +160,7 @@ export default async function IncidentDetailPage({
       <Card className="space-y-4 p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Corrective actions
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -184,7 +184,7 @@ export default async function IncidentDetailPage({
             {incident.actions.map((action) => (
               <li key={action.id} className="py-3">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="font-medium text-brand-navy">{action.action}</p>
+                  <p className="font-medium text-brand-strong">{action.action}</p>
                   <StatusBadge
                     status={action.status.replaceAll("_", "-")}
                     label={action.status.replaceAll("_", " ")}

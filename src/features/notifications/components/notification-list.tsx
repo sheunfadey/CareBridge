@@ -96,7 +96,7 @@ export function NotificationList({
                       "text-sm",
                       item.read
                         ? "font-normal text-foreground"
-                        : "font-semibold text-brand-navy",
+                        : "font-semibold text-brand-strong",
                     )}
                   >
                     {item.title}

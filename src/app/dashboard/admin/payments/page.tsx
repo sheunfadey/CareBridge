@@ -239,7 +239,7 @@ export default async function AdminPaymentsPage({
                     ) : null}
                   </TableCell>
                   <TableCell>
-                    <span className="block font-medium text-brand-navy">
+                    <span className="block font-medium text-brand-strong">
                       {payment.payerName ?? "—"}
                     </span>
                     <span className="block text-xs text-muted-foreground">
@@ -252,7 +252,7 @@ export default async function AdminPaymentsPage({
                     ] ?? payment.purpose.replaceAll("_", " ")}
                   </TableCell>
                   <TableCell className="tabular-nums">
-                    <span className="font-medium text-brand-navy">
+                    <span className="font-medium text-brand-strong">
                       {formatMoney(payment.amountMinorUnits, payment.currency)}
                     </span>
                     {payment.refundedMinorUnits > 0 ? (

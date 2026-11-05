@@ -16,7 +16,7 @@ export function SiteSection({
   const toneClass = {
     default: "bg-background",
     ivory: "surface-ivory",
-    sky: "bg-gradient-to-br from-brand-sky/70 via-white to-brand-ivory",
+    sky: "bg-gradient-to-br from-brand-sky/70 via-white to-brand-ivory dark:from-brand-sky/50 dark:via-brand-dark-surface dark:to-brand-dark",
     navy: "bg-brand-navy text-white",
   }[tone];
 
@@ -63,7 +63,7 @@ export function SectionHeading({
       <h2
         className={cn(
           "font-heading text-3xl font-semibold leading-tight sm:text-4xl",
-          isDark ? "text-white" : "text-brand-navy",
+          isDark ? "text-white" : "text-brand-strong",
         )}
       >
         {title}

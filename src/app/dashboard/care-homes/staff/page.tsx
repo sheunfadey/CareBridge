@@ -99,7 +99,7 @@ export default async function StaffPage({
                 return (
                   <TableRow key={member.id}>
                     <TableCell>
-                      <p className="font-medium text-brand-navy">
+                      <p className="font-medium text-brand-strong">
                         {member.fullName ?? "Unnamed staff member"}
                       </p>
                       <p className="text-xs text-muted-foreground">
@@ -167,7 +167,7 @@ export default async function StaffPage({
       </Card>
 
       <Card className="p-5">
-        <h2 className="font-heading text-base font-semibold text-brand-navy">
+        <h2 className="font-heading text-base font-semibold text-brand-strong">
           How shift assignment uses these records
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">

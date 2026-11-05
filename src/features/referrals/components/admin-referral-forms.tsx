@@ -556,7 +556,7 @@ function PolicyForm({
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <div>
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           {policy ? "Edit commission policy" : "Publish a commission policy"}
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
@@ -635,7 +635,7 @@ function PolicyForm({
       </div>
 
       <fieldset className="space-y-2">
-        <legend className="text-sm font-medium text-brand-navy">
+        <legend className="text-sm font-medium text-brand-strong">
           Eligible payment purposes
         </legend>
         <div className="grid gap-2 sm:grid-cols-2">
@@ -702,7 +702,7 @@ function PolicyForm({
         <FormFieldError messages={fieldErrors.refundPolicy} />
       </div>
 
-      <label className="flex items-center gap-2 text-sm text-brand-navy">
+      <label className="flex items-center gap-2 text-sm text-brand-strong">
         <input
           type="checkbox"
           checked={isActive}

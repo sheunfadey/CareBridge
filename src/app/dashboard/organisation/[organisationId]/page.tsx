@@ -92,7 +92,7 @@ export default async function OrganisationDetailPage({
         </Card>
         <Card className="p-4">
           <p className="text-xs text-muted-foreground">Active members</p>
-          <p className="font-heading text-2xl font-semibold text-brand-navy">
+          <p className="font-heading text-2xl font-semibold text-brand-strong">
             {detail.summary.memberCount}
           </p>
         </Card>
@@ -100,7 +100,7 @@ export default async function OrganisationDetailPage({
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card className="space-y-3 p-4">
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             Verification
           </h2>
           {isOwner ? (
@@ -116,7 +116,7 @@ export default async function OrganisationDetailPage({
         </Card>
         {canManage ? (
           <Card className="space-y-3 p-4">
-            <h2 className="font-heading text-base font-semibold text-brand-navy">
+            <h2 className="font-heading text-base font-semibold text-brand-strong">
               Internship provider details
             </h2>
             <p className="text-sm text-muted-foreground">

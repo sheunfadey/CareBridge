@@ -100,7 +100,7 @@ export default async function CampaignsPage({
                     <TableCell>
                       <Link
                         href={`/dashboard/charity/campaigns/${campaign.id}`}
-                        className="font-medium text-brand-navy hover:text-brand-teal"
+                        className="font-medium text-brand-strong hover:text-brand-teal"
                       >
                         {campaign.title}
                       </Link>
@@ -116,7 +116,7 @@ export default async function CampaignsPage({
                       {formatDate(campaign.startsOn)}
                       {campaign.endsOn ? ` – ${formatDate(campaign.endsOn)}` : ""}
                     </TableCell>
-                    <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                    <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                       {formatMoney(campaign.receivedMinorUnits, "NGN")}
                       <p className="text-xs text-muted-foreground">
                         of {formatMoney(campaign.fundingTargetMinorUnits, "NGN")} · {progress}%

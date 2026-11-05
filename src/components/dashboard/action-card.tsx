@@ -49,7 +49,7 @@ export function ActionCard({
             <Icon className="size-5" />
           </span>
         ) : null}
-        <p className="font-heading font-semibold text-brand-navy">{title}</p>
+        <p className="font-heading font-semibold text-brand-strong">{title}</p>
         {description ? (
           <p className="text-sm text-muted-foreground">{description}</p>
         ) : null}

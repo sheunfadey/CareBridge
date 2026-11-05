@@ -52,7 +52,7 @@ export function ModulePlaceholder({
           </span>
           <div className="space-y-3">
             <div>
-              <p className="font-heading text-lg font-semibold text-brand-navy">
+              <p className="font-heading text-lg font-semibold text-brand-strong">
                 Planned for {phase}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">

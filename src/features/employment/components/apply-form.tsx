@@ -77,7 +77,7 @@ export function ApplyForm({
 
   if (alreadyApplied) {
     return (
-      <div className="rounded-xl border border-brand-teal/30 bg-brand-teal/5 p-4 text-sm text-brand-navy">
+      <div className="rounded-xl border border-brand-teal/30 bg-brand-teal/5 p-4 text-sm text-brand-strong">
         You have already applied. Track its status from your applications page.
       </div>
     );

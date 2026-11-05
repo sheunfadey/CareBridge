@@ -34,7 +34,7 @@ function ListSection({
   if (items.length === 0) return null;
   return (
     <div>
-      <h2 className="font-heading text-base font-semibold text-brand-navy">
+      <h2 className="font-heading text-base font-semibold text-brand-strong">
         {title}
       </h2>
       <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
@@ -150,7 +150,7 @@ export default async function InternshipDetailPage({
         <aside className="space-y-4">
           <Card className="space-y-4 p-5">
             <div className="flex items-center justify-between gap-2">
-              <h2 className="font-heading text-base font-semibold text-brand-navy">
+              <h2 className="font-heading text-base font-semibold text-brand-strong">
                 Apply
               </h2>
               <StatusBadge status={disabledReason ? "closed" : "open"} />

@@ -97,7 +97,7 @@ export default async function JobCandidatePage({ params }: PageProps) {
       <div className="grid gap-4 lg:grid-cols-3">
         <Card className="space-y-2 p-4 lg:col-span-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-heading text-base font-semibold text-brand-navy">
+            <h2 className="font-heading text-base font-semibold text-brand-strong">
               Application
             </h2>
             <StatusBadge
@@ -120,7 +120,7 @@ export default async function JobCandidatePage({ params }: PageProps) {
           )}
         </Card>
         <Card className="space-y-2 p-4">
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             Contact
           </h2>
           <p className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -148,7 +148,7 @@ export default async function JobCandidatePage({ params }: PageProps) {
       <section className="space-y-4">
         <div className="flex items-center gap-2">
           <CalendarClockIcon className="size-4 text-brand-teal" aria-hidden="true" />
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             Interviews
           </h2>
           <span className="text-xs text-muted-foreground">
@@ -157,7 +157,7 @@ export default async function JobCandidatePage({ params }: PageProps) {
         </div>
 
         <Card className="p-4">
-          <h3 className="mb-3 font-heading text-sm font-semibold text-brand-navy">
+          <h3 className="mb-3 font-heading text-sm font-semibold text-brand-strong">
             Schedule an interview
           </h3>
           <ScheduleInterviewForm
@@ -176,7 +176,7 @@ export default async function JobCandidatePage({ params }: PageProps) {
               <Card key={interview.id} className="p-4">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div>
-                    <p className="font-heading text-sm font-semibold text-brand-navy">
+                    <p className="font-heading text-sm font-semibold text-brand-strong">
                       {formatDateTime(interview.scheduledAt)}
                     </p>
                     <p className="text-xs text-muted-foreground">
@@ -223,13 +223,13 @@ export default async function JobCandidatePage({ params }: PageProps) {
       </section>
 
       <section className="space-y-4">
-        <h2 className="font-heading text-base font-semibold text-brand-navy">
+        <h2 className="font-heading text-base font-semibold text-brand-strong">
           Offer
         </h2>
         {offer ? (
           <Card className="space-y-2 p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="font-heading text-sm font-semibold text-brand-navy">
+              <p className="font-heading text-sm font-semibold text-brand-strong">
                 {offer.employmentType.replaceAll("_", " ")} offer
               </p>
               <StatusBadge status={offer.status} />
@@ -265,7 +265,7 @@ export default async function JobCandidatePage({ params }: PageProps) {
           </Card>
         ) : (
           <Card className="p-4">
-            <h3 className="mb-3 font-heading text-sm font-semibold text-brand-navy">
+            <h3 className="mb-3 font-heading text-sm font-semibold text-brand-strong">
               Send an offer
             </h3>
             <JobOfferForm

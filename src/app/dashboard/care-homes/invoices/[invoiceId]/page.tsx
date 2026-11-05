@@ -103,19 +103,19 @@ export default async function InvoiceDetailPage({
       <div className="grid gap-4 sm:grid-cols-3">
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Invoice total</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(invoice.totalMinorUnits, "NGN")}
           </p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Paid</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(invoice.paidMinorUnits, "NGN")}
           </p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Outstanding</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(invoice.outstandingMinorUnits, "NGN")}
           </p>
         </Card>
@@ -123,7 +123,7 @@ export default async function InvoiceDetailPage({
 
       <Card className="overflow-hidden p-0">
         <div className="border-b border-border p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Invoice lines
           </h2>
         </div>
@@ -139,14 +139,14 @@ export default async function InvoiceDetailPage({
           <TableBody>
             {invoice.items.map((item) => (
               <TableRow key={item.id}>
-                <TableCell className="text-sm text-brand-navy">{item.description}</TableCell>
+                <TableCell className="text-sm text-brand-strong">{item.description}</TableCell>
                 <TableCell className="text-right text-sm tabular-nums text-muted-foreground">
                   {item.quantity}
                 </TableCell>
                 <TableCell className="text-right text-sm tabular-nums text-muted-foreground">
                   {formatMoney(item.unitPriceMinorUnits, "NGN")}
                 </TableCell>
-                <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                   {formatMoney(item.lineTotalMinorUnits, "NGN")}
                 </TableCell>
               </TableRow>
@@ -157,7 +157,7 @@ export default async function InvoiceDetailPage({
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Payments
           </h2>
           {invoice.payments.length === 0 ? (
@@ -167,7 +167,7 @@ export default async function InvoiceDetailPage({
               {invoice.payments.map((payment) => (
                 <li key={payment.id} className="flex items-start justify-between gap-3 py-3 text-sm">
                   <div>
-                    <p className="font-medium tabular-nums text-brand-navy">
+                    <p className="font-medium tabular-nums text-brand-strong">
                       {formatMoney(payment.amountMinorUnits, "NGN")}
                     </p>
                     <p className="text-xs text-muted-foreground">
@@ -194,7 +194,7 @@ export default async function InvoiceDetailPage({
               <ul className="mt-2 space-y-2 text-sm">
                 {invoice.refunds.map((refund) => (
                   <li key={refund.id} className="flex justify-between gap-3">
-                    <span className="text-brand-navy">{refund.reason}</span>
+                    <span className="text-brand-strong">{refund.reason}</span>
                     <span className="tabular-nums text-muted-foreground">
                       {formatMoney(refund.amountMinorUnits, "NGN")}
                     </span>
@@ -206,7 +206,7 @@ export default async function InvoiceDetailPage({
         </Card>
 
         <Card className="space-y-3 p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Notes
           </h2>
           <p className="whitespace-pre-line text-sm text-muted-foreground">
@@ -215,21 +215,21 @@ export default async function InvoiceDetailPage({
           <dl className="grid gap-3 border-t border-border pt-3 text-sm sm:grid-cols-2">
             <div>
               <dt className="text-muted-foreground">Issued</dt>
-              <dd className="font-medium text-brand-navy">{formatDate(invoice.issueDate)}</dd>
+              <dd className="font-medium text-brand-strong">{formatDate(invoice.issueDate)}</dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Due</dt>
-              <dd className="font-medium text-brand-navy">{formatDate(invoice.dueDate)}</dd>
+              <dd className="font-medium text-brand-strong">{formatDate(invoice.dueDate)}</dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Payer contact</dt>
-              <dd className="font-medium text-brand-navy">
+              <dd className="font-medium text-brand-strong">
                 {invoice.payerContact ?? "—"}
               </dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Refunded</dt>
-              <dd className="font-medium text-brand-navy">
+              <dd className="font-medium text-brand-strong">
                 {formatMoney(invoice.refundedMinorUnits, "NGN")}
               </dd>
             </div>

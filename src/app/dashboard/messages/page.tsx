@@ -66,7 +66,7 @@ export default async function MessagesPage({ searchParams }: MessagesPageProps) 
       <div className="grid gap-6 lg:grid-cols-[340px_1fr]">
         <Card className="overflow-hidden p-0">
           <div className="border-b p-4">
-            <h2 className="font-heading text-base font-semibold text-brand-navy">
+            <h2 className="font-heading text-base font-semibold text-brand-strong">
               Conversations
             </h2>
             <p className="mt-1 text-xs text-muted-foreground">
@@ -81,7 +81,7 @@ export default async function MessagesPage({ searchParams }: MessagesPageProps) 
           {conversations.length === 0 ? (
             <div className="p-6 text-center">
               <MessageSquareIcon className="mx-auto size-8 text-brand-teal" />
-              <p className="mt-2 text-sm font-medium text-brand-navy">
+              <p className="mt-2 text-sm font-medium text-brand-strong">
                 No messages yet
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
@@ -104,7 +104,7 @@ export default async function MessagesPage({ searchParams }: MessagesPageProps) 
                       }
                     >
                       <div className="flex items-start justify-between gap-2">
-                        <p className="text-sm font-medium text-brand-navy">
+                        <p className="text-sm font-medium text-brand-strong">
                           {item.subject}
                         </p>
                         {item.unreadCount > 0 ? (
@@ -140,7 +140,7 @@ export default async function MessagesPage({ searchParams }: MessagesPageProps) 
           ) : (
             <div className="flex h-full min-h-[420px] flex-col items-center justify-center p-8 text-center">
               <MessageSquareIcon className="size-10 text-brand-teal" />
-              <p className="mt-3 font-heading text-base font-semibold text-brand-navy">
+              <p className="mt-3 font-heading text-base font-semibold text-brand-strong">
                 Select a conversation
               </p>
               <p className="mt-1 max-w-sm text-sm text-muted-foreground">

@@ -127,41 +127,41 @@ export default async function ResidentRecordPage({
 
       <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
         <Card className="space-y-4 p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Resident details
           </h2>
           <dl className="grid gap-4 text-sm sm:grid-cols-2">
             <div>
               <dt className="text-muted-foreground">Date of birth</dt>
-              <dd className="font-medium text-brand-navy">
+              <dd className="font-medium text-brand-strong">
                 {resident.dateOfBirth ? formatDate(resident.dateOfBirth) : "Not recorded"}
               </dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Gender</dt>
-              <dd className="font-medium text-brand-navy">{resident.gender ?? "—"}</dd>
+              <dd className="font-medium text-brand-strong">{resident.gender ?? "—"}</dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Admitted</dt>
-              <dd className="font-medium text-brand-navy">
+              <dd className="font-medium text-brand-strong">
                 {formatDate(resident.admissionDate)}
               </dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Discharged</dt>
-              <dd className="font-medium text-brand-navy">
+              <dd className="font-medium text-brand-strong">
                 {resident.dischargeDate ? formatDate(resident.dischargeDate) : "—"}
               </dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Care level</dt>
-              <dd className="font-medium text-brand-navy">
+              <dd className="font-medium text-brand-strong">
                 {resident.careLevel ?? "—"}
               </dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Facility</dt>
-              <dd className="font-medium text-brand-navy">
+              <dd className="font-medium text-brand-strong">
                 {resident.facilityName ?? "—"}
               </dd>
             </div>
@@ -181,7 +181,7 @@ export default async function ResidentRecordPage({
                   <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                     {label}
                   </p>
-                  <p className="mt-1 whitespace-pre-line text-brand-navy">{value}</p>
+                  <p className="mt-1 whitespace-pre-line text-brand-strong">{value}</p>
                 </div>
               ) : null,
             )}
@@ -192,7 +192,7 @@ export default async function ResidentRecordPage({
           <Card className="space-y-3 p-5">
             <div className="flex items-center gap-2">
               <PhoneIcon className="size-5 text-brand-teal" aria-hidden="true" />
-              <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Emergency contacts
               </h2>
             </div>
@@ -203,7 +203,7 @@ export default async function ResidentRecordPage({
                 {record.contacts.map((contact) => (
                   <li key={contact.id} className="py-2.5 text-sm">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-medium text-brand-navy">{contact.name}</span>
+                      <span className="font-medium text-brand-strong">{contact.name}</span>
                       {contact.isEmergency ? (
                         <StatusBadge status="emergency" label="Emergency" />
                       ) : null}
@@ -231,7 +231,7 @@ export default async function ResidentRecordPage({
           <Card className="space-y-3 p-5">
             <div className="flex items-center gap-2">
               <UsersIcon className="size-5 text-brand-teal" aria-hidden="true" />
-              <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Family access
               </h2>
             </div>
@@ -244,7 +244,7 @@ export default async function ResidentRecordPage({
                 {record.relationships.map((relationship) => (
                   <li key={relationship.id} className="flex items-start justify-between gap-2 py-2.5 text-sm">
                     <div>
-                      <p className="font-medium text-brand-navy">
+                      <p className="font-medium text-brand-strong">
                         {relationship.relationship ?? "Linked account"}
                       </p>
                       <p className="text-xs text-muted-foreground">
@@ -274,7 +274,7 @@ export default async function ResidentRecordPage({
           <Card className="space-y-3 p-5">
             <div className="flex items-center gap-2">
               <FileHeartIcon className="size-5 text-brand-teal" aria-hidden="true" />
-              <h2 className="font-heading text-lg font-semibold text-brand-navy">
+              <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Consents
               </h2>
             </div>
@@ -285,7 +285,7 @@ export default async function ResidentRecordPage({
                 {record.consents.map((consent) => (
                   <li key={consent.id} className="py-2.5 text-sm">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="font-medium capitalize text-brand-navy">
+                      <span className="font-medium capitalize text-brand-strong">
                         {consent.consentType.replaceAll("_", " ")}
                       </span>
                       <StatusBadge
@@ -313,7 +313,7 @@ export default async function ResidentRecordPage({
 
       <Card className="space-y-4 p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Care plans
           </h2>
           {canPlan ? (
@@ -334,7 +334,7 @@ export default async function ResidentRecordPage({
                 <div>
                   <Link
                     href={`/dashboard/care-homes/plans/${plan.id}`}
-                    className="font-medium text-brand-navy hover:text-brand-teal"
+                    className="font-medium text-brand-strong hover:text-brand-teal"
                   >
                     {plan.title}
                   </Link>
@@ -366,7 +366,7 @@ export default async function ResidentRecordPage({
         <Card className="space-y-3 p-5">
           <div className="flex items-center gap-2">
             <PillIcon className="size-5 text-brand-teal" aria-hidden="true" />
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Medication records
             </h2>
           </div>
@@ -379,7 +379,7 @@ export default async function ResidentRecordPage({
               {record.medication.map((item) => (
                 <li key={item.id} className="flex flex-wrap items-center justify-between gap-2 py-2.5 text-sm">
                   <div>
-                    <p className="font-medium text-brand-navy">{item.medicationName}</p>
+                    <p className="font-medium text-brand-strong">{item.medicationName}</p>
                     <p className="text-xs text-muted-foreground">
                       {[item.doseText, item.route, formatDateTime(item.scheduledAt)]
                         .filter(Boolean)
@@ -413,7 +413,7 @@ export default async function ResidentRecordPage({
         <Card className="space-y-3 p-5">
           <div className="flex items-center gap-2">
             <CalendarClockIcon className="size-5 text-brand-teal" aria-hidden="true" />
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Recent care records
             </h2>
           </div>
@@ -424,7 +424,7 @@ export default async function ResidentRecordPage({
               {record.recentRecords.map((entry) => (
                 <li key={entry.id} className="py-2.5 text-sm">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-medium capitalize text-brand-navy">
+                    <span className="font-medium capitalize text-brand-strong">
                       {entry.status.replaceAll("_", " ")}
                     </span>
                     <span className="text-xs text-muted-foreground">
@@ -450,7 +450,7 @@ export default async function ResidentRecordPage({
       {canManage ? (
         <Card className="space-y-3 p-5">
           <div>
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Access history
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -466,7 +466,7 @@ export default async function ResidentRecordPage({
             <ul className="divide-y divide-border">
               {accessEvents.map((event) => (
                 <li key={event.id} className="flex items-center justify-between gap-3 py-2.5 text-sm">
-                  <span className="text-brand-navy">
+                  <span className="text-brand-strong">
                     {event.userName ?? "Staff member"} · {event.action}
                   </span>
                   <span className="whitespace-nowrap text-xs text-muted-foreground">
@@ -483,7 +483,7 @@ export default async function ResidentRecordPage({
         <Card className="space-y-3 p-5">
           <div className="flex items-center gap-2">
             <ShieldAlertIcon className="size-5 text-brand-teal" aria-hidden="true" />
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Incidents
             </h2>
           </div>
@@ -495,7 +495,7 @@ export default async function ResidentRecordPage({
                 <li key={incident.id} className="flex items-center justify-between gap-2 py-2.5 text-sm">
                   <Link
                     href={`/dashboard/care-homes/incidents/${incident.id}`}
-                    className="font-medium capitalize text-brand-navy hover:text-brand-teal"
+                    className="font-medium capitalize text-brand-strong hover:text-brand-teal"
                   >
                     {incident.category.replaceAll("_", " ")}
                   </Link>
@@ -509,7 +509,7 @@ export default async function ResidentRecordPage({
         </Card>
 
         <Card className="space-y-3 p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Invoices
           </h2>
           {record.invoices.length === 0 ? (
@@ -520,12 +520,12 @@ export default async function ResidentRecordPage({
                 <li key={invoice.id} className="flex items-center justify-between gap-2 py-2.5 text-sm">
                   <Link
                     href={`/dashboard/care-homes/invoices/${invoice.id}`}
-                    className="font-medium text-brand-navy hover:text-brand-teal"
+                    className="font-medium text-brand-strong hover:text-brand-teal"
                   >
                     {invoice.invoiceNumber}
                   </Link>
                   <div className="text-right">
-                    <p className="tabular-nums text-brand-navy">
+                    <p className="tabular-nums text-brand-strong">
                       {formatMoney(invoice.totalMinorUnits, "NGN")}
                     </p>
                     <p className="text-xs text-muted-foreground">

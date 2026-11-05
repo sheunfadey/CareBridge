@@ -72,7 +72,7 @@ function PaymentTable({
               </Link>
             </TableCell>
             <TableCell>
-              <span className="block text-sm font-medium text-brand-navy">
+              <span className="block text-sm font-medium text-brand-strong">
                 {payment.payerName ?? "—"}
               </span>
               <span className="block text-xs text-muted-foreground">
@@ -83,7 +83,7 @@ function PaymentTable({
               {paymentPurposeLabels[payment.purpose as PaymentPurposeOption] ??
                 payment.purpose.replaceAll("_", " ")}
             </TableCell>
-            <TableCell className="text-sm font-medium tabular-nums text-brand-navy">
+            <TableCell className="text-sm font-medium tabular-nums text-brand-strong">
               {formatMoney(payment.amountMinorUnits, payment.currency)}
             </TableCell>
             <TableCell>
@@ -168,7 +168,7 @@ export default async function AdminReconciliationPage() {
       {needsAttention.length > 0 ? (
         <Card className="overflow-hidden border-brand-warning/40 p-0">
           <div className="border-b border-border bg-brand-warning/10 p-5">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Needs attention
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -186,7 +186,7 @@ export default async function AdminReconciliationPage() {
 
       <Card className="overflow-hidden p-0">
         <div className="border-b border-border p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Awaiting verification
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -203,7 +203,7 @@ export default async function AdminReconciliationPage() {
 
       <Card className="overflow-hidden p-0">
         <div className="border-b border-border p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Recently matched
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">

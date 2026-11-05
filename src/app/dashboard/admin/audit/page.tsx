@@ -75,7 +75,7 @@ export default async function AdminAuditPage() {
                         timeStyle: "short",
                       })}
                     </TableCell>
-                    <TableCell className="text-sm font-medium text-brand-navy">
+                    <TableCell className="text-sm font-medium text-brand-strong">
                       {log.action}
                     </TableCell>
                     <TableCell className="text-xs text-muted-foreground">

@@ -57,7 +57,7 @@ export default async function FamilyPortalPage() {
                 <div>
                   <div className="flex items-center gap-2">
                     <HeartHandshakeIcon className="size-5 text-brand-teal" aria-hidden="true" />
-                    <h2 className="font-heading text-lg font-semibold text-brand-navy">
+                    <h2 className="font-heading text-lg font-semibold text-brand-strong">
                       {resident.firstName} {resident.lastName}
                     </h2>
                   </div>
@@ -76,37 +76,37 @@ export default async function FamilyPortalPage() {
               <dl className="grid gap-3 text-sm sm:grid-cols-2">
                 <div>
                   <dt className="text-muted-foreground">Facility</dt>
-                  <dd className="font-medium text-brand-navy">
+                  <dd className="font-medium text-brand-strong">
                     {resident.facilityName}
                   </dd>
                 </div>
                 <div>
                   <dt className="text-muted-foreground">Room</dt>
-                  <dd className="font-medium text-brand-navy">
+                  <dd className="font-medium text-brand-strong">
                     {resident.roomNumber ?? "—"}
                   </dd>
                 </div>
                 <div>
                   <dt className="text-muted-foreground">Admitted</dt>
-                  <dd className="font-medium text-brand-navy">
+                  <dd className="font-medium text-brand-strong">
                     {formatDate(resident.admissionDate)}
                   </dd>
                 </div>
                 <div>
                   <dt className="text-muted-foreground">Care level</dt>
-                  <dd className="font-medium text-brand-navy">
+                  <dd className="font-medium text-brand-strong">
                     {resident.careLevel ?? "—"}
                   </dd>
                 </div>
                 <div>
                   <dt className="text-muted-foreground">Your relationship</dt>
-                  <dd className="font-medium text-brand-navy">
+                  <dd className="font-medium text-brand-strong">
                     {resident.relationship ?? "Linked family"}
                   </dd>
                 </div>
                 <div>
                   <dt className="text-muted-foreground">Access level</dt>
-                  <dd className="font-medium text-brand-navy">
+                  <dd className="font-medium text-brand-strong">
                     {resident.accessLevel === "full" ? "Full" : "Summary"}
                   </dd>
                 </div>
@@ -123,7 +123,7 @@ export default async function FamilyPortalPage() {
       )}
 
       <Card className="p-5 text-sm text-muted-foreground">
-        <p className="font-medium text-brand-navy">What this portal does not show</p>
+        <p className="font-medium text-brand-strong">What this portal does not show</p>
         <p className="mt-1">
           Incident reports, medication records, daily care notes, staff notes and
           invoices are restricted to authorised care and finance staff. This is a

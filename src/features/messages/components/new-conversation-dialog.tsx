@@ -166,7 +166,7 @@ export function NewConversationDialog({
                       onCheckedChange={() => toggle(member.userId)}
                     />
                     <span>
-                      <span className="font-medium text-brand-navy">
+                      <span className="font-medium text-brand-strong">
                         {member.name}
                       </span>
                       <span className="block text-xs text-muted-foreground">

@@ -97,13 +97,13 @@ export default async function ExpensesPage({
       <div className="grid gap-4 sm:grid-cols-2">
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Recorded spend</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(total, "NGN")}
           </p>
         </Card>
         <Card className="p-5">
           <p className="text-sm text-muted-foreground">Unpaid</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-navy">
+          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(unpaid, "NGN")}
           </p>
         </Card>
@@ -111,7 +111,7 @@ export default async function ExpensesPage({
 
       <Card className="overflow-hidden p-0">
         <div className="border-b border-border p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Purchase requests
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -139,7 +139,7 @@ export default async function ExpensesPage({
             <TableBody>
               {purchaseRequests.map((request) => (
                 <TableRow key={request.id}>
-                  <TableCell className="text-sm text-brand-navy">
+                  <TableCell className="text-sm text-brand-strong">
                     {request.items.map((item) => item.description).join(", ") ||
                       "Purchase request"}
                     {request.notes ? (
@@ -152,7 +152,7 @@ export default async function ExpensesPage({
                   <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
                     {request.neededBy ? formatDate(request.neededBy) : "—"}
                   </TableCell>
-                  <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                  <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                     {formatMoney(request.estimatedTotalMinorUnits, "NGN")}
                   </TableCell>
                   <TableCell>
@@ -205,7 +205,7 @@ export default async function ExpensesPage({
                   <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
                     {formatDate(expense.incurredOn)}
                   </TableCell>
-                  <TableCell className="text-sm font-medium text-brand-navy">
+                  <TableCell className="text-sm font-medium text-brand-strong">
                     {expense.category}
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
@@ -214,7 +214,7 @@ export default async function ExpensesPage({
                   <TableCell className="max-w-72 text-sm text-muted-foreground">
                     {expense.description ?? "—"}
                   </TableCell>
-                  <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                  <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                     {formatMoney(expense.amountMinorUnits, expense.currency)}
                   </TableCell>
                   <TableCell>

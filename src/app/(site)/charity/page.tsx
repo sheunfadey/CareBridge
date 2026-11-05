@@ -90,7 +90,7 @@ export default async function CharityPage() {
             </div>
           </div>
           <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-navy">
+            <p className="font-heading text-lg font-semibold text-brand-strong">
               Our commitments
             </p>
             <ul className="mt-4 space-y-3">
@@ -131,7 +131,7 @@ export default async function CharityPage() {
               >
                 <item.icon className="size-5" />
               </span>
-              <p className="mt-4 font-heading text-lg font-semibold text-brand-navy">
+              <p className="mt-4 font-heading text-lg font-semibold text-brand-strong">
                 {item.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">{item.body}</p>
@@ -153,7 +153,7 @@ export default async function CharityPage() {
                 key={campaign.campaignId}
                 className="flex flex-col rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10"
               >
-                <p className="font-heading text-lg font-semibold text-brand-navy">
+                <p className="font-heading text-lg font-semibold text-brand-strong">
                   {campaign.title}
                 </p>
                 <p className="mt-2 flex-1 text-sm text-muted-foreground">
@@ -206,7 +206,7 @@ export default async function CharityPage() {
                   <item.icon className="size-5" />
                 </span>
                 <div>
-                  <p className="font-heading font-semibold text-brand-navy">
+                  <p className="font-heading font-semibold text-brand-strong">
                     {item.title}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">{item.body}</p>
@@ -225,7 +225,7 @@ export default async function CharityPage() {
             description="Scholarship applications are reviewed through a defined process. Awards are made based on published criteria, and all decisions and allocations are recorded."
           />
           <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-navy">
+            <p className="font-heading text-lg font-semibold text-brand-strong">
               What to know
             </p>
             <ul className="mt-4 space-y-3">
@@ -266,7 +266,7 @@ export default async function CharityPage() {
                 key={programme.id}
                 className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10"
               >
-                <p className="font-heading text-lg font-semibold text-brand-navy">
+                <p className="font-heading text-lg font-semibold text-brand-strong">
                   {programme.name}
                 </p>
                 <p className="mt-2 text-sm text-muted-foreground">

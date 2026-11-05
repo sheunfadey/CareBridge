@@ -134,14 +134,14 @@ export default async function InventoryPage({
             <TableBody>
               {items.map((item) => (
                 <TableRow key={item.itemId}>
-                  <TableCell className="font-medium text-brand-navy">{item.name}</TableCell>
+                  <TableCell className="font-medium text-brand-strong">{item.name}</TableCell>
                   <TableCell className="font-mono text-xs text-muted-foreground">
                     {item.sku}
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
                     {item.category ?? "—"}
                   </TableCell>
-                  <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                  <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                     {item.currentQuantity} {item.unit}
                   </TableCell>
                   <TableCell className="text-right text-sm tabular-nums text-muted-foreground">
@@ -173,7 +173,7 @@ export default async function InventoryPage({
 
       <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
         <Card className="p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Recent stock movements
           </h2>
           {movements.length === 0 ? (
@@ -183,7 +183,7 @@ export default async function InventoryPage({
               {movements.slice(0, 20).map((movement) => (
                 <li key={movement.id} className="flex items-center justify-between gap-3 py-2.5 text-sm">
                   <div>
-                    <p className="font-medium text-brand-navy">{movement.itemName}</p>
+                    <p className="font-medium text-brand-strong">{movement.itemName}</p>
                     <p className="text-xs text-muted-foreground">
                       {inventoryMovementTypeLabels[movement.movementType]} ·{" "}
                       {formatDateTime(movement.createdAt)}
@@ -207,7 +207,7 @@ export default async function InventoryPage({
         </Card>
 
         <Card className="p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Suppliers
           </h2>
           {suppliers.length === 0 ? (
@@ -216,7 +216,7 @@ export default async function InventoryPage({
             <ul className="mt-3 divide-y divide-border">
               {suppliers.map((supplier) => (
                 <li key={supplier.id} className="py-2.5 text-sm">
-                  <p className="font-medium text-brand-navy">{supplier.name}</p>
+                  <p className="font-medium text-brand-strong">{supplier.name}</p>
                   <p className="text-xs text-muted-foreground">
                     {[supplier.contactName, supplier.phone, supplier.email]
                       .filter(Boolean)

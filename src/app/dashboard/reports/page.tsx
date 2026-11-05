@@ -173,8 +173,8 @@ export default async function ReportsPage({
                           href={`/dashboard/reports?report=${report.key}&from=${from}&to=${to}${organisationId ? `&organisation=${organisationId}` : ""}`}
                           className={
                             report.key === selectedKey
-                              ? "block rounded px-2 py-1 text-sm font-medium text-brand-navy bg-brand-sky/60"
-                              : "block rounded px-2 py-1 text-sm text-muted-foreground hover:text-brand-navy"
+                              ? "block rounded px-2 py-1 text-sm font-medium text-brand-strong bg-brand-sky/60"
+                              : "block rounded px-2 py-1 text-sm text-muted-foreground hover:text-brand-strong"
                           }
                         >
                           {report.label}
@@ -190,7 +190,7 @@ export default async function ReportsPage({
 
         <Card className="overflow-hidden p-0">
           <div className="border-b border-border p-5">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               {result?.report.label ?? "Report"}
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">

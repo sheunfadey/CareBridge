@@ -128,7 +128,7 @@ export default async function CharityPage({
       />
 
       {params.payment === "success" ? (
-        <Card className="border-brand-teal/40 bg-brand-teal/5 p-4 text-sm text-brand-navy">
+        <Card className="border-brand-teal/40 bg-brand-teal/5 p-4 text-sm text-brand-strong">
           Thank you. Your donation will appear below once the provider
           confirmation is verified. Receipts become available at the same time.
         </Card>
@@ -166,7 +166,7 @@ export default async function CharityPage({
           <div className="grid gap-6 lg:grid-cols-2">
             <Card className="p-5">
               <div className="flex items-center justify-between gap-2">
-                <h2 className="font-heading text-lg font-semibold text-brand-navy">
+                <h2 className="font-heading text-lg font-semibold text-brand-strong">
                   Campaigns
                 </h2>
                 <Link
@@ -187,7 +187,7 @@ export default async function CharityPage({
                       <div>
                         <Link
                           href={`/dashboard/charity/campaigns/${campaign.id}`}
-                          className="text-sm font-medium text-brand-navy hover:text-brand-teal"
+                          className="text-sm font-medium text-brand-strong hover:text-brand-teal"
                         >
                           {campaign.title}
                         </Link>
@@ -208,7 +208,7 @@ export default async function CharityPage({
 
             <Card className="p-5">
               <div className="flex items-center justify-between gap-2">
-                <h2 className="font-heading text-lg font-semibold text-brand-navy">
+                <h2 className="font-heading text-lg font-semibold text-brand-strong">
                   Recent donations
                 </h2>
                 <Link
@@ -227,13 +227,13 @@ export default async function CharityPage({
                   {adminSummary.recentDonations.map((donation) => (
                     <li key={donation.id} className="flex items-center justify-between gap-3 py-2.5 text-sm">
                       <div>
-                        <p className="font-medium text-brand-navy">{donation.donorLabel}</p>
+                        <p className="font-medium text-brand-strong">{donation.donorLabel}</p>
                         <p className="text-xs text-muted-foreground">
                           {donation.campaignTitle} · {formatDateTime(donation.createdAt)}
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="tabular-nums text-brand-navy">
+                        <p className="tabular-nums text-brand-strong">
                           {formatMoney(donation.amountMinorUnits, "NGN")}
                         </p>
                         <StatusBadge
@@ -254,7 +254,7 @@ export default async function CharityPage({
         <Card className="p-5">
           <div className="flex items-center gap-2">
             <ReceiptTextIcon className="size-5 text-brand-teal" aria-hidden="true" />
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               My donations
             </h2>
           </div>
@@ -271,14 +271,14 @@ export default async function CharityPage({
               {donations.map((donation) => (
                 <li key={donation.id} className="flex items-center justify-between gap-3 py-2.5 text-sm">
                   <div>
-                    <p className="font-medium text-brand-navy">{donation.campaignTitle}</p>
+                    <p className="font-medium text-brand-strong">{donation.campaignTitle}</p>
                     <p className="text-xs text-muted-foreground">
                       {formatDateTime(donation.paidAt ?? donation.createdAt)}
                       {donation.receiptReference ? ` · ${donation.receiptReference}` : ""}
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="tabular-nums text-brand-navy">
+                    <p className="tabular-nums text-brand-strong">
                       {formatMoney(donation.amountMinorUnits, donation.currency)}
                     </p>
                     <div className="mt-1 flex items-center justify-end gap-2">
@@ -303,7 +303,7 @@ export default async function CharityPage({
         <Card className="p-5">
           <div className="flex items-center gap-2">
             <BookOpenCheckIcon className="size-5 text-brand-teal" aria-hidden="true" />
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               My scholarships
             </h2>
           </div>
@@ -322,7 +322,7 @@ export default async function CharityPage({
                     {scholarships.awards.map((award) => (
                       <li key={award.id} className="py-2.5 text-sm">
                         <div className="flex items-center justify-between gap-2">
-                          <p className="font-medium text-brand-navy">{award.programmeName}</p>
+                          <p className="font-medium text-brand-strong">{award.programmeName}</p>
                           <StatusBadge
                             status={award.status}
                             label={scholarshipAwardStatusLabels[award.status]}
@@ -351,7 +351,7 @@ export default async function CharityPage({
                     {scholarships.applications.map((application) => (
                       <li key={application.id} className="flex items-center justify-between gap-2 py-2.5 text-sm">
                         <div>
-                          <p className="font-medium text-brand-navy">{application.programmeName}</p>
+                          <p className="font-medium text-brand-strong">{application.programmeName}</p>
                           <p className="text-xs text-muted-foreground">
                             Applied {formatDate(application.createdAt)}
                           </p>
@@ -371,7 +371,7 @@ export default async function CharityPage({
       </div>
 
       <Card className="p-5">
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Open scholarship programmes
         </h2>
         {openProgrammes.length === 0 ? (
@@ -387,7 +387,7 @@ export default async function CharityPage({
               return (
                 <div key={programme.id} className="rounded-lg border border-border p-4">
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <h3 className="font-medium text-brand-navy">{programme.name}</h3>
+                    <h3 className="font-medium text-brand-strong">{programme.name}</h3>
                     <StatusBadge
                       status="open"
                       label={scholarshipCoverageLabels[programme.coverage]}

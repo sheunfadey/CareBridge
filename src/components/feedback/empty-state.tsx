@@ -37,7 +37,7 @@ export function EmptyState({
       >
         <Icon className={compact ? "size-4" : "size-5"} />
       </span>
-      <p className={cn("font-heading font-semibold text-brand-navy", compact ? "text-sm" : "text-base")}>
+      <p className={cn("font-heading font-semibold text-brand-strong", compact ? "text-sm" : "text-base")}>
         {title}
       </p>
       {description ? (

@@ -60,7 +60,7 @@ export default async function ManageCoursesPage() {
       {courses.length === 0 ? (
         <Card className="p-6 text-center">
           <FileCogIcon className="mx-auto size-8 text-muted-foreground" />
-          <p className="mt-2 font-heading font-semibold text-brand-navy">
+          <p className="mt-2 font-heading font-semibold text-brand-strong">
             No courses yet
           </p>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -89,7 +89,7 @@ export default async function ManageCoursesPage() {
               {courses.map((course) => (
                 <tr key={course.id}>
                   <td className="px-4 py-3">
-                    <p className="font-medium text-brand-navy">{course.title}</p>
+                    <p className="font-medium text-brand-strong">{course.title}</p>
                     <p className="text-xs text-muted-foreground">
                       {course.organisationName ?? "Platform"}
                     </p>

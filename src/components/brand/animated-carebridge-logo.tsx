@@ -45,7 +45,7 @@ export function AnimatedCareBridgeLogo({
       ? "text-white"
       : tone === "mono"
         ? "text-current"
-        : "text-brand-navy";
+        : "text-brand-strong";
   const taglineColor = tone === "onDark" ? "text-white/70" : "text-brand-slate";
 
   return (

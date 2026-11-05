@@ -113,7 +113,7 @@ export default async function OrganisationBillingPage({
 
       {readOnly ? (
         <Card className="border-brand-warning/40 bg-brand-warning/5 p-5">
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             This workspace is read-only
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -132,7 +132,7 @@ export default async function OrganisationBillingPage({
               <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Current plan
               </p>
-              <h2 className="mt-1 font-heading text-xl font-semibold text-brand-navy">
+              <h2 className="mt-1 font-heading text-xl font-semibold text-brand-strong">
                 {plan?.name ?? "Legacy access"}
               </h2>
             </div>
@@ -155,7 +155,7 @@ export default async function OrganisationBillingPage({
               <dl className="grid gap-4 text-sm sm:grid-cols-2">
                 <div>
                   <dt className="text-muted-foreground">Billing cycle</dt>
-                  <dd className="font-medium text-brand-navy">
+                  <dd className="font-medium text-brand-strong">
                     {subscription
                       ? subscriptionBillingCycleLabels[subscription.billingCycle]
                       : "—"}
@@ -163,7 +163,7 @@ export default async function OrganisationBillingPage({
                 </div>
                 <div>
                   <dt className="text-muted-foreground">Monthly price</dt>
-                  <dd className="font-medium text-brand-navy">
+                  <dd className="font-medium text-brand-strong">
                     {plan.monthlyPriceMinorUnits === null
                       ? "Contact us"
                       : formatMoney(plan.monthlyPriceMinorUnits, plan.currency)}
@@ -171,25 +171,25 @@ export default async function OrganisationBillingPage({
                 </div>
                 <div>
                   <dt className="text-muted-foreground">Current period ends</dt>
-                  <dd className="font-medium text-brand-navy">
+                  <dd className="font-medium text-brand-strong">
                     {subscription ? formatDate(subscription.currentPeriodEnd) : "—"}
                   </dd>
                 </div>
                 <div>
                   <dt className="text-muted-foreground">Trial ends</dt>
-                  <dd className="font-medium text-brand-navy">
+                  <dd className="font-medium text-brand-strong">
                     {subscription?.trialEndsAt ? formatDate(subscription.trialEndsAt) : "—"}
                   </dd>
                 </div>
                 <div>
                   <dt className="text-muted-foreground">Grace ends</dt>
-                  <dd className="font-medium text-brand-navy">
+                  <dd className="font-medium text-brand-strong">
                     {subscription?.graceEndsAt ? formatDate(subscription.graceEndsAt) : "—"}
                   </dd>
                 </div>
                 <div>
                   <dt className="text-muted-foreground">Cancellation</dt>
-                  <dd className="font-medium text-brand-navy">
+                  <dd className="font-medium text-brand-strong">
                     {subscription?.cancelAtPeriodEnd
                       ? "Cancels at period end"
                       : subscription?.cancelledAt
@@ -228,14 +228,14 @@ export default async function OrganisationBillingPage({
         </Card>
 
         <Card className="space-y-4 p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Usage and limits
           </h2>
           <div className="space-y-4 text-sm">
             <div>
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Members</span>
-                <span className="tabular-nums text-brand-navy">
+                <span className="tabular-nums text-brand-strong">
                   {membersUsed}
                   {memberLimit !== null ? ` / ${memberLimit}` : " / unlimited"}
                 </span>
@@ -252,7 +252,7 @@ export default async function OrganisationBillingPage({
             <div>
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Facilities</span>
-                <span className="tabular-nums text-brand-navy">
+                <span className="tabular-nums text-brand-strong">
                   {summary.usage.facilities}
                   {facilityLimit !== null ? ` / ${facilityLimit}` : " / unlimited"}
                 </span>
@@ -270,7 +270,7 @@ export default async function OrganisationBillingPage({
             </div>
             <div className="flex items-center justify-between">
               <span className="text-muted-foreground">Storage allowance</span>
-              <span className="tabular-nums text-brand-navy">
+              <span className="tabular-nums text-brand-strong">
                 {plan?.storageAllowanceMb
                   ? `${plan.storageAllowanceMb.toLocaleString("en-NG")} MB`
                   : "—"}
@@ -286,7 +286,7 @@ export default async function OrganisationBillingPage({
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="overflow-hidden p-0">
           <div className="border-b border-border p-5">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Billing history
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -302,7 +302,7 @@ export default async function OrganisationBillingPage({
               {summary.payments.map((payment) => (
                 <li key={payment.id} className="flex items-center justify-between gap-3 p-4 text-sm">
                   <div>
-                    <p className="font-medium tabular-nums text-brand-navy">
+                    <p className="font-medium tabular-nums text-brand-strong">
                       {formatMoney(payment.amountMinorUnits, payment.currency)}
                     </p>
                     <p className="text-xs text-muted-foreground">
@@ -321,7 +321,7 @@ export default async function OrganisationBillingPage({
         </Card>
 
         <Card className="p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Subscription events
           </h2>
           {summary.events.length === 0 ? (
@@ -330,7 +330,7 @@ export default async function OrganisationBillingPage({
             <ul className="mt-3 divide-y divide-border">
               {summary.events.map((event) => (
                 <li key={event.id} className="py-2.5 text-sm">
-                  <p className="font-medium text-brand-navy">
+                  <p className="font-medium text-brand-strong">
                     {subscriptionEventLabels[event.eventType]}
                   </p>
                   <p className="text-xs text-muted-foreground">

@@ -50,7 +50,7 @@ export function AcceptInvitationPanel() {
           <MailCheckIcon className="size-5" aria-hidden="true" />
         </span>
         <div className="space-y-1">
-          <h1 className="font-heading text-lg font-semibold text-brand-navy">
+          <h1 className="font-heading text-lg font-semibold text-brand-strong">
             Organisation invitation
           </h1>
           <p className="text-sm text-muted-foreground">

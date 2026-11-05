@@ -91,7 +91,7 @@ export default async function MyLearningPage({
       {learning.length === 0 ? (
         <Card className="p-6 text-center">
           <BookOpenIcon className="mx-auto size-8 text-muted-foreground" />
-          <p className="mt-2 font-heading font-semibold text-brand-navy">
+          <p className="mt-2 font-heading font-semibold text-brand-strong">
             You are not enrolled in any courses yet
           </p>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -111,7 +111,7 @@ export default async function MyLearningPage({
               <Card key={course.enrolmentId} className="p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="font-heading font-semibold text-brand-navy">
+                    <p className="font-heading font-semibold text-brand-strong">
                       {course.title}
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">

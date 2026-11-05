@@ -116,7 +116,7 @@ export function AssessmentRunner(props: AssessmentRunnerProps) {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="font-heading text-base font-semibold text-brand-navy">
+            <h3 className="font-heading text-base font-semibold text-brand-strong">
               {props.title}
             </h3>
             {props.isRequired ? <Badge variant="secondary">Required</Badge> : null}
@@ -179,7 +179,7 @@ export function AssessmentRunner(props: AssessmentRunnerProps) {
       {mode === "taking" && attempt ? (
         <div className="space-y-5">
           <div className="flex flex-wrap items-center justify-between gap-2 rounded-md bg-muted/40 p-3 text-sm">
-            <span className="font-medium text-brand-navy">
+            <span className="font-medium text-brand-strong">
               Attempt {attempt.attemptNumber} of {props.maxAttempts}
             </span>
             <span className="text-xs text-muted-foreground">
@@ -197,7 +197,7 @@ export function AssessmentRunner(props: AssessmentRunnerProps) {
                 key={question.id}
                 className="space-y-3 rounded-lg border p-4"
               >
-                <legend className="px-1 text-sm font-medium text-brand-navy">
+                <legend className="px-1 text-sm font-medium text-brand-strong">
                   {questionIndex + 1}. {question.prompt}
                   <span className="ml-2 text-xs font-normal text-muted-foreground">
                     {question.points} pt{question.points === 1 ? "" : "s"}
@@ -259,7 +259,7 @@ export function AssessmentRunner(props: AssessmentRunnerProps) {
               ) : (
                 <XCircleIcon className="size-5 text-amber-600" />
               )}
-              <p className="font-heading font-semibold text-brand-navy">
+              <p className="font-heading font-semibold text-brand-strong">
                 {result.passed ? "Passed" : "Not passed"}
               </p>
             </div>
@@ -268,7 +268,7 @@ export function AssessmentRunner(props: AssessmentRunnerProps) {
               {result.scorePercent}% (pass mark {result.passMarkPercent}%)
             </p>
             {result.courseCompleted ? (
-              <p className="mt-2 text-sm text-brand-navy">
+              <p className="mt-2 text-sm text-brand-strong">
                 Course completed.{" "}
                 {result.certificateId ? (
                   <Link
@@ -299,7 +299,7 @@ export function AssessmentRunner(props: AssessmentRunnerProps) {
                       <XCircleIcon className="mt-0.5 size-4 shrink-0 text-destructive" />
                     )}
                     <div>
-                      <p className="font-medium text-brand-navy">
+                      <p className="font-medium text-brand-strong">
                         {index + 1}. {question.prompt}
                       </p>
                       <p className="mt-1 text-muted-foreground">

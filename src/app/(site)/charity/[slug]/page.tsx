@@ -66,7 +66,7 @@ export default async function PublicCampaignPage({
 
           <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
             <div className="flex items-center justify-between text-sm">
-              <span className="font-medium text-brand-navy">
+              <span className="font-medium text-brand-strong">
                 {formatMoney(campaign.receivedMinorUnits, campaign.currency)} raised
               </span>
               <span className="text-muted-foreground">{campaign.progressPercent}%</span>
@@ -80,13 +80,13 @@ export default async function PublicCampaignPage({
             <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
               <div>
                 <dt className="text-muted-foreground">Target</dt>
-                <dd className="font-medium text-brand-navy">
+                <dd className="font-medium text-brand-strong">
                   {formatMoney(campaign.fundingTargetMinorUnits, campaign.currency)}
                 </dd>
               </div>
               <div>
                 <dt className="text-muted-foreground">Donations</dt>
-                <dd className="font-medium text-brand-navy">{campaign.donationCount}</dd>
+                <dd className="font-medium text-brand-strong">{campaign.donationCount}</dd>
               </div>
             </dl>
             <p className="mt-4 text-xs text-muted-foreground">
@@ -100,7 +100,7 @@ export default async function PublicCampaignPage({
       {campaign.description ? (
         <SiteSection>
           <div className="mx-auto max-w-3xl space-y-4">
-            <h2 className="font-heading text-2xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-2xl font-semibold text-brand-strong">
               About this campaign
             </h2>
             <p className="whitespace-pre-line text-sm text-muted-foreground">
@@ -140,7 +140,7 @@ export default async function PublicCampaignPage({
         <SiteSection>
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
-              <h2 className="font-heading text-xl font-semibold text-brand-navy">
+              <h2 className="font-heading text-xl font-semibold text-brand-strong">
                 Public supporters
               </h2>
               {detail.donors.length === 0 ? (
@@ -151,7 +151,7 @@ export default async function PublicCampaignPage({
                 <ul className="mt-4 divide-y divide-border">
                   {detail.donors.map((donor, index) => (
                     <li key={`${donor.displayName}-${index}`} className="flex items-center justify-between py-2.5 text-sm">
-                      <span className="text-brand-navy">{donor.displayName}</span>
+                      <span className="text-brand-strong">{donor.displayName}</span>
                       <span className="tabular-nums text-muted-foreground">
                         {formatMoney(donor.amountMinorUnits, campaign.currency)}
                       </span>
@@ -161,7 +161,7 @@ export default async function PublicCampaignPage({
               )}
             </div>
             <div>
-              <h2 className="font-heading text-xl font-semibold text-brand-navy">
+              <h2 className="font-heading text-xl font-semibold text-brand-strong">
                 Impact updates
               </h2>
               {detail.impactReports.length === 0 ? (
@@ -172,7 +172,7 @@ export default async function PublicCampaignPage({
                 <ul className="mt-4 space-y-4">
                   {detail.impactReports.map((report) => (
                     <li key={report.id} className="rounded-lg border border-border p-4">
-                      <p className="font-medium text-brand-navy">{report.title}</p>
+                      <p className="font-medium text-brand-strong">{report.title}</p>
                       <p className="text-xs text-muted-foreground">
                         {report.publishedAt ? formatDateTime(report.publishedAt) : ""}
                       </p>

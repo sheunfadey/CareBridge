@@ -69,7 +69,7 @@ export default async function AdminPaymentDetailPage({
       <div className="flex flex-wrap items-center gap-2">
         <Link
           href="/dashboard/admin/payments"
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-brand-navy"
+          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-brand-strong"
         >
           <ArrowLeftIcon className="size-4" aria-hidden="true" />
           All payments
@@ -104,19 +104,19 @@ export default async function AdminPaymentDetailPage({
           <dl className="grid gap-4 text-sm sm:grid-cols-2">
             <div>
               <dt className="text-muted-foreground">Amount</dt>
-              <dd className="font-heading text-2xl font-semibold tabular-nums text-brand-navy">
+              <dd className="font-heading text-2xl font-semibold tabular-nums text-brand-strong">
                 {formatMoney(payment.amountMinorUnits, payment.currency)}
               </dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Refunded</dt>
-              <dd className="font-medium tabular-nums text-brand-navy">
+              <dd className="font-medium tabular-nums text-brand-strong">
                 {formatMoney(payment.refundedMinorUnits, payment.currency)}
               </dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Payer</dt>
-              <dd className="font-medium text-brand-navy">
+              <dd className="font-medium text-brand-strong">
                 {payment.payerName ?? "—"}
                 <span className="block text-xs text-muted-foreground">
                   {payment.payerEmail}
@@ -125,45 +125,45 @@ export default async function AdminPaymentDetailPage({
             </div>
             <div>
               <dt className="text-muted-foreground">Provider reference</dt>
-              <dd className="font-mono text-xs text-brand-navy">
+              <dd className="font-mono text-xs text-brand-strong">
                 {payment.providerReference ?? "—"}
               </dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Created</dt>
-              <dd className="text-brand-navy">
+              <dd className="text-brand-strong">
                 {formatDateTime(payment.createdAt)}
               </dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Paid</dt>
-              <dd className="text-brand-navy">{formatDateTime(payment.paidAt)}</dd>
+              <dd className="text-brand-strong">{formatDateTime(payment.paidAt)}</dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Last verified</dt>
-              <dd className="text-brand-navy">
+              <dd className="text-brand-strong">
                 {formatDateTime(payment.lastVerifiedAt)}
               </dd>
             </div>
             <div>
               <dt className="text-muted-foreground">Description</dt>
-              <dd className="text-brand-navy">{payment.description ?? "—"}</dd>
+              <dd className="text-brand-strong">{payment.description ?? "—"}</dd>
             </div>
           </dl>
         </Card>
 
         <Card className="space-y-3 p-6">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Provider data
           </h2>
           <p className="text-xs text-muted-foreground">
             Raw provider payloads are stored for reconciliation and are never
             used as the source of truth for balances.
           </p>
-          <pre className="max-h-80 overflow-auto rounded-lg border border-border bg-muted/40 p-3 text-xs text-brand-navy">
+          <pre className="max-h-80 overflow-auto rounded-lg border border-border bg-muted/40 p-3 text-xs text-brand-strong">
             {JSON.stringify(payment.providerPayload, null, 2)}
           </pre>
-          <pre className="max-h-40 overflow-auto rounded-lg border border-border bg-muted/40 p-3 text-xs text-brand-navy">
+          <pre className="max-h-40 overflow-auto rounded-lg border border-border bg-muted/40 p-3 text-xs text-brand-strong">
             {JSON.stringify(payment.metadata, null, 2)}
           </pre>
         </Card>
@@ -171,7 +171,7 @@ export default async function AdminPaymentDetailPage({
 
       <Card className="overflow-hidden p-0">
         <div className="border-b border-border p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Refunds
           </h2>
         </div>
@@ -196,7 +196,7 @@ export default async function AdminPaymentDetailPage({
                   <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
                     {formatDateTime(refund.createdAt)}
                   </TableCell>
-                  <TableCell className="text-sm font-medium tabular-nums text-brand-navy">
+                  <TableCell className="text-sm font-medium tabular-nums text-brand-strong">
                     {formatMoney(refund.amountMinorUnits, payment.currency)}
                   </TableCell>
                   <TableCell>
@@ -217,7 +217,7 @@ export default async function AdminPaymentDetailPage({
 
       <Card className="overflow-hidden p-0">
         <div className="border-b border-border p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Webhook events
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -246,7 +246,7 @@ export default async function AdminPaymentDetailPage({
                   <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
                     {formatDateTime(event.receivedAt)}
                   </TableCell>
-                  <TableCell className="font-mono text-xs text-brand-navy">
+                  <TableCell className="font-mono text-xs text-brand-strong">
                     {event.eventType}
                   </TableCell>
                   <TableCell>

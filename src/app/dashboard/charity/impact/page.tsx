@@ -83,7 +83,7 @@ export default async function ImpactPage({
               <li key={report.id} className="flex flex-wrap items-start justify-between gap-3 p-5">
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <h2 className="font-heading text-base font-semibold text-brand-navy">
+                    <h2 className="font-heading text-base font-semibold text-brand-strong">
                       {report.title}
                     </h2>
                     <StatusBadge

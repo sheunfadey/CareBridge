@@ -40,7 +40,7 @@ export function StatCard({
           {loading ? (
             <Skeleton className="mt-1.5 h-5 w-16" />
           ) : (
-            <p className="font-heading text-lg font-semibold tabular-nums text-brand-navy">
+            <p className="font-heading text-lg font-semibold tabular-nums text-brand-strong">
               {value}
             </p>
           )}

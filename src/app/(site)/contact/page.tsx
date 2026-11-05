@@ -71,7 +71,7 @@ export default function ContactPage() {
               <MailIcon className="size-3.5" aria-hidden="true" />
               Contact
             </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-navy sm:text-5xl">
+            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
               Contact {brand.name}
               <span className="text-gradient-care block">
                 and we will point you to the right place
@@ -93,7 +93,7 @@ export default function ContactPage() {
           </div>
 
           <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-navy">
+            <p className="font-heading text-lg font-semibold text-brand-strong">
               What happens next
             </p>
             <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
@@ -141,7 +141,7 @@ export default function ContactPage() {
               >
                 <route.icon className="size-5" />
               </span>
-              <p className="mt-4 font-heading text-lg font-semibold text-brand-navy">
+              <p className="mt-4 font-heading text-lg font-semibold text-brand-strong">
                 {route.title}
               </p>
               <p className="mt-2 flex-1 text-sm text-muted-foreground">

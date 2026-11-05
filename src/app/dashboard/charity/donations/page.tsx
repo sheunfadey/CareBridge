@@ -69,7 +69,7 @@ export default async function DonationsPage({
 
       <Card className="overflow-hidden p-0">
         <div className="border-b border-border p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             My donations
           </h2>
         </div>
@@ -93,7 +93,7 @@ export default async function DonationsPage({
             <TableBody>
               {myDonations.map((donation) => (
                 <TableRow key={donation.id}>
-                  <TableCell className="text-sm font-medium text-brand-navy">
+                  <TableCell className="text-sm font-medium text-brand-strong">
                     {donation.campaignSlug ? (
                       <Link
                         href={`/charity/${donation.campaignSlug}`}
@@ -105,7 +105,7 @@ export default async function DonationsPage({
                       donation.campaignTitle
                     )}
                   </TableCell>
-                  <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                  <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                     {formatMoney(donation.amountMinorUnits, donation.currency)}
                   </TableCell>
                   <TableCell>
@@ -143,7 +143,7 @@ export default async function DonationsPage({
       {workspace ? (
         <Card className="overflow-hidden p-0">
           <div className="border-b border-border p-5">
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Workspace donations
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -170,13 +170,13 @@ export default async function DonationsPage({
               <TableBody>
                 {adminDonations.map((donation) => (
                   <TableRow key={donation.id}>
-                    <TableCell className="text-sm text-brand-navy">
+                    <TableCell className="text-sm text-brand-strong">
                       {donation.campaignTitle}
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">
                       {donation.donorLabel}
                     </TableCell>
-                    <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                    <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                       {formatMoney(donation.amountMinorUnits, donation.currency)}
                     </TableCell>
                     <TableCell>

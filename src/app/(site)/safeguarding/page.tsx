@@ -22,7 +22,7 @@ export default function SafeguardingPage() {
             description={`Our commitment to protecting children and vulnerable adults, how to raise a concern, and what happens when you do.`}
           />
           <div className="rounded-xl border border-brand-warning/30 bg-brand-sky p-5">
-            <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-navy">
+            <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-strong">
               <TriangleAlertIcon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
               Working draft
             </p>
@@ -40,7 +40,7 @@ export default function SafeguardingPage() {
       <SiteSection>
         <div className="max-w-3xl space-y-8">
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Our commitment
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -62,7 +62,7 @@ export default function SafeguardingPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Scope and our role
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -84,7 +84,7 @@ export default function SafeguardingPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               How to raise a concern
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -133,7 +133,7 @@ export default function SafeguardingPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               How concerns are reviewed and escalated
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -194,7 +194,7 @@ export default function SafeguardingPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Record keeping
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -222,7 +222,7 @@ export default function SafeguardingPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Roles and responsibilities
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -268,7 +268,7 @@ export default function SafeguardingPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Training and expectations
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -297,7 +297,7 @@ export default function SafeguardingPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Preventative measures
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -335,7 +335,7 @@ export default function SafeguardingPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Concerns about {brand.name} itself
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -348,7 +348,7 @@ export default function SafeguardingPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Reviewing this policy
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -360,7 +360,7 @@ export default function SafeguardingPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Contact
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">

@@ -89,7 +89,7 @@ export default async function RosterPage({
         <div className="space-y-6">
           {Array.from(groups.entries()).map(([day, dayShifts]) => (
             <section key={day} className="space-y-3">
-              <h2 className="font-heading text-base font-semibold text-brand-navy">
+              <h2 className="font-heading text-base font-semibold text-brand-strong">
                 {new Date(`${day}T00:00:00`).toLocaleDateString("en-NG", {
                   weekday: "long",
                   day: "numeric",
@@ -102,7 +102,7 @@ export default async function RosterPage({
                   <Card key={shift.id} className="space-y-4 p-5">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div>
-                        <h3 className="font-heading text-base font-semibold text-brand-navy">
+                        <h3 className="font-heading text-base font-semibold text-brand-strong">
                           {shift.title ?? "Shift"}
                         </h3>
                         <p className="text-xs text-muted-foreground">
@@ -141,7 +141,7 @@ export default async function RosterPage({
                             className="flex items-center justify-between gap-2 py-2 text-sm"
                           >
                             <div>
-                              <p className="font-medium text-brand-navy">
+                              <p className="font-medium text-brand-strong">
                                 {assignment.fullName ?? "Staff member"}
                               </p>
                               <p className="text-xs capitalize text-muted-foreground">
@@ -162,7 +162,7 @@ export default async function RosterPage({
                     )}
 
                     <details className="rounded-md border border-border p-3">
-                      <summary className="cursor-pointer text-sm font-medium text-brand-navy">
+                      <summary className="cursor-pointer text-sm font-medium text-brand-strong">
                         Assign a staff member
                       </summary>
                       <div className="pt-3">
@@ -191,7 +191,7 @@ export default async function RosterPage({
                         <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                           Handover
                         </p>
-                        <p className="mt-1 whitespace-pre-line text-brand-navy">
+                        <p className="mt-1 whitespace-pre-line text-brand-strong">
                           {shift.handover}
                         </p>
                       </div>

@@ -53,7 +53,7 @@ export default function ForCareHomesPage() {
             </div>
           </div>
           <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-navy">
+            <p className="font-heading text-lg font-semibold text-brand-strong">
               What you can manage
             </p>
             <ul className="mt-4 space-y-3">
@@ -98,7 +98,7 @@ export default function ForCareHomesPage() {
                 >
                   <Icon className="size-5" />
                 </span>
-                <p className="mt-4 font-heading text-lg font-semibold text-brand-navy">
+                <p className="mt-4 font-heading text-lg font-semibold text-brand-strong">
                   {feature.title}
                 </p>
                 <p className="mt-2 text-sm text-muted-foreground">{feature.body}</p>
@@ -144,7 +144,7 @@ export default function ForCareHomesPage() {
                   <item.icon className="size-5" />
                 </span>
                 <div>
-                  <p className="font-heading font-semibold text-brand-navy">
+                  <p className="font-heading font-semibold text-brand-strong">
                     {item.title}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">{item.body}</p>

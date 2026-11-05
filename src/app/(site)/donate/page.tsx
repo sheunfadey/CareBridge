@@ -95,7 +95,7 @@ export default function DonatePage() {
                     <item.icon className="size-5" />
                   </span>
                   <div>
-                    <p className="font-heading font-semibold text-brand-navy">
+                    <p className="font-heading font-semibold text-brand-strong">
                       {item.title}
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
@@ -108,7 +108,7 @@ export default function DonatePage() {
           </div>
 
           <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-navy">
+            <p className="font-heading text-lg font-semibold text-brand-strong">
               Give today
             </p>
             <p className="mt-2 text-sm text-muted-foreground">

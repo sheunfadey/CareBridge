@@ -144,7 +144,7 @@ export function ReferralLinkCard({
 
   return (
     <div className="space-y-3">
-      <p className="break-all rounded-lg border border-border bg-muted/40 px-3 py-2 font-mono text-sm text-brand-navy">
+      <p className="break-all rounded-lg border border-border bg-muted/40 px-3 py-2 font-mono text-sm text-brand-strong">
         {link}
       </p>
       <Button type="button" variant="outline" onClick={copy}>
@@ -286,7 +286,7 @@ export function RequestPayoutCard({
       <Feedback error={error} success={success} />
       <p className="text-sm text-muted-foreground">
         Available to request:{" "}
-        <span className="font-semibold text-brand-navy">
+        <span className="font-semibold text-brand-strong">
           {formatMoney(balance.approvedMinorUnits, currency)}
         </span>
         {minimumPayoutMinorUnits > 0

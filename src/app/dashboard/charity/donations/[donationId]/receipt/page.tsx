@@ -58,7 +58,7 @@ export default async function DonationReceiptPage({
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-teal">
               CareBridge Charity
             </p>
-            <h2 className="mt-1 font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="mt-1 font-heading text-xl font-semibold text-brand-strong">
               Donation receipt
             </h2>
           </div>
@@ -71,33 +71,33 @@ export default async function DonationReceiptPage({
         <dl className="grid gap-4 text-sm sm:grid-cols-2">
           <div>
             <dt className="text-muted-foreground">Receipt number</dt>
-            <dd className="font-mono text-brand-navy">
+            <dd className="font-mono text-brand-strong">
               {receipt.receiptReference ?? "—"}
             </dd>
           </div>
           <div>
             <dt className="text-muted-foreground">Date</dt>
-            <dd className="text-brand-navy">
+            <dd className="text-brand-strong">
               {formatDate(receipt.paidAt ?? receipt.createdAt)}
             </dd>
           </div>
           <div>
             <dt className="text-muted-foreground">Donor</dt>
-            <dd className="text-brand-navy">{receipt.donorLabel}</dd>
+            <dd className="text-brand-strong">{receipt.donorLabel}</dd>
           </div>
           <div>
             <dt className="text-muted-foreground">Campaign</dt>
-            <dd className="text-brand-navy">{receipt.campaignTitle}</dd>
+            <dd className="text-brand-strong">{receipt.campaignTitle}</dd>
           </div>
           <div>
             <dt className="text-muted-foreground">Donation amount</dt>
-            <dd className="font-medium tabular-nums text-brand-navy">
+            <dd className="font-medium tabular-nums text-brand-strong">
               {formatMoney(receipt.amountMinorUnits, receipt.currency)}
             </dd>
           </div>
           <div>
             <dt className="text-muted-foreground">Refunded</dt>
-            <dd className="tabular-nums text-brand-navy">
+            <dd className="tabular-nums text-brand-strong">
               {formatMoney(receipt.refundedAmountMinorUnits, receipt.currency)}
             </dd>
           </div>
@@ -105,7 +105,7 @@ export default async function DonationReceiptPage({
             <dt className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
               Net donation recorded
             </dt>
-            <dd className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-navy">
+            <dd className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong">
               {formatMoney(netAmount, receipt.currency)}
             </dd>
           </div>

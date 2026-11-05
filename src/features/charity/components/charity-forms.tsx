@@ -336,7 +336,7 @@ export function DonateForm({
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground">
-        You are supporting <span className="font-medium text-brand-navy">{campaignTitle}</span>.
+        You are supporting <span className="font-medium text-brand-strong">{campaignTitle}</span>.
         Payments are verified server-side; a donation is recorded only after the
         provider confirms it.
       </p>
@@ -374,7 +374,7 @@ export function DonateForm({
               onChange={(event) => setPublicAcknowledgement(event.target.checked)}
             />
             <span>
-              <span className="font-medium text-brand-navy">Acknowledge me publicly</span>
+              <span className="font-medium text-brand-strong">Acknowledge me publicly</span>
               <span className="block text-xs text-muted-foreground">
                 Only your chosen display name and amount are shown. Your email is never public.
               </span>

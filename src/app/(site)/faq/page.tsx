@@ -152,7 +152,7 @@ export default function FaqPage() {
               <CircleHelpIcon className="size-3.5" aria-hidden="true" />
               Frequently asked questions
             </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-navy sm:text-5xl">
+            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
               Frequently asked questions
               <span className="text-gradient-care block">
                 about training, work and the platform
@@ -174,7 +174,7 @@ export default function FaqPage() {
           </div>
 
           <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-navy">
+            <p className="font-heading text-lg font-semibold text-brand-strong">
               On this page
             </p>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
@@ -214,7 +214,7 @@ export default function FaqPage() {
         <div className="mt-10 space-y-12">
           {groupedFaqs.map((group) => (
             <div key={group.title}>
-              <h3 className="font-heading text-xl font-semibold text-brand-navy">
+              <h3 className="font-heading text-xl font-semibold text-brand-strong">
                 {group.title}
               </h3>
               <div className="mt-4">

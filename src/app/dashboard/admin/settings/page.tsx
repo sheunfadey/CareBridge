@@ -73,7 +73,7 @@ export default async function AdminSettingsPage() {
       />
 
       <section className="space-y-3">
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Configuration status
         </h2>
         <Card className="divide-y divide-border p-0">
@@ -83,7 +83,7 @@ export default async function AdminSettingsPage() {
               className="flex flex-col gap-2 p-5 sm:flex-row sm:items-center sm:justify-between"
             >
               <div className="space-y-1">
-                <p className="text-sm font-medium text-brand-navy">
+                <p className="text-sm font-medium text-brand-strong">
                   {row.label}
                 </p>
                 <p className="max-w-2xl text-xs text-muted-foreground">
@@ -104,7 +104,7 @@ export default async function AdminSettingsPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-heading text-lg font-semibold text-brand-navy">
+        <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Policy safeguards
         </h2>
         <Card className="p-5">

@@ -54,7 +54,7 @@ export default function HomePage() {
               <SparklesIcon className="size-3.5 animate-pulse" aria-hidden="true" />
               Learn. Practise. Work.
             </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-navy sm:text-5xl lg:text-6xl">
+            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl lg:text-6xl">
               Build a Career in Care.
               <span className="bg-gradient-to-r from-brand-teal via-brand-green to-brand-coral bg-clip-text text-transparent block">
                 Help Someone Live Better.
@@ -100,7 +100,7 @@ export default function HomePage() {
                   >
                     <card.icon className="size-5" />
                   </span>
-                  <p className="relative mt-4 font-heading font-semibold text-brand-navy">
+                  <p className="relative mt-4 font-heading font-semibold text-brand-strong">
                     {card.title}
                   </p>
                   <p className="relative mt-1.5 text-sm text-muted-foreground">{card.body}</p>
@@ -144,7 +144,7 @@ export default function HomePage() {
                   aria-hidden="true"
                 />
               </span>
-              <p className="relative mt-4 font-heading font-semibold text-brand-navy">
+              <p className="relative mt-4 font-heading font-semibold text-brand-strong">
                 {item.title}
               </p>
               <p className="relative mt-1.5 text-sm text-muted-foreground">{item.body}</p>
@@ -173,7 +173,7 @@ export default function HomePage() {
                 <span className="relative font-heading text-4xl font-semibold bg-gradient-to-br from-brand-teal to-brand-green bg-clip-text text-transparent">
                   {step.step}
                 </span>
-                <p className="relative mt-2 font-heading text-lg font-semibold text-brand-navy">
+                <p className="relative mt-2 font-heading text-lg font-semibold text-brand-strong">
                   {step.title}
                 </p>
                 <p className="relative mt-2 text-sm text-muted-foreground">{step.body}</p>
@@ -207,7 +207,7 @@ export default function HomePage() {
               >
                 <BookOpenIcon className="size-5" />
               </span>
-              <p className="mt-4 font-heading text-lg font-semibold text-brand-navy">
+              <p className="mt-4 font-heading text-lg font-semibold text-brand-strong">
                 {programme.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">
@@ -258,7 +258,7 @@ export default function HomePage() {
                   <item.icon className="size-5" />
                 </span>
                 <div>
-                  <p className="font-heading font-semibold text-brand-navy">
+                  <p className="font-heading font-semibold text-brand-strong">
                     {item.title}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">{item.body}</p>
@@ -293,7 +293,7 @@ export default function HomePage() {
                 >
                   <Icon className="size-5" />
                 </span>
-                <p className="mt-4 font-heading font-semibold text-brand-navy">
+                <p className="mt-4 font-heading font-semibold text-brand-strong">
                   {feature.title}
                 </p>
                 <p className="mt-1.5 text-sm text-muted-foreground">

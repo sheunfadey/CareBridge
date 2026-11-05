@@ -105,7 +105,7 @@ export default function InternshipsPage() {
               <UserCheckIcon className="size-3.5" aria-hidden="true" />
               Supervised practice
             </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-navy sm:text-5xl">
+            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
               Internship opportunities
               <span className="text-gradient-care block">
                 Learn on the job, with support.
@@ -128,7 +128,7 @@ export default function InternshipsPage() {
           </div>
 
           <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-navy">
+            <p className="font-heading text-lg font-semibold text-brand-strong">
               Who internships are for
             </p>
             <ul className="mt-4 space-y-3">
@@ -171,7 +171,7 @@ export default function InternshipsPage() {
               >
                 <step.icon className="size-5" />
               </span>
-              <p className="mt-4 font-heading font-semibold text-brand-navy">
+              <p className="mt-4 font-heading font-semibold text-brand-strong">
                 {step.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">{step.body}</p>
@@ -198,7 +198,7 @@ export default function InternshipsPage() {
               >
                 <item.icon className="size-5" />
               </span>
-              <p className="mt-4 font-heading font-semibold text-brand-navy">
+              <p className="mt-4 font-heading font-semibold text-brand-strong">
                 {item.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">{item.body}</p>
@@ -227,7 +227,7 @@ export default function InternshipsPage() {
                   <step.icon className="size-5" />
                 </span>
                 <div>
-                  <p className="font-heading font-semibold text-brand-navy">
+                  <p className="font-heading font-semibold text-brand-strong">
                     {step.title}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">{step.body}</p>

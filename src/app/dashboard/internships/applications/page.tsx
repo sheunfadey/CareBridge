@@ -69,7 +69,7 @@ export default async function InternshipApplicationsPage() {
                 <div className="min-w-0">
                   <Link
                     href={`/dashboard/internships/${application.listingId}`}
-                    className="font-heading font-semibold text-brand-navy hover:text-brand-teal"
+                    className="font-heading font-semibold text-brand-strong hover:text-brand-teal"
                   >
                     {application.listingTitle}
                   </Link>
@@ -95,7 +95,7 @@ export default async function InternshipApplicationsPage() {
 
               {application.interviews.length > 0 ? (
                 <div className="space-y-1 border-t pt-2">
-                  <p className="text-xs font-medium text-brand-navy">
+                  <p className="text-xs font-medium text-brand-strong">
                     Interviews
                   </p>
                   {application.interviews.map((interview) => (
@@ -120,7 +120,7 @@ export default async function InternshipApplicationsPage() {
               {application.offer ? (
                 <div className="space-y-2 border-t pt-2">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="text-xs font-medium text-brand-navy">Offer</p>
+                    <p className="text-xs font-medium text-brand-strong">Offer</p>
                     <StatusBadge status={application.offer.status} />
                     <span className="text-xs text-muted-foreground">
                       {formatDate(application.offer.startDate)} to{" "}
@@ -138,7 +138,7 @@ export default async function InternshipApplicationsPage() {
 
               {application.placement ? (
                 <div className="flex flex-wrap items-center gap-2 border-t pt-2">
-                  <p className="text-xs font-medium text-brand-navy">
+                  <p className="text-xs font-medium text-brand-strong">
                     Placement
                   </p>
                   <StatusBadge status={application.placement.status} />

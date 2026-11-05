@@ -22,7 +22,7 @@ export default function ReferralTermsPage() {
             description={`The rules for earning, tracking and receiving referral commission from ${brand.name}.`}
           />
           <div className="rounded-xl border border-brand-warning/30 bg-brand-sky p-5">
-            <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-navy">
+            <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-strong">
               <InfoIcon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
               Working draft
             </p>
@@ -40,7 +40,7 @@ export default function ReferralTermsPage() {
       <SiteSection>
         <div className="max-w-3xl space-y-8">
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               1. About the referral programme
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -60,7 +60,7 @@ export default function ReferralTermsPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               2. Who can take part
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -95,7 +95,7 @@ export default function ReferralTermsPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               3. How referrals are attributed and tracked
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -141,7 +141,7 @@ export default function ReferralTermsPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               4. Commission policy
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -179,7 +179,7 @@ export default function ReferralTermsPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               5. Qualifying conditions
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -219,7 +219,7 @@ export default function ReferralTermsPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               6. Payout requests and approval
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -261,7 +261,7 @@ export default function ReferralTermsPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               7. Fraud, abuse and prohibited conduct
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -306,7 +306,7 @@ export default function ReferralTermsPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               8. Financial records
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -321,7 +321,7 @@ export default function ReferralTermsPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               9. Taxes and your responsibilities as a partner
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -337,7 +337,7 @@ export default function ReferralTermsPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               10. Changes to the programme
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -351,7 +351,7 @@ export default function ReferralTermsPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               11. Leaving the programme
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -366,7 +366,7 @@ export default function ReferralTermsPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               12. Contact
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">

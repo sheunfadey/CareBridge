@@ -180,7 +180,7 @@ export default async function IncidentsPage({
                     {formatDateTime(incident.occurredAt)}
                   </TableCell>
                   <TableCell>
-                    <p className="text-sm font-medium text-brand-navy">
+                    <p className="text-sm font-medium text-brand-strong">
                       {careIncidentCategoryLabels[incident.category]}
                     </p>
                     {incident.isSafeguarding ? (

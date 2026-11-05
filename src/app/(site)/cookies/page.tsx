@@ -22,7 +22,7 @@ export default function CookiesPage() {
             description={`How ${brand.name} uses cookies and similar technologies, and the choices available to you.`}
           />
           <div className="rounded-xl border border-brand-warning/30 bg-brand-sky p-5">
-            <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-navy">
+            <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-strong">
               <InfoIcon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
               Working draft
             </p>
@@ -40,7 +40,7 @@ export default function CookiesPage() {
       <SiteSection>
         <div className="max-w-3xl space-y-8">
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               What cookies are
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -53,7 +53,7 @@ export default function CookiesPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               The categories we use
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -99,7 +99,7 @@ export default function CookiesPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Cookies required for sign-in
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -116,7 +116,7 @@ export default function CookiesPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Third-party content
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -131,7 +131,7 @@ export default function CookiesPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               How to manage your preferences
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -153,7 +153,7 @@ export default function CookiesPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               How we make decisions
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -174,7 +174,7 @@ export default function CookiesPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Changes to this page
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">
@@ -185,7 +185,7 @@ export default function CookiesPage() {
           </section>
 
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand-navy">
+            <h2 className="font-heading text-xl font-semibold text-brand-strong">
               Contact
             </h2>
             <p className="mt-3 text-sm text-muted-foreground">

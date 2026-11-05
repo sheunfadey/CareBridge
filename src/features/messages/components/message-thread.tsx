@@ -58,7 +58,7 @@ export function MessageThread({
   return (
     <div className="flex h-full flex-col">
       <div className="border-b p-4">
-        <h2 className="font-heading text-base font-semibold text-brand-navy">
+        <h2 className="font-heading text-base font-semibold text-brand-strong">
           {conversation.subject}
         </h2>
         <p className="mt-1 text-xs text-muted-foreground">
@@ -79,13 +79,13 @@ export function MessageThread({
                 : "mr-auto max-w-[85%] rounded-lg bg-muted/60 p-3"
             }
           >
-            <p className="text-xs font-medium text-brand-navy">
+            <p className="text-xs font-medium text-brand-strong">
               {message.mine ? "You" : message.senderName}
               <span className="ml-2 font-normal text-muted-foreground">
                 {formatDateTime(message.createdAt)}
               </span>
             </p>
-            <p className="mt-1 whitespace-pre-wrap text-sm leading-relaxed text-brand-navy">
+            <p className="mt-1 whitespace-pre-wrap text-sm leading-relaxed text-brand-strong">
               {message.body}
             </p>
           </div>

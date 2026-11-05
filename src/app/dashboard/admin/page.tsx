@@ -103,7 +103,7 @@ export default async function AdminPage() {
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Pending organisations
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-navy">
+          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
             {pendingOrgCount && pendingOrgCount.ok ? pendingOrgCount.data : "—"}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
@@ -114,7 +114,7 @@ export default async function AdminPage() {
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Accounts
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-navy">
+          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
             {userCount && userCount.ok ? userCount.data : "—"}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
@@ -125,7 +125,7 @@ export default async function AdminPage() {
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Service-role client
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-navy">
+          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
             {available ? "Ready" : "Off"}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
@@ -144,7 +144,7 @@ export default async function AdminPage() {
               <section.icon className="size-5" />
             </span>
             <div>
-              <p className="font-heading font-semibold text-brand-navy">
+              <p className="font-heading font-semibold text-brand-strong">
                 {section.title}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">

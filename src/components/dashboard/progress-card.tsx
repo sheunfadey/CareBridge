@@ -20,7 +20,7 @@ export function ProgressCard({
   return (
     <Card className="p-5">
       <div className="flex items-center justify-between gap-3">
-        <p className="text-sm font-medium text-brand-navy">{title}</p>
+        <p className="text-sm font-medium text-brand-strong">{title}</p>
         {loading ? (
           <Skeleton className="h-4 w-10" />
         ) : (

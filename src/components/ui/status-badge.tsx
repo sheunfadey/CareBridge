@@ -11,7 +11,7 @@ export type StatusTone =
 
 const toneStyles: Record<StatusTone, string> = {
   neutral: "border-border bg-muted text-brand-slate",
-  info: "border-brand-sky bg-brand-sky text-brand-navy",
+  info: "border-brand-sky bg-brand-sky text-brand-strong",
   progress: "border-brand-teal/20 bg-brand-teal/10 text-brand-teal",
   success: "border-brand-success/20 bg-brand-success/10 text-brand-success",
   warning: "border-brand-warning/25 bg-brand-warning/10 text-brand-warning",
@@ -20,7 +20,7 @@ const toneStyles: Record<StatusTone, string> = {
 
 const dotStyles: Record<StatusTone, string> = {
   neutral: "bg-brand-slate",
-  info: "bg-brand-navy",
+  info: "bg-brand-teal",
   progress: "bg-brand-teal",
   success: "bg-brand-success",
   warning: "bg-brand-warning",

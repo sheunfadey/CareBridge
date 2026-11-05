@@ -71,7 +71,7 @@ export default function HowItWorksPage() {
               >
                 <stage.icon className="size-5" />
               </span>
-              <p className="mt-4 font-heading text-lg font-semibold text-brand-navy">
+              <p className="mt-4 font-heading text-lg font-semibold text-brand-strong">
                 {stage.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">{stage.body}</p>
@@ -114,7 +114,7 @@ export default function HowItWorksPage() {
                   <item.icon className="size-5" />
                 </span>
                 <div className="flex-1">
-                  <p className="font-heading font-semibold text-brand-navy">
+                  <p className="font-heading font-semibold text-brand-strong">
                     {item.title}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">{item.body}</p>

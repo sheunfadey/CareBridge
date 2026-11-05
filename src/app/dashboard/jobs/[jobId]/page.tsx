@@ -35,7 +35,7 @@ function ListSection({
   if (items.length === 0) return null;
   return (
     <div>
-      <h2 className="font-heading text-base font-semibold text-brand-navy">
+      <h2 className="font-heading text-base font-semibold text-brand-strong">
         {title}
       </h2>
       <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
@@ -123,7 +123,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
                 {formatDeadline(job.applicationDeadline)}
               </span>
             </div>
-            <p className="text-sm font-medium text-brand-navy">
+            <p className="text-sm font-medium text-brand-strong">
               {formatSalaryRange(
                 job.salaryMinMinorUnits,
                 job.salaryMaxMinorUnits,
@@ -144,7 +144,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
             <ListSection title="Skills" items={job.skills} />
             {job.experienceRequirements ? (
               <div>
-                <h2 className="font-heading text-base font-semibold text-brand-navy">
+                <h2 className="font-heading text-base font-semibold text-brand-strong">
                   Experience
                 </h2>
                 <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground">
@@ -154,7 +154,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
             ) : null}
             {job.shiftRequirements ? (
               <div>
-                <h2 className="font-heading text-base font-semibold text-brand-navy">
+                <h2 className="font-heading text-base font-semibold text-brand-strong">
                   Shift requirements
                 </h2>
                 <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground">
@@ -164,7 +164,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
             ) : null}
             {job.safeguardingRequirements ? (
               <div>
-                <h2 className="font-heading text-base font-semibold text-brand-navy">
+                <h2 className="font-heading text-base font-semibold text-brand-strong">
                   Safeguarding
                 </h2>
                 <p className="mt-1 whitespace-pre-line text-sm text-muted-foreground">
@@ -178,7 +178,7 @@ export default async function JobDetailPage({ params }: JobDetailPageProps) {
         <aside className="space-y-4">
           <Card className="space-y-4 p-5">
             <div className="flex items-center justify-between gap-2">
-              <h2 className="font-heading text-base font-semibold text-brand-navy">
+              <h2 className="font-heading text-base font-semibold text-brand-strong">
                 Apply
               </h2>
               <StatusBadge status={disabledReason ? "closed" : "open"} />

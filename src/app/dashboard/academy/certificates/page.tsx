@@ -44,7 +44,7 @@ export default async function CertificatesPage() {
       {certificates.length === 0 ? (
         <Card className="p-6 text-center">
           <ShieldCheckIcon className="mx-auto size-8 text-muted-foreground" />
-          <p className="mt-2 font-heading font-semibold text-brand-navy">
+          <p className="mt-2 font-heading font-semibold text-brand-strong">
             No certificates yet
           </p>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -61,7 +61,7 @@ export default async function CertificatesPage() {
             <Card key={certificate.id} className="p-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="font-heading font-semibold text-brand-navy">
+                  <p className="font-heading font-semibold text-brand-strong">
                     {certificate.courseTitle}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
@@ -75,13 +75,13 @@ export default async function CertificatesPage() {
               <dl className="mt-4 space-y-2 text-sm">
                 <div className="flex justify-between gap-3">
                   <dt className="text-muted-foreground">Certificate no.</dt>
-                  <dd className="font-medium text-brand-navy">
+                  <dd className="font-medium text-brand-strong">
                     {certificate.certificateNumber}
                   </dd>
                 </div>
                 <div className="flex justify-between gap-3">
                   <dt className="text-muted-foreground">Issued</dt>
-                  <dd className="text-brand-navy">
+                  <dd className="text-brand-strong">
                     {new Date(certificate.issuedAt).toLocaleDateString("en-NG", {
                       day: "numeric",
                       month: "short",

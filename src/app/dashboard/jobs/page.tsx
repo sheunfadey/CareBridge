@@ -76,7 +76,7 @@ export default async function JobsPage() {
                 <div className="min-w-0">
                   <Link
                     href={`/dashboard/jobs/${job.id}`}
-                    className="font-heading text-lg font-semibold text-brand-navy hover:text-brand-teal"
+                    className="font-heading text-lg font-semibold text-brand-strong hover:text-brand-teal"
                   >
                     {job.title}
                   </Link>
@@ -110,7 +110,7 @@ export default async function JobsPage() {
                 </div>
               </dl>
 
-              <p className="mt-3 text-sm font-medium text-brand-navy">
+              <p className="mt-3 text-sm font-medium text-brand-strong">
                 {formatSalaryRange(
                   job.salaryMinMinorUnits,
                   job.salaryMaxMinorUnits,

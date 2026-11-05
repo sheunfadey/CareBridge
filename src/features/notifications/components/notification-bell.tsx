@@ -93,7 +93,7 @@ export function NotificationBell({ notifications }: NotificationBellProps) {
         >
           <BellIcon />
           {unread > 0 ? (
-            <span className="absolute right-1 top-1 flex size-4 items-center justify-center rounded-full bg-brand-coral text-[10px] font-semibold text-brand-navy">
+            <span className="absolute right-1 top-1 flex size-4 items-center justify-center rounded-full bg-brand-coral text-[10px] font-semibold text-brand-ink">
               {unread > 9 ? "9+" : unread}
             </span>
           ) : null}
@@ -101,7 +101,7 @@ export function NotificationBell({ notifications }: NotificationBellProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-80 p-0">
         <div className="flex items-center justify-between border-b border-border px-3 py-2">
-          <span className="text-sm font-medium text-brand-navy">
+          <span className="text-sm font-medium text-brand-strong">
             Notifications
           </span>
           {unread > 0 ? (
@@ -137,7 +137,7 @@ export function NotificationBell({ notifications }: NotificationBellProps) {
                         "text-sm",
                         item.read
                           ? "font-normal text-muted-foreground"
-                          : "font-medium text-brand-navy",
+                          : "font-medium text-brand-strong",
                       )}
                     >
                       {item.title}

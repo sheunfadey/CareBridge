@@ -61,7 +61,7 @@ export default async function InternshipsPage() {
 
       {myApplications.length > 0 ? (
         <section className="space-y-3">
-          <h2 className="font-heading text-base font-semibold text-brand-navy">
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
             My applications
           </h2>
           <div className="space-y-3">
@@ -73,7 +73,7 @@ export default async function InternshipsPage() {
                 <div className="min-w-0">
                   <Link
                     href={`/dashboard/internships/${application.listingId}`}
-                    className="font-heading font-semibold text-brand-navy hover:text-brand-teal"
+                    className="font-heading font-semibold text-brand-strong hover:text-brand-teal"
                   >
                     {application.listingTitle}
                   </Link>
@@ -102,7 +102,7 @@ export default async function InternshipsPage() {
       ) : null}
 
       <section className="space-y-4">
-        <h2 className="font-heading text-base font-semibold text-brand-navy">
+        <h2 className="font-heading text-base font-semibold text-brand-strong">
           Open placements
         </h2>
         {unavailable ? (
@@ -123,7 +123,7 @@ export default async function InternshipsPage() {
                   <div className="min-w-0">
                     <Link
                       href={`/dashboard/internships/${listing.id}`}
-                      className="font-heading text-lg font-semibold text-brand-navy hover:text-brand-teal"
+                      className="font-heading text-lg font-semibold text-brand-strong hover:text-brand-teal"
                     >
                       {listing.title}
                     </Link>

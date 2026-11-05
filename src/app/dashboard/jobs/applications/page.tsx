@@ -68,7 +68,7 @@ export default async function JobApplicationsPage() {
               <div className="min-w-0">
                 <Link
                   href={`/dashboard/jobs/${application.jobId}`}
-                  className="font-heading font-semibold text-brand-navy hover:text-brand-teal"
+                  className="font-heading font-semibold text-brand-strong hover:text-brand-teal"
                 >
                   {application.jobTitle}
                 </Link>
@@ -91,7 +91,7 @@ export default async function JobApplicationsPage() {
               </div>
               {application.interviews.length > 0 ? (
                 <div className="space-y-1 border-t pt-2">
-                  <p className="text-xs font-medium text-brand-navy">
+                  <p className="text-xs font-medium text-brand-strong">
                     Interviews
                   </p>
                   {application.interviews.map((interview) => (
@@ -112,7 +112,7 @@ export default async function JobApplicationsPage() {
               {application.offer ? (
                 <div className="space-y-2 border-t pt-2">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="text-xs font-medium text-brand-navy">
+                    <p className="text-xs font-medium text-brand-strong">
                       Offer
                     </p>
                     <StatusBadge status={application.offer.status} />

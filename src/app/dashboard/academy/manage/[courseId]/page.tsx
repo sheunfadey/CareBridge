@@ -107,7 +107,7 @@ export default async function ManageCoursePage({
       <Card className="overflow-hidden p-0">
         <div className="flex flex-wrap items-start justify-between gap-3 border-b p-5">
           <div>
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Assessments
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -137,7 +137,7 @@ export default async function ManageCoursePage({
                   className="flex flex-wrap items-center justify-between gap-3 p-5 text-sm transition hover:bg-muted/50"
                 >
                   <div>
-                    <p className="font-medium text-brand-navy">
+                    <p className="font-medium text-brand-strong">
                       {assessment.title}
                     </p>
                     <p className="mt-1 text-xs text-muted-foreground">
@@ -172,7 +172,7 @@ export default async function ManageCoursePage({
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="space-y-4">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="font-heading text-base font-semibold text-brand-navy">
+            <h2 className="font-heading text-base font-semibold text-brand-strong">
               Syllabus
             </h2>
             {canAddContent ? (
@@ -187,7 +187,7 @@ export default async function ManageCoursePage({
 
           {course.modules.length === 0 ? (
             <Card className="p-6 text-center">
-              <p className="font-heading font-semibold text-brand-navy">
+              <p className="font-heading font-semibold text-brand-strong">
                 No modules yet
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -199,7 +199,7 @@ export default async function ManageCoursePage({
               <Card key={module.id} className="overflow-hidden">
                 <div className="flex items-start justify-between gap-3 border-b p-5">
                   <div>
-                    <p className="font-heading font-semibold text-brand-navy">
+                    <p className="font-heading font-semibold text-brand-strong">
                       Module {module.position}: {module.title}
                     </p>
                     {module.summary ? (
@@ -231,7 +231,7 @@ export default async function ManageCoursePage({
                     {module.lessons.map((lesson) => (
                       <details key={lesson.id}>
                         <summary className="flex cursor-pointer items-center justify-between gap-3 p-4 text-sm hover:bg-muted/50">
-                          <span className="font-medium text-brand-navy">
+                          <span className="font-medium text-brand-strong">
                             {lesson.position}. {lesson.title}
                           </span>
                           <span className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -262,7 +262,7 @@ export default async function ManageCoursePage({
 
         <div className="space-y-4">
           <Card className="p-5">
-            <p className="font-heading font-semibold text-brand-navy">
+            <p className="font-heading font-semibold text-brand-strong">
               Course details
             </p>
             <dl className="mt-4 space-y-3 text-sm">

@@ -129,7 +129,7 @@ export default async function ManageAssessmentPage({
       <Card className="overflow-hidden p-0">
         <div className="flex flex-wrap items-start justify-between gap-3 border-b p-5">
           <div>
-            <h2 className="font-heading text-lg font-semibold text-brand-navy">
+            <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Questions
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -159,7 +159,7 @@ export default async function ManageAssessmentPage({
               return (
                 <li key={question.id} className="space-y-3 p-5">
                   <div className="flex flex-wrap items-start justify-between gap-2">
-                    <p className="font-medium text-brand-navy">
+                    <p className="font-medium text-brand-strong">
                       {index + 1}. {question.prompt}
                     </p>
                     <Badge variant="secondary">
@@ -198,7 +198,7 @@ export default async function ManageAssessmentPage({
 
       <Card className="overflow-hidden p-0">
         <div className="border-b p-5">
-          <h2 className="font-heading text-lg font-semibold text-brand-navy">
+          <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Attempts
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -228,7 +228,7 @@ export default async function ManageAssessmentPage({
             <TableBody>
               {assessment.attempts.map((attempt) => (
                 <TableRow key={attempt.id}>
-                  <TableCell className="text-sm text-brand-navy">
+                  <TableCell className="text-sm text-brand-strong">
                     {attempt.learnerName}
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
@@ -242,7 +242,7 @@ export default async function ManageAssessmentPage({
                       }
                     />
                   </TableCell>
-                  <TableCell className="text-right text-sm tabular-nums text-brand-navy">
+                  <TableCell className="text-right text-sm tabular-nums text-brand-strong">
                     {attempt.scorePoints !== null &&
                     attempt.maxPoints !== null
                       ? `${attempt.scorePoints} / ${attempt.maxPoints}`

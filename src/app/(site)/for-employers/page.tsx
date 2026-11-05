@@ -87,7 +87,7 @@ export default function ForEmployersPage() {
             </div>
           </div>
           <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-navy">
+            <p className="font-heading text-lg font-semibold text-brand-strong">
               Built for hiring teams
             </p>
             <ul className="mt-4 space-y-3">
@@ -128,7 +128,7 @@ export default function ForEmployersPage() {
               >
                 <item.icon className="size-5" />
               </span>
-              <p className="mt-4 font-heading text-lg font-semibold text-brand-navy">
+              <p className="mt-4 font-heading text-lg font-semibold text-brand-strong">
                 {item.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">{item.body}</p>
@@ -157,7 +157,7 @@ export default function ForEmployersPage() {
                   <point.icon className="size-5" />
                 </span>
                 <div>
-                  <p className="font-heading font-semibold text-brand-navy">
+                  <p className="font-heading font-semibold text-brand-strong">
                     {point.title}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">{point.body}</p>
@@ -167,7 +167,7 @@ export default function ForEmployersPage() {
           </div>
         </div>
         <div className="mt-10 rounded-xl border border-brand-teal/20 bg-card p-6 shadow-card">
-          <p className="font-heading font-semibold text-brand-navy">
+          <p className="font-heading font-semibold text-brand-strong">
             What verification is not
           </p>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -191,7 +191,7 @@ export default function ForEmployersPage() {
               >
                 <MessageSquareIcon className="size-5" />
               </span>
-              <p className="font-heading text-lg font-semibold text-brand-navy">
+              <p className="font-heading text-lg font-semibold text-brand-strong">
                 Talk to us about your needs
               </p>
             </div>

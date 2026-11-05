@@ -71,7 +71,7 @@ export default function ReferralProgrammePage() {
             </div>
           </div>
           <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-navy">
+            <p className="font-heading text-lg font-semibold text-brand-strong">
               Key principles
             </p>
             <ul className="mt-4 space-y-3">
@@ -113,7 +113,7 @@ export default function ReferralProgrammePage() {
               >
                 <item.icon className="size-5" />
               </span>
-              <p className="mt-4 font-heading text-lg font-semibold text-brand-navy">
+              <p className="mt-4 font-heading text-lg font-semibold text-brand-strong">
                 {item.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">{item.body}</p>
@@ -143,7 +143,7 @@ export default function ReferralProgrammePage() {
               >
                 <ListOrderedIcon className="size-5" />
               </span>
-              <p className="mt-4 font-heading font-semibold text-brand-navy">
+              <p className="mt-4 font-heading font-semibold text-brand-strong">
                 {step.title}
               </p>
               <p className="mt-2 text-sm text-muted-foreground">{step.body}</p>
@@ -188,7 +188,7 @@ export default function ReferralProgrammePage() {
                   <item.icon className="size-5" />
                 </span>
                 <div>
-                  <p className="font-heading font-semibold text-brand-navy">
+                  <p className="font-heading font-semibold text-brand-strong">
                     {item.title}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">{item.body}</p>
