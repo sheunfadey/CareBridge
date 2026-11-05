@@ -36,7 +36,7 @@ export function ActionCard({
   return (
     <div
       className={cn(
-        "flex h-full flex-col justify-between gap-4 rounded-xl bg-card p-5 ring-1 ring-foreground/10 transition hover:ring-brand-teal/30",
+        "flex h-full flex-col justify-between gap-3 rounded-xl bg-card p-4 ring-1 ring-foreground/10 transition hover:ring-brand-teal/30",
         className,
       )}
     >

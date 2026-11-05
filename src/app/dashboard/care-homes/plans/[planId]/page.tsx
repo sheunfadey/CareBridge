@@ -48,7 +48,7 @@ export default async function CarePlanDetailPage({
   const canManage = userHasPermission(context.user, "care_plan_manage");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Care plan"
         title={plan.title}
@@ -99,7 +99,7 @@ export default async function CarePlanDetailPage({
       />
 
       {canManage ? (
-        <Card className="space-y-3 p-5">
+        <Card className="space-y-3 p-4">
           <h2 className="font-heading text-base font-semibold text-brand-strong">
             Approval workflow
           </h2>
@@ -117,7 +117,7 @@ export default async function CarePlanDetailPage({
       ) : null}
 
       {plan.summary ? (
-        <Card className="p-5">
+        <Card className="p-4">
           <h2 className="font-heading text-base font-semibold text-brand-strong">
             Summary
           </h2>
@@ -127,7 +127,7 @@ export default async function CarePlanDetailPage({
         </Card>
       ) : null}
 
-      <Card className="p-5">
+      <Card className="p-4">
         <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Version history
         </h2>
@@ -185,7 +185,7 @@ export default async function CarePlanDetailPage({
         )}
       </Card>
 
-      <Card className="p-5">
+      <Card className="p-4">
         <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Assigned responsibilities
         </h2>

@@ -28,7 +28,7 @@ export default async function NewInternshipPage() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Internships"
         title="Create a placement"
@@ -46,7 +46,7 @@ export default async function NewInternshipPage() {
         }
       />
 
-      <Card className="p-5 sm:p-6">
+      <Card className="p-4 sm:p-5">
         <CreateInternshipForm organisations={organisations} />
       </Card>
     </div>

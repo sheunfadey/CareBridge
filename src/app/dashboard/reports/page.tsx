@@ -68,7 +68,7 @@ export default async function ReportsPage({
   if (organisationId) exportQuery.set("organisation", organisationId);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Reporting"
         title="Reports"
@@ -156,7 +156,7 @@ export default async function ReportsPage({
         </form>
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-[220px_1fr]">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-[220px_1fr]">
         <Card className="p-4">
           <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             Report catalogue
@@ -189,7 +189,7 @@ export default async function ReportsPage({
         </Card>
 
         <Card className="overflow-hidden p-0">
-          <div className="border-b border-border p-5">
+          <div className="border-b border-border p-4">
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               {result?.report.label ?? "Report"}
             </h2>

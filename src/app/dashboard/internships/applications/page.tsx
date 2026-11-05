@@ -33,7 +33,7 @@ export default async function InternshipApplicationsPage() {
   const applications = await getMyInternshipApplications(user.id);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Internships"
         title="My internship applications"

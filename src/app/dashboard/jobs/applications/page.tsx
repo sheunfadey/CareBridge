@@ -30,7 +30,7 @@ export default async function JobApplicationsPage() {
   const applications = await getMyJobApplications(user.id);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Employment"
         title="My job applications"

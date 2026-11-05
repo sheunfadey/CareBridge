@@ -81,7 +81,7 @@ export default async function ResidentRecordPage({
     : [];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow={resident.facilityName ?? "Resident"}
         title={`${resident.firstName} ${resident.lastName}`}
@@ -125,8 +125,8 @@ export default async function ResidentRecordPage({
         active="/residents"
       />
 
-      <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-        <Card className="space-y-4 p-5">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-[1.15fr_0.85fr]">
+        <Card className="space-y-4 p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Resident details
           </h2>
@@ -188,8 +188,8 @@ export default async function ResidentRecordPage({
           </div>
         </Card>
 
-        <div className="space-y-6">
-          <Card className="space-y-3 p-5">
+        <div className="space-y-4 lg:space-y-5">
+          <Card className="space-y-3 p-4">
             <div className="flex items-center gap-2">
               <PhoneIcon className="size-5 text-brand-teal" aria-hidden="true" />
               <h2 className="font-heading text-lg font-semibold text-brand-strong">
@@ -228,7 +228,7 @@ export default async function ResidentRecordPage({
             ) : null}
           </Card>
 
-          <Card className="space-y-3 p-5">
+          <Card className="space-y-3 p-4">
             <div className="flex items-center gap-2">
               <UsersIcon className="size-5 text-brand-teal" aria-hidden="true" />
               <h2 className="font-heading text-lg font-semibold text-brand-strong">
@@ -271,7 +271,7 @@ export default async function ResidentRecordPage({
             ) : null}
           </Card>
 
-          <Card className="space-y-3 p-5">
+          <Card className="space-y-3 p-4">
             <div className="flex items-center gap-2">
               <FileHeartIcon className="size-5 text-brand-teal" aria-hidden="true" />
               <h2 className="font-heading text-lg font-semibold text-brand-strong">
@@ -311,7 +311,7 @@ export default async function ResidentRecordPage({
         </div>
       </div>
 
-      <Card className="space-y-4 p-5">
+      <Card className="space-y-4 p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Care plans
@@ -362,8 +362,8 @@ export default async function ResidentRecordPage({
         ) : null}
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Card className="space-y-3 p-5">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
+        <Card className="space-y-3 p-4">
           <div className="flex items-center gap-2">
             <PillIcon className="size-5 text-brand-teal" aria-hidden="true" />
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
@@ -410,7 +410,7 @@ export default async function ResidentRecordPage({
           ) : null}
         </Card>
 
-        <Card className="space-y-3 p-5">
+        <Card className="space-y-3 p-4">
           <div className="flex items-center gap-2">
             <CalendarClockIcon className="size-5 text-brand-teal" aria-hidden="true" />
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
@@ -448,7 +448,7 @@ export default async function ResidentRecordPage({
       </div>
 
       {canManage ? (
-        <Card className="space-y-3 p-5">
+        <Card className="space-y-3 p-4">
           <div>
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Access history
@@ -479,8 +479,8 @@ export default async function ResidentRecordPage({
         </Card>
       ) : null}
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Card className="space-y-3 p-5">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
+        <Card className="space-y-3 p-4">
           <div className="flex items-center gap-2">
             <ShieldAlertIcon className="size-5 text-brand-teal" aria-hidden="true" />
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
@@ -508,7 +508,7 @@ export default async function ResidentRecordPage({
           )}
         </Card>
 
-        <Card className="space-y-3 p-5">
+        <Card className="space-y-3 p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Invoices
           </h2>

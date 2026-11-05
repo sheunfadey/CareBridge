@@ -49,7 +49,7 @@ export default async function ManageJobPage({ params }: ManageJobPageProps) {
   const { applicants } = await getJobApplicants(job.id);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Employment"
         title={job.title}

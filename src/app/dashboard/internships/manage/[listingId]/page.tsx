@@ -50,7 +50,7 @@ export default async function ManageInternshipPage({
   const { applicants } = await getInternshipApplicants(listing.id);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Internships"
         title={listing.title}

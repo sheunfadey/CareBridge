@@ -83,7 +83,7 @@ export default async function PlacementDetailPage({
     placement.status === "active";
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Placement"
         title={placement.listingTitle}

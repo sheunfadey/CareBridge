@@ -35,7 +35,7 @@ export default async function DonationReceiptPage({
   const netAmount = receipt.amountMinorUnits - receipt.refundedAmountMinorUnits;
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
+    <div className="mx-auto max-w-2xl space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Donation receipt"
         title={receipt.receiptReference ?? "Receipt"}
@@ -52,7 +52,7 @@ export default async function DonationReceiptPage({
         actions={<PrintButton />}
       />
 
-      <Card className="space-y-6 p-8 print:border-0 print:shadow-none">
+      <Card className="space-y-4 lg:space-y-5 p-8 print:border-0 print:shadow-none">
         <div className="flex items-start justify-between gap-4 border-b border-border pb-5">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-teal">

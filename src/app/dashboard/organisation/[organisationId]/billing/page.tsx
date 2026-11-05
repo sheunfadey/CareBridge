@@ -71,7 +71,7 @@ export default async function OrganisationBillingPage({
   const membersUsed = summary.usage.activeMembers + summary.usage.pendingInvitations;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Organisation billing"
         title={summary.organisationName}
@@ -112,7 +112,7 @@ export default async function OrganisationBillingPage({
       />
 
       {readOnly ? (
-        <Card className="border-brand-warning/40 bg-brand-warning/5 p-5">
+        <Card className="border-brand-warning/40 bg-brand-warning/5 p-4">
           <h2 className="font-heading text-base font-semibold text-brand-strong">
             This workspace is read-only
           </h2>
@@ -125,8 +125,8 @@ export default async function OrganisationBillingPage({
         </Card>
       ) : null}
 
-      <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <Card className="space-y-4 p-5">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+        <Card className="space-y-4 p-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div>
               <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -227,7 +227,7 @@ export default async function OrganisationBillingPage({
           )}
         </Card>
 
-        <Card className="space-y-4 p-5">
+        <Card className="space-y-4 p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Usage and limits
           </h2>
@@ -283,9 +283,9 @@ export default async function OrganisationBillingPage({
         </Card>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
         <Card className="overflow-hidden p-0">
-          <div className="border-b border-border p-5">
+          <div className="border-b border-border p-4">
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Billing history
             </h2>
@@ -294,7 +294,7 @@ export default async function OrganisationBillingPage({
             </p>
           </div>
           {summary.payments.length === 0 ? (
-            <p className="p-5 text-sm text-muted-foreground">
+            <p className="p-4 text-sm text-muted-foreground">
               No subscription payments recorded.
             </p>
           ) : (
@@ -320,7 +320,7 @@ export default async function OrganisationBillingPage({
           )}
         </Card>
 
-        <Card className="p-5">
+        <Card className="p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Subscription events
           </h2>

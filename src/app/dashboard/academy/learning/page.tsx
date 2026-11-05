@@ -64,7 +64,7 @@ export default async function MyLearningPage({
   const learning = await getMyLearning(user.id);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Academy"
         title="My Learning"
@@ -89,7 +89,7 @@ export default async function MyLearningPage({
       ) : null}
 
       {learning.length === 0 ? (
-        <Card className="p-6 text-center">
+        <Card className="p-5 text-center">
           <BookOpenIcon className="mx-auto size-8 text-muted-foreground" />
           <p className="mt-2 font-heading font-semibold text-brand-strong">
             You are not enrolled in any courses yet
@@ -108,7 +108,7 @@ export default async function MyLearningPage({
               ? Math.round((course.completedLessons / course.totalLessons) * 100)
               : 0;
             return (
-              <Card key={course.enrolmentId} className="p-5">
+              <Card key={course.enrolmentId} className="p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="font-heading font-semibold text-brand-strong">

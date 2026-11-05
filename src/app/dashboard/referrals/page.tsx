@@ -54,7 +54,7 @@ export default async function ReferralsPage() {
   const partner = data.partner;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Growth"
         title="Referral programme"
@@ -66,8 +66,8 @@ export default async function ReferralsPage() {
       />
 
       {!partner ? (
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <Card className="space-y-4 p-6">
+        <div className="grid gap-4 lg:gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+          <Card className="space-y-4 p-5">
             <div>
               <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Join the referral programme
@@ -83,7 +83,7 @@ export default async function ReferralsPage() {
             />
           </Card>
 
-          <Card className="space-y-4 p-6">
+          <Card className="space-y-4 p-5">
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               How it works
             </h2>
@@ -103,7 +103,7 @@ export default async function ReferralsPage() {
       ) : null}
 
       {partner && partner.status !== "approved" ? (
-        <Card className="space-y-4 p-6">
+        <Card className="space-y-4 p-5">
           <div className="flex flex-wrap items-center gap-3">
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Application status
@@ -172,8 +172,8 @@ export default async function ReferralsPage() {
             />
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-2">
-            <Card className="space-y-3 p-6">
+          <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
+            <Card className="space-y-3 p-5">
               <div className="flex items-center gap-2">
                 <Share2Icon
                   className="size-5 text-brand-teal"
@@ -186,7 +186,7 @@ export default async function ReferralsPage() {
               <ReferralLinkCard code={partner.code} baseUrl={baseUrl} />
             </Card>
 
-            <Card className="space-y-3 p-6">
+            <Card className="space-y-3 p-5">
               <div className="flex items-center gap-2">
                 <WalletIcon
                   className="size-5 text-brand-teal"
@@ -205,7 +205,7 @@ export default async function ReferralsPage() {
             </Card>
           </div>
 
-          <Card className="space-y-4 p-6">
+          <Card className="space-y-4 p-5">
             <div>
               <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Payout details
@@ -219,7 +219,7 @@ export default async function ReferralsPage() {
           </Card>
 
           <Card className="overflow-hidden p-0">
-            <div className="border-b border-border p-5">
+            <div className="border-b border-border p-4">
               <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Commission ledger
               </h2>
@@ -272,7 +272,7 @@ export default async function ReferralsPage() {
           </Card>
 
           <Card className="overflow-hidden p-0">
-            <div className="border-b border-border p-5">
+            <div className="border-b border-border p-4">
               <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Payout requests
               </h2>
@@ -327,9 +327,9 @@ export default async function ReferralsPage() {
             )}
           </Card>
 
-          <div className="grid gap-6 lg:grid-cols-2">
+          <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
             <Card className="overflow-hidden p-0">
-              <div className="border-b border-border p-5">
+              <div className="border-b border-border p-4">
                 <h2 className="font-heading text-lg font-semibold text-brand-strong">
                   Referral activity
                 </h2>
@@ -375,7 +375,7 @@ export default async function ReferralsPage() {
               )}
             </Card>
 
-            <Card className="space-y-4 p-6">
+            <Card className="space-y-4 p-5">
               <div className="flex items-center gap-2">
                 <UsersIcon className="size-5 text-brand-teal" aria-hidden="true" />
                 <h2 className="font-heading text-lg font-semibold text-brand-strong">

@@ -44,7 +44,7 @@ export default async function MessagesPage({ searchParams }: MessagesPageProps) 
     : null;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Communication"
         title="Messages"
@@ -63,7 +63,7 @@ export default async function MessagesPage({ searchParams }: MessagesPageProps) 
         }
       />
 
-      <div className="grid gap-6 lg:grid-cols-[340px_1fr]">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-[340px_1fr]">
         <Card className="overflow-hidden p-0">
           <div className="border-b p-4">
             <h2 className="font-heading text-base font-semibold text-brand-strong">
@@ -79,7 +79,7 @@ export default async function MessagesPage({ searchParams }: MessagesPageProps) 
           </div>
 
           {conversations.length === 0 ? (
-            <div className="p-6 text-center">
+            <div className="p-5 text-center">
               <MessageSquareIcon className="mx-auto size-8 text-brand-teal" />
               <p className="mt-2 text-sm font-medium text-brand-strong">
                 No messages yet

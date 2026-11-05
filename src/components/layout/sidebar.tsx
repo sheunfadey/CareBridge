@@ -41,11 +41,6 @@ export function Sidebar({
   permissions = [],
 }: SidebarProps) {
   const pathname = usePathname();
-  const [collapsedGroups, setCollapsedGroups] = React.useState<Record<string, boolean>>({});
-
-  const toggleGroup = (label: string) => {
-    setCollapsedGroups((prev) => ({ ...prev, [label]: !prev[label] }));
-  };
 
   const visibleGroups = primaryNav
     .map((group) => ({
@@ -61,6 +56,39 @@ export function Sidebar({
       ),
     }))
     .filter((group) => group.items.length > 0);
+
+  const activeGroupLabel = visibleGroups.find((group) =>
+    group.items.some((item) => isActivePath(pathname, item.href)),
+  )?.label;
+
+  const [collapsedGroups, setCollapsedGroups] = React.useState<
+    Record<string, boolean>
+  >(() =>
+    Object.fromEntries(
+      visibleGroups.map((group) => [
+        group.label,
+        group.label !== activeGroupLabel,
+      ]),
+    ),
+  );
+
+  const previousActiveGroup = React.useRef(activeGroupLabel);
+
+  React.useEffect(() => {
+    const previous = previousActiveGroup.current;
+    previousActiveGroup.current = activeGroupLabel;
+
+    setCollapsedGroups((prev) => {
+      const next = { ...prev };
+      if (previous && previous !== activeGroupLabel) next[previous] = true;
+      if (activeGroupLabel) next[activeGroupLabel] = false;
+      return next;
+    });
+  }, [activeGroupLabel]);
+
+  const toggleGroup = (label: string) => {
+    setCollapsedGroups((prev) => ({ ...prev, [label]: !prev[label] }));
+  };
 
   return (
     <nav
@@ -82,7 +110,8 @@ export function Sidebar({
 
       <div className="flex-1 space-y-5">
         {visibleGroups.map((group) => {
-          const collapsed = collapsedGroups[group.label];
+          const collapsed =
+            collapsedGroups[group.label] ?? group.label !== activeGroupLabel;
           const groupId = `nav-group-${group.label.toLowerCase().replace(/\s+/g, "-")}`;
           return (
             <div key={group.label} className="space-y-1">

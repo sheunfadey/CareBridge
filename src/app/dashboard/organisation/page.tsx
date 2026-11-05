@@ -18,7 +18,7 @@ export default async function OrganisationListPage() {
   const organisations = await listOrganisationsForUser();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Account"
         title="Organisations"
@@ -61,7 +61,7 @@ export default async function OrganisationListPage() {
             <li key={org.id}>
               <Link
                 href={`/dashboard/organisation/${org.id}`}
-                className="group block h-full rounded-xl bg-card p-5 ring-1 ring-foreground/10 transition hover:ring-brand-teal/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="group block h-full rounded-xl bg-card p-4 ring-1 ring-foreground/10 transition hover:ring-brand-teal/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <div className="flex items-start justify-between gap-3">
                   <span className="flex size-10 items-center justify-center rounded-lg bg-brand-sky text-brand-teal">

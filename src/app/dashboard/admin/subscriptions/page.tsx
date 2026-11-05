@@ -56,7 +56,7 @@ export default async function AdminSubscriptionsPage() {
   const period = defaultPaymentPeriod();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Platform billing"
         title="Subscriptions"
@@ -70,25 +70,25 @@ export default async function AdminSubscriptionsPage() {
       />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Organisations</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {summary.organisations}
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Active / trial / grace</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {summary.activeOrTrial}
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Past due</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {summary.pastDue}
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Recorded subscription payments</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(summary.recordedPaymentsMinorUnits, "NGN")}
@@ -101,7 +101,7 @@ export default async function AdminSubscriptionsPage() {
       </div>
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b border-border p-5">
+        <div className="border-b border-border p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Plans
           </h2>
@@ -166,7 +166,7 @@ export default async function AdminSubscriptionsPage() {
       </Card>
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b border-border p-5">
+        <div className="border-b border-border p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Organisation subscriptions
           </h2>

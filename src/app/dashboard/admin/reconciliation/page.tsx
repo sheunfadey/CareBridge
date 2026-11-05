@@ -128,7 +128,7 @@ export default async function AdminReconciliationPage() {
   const needsAttention = [...mismatches, ...reviewRequired];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Finance"
         title="Reconciliation"
@@ -167,7 +167,7 @@ export default async function AdminReconciliationPage() {
 
       {needsAttention.length > 0 ? (
         <Card className="overflow-hidden border-brand-warning/40 p-0">
-          <div className="border-b border-border bg-brand-warning/10 p-5">
+          <div className="border-b border-border bg-brand-warning/10 p-4">
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Needs attention
             </h2>
@@ -185,7 +185,7 @@ export default async function AdminReconciliationPage() {
       ) : null}
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b border-border p-5">
+        <div className="border-b border-border p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Awaiting verification
           </h2>
@@ -202,7 +202,7 @@ export default async function AdminReconciliationPage() {
       </Card>
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b border-border p-5">
+        <div className="border-b border-border p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Recently matched
           </h2>

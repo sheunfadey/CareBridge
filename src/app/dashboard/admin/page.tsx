@@ -69,7 +69,7 @@ export default async function AdminPage() {
     : [null, null];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Platform"
         title="Administration"
@@ -99,7 +99,7 @@ export default async function AdminPage() {
       </Alert>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Pending organisations
           </p>
@@ -110,7 +110,7 @@ export default async function AdminPage() {
             Awaiting approval or verification
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Accounts
           </p>
@@ -121,7 +121,7 @@ export default async function AdminPage() {
             Visible to platform administration
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Service-role client
           </p>
@@ -136,7 +136,7 @@ export default async function AdminPage() {
 
       <div className="grid gap-4 sm:grid-cols-2">
         {sections.map((section) => (
-          <Card key={section.href} className="flex flex-col gap-3 p-5">
+          <Card key={section.href} className="flex flex-col gap-3 p-4">
             <span
               aria-hidden="true"
               className="flex size-10 items-center justify-center rounded-lg bg-brand-sky text-brand-teal"

@@ -2,6 +2,7 @@ import type { ComponentProps, ReactNode } from "react";
 
 import { Sidebar } from "@/components/layout/sidebar";
 import { Topbar } from "@/components/layout/topbar";
+import { MobileNav } from "@/components/layout/mobile-nav";
 
 type DashboardShellProps = {
   children: ReactNode;
@@ -35,11 +36,20 @@ export function DashboardShell({
         />
         <main
           id="main-content"
-          className="mx-auto w-full max-w-[1400px] flex-1 px-3 py-4 sm:px-4 sm:py-6 md:px-6 lg:px-8"
+          className="mx-auto w-full max-w-[1500px] flex-1 px-3 py-3 pb-24 sm:px-4 sm:py-4 md:px-5 lg:px-7 lg:py-5 lg:pb-7"
         >
           <div className="w-full overflow-x-hidden">{children}</div>
         </main>
       </div>
+
+      <MobileNav
+        isSuperAdmin={isSuperAdmin}
+        permissions={permissions}
+        unreadNotifications={
+          notifications?.filter((notification) => !notification.read).length ??
+          0
+        }
+      />
     </div>
   );
 }

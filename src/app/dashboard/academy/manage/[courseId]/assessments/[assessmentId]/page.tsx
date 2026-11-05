@@ -72,7 +72,7 @@ export default async function ManageAssessmentPage({
   const correctIds = new Set<string>();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Assessment"
         title={assessment.title}
@@ -127,7 +127,7 @@ export default async function ManageAssessmentPage({
       </div>
 
       <Card className="overflow-hidden p-0">
-        <div className="flex flex-wrap items-start justify-between gap-3 border-b p-5">
+        <div className="flex flex-wrap items-start justify-between gap-3 border-b p-4">
           <div>
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Questions
@@ -148,7 +148,7 @@ export default async function ManageAssessmentPage({
         </div>
 
         {assessment.questions.length === 0 ? (
-          <p className="p-5 text-sm text-muted-foreground">
+          <p className="p-4 text-sm text-muted-foreground">
             No questions yet. Add at least one before publishing.
           </p>
         ) : (
@@ -157,7 +157,7 @@ export default async function ManageAssessmentPage({
               correctIds.clear();
               for (const id of question.correctOptionIds) correctIds.add(id);
               return (
-                <li key={question.id} className="space-y-3 p-5">
+                <li key={question.id} className="space-y-3 p-4">
                   <div className="flex flex-wrap items-start justify-between gap-2">
                     <p className="font-medium text-brand-strong">
                       {index + 1}. {question.prompt}
@@ -197,7 +197,7 @@ export default async function ManageAssessmentPage({
       </Card>
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b p-5">
+        <div className="border-b p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Attempts
           </h2>
@@ -210,7 +210,7 @@ export default async function ManageAssessmentPage({
           </p>
         </div>
         {assessment.attempts.length === 0 ? (
-          <p className="p-5 text-sm text-muted-foreground">
+          <p className="p-4 text-sm text-muted-foreground">
             Attempts will appear here after learners start the assessment.
           </p>
         ) : (

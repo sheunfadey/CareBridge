@@ -34,7 +34,7 @@ export default async function NewCoursePage() {
   ]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Academy management"
         title="New course"
@@ -63,7 +63,7 @@ export default async function NewCoursePage() {
         </Alert>
       ) : null}
 
-      <Card className="p-6">
+      <Card className="p-5">
         <CreateCourseForm
           programmes={programmes}
           organisations={organisations}

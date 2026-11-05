@@ -45,7 +45,7 @@ export default async function CampaignsPage({
   const canManage = await context.can("charity_campaign_manage");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Charity"
         title="Campaigns"

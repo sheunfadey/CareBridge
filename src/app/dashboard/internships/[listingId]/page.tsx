@@ -86,7 +86,7 @@ export default async function InternshipDetailPage({
     "Location not specified";
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow={listing.organisationName}
         title={listing.title}
@@ -103,9 +103,9 @@ export default async function InternshipDetailPage({
         }
       />
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="space-y-6">
-          <Card className="space-y-4 p-5">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <div className="space-y-4 lg:space-y-5">
+          <Card className="space-y-4 p-4">
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
               <span className="flex items-center gap-1">
                 <MapPinIcon className="size-4" />
@@ -138,7 +138,7 @@ export default async function InternshipDetailPage({
             ) : null}
           </Card>
 
-          <Card className="space-y-5 p-5">
+          <Card className="space-y-5 p-4">
             <ListSection title="Requirements" items={listing.requirements} />
             <ListSection
               title="What you will learn"
@@ -148,7 +148,7 @@ export default async function InternshipDetailPage({
         </div>
 
         <aside className="space-y-4">
-          <Card className="space-y-4 p-5">
+          <Card className="space-y-4 p-4">
             <div className="flex items-center justify-between gap-2">
               <h2 className="font-heading text-base font-semibold text-brand-strong">
                 Apply

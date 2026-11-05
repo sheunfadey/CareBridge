@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function AcceptInvitationPage() {
   return (
-    <div className="mx-auto max-w-xl py-6">
+    <div className="mx-auto max-w-xl py-4">
       <Suspense
         fallback={<RouteLoadingFallback message="Loading your invitation" />}
       >

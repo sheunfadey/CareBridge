@@ -25,7 +25,7 @@ export default async function AdminUsersPage() {
   const result = await adminService.listProfiles({ limit: 100 });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Platform administration"
         title="User management"
@@ -38,7 +38,7 @@ export default async function AdminUsersPage() {
       />
 
       {!result.ok ? (
-        <Card className="p-5 text-sm text-muted-foreground">
+        <Card className="p-4 text-sm text-muted-foreground">
           {result.message}
         </Card>
       ) : result.data.length === 0 ? (

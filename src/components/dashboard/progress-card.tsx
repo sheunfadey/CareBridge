@@ -18,7 +18,7 @@ export function ProgressCard({
   const clamped = Math.max(0, Math.min(100, value));
 
   return (
-    <Card className="p-5">
+    <Card className="p-4">
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm font-medium text-brand-strong">{title}</p>
         {loading ? (

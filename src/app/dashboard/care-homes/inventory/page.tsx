@@ -58,7 +58,7 @@ export default async function InventoryPage({
   const canManage = userHasPermission(context.user, "inventory_manage");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Care operations"
         title="Inventory"
@@ -171,8 +171,8 @@ export default async function InventoryPage({
         )}
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <Card className="p-5">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+        <Card className="p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Recent stock movements
           </h2>
@@ -206,7 +206,7 @@ export default async function InventoryPage({
           )}
         </Card>
 
-        <Card className="p-5">
+        <Card className="p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Suppliers
           </h2>

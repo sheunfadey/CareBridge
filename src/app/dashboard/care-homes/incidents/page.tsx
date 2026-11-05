@@ -73,7 +73,7 @@ export default async function IncidentsPage({
   const canReport = userHasPermission(context.user, "incident_manage");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Care operations"
         title="Incidents"

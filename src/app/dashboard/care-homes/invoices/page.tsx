@@ -70,7 +70,7 @@ export default async function InvoicesPage({
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Care operations"
         title="Invoices"
@@ -103,19 +103,19 @@ export default async function InvoicesPage({
       />
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Total billed</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(billed, "NGN")}
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Outstanding</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(outstanding, "NGN")}
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Invoices</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {invoices.length}

@@ -55,7 +55,7 @@ export default async function OrganisationDetailPage({
     : null;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow={organisationTypeLabels[detail.summary.type]}
         title={detail.summary.name}

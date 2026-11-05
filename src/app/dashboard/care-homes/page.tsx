@@ -55,7 +55,7 @@ export default async function CareHomesPage({
   const residents = facility ? await listResidentOptions(workspace, facility.id) : [];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Care operations"
         title={workspace.name}
@@ -88,7 +88,7 @@ export default async function CareHomesPage({
       />
 
       {facilities.length === 0 ? (
-        <Card className="space-y-4 p-6">
+        <Card className="space-y-4 p-5">
           <div>
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Set up your first facility
@@ -155,8 +155,8 @@ export default async function CareHomesPage({
             />
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-2">
-            <Card className="p-5">
+          <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
+            <Card className="p-4">
               <div className="flex items-center justify-between gap-2">
                 <h2 className="font-heading text-lg font-semibold text-brand-strong">
                   Occupancy
@@ -195,7 +195,7 @@ export default async function CareHomesPage({
               )}
             </Card>
 
-            <Card className="p-5">
+            <Card className="p-4">
               <div className="flex items-center justify-between gap-2">
                 <h2 className="font-heading text-lg font-semibold text-brand-strong">
                   Today&apos;s shifts
@@ -234,8 +234,8 @@ export default async function CareHomesPage({
             </Card>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-3">
-            <Card className="p-5">
+          <div className="grid gap-4 lg:gap-5 lg:grid-cols-3">
+            <Card className="p-4">
               <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Incidents needing attention
               </h2>
@@ -268,7 +268,7 @@ export default async function CareHomesPage({
               )}
             </Card>
 
-            <Card className="p-5">
+            <Card className="p-4">
               <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Low stock
               </h2>
@@ -296,7 +296,7 @@ export default async function CareHomesPage({
               </Link>
             </Card>
 
-            <Card className="p-5">
+            <Card className="p-4">
               <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Outstanding invoices
               </h2>
@@ -335,7 +335,7 @@ export default async function CareHomesPage({
           </div>
 
           {dashboard.expiringCompliance > 0 ? (
-            <Card className="border-brand-warning/40 bg-brand-warning/5 p-5">
+            <Card className="border-brand-warning/40 bg-brand-warning/5 p-4">
               <div className="flex items-start gap-3">
                 <AlertTriangleIcon className="mt-0.5 size-5 text-brand-warning" aria-hidden="true" />
                 <div>

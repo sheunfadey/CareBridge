@@ -33,9 +33,9 @@ export function PageHeader({
   className,
 }: PageHeaderProps) {
   return (
-    <header className={cn("space-y-4", className)}>
+    <header className={cn("space-y-3", className)}>
       {breadcrumbs && breadcrumbs.length > 0 ? (
-        <Breadcrumb>
+        <Breadcrumb className="hidden sm:block">
           <BreadcrumbList>
             {breadcrumbs.map((crumb, index) => {
               const isLast = index === breadcrumbs.length - 1;
@@ -58,18 +58,18 @@ export function PageHeader({
         </Breadcrumb>
       ) : null}
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div className="space-y-1.5">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div className="space-y-1">
           {eyebrow ? (
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand-teal">
               {eyebrow}
             </p>
           ) : null}
-          <h1 className="text-2xl font-semibold text-brand-strong sm:text-[1.75rem]">
+          <h1 className="text-xl font-semibold text-brand-strong sm:text-2xl">
             {title}
           </h1>
           {description ? (
-            <p className="max-w-2xl text-sm text-muted-foreground">
+            <p className="max-w-3xl text-sm text-muted-foreground">
               {description}
             </p>
           ) : null}

@@ -72,7 +72,7 @@ export default async function CampaignDetailPage({
       : 0;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Charity campaign"
         title={campaign.title}
@@ -112,20 +112,20 @@ export default async function CampaignDetailPage({
       />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Funding target</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(campaign.fundingTargetMinorUnits, campaign.currency)}
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Received (net)</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(campaign.receivedMinorUnits, campaign.currency)}
           </p>
           <p className="text-xs text-muted-foreground">{progress}% of target</p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Committed</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(campaign.committedMinorUnits, campaign.currency)}
@@ -134,7 +134,7 @@ export default async function CampaignDetailPage({
             {formatMoney(campaign.disbursedMinorUnits, campaign.currency)} disbursed
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Uncommitted</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(available, campaign.currency)}
@@ -143,7 +143,7 @@ export default async function CampaignDetailPage({
       </div>
 
       {canApprove && campaign.status === "pending_approval" ? (
-        <Card className="space-y-4 border-brand-warning/40 p-5">
+        <Card className="space-y-4 border-brand-warning/40 p-4">
           <div>
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Review this campaign
@@ -162,7 +162,7 @@ export default async function CampaignDetailPage({
       ) : null}
 
       {campaign.description || campaign.beneficiaryCriteria ? (
-        <Card className="space-y-3 p-5">
+        <Card className="space-y-3 p-4">
           {campaign.description ? (
             <div>
               <h2 className="font-heading text-base font-semibold text-brand-strong">
@@ -186,7 +186,7 @@ export default async function CampaignDetailPage({
         </Card>
       ) : null}
 
-      <Card className="p-5">
+      <Card className="p-4">
         <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Review history
         </h2>
@@ -213,9 +213,9 @@ export default async function CampaignDetailPage({
         )}
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
         <Card className="overflow-hidden p-0">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-5">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-4">
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Donations
             </h2>
@@ -224,7 +224,7 @@ export default async function CampaignDetailPage({
             </p>
           </div>
           {detail.donations.length === 0 ? (
-            <p className="p-5 text-sm text-muted-foreground">No donations yet.</p>
+            <p className="p-4 text-sm text-muted-foreground">No donations yet.</p>
           ) : (
             <Table>
               <TableHeader>
@@ -264,7 +264,7 @@ export default async function CampaignDetailPage({
         </Card>
 
         <Card className="overflow-hidden p-0">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-5">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-4">
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Allocations
             </h2>
@@ -277,7 +277,7 @@ export default async function CampaignDetailPage({
             ) : null}
           </div>
           {detail.allocations.length === 0 ? (
-            <p className="p-5 text-sm text-muted-foreground">
+            <p className="p-4 text-sm text-muted-foreground">
               No funds have been allocated yet.
             </p>
           ) : (
@@ -302,7 +302,7 @@ export default async function CampaignDetailPage({
       </div>
 
       <Card className="overflow-hidden p-0">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-5">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-4">
           <div>
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Campaign expenses
@@ -320,7 +320,7 @@ export default async function CampaignDetailPage({
           ) : null}
         </div>
         {detail.expenses.length === 0 ? (
-          <p className="p-5 text-sm text-muted-foreground">No expenses recorded.</p>
+          <p className="p-4 text-sm text-muted-foreground">No expenses recorded.</p>
         ) : (
           <Table>
             <TableHeader>
@@ -367,7 +367,7 @@ export default async function CampaignDetailPage({
         )}
       </Card>
 
-      <Card className="p-5">
+      <Card className="p-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <h2 className="font-heading text-lg font-semibold text-brand-strong">

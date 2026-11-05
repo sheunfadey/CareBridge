@@ -58,7 +58,7 @@ export default async function ExpensesPage({
     .reduce((sum, expense) => sum + expense.amountMinorUnits, 0);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Care operations"
         title="Expenses"
@@ -95,13 +95,13 @@ export default async function ExpensesPage({
       />
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Recorded spend</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(total, "NGN")}
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Unpaid</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(unpaid, "NGN")}
@@ -110,7 +110,7 @@ export default async function ExpensesPage({
       </div>
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b border-border p-5">
+        <div className="border-b border-border p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Purchase requests
           </h2>

@@ -37,7 +37,7 @@ export default async function AcademyPage() {
   const completed = learning.filter((course) => course.status === "completed");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Academy"
         title="CareBridge Academy"
@@ -67,7 +67,7 @@ export default async function AcademyPage() {
         aria-label="Your learning overview"
         className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
       >
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Active enrolments
           </p>
@@ -78,7 +78,7 @@ export default async function AcademyPage() {
             In progress now
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Completed
           </p>
@@ -89,7 +89,7 @@ export default async function AcademyPage() {
             Courses finished
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Certificates
           </p>
@@ -100,7 +100,7 @@ export default async function AcademyPage() {
             Valid, unrevoked
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Catalogue
           </p>
@@ -124,7 +124,7 @@ export default async function AcademyPage() {
           </Button>
         </div>
         {active.length === 0 ? (
-          <Card className="p-6 text-center">
+          <Card className="p-5 text-center">
             <BookOpenIcon className="mx-auto size-8 text-muted-foreground" />
             <p className="mt-2 font-heading font-semibold text-brand-strong">
               No courses in progress
@@ -145,7 +145,7 @@ export default async function AcademyPage() {
                   )
                 : 0;
               return (
-                <Card key={course.enrolmentId} className="p-5">
+                <Card key={course.enrolmentId} className="p-4">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="font-heading font-semibold text-brand-strong">
@@ -192,7 +192,7 @@ export default async function AcademyPage() {
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             {completed.slice(0, 4).map((course) => (
-              <Card key={course.enrolmentId} className="p-5">
+              <Card key={course.enrolmentId} className="p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="font-heading font-semibold text-brand-strong">

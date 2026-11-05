@@ -31,13 +31,13 @@ export function MetricCard({
   className,
 }: MetricCardProps) {
   return (
-    <Card className={cn("p-5", className)}>
+    <Card className={cn("p-4", className)}>
       <div className="flex items-start justify-between gap-3">
         <p className="text-sm font-medium text-muted-foreground">{label}</p>
         {icon ? (
           <span
             aria-hidden="true"
-            className="flex size-9 items-center justify-center rounded-lg bg-brand-sky text-brand-teal [&_svg]:size-4.5"
+            className="flex size-8 items-center justify-center rounded-lg bg-brand-sky text-brand-teal [&_svg]:size-4"
           >
             {icon}
           </span>
@@ -46,13 +46,13 @@ export function MetricCard({
 
       {loading ? (
         <>
-          <Skeleton className="mt-3 h-8 w-24" />
+          <Skeleton className="mt-2 h-7 w-24" />
           <Skeleton className="mt-2 h-3 w-32" />
         </>
       ) : (
         <>
-          <div className="mt-3 flex items-center gap-2">
-            <p className="font-heading text-3xl font-semibold tabular-nums text-brand-strong">
+          <div className="mt-2 flex items-center gap-2">
+            <p className="font-heading text-2xl font-semibold tabular-nums text-brand-strong">
               {empty ? "—" : value}
             </p>
             {trend ? (

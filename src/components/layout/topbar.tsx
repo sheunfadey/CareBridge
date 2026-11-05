@@ -120,7 +120,6 @@ export function Topbar({
         <Button
           variant="ghost"
           size="icon"
-          className="hidden sm:inline-flex"
           aria-label="Toggle theme"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         >

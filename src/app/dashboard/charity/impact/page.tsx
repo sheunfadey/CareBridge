@@ -42,7 +42,7 @@ export default async function ImpactPage({
   const canManage = await context.can("charity_campaign_manage");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Charity"
         title="Impact reports"
@@ -80,7 +80,7 @@ export default async function ImpactPage({
         ) : (
           <ul className="divide-y divide-border">
             {reports.map((report) => (
-              <li key={report.id} className="flex flex-wrap items-start justify-between gap-3 p-5">
+              <li key={report.id} className="flex flex-wrap items-start justify-between gap-3 p-4">
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
                     <h2 className="font-heading text-base font-semibold text-brand-strong">

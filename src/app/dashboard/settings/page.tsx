@@ -18,7 +18,7 @@ export default async function SettingsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Account"
         title="Settings"
@@ -30,7 +30,7 @@ export default async function SettingsPage() {
       />
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <Card className="space-y-3 p-5">
+        <Card className="space-y-3 p-4">
           <h2 className="font-heading text-base font-semibold text-brand-strong">
             Profile
           </h2>
@@ -59,7 +59,7 @@ export default async function SettingsPage() {
           </p>
         </Card>
 
-        <Card className="space-y-3 p-5">
+        <Card className="space-y-3 p-4">
           <h2 className="font-heading text-base font-semibold text-brand-strong">
             Organisations
           </h2>
@@ -92,7 +92,7 @@ export default async function SettingsPage() {
           </Button>
         </Card>
 
-        <Card className="space-y-3 p-5 lg:col-span-2">
+        <Card className="space-y-3 p-4 lg:col-span-2">
           <h2 className="font-heading text-base font-semibold text-brand-strong">
             Notifications
           </h2>

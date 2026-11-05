@@ -100,7 +100,7 @@ export default async function DashboardPage() {
     .slice(0, 4);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Overview"
         title={`Welcome back, ${firstName}`}
@@ -134,7 +134,7 @@ export default async function DashboardPage() {
       />
 
       {readOnly ? (
-        <Card className="border-brand-warning/50 bg-brand-warning/5 p-5">
+        <Card className="border-brand-warning/50 bg-brand-warning/5 p-4">
           <div className="flex items-start gap-3">
             <AlertTriangleIcon className="mt-0.5 size-5 text-brand-warning" aria-hidden="true" />
             <div>
@@ -166,7 +166,7 @@ export default async function DashboardPage() {
       ) : null}
 
       {trialEndsSoon ? (
-        <Card className="border-brand-sky bg-brand-sky/40 p-5">
+        <Card className="border-brand-sky bg-brand-sky/40 p-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <h2 className="font-heading text-base font-semibold text-brand-strong">
@@ -330,7 +330,7 @@ export default async function DashboardPage() {
         </section>
       ) : null}
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
         <section className="space-y-4" aria-label="Academy">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
@@ -394,7 +394,7 @@ export default async function DashboardPage() {
           Your organisations
         </h2>
         {user.organisations.length === 0 ? (
-          <Card className="p-5 text-sm text-muted-foreground">
+          <Card className="p-4 text-sm text-muted-foreground">
             You are not a member of an organisation yet.{" "}
             <Link href="/dashboard/organisation" className="font-medium text-brand-teal hover:underline">
               Create or join a workspace
@@ -404,7 +404,7 @@ export default async function DashboardPage() {
         ) : (
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {user.organisations.map((organisation) => (
-              <Card key={organisation.organisationId} className="space-y-2 p-5">
+              <Card key={organisation.organisationId} className="space-y-2 p-4">
                 <p className="font-heading text-base font-semibold text-brand-strong">
                   {organisation.organisationName}
                 </p>

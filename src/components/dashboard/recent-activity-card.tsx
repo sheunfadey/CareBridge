@@ -28,7 +28,7 @@ export function RecentActivityCard({
   className?: string;
 }) {
   return (
-    <Card className={cn("p-5", className)}>
+    <Card className={cn("p-4", className)}>
       <h2 className="font-heading text-base font-semibold text-brand-strong">
         {title}
       </h2>

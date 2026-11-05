@@ -29,7 +29,7 @@ export default async function AdminOrganisationsPage() {
   ]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Platform administration"
         title="Organisations"
@@ -46,7 +46,7 @@ export default async function AdminOrganisationsPage() {
           Approval queue
         </h2>
         {!pending.ok ? (
-          <Card className="p-5 text-sm text-muted-foreground">
+          <Card className="p-4 text-sm text-muted-foreground">
             {pending.message}
           </Card>
         ) : pending.data.length === 0 ? (
@@ -106,7 +106,7 @@ export default async function AdminOrganisationsPage() {
           All organisations
         </h2>
         {!all.ok ? (
-          <Card className="p-5 text-sm text-muted-foreground">
+          <Card className="p-4 text-sm text-muted-foreground">
             {all.message}
           </Card>
         ) : all.data.length === 0 ? (

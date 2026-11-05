@@ -93,7 +93,7 @@ export default async function AdminPaymentsPage({
   const canRefund = userHasPermission(user, "refund_process");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Finance"
         title="Payments"

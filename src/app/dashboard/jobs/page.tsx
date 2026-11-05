@@ -35,7 +35,7 @@ export default async function JobsPage() {
   const appliedJobs = new Set(myApplications.map((application) => application.jobId));
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Employment"
         title="Careers in care"
@@ -59,7 +59,7 @@ export default async function JobsPage() {
       />
 
       {unavailable ? (
-        <Card className="p-5 text-sm text-muted-foreground">
+        <Card className="p-4 text-sm text-muted-foreground">
           Jobs are temporarily unavailable. Please try again shortly.
         </Card>
       ) : jobs.length === 0 ? (
@@ -71,7 +71,7 @@ export default async function JobsPage() {
       ) : (
         <div className="grid gap-4 lg:grid-cols-2">
           {jobs.map((job) => (
-            <Card key={job.id} className="flex flex-col p-5">
+            <Card key={job.id} className="flex flex-col p-4">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <Link

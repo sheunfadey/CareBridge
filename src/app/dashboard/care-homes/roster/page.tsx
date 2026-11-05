@@ -49,7 +49,7 @@ export default async function RosterPage({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Care operations"
         title="Roster"
@@ -86,7 +86,7 @@ export default async function RosterPage({
           />
         </Card>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-4 lg:space-y-5">
           {Array.from(groups.entries()).map(([day, dayShifts]) => (
             <section key={day} className="space-y-3">
               <h2 className="font-heading text-base font-semibold text-brand-strong">
@@ -99,7 +99,7 @@ export default async function RosterPage({
               </h2>
               <div className="grid gap-4 xl:grid-cols-2">
                 {dayShifts.map((shift) => (
-                  <Card key={shift.id} className="space-y-4 p-5">
+                  <Card key={shift.id} className="space-y-4 p-4">
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div>
                         <h3 className="font-heading text-base font-semibold text-brand-strong">

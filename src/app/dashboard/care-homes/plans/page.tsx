@@ -44,7 +44,7 @@ export default async function CarePlansPage({
   const plans = await listCarePlans(context.workspace, context.facility?.id);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Care operations"
         title="Care plans"

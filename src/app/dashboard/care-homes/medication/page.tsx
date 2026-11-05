@@ -47,7 +47,7 @@ export default async function MedicationPage({
   ]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Care operations"
         title="Medication"
@@ -138,7 +138,7 @@ export default async function MedicationPage({
         )}
       </Card>
 
-      <Card className="p-5">
+      <Card className="p-4">
         <h2 className="font-heading text-base font-semibold text-brand-strong">
           Safeguards
         </h2>

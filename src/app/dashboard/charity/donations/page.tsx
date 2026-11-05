@@ -49,7 +49,7 @@ export default async function DonationsPage({
   ]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Charity"
         title="Donations"
@@ -68,7 +68,7 @@ export default async function DonationsPage({
       />
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b border-border p-5">
+        <div className="border-b border-border p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             My donations
           </h2>
@@ -142,7 +142,7 @@ export default async function DonationsPage({
 
       {workspace ? (
         <Card className="overflow-hidden p-0">
-          <div className="border-b border-border p-5">
+          <div className="border-b border-border p-4">
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Workspace donations
             </h2>
@@ -152,7 +152,7 @@ export default async function DonationsPage({
             </p>
           </div>
           {adminDonations.length === 0 ? (
-            <p className="p-5 text-sm text-muted-foreground">
+            <p className="p-4 text-sm text-muted-foreground">
               No donations have been verified for this workspace.
             </p>
           ) : (

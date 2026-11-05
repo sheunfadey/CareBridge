@@ -57,7 +57,7 @@ export default async function CharityReportsPage({
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Charity"
         title="Reports"
@@ -76,28 +76,28 @@ export default async function CharityReportsPage({
       />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Donations received</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(received, "NGN")}
           </p>
           <p className="text-xs text-muted-foreground">Net of refunds</p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Committed</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(committed, "NGN")}
           </p>
           <p className="text-xs text-muted-foreground">Allocated to campaign purposes</p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Disbursed</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(disbursed, "NGN")}
           </p>
           <p className="text-xs text-muted-foreground">Approved and paid expenses</p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Scholarships awarded</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(awarded, "NGN")}
@@ -106,7 +106,7 @@ export default async function CharityReportsPage({
       </div>
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b border-border p-5">
+        <div className="border-b border-border p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Campaign finance
           </h2>
@@ -160,7 +160,7 @@ export default async function CharityReportsPage({
       </Card>
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b border-border p-5">
+        <div className="border-b border-border p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Scholarship outcomes
           </h2>

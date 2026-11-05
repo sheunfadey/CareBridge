@@ -35,7 +35,7 @@ const helpLinks = [
 
 export default function DashboardHelpPage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Support"
         title="Help centre"
@@ -53,7 +53,7 @@ export default function DashboardHelpPage() {
 
       <div className="grid gap-4 sm:grid-cols-2">
         {helpLinks.map((link) => (
-          <Card key={link.href} className="flex flex-col p-5">
+          <Card key={link.href} className="flex flex-col p-4">
             <span className="flex size-10 items-center justify-center rounded-full bg-brand-sky text-brand-teal">
               <LifeBuoyIcon className="size-5" />
             </span>
@@ -70,7 +70,7 @@ export default function DashboardHelpPage() {
         ))}
       </div>
 
-      <Card className="p-5">
+      <Card className="p-4">
         <h2 className="font-heading text-base font-semibold text-brand-strong">
           Need more help?
         </h2>

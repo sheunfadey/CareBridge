@@ -16,7 +16,7 @@ export function PageLoadingSkeleton({
     <div
       role="status"
       aria-label="Loading page content"
-      className={cn("space-y-6", className)}
+      className={cn("space-y-4", className)}
     >
       <div className="space-y-2">
         <Skeleton className="h-4 w-28" />
@@ -24,11 +24,11 @@ export function PageLoadingSkeleton({
         <Skeleton className="h-4 w-96 max-w-full" />
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {Array.from({ length: cards }).map((_, index) => (
           <div
             key={index}
-            className="rounded-xl bg-card p-5 ring-1 ring-foreground/10"
+            className="rounded-xl bg-card p-4 ring-1 ring-foreground/10"
           >
             <div className="flex items-center justify-between">
               <Skeleton className="h-3.5 w-24" />
@@ -40,12 +40,12 @@ export function PageLoadingSkeleton({
         ))}
       </div>
 
-      <div className="rounded-xl bg-card p-5 ring-1 ring-foreground/10">
+      <div className="rounded-xl bg-card p-4 ring-1 ring-foreground/10">
         <div className="flex items-center justify-between">
           <Skeleton className="h-5 w-40" />
           <Skeleton className="h-8 w-24 rounded-lg" />
         </div>
-        <div className="mt-5 space-y-3">
+        <div className="mt-4 space-y-3">
           {Array.from({ length: rows }).map((_, index) => (
             <div key={index} className="flex items-center gap-4">
               <Skeleton className="size-9 rounded-full" />

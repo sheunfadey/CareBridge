@@ -44,7 +44,7 @@ export default async function IncidentDetailPage({
   const canManage = userHasPermission(context.user, "incident_manage");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Incident review"
         title={careIncidentCategoryLabels[incident.category]}
@@ -82,8 +82,8 @@ export default async function IncidentDetailPage({
         active="/incidents"
       />
 
-      <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <Card className="space-y-4 p-5">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+        <Card className="space-y-4 p-4">
           <div>
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               What happened
@@ -137,7 +137,7 @@ export default async function IncidentDetailPage({
         </Card>
 
         {canManage ? (
-          <Card className="space-y-4 p-5">
+          <Card className="space-y-4 p-4">
             <div>
               <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Investigation
@@ -157,7 +157,7 @@ export default async function IncidentDetailPage({
         ) : null}
       </div>
 
-      <Card className="space-y-4 p-5">
+      <Card className="space-y-4 p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="font-heading text-lg font-semibold text-brand-strong">

@@ -26,7 +26,7 @@ export default async function FamilyPortalPage() {
   const residents = await listFamilyResidents();
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Family access"
         title="Family portal"
@@ -52,7 +52,7 @@ export default async function FamilyPortalPage() {
       ) : (
         <div className="grid gap-4 lg:grid-cols-2">
           {residents.map((resident) => (
-            <Card key={resident.residentId} className="space-y-4 p-5">
+            <Card key={resident.residentId} className="space-y-4 p-4">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2">
@@ -122,7 +122,7 @@ export default async function FamilyPortalPage() {
         </div>
       )}
 
-      <Card className="p-5 text-sm text-muted-foreground">
+      <Card className="p-4 text-sm text-muted-foreground">
         <p className="font-medium text-brand-strong">What this portal does not show</p>
         <p className="mt-1">
           Incident reports, medication records, daily care notes, staff notes and

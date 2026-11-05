@@ -23,7 +23,7 @@ export default async function AdminAuditPage() {
   const result = await adminService.listAuditLogs(100);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Platform administration"
         title="Audit log"
@@ -36,7 +36,7 @@ export default async function AdminAuditPage() {
       />
 
       {!result.ok ? (
-        <Card className="p-5 text-sm text-muted-foreground">
+        <Card className="p-4 text-sm text-muted-foreground">
           {result.message}
         </Card>
       ) : result.data.length === 0 ? (

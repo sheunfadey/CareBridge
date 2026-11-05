@@ -31,7 +31,7 @@ export function ChartCard({
   className,
 }: ChartCardProps) {
   return (
-    <Card className={cn("p-5", className)}>
+    <Card className={cn("p-4", className)}>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h2 className="font-heading text-base font-semibold text-brand-strong">

@@ -39,7 +39,7 @@ export default async function InternshipsPage() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Internships"
         title="Supervised placements"
@@ -106,7 +106,7 @@ export default async function InternshipsPage() {
           Open placements
         </h2>
         {unavailable ? (
-          <Card className="p-5 text-sm text-muted-foreground">
+          <Card className="p-4 text-sm text-muted-foreground">
             Placements are temporarily unavailable. Please try again shortly.
           </Card>
         ) : internships.length === 0 ? (
@@ -118,7 +118,7 @@ export default async function InternshipsPage() {
         ) : (
           <div className="grid gap-4 lg:grid-cols-2">
             {internships.map((listing) => (
-              <Card key={listing.id} className="flex flex-col p-5">
+              <Card key={listing.id} className="flex flex-col p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <Link

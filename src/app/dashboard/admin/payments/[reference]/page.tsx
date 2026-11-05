@@ -53,7 +53,7 @@ export default async function AdminPaymentDetailPage({
   const canVerify = userHasPermission(user, "payment_review");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Finance"
         title={payment.reference}
@@ -87,8 +87,8 @@ export default async function AdminPaymentDetailPage({
         ) : null}
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <Card className="space-y-4 p-6">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+        <Card className="space-y-4 p-5">
           <div className="flex flex-wrap items-center gap-2">
             <StatusBadge
               status={payment.status}
@@ -152,7 +152,7 @@ export default async function AdminPaymentDetailPage({
           </dl>
         </Card>
 
-        <Card className="space-y-3 p-6">
+        <Card className="space-y-3 p-5">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Provider data
           </h2>
@@ -170,13 +170,13 @@ export default async function AdminPaymentDetailPage({
       </div>
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b border-border p-5">
+        <div className="border-b border-border p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Refunds
           </h2>
         </div>
         {payment.refunds.length === 0 ? (
-          <p className="p-5 text-sm text-muted-foreground">
+          <p className="p-4 text-sm text-muted-foreground">
             No refunds have been requested for this payment.
           </p>
         ) : (
@@ -216,7 +216,7 @@ export default async function AdminPaymentDetailPage({
       </Card>
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b border-border p-5">
+        <div className="border-b border-border p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Webhook events
           </h2>
@@ -226,7 +226,7 @@ export default async function AdminPaymentDetailPage({
           </p>
         </div>
         {payment.webhookEvents.length === 0 ? (
-          <p className="p-5 text-sm text-muted-foreground">
+          <p className="p-4 text-sm text-muted-foreground">
             No webhook events have been recorded.
           </p>
         ) : (

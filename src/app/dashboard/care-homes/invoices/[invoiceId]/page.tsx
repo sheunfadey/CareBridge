@@ -56,7 +56,7 @@ export default async function InvoiceDetailPage({
   const canManage = userHasPermission(context.user, "invoice_manage");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Invoice"
         title={invoice.invoiceNumber}
@@ -101,19 +101,19 @@ export default async function InvoiceDetailPage({
       />
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Invoice total</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(invoice.totalMinorUnits, "NGN")}
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Paid</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(invoice.paidMinorUnits, "NGN")}
           </p>
         </Card>
-        <Card className="p-5">
+        <Card className="p-4">
           <p className="text-sm text-muted-foreground">Outstanding</p>
           <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
             {formatMoney(invoice.outstandingMinorUnits, "NGN")}
@@ -122,7 +122,7 @@ export default async function InvoiceDetailPage({
       </div>
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b border-border p-5">
+        <div className="border-b border-border p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Invoice lines
           </h2>
@@ -155,8 +155,8 @@ export default async function InvoiceDetailPage({
         </Table>
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Card className="p-5">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
+        <Card className="p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Payments
           </h2>
@@ -205,7 +205,7 @@ export default async function InvoiceDetailPage({
           ) : null}
         </Card>
 
-        <Card className="space-y-3 p-5">
+        <Card className="space-y-3 p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Notes
           </h2>

@@ -67,7 +67,7 @@ export default async function JobCandidatePage({ params }: PageProps) {
   const { application, job, interviews, offer } = workspace;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Candidate"
         title={application.applicantName}

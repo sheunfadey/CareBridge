@@ -35,7 +35,7 @@ export default async function ManageCoursesPage() {
   const courses = await listManagedCourses(user);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Academy management"
         title="Manage courses"
@@ -58,7 +58,7 @@ export default async function ManageCoursesPage() {
       />
 
       {courses.length === 0 ? (
-        <Card className="p-6 text-center">
+        <Card className="p-5 text-center">
           <FileCogIcon className="mx-auto size-8 text-muted-foreground" />
           <p className="mt-2 font-heading font-semibold text-brand-strong">
             No courses yet

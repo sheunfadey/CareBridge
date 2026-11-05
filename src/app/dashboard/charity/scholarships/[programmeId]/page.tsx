@@ -62,7 +62,7 @@ export default async function ProgrammeDetailPage({
   const canReview = await context.can("scholarship_review");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Scholarship programme"
         title={programme.name}
@@ -99,7 +99,7 @@ export default async function ProgrammeDetailPage({
         active="/scholarships"
       />
 
-      <Card className="space-y-3 p-5">
+      <Card className="space-y-3 p-4">
         <div>
           <h2 className="font-heading text-base font-semibold text-brand-strong">
             Eligibility
@@ -121,7 +121,7 @@ export default async function ProgrammeDetailPage({
       </Card>
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b border-border p-5">
+        <div className="border-b border-border p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Applications
           </h2>
@@ -131,13 +131,13 @@ export default async function ProgrammeDetailPage({
           </p>
         </div>
         {detail.applications.length === 0 ? (
-          <p className="p-5 text-sm text-muted-foreground">
+          <p className="p-4 text-sm text-muted-foreground">
             No applications yet.
           </p>
         ) : (
           <div className="divide-y divide-border">
             {detail.applications.map((application) => (
-              <div key={application.id} className="space-y-3 p-5">
+              <div key={application.id} className="space-y-3 p-4">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
                     <p className="font-medium text-brand-strong">
@@ -207,7 +207,7 @@ export default async function ProgrammeDetailPage({
       </Card>
 
       <Card className="overflow-hidden p-0">
-        <div className="border-b border-border p-5">
+        <div className="border-b border-border p-4">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Awards
           </h2>
@@ -216,7 +216,7 @@ export default async function ProgrammeDetailPage({
           </p>
         </div>
         {detail.awards.length === 0 ? (
-          <p className="p-5 text-sm text-muted-foreground">No awards yet.</p>
+          <p className="p-4 text-sm text-muted-foreground">No awards yet.</p>
         ) : (
           <Table>
             <TableHeader>

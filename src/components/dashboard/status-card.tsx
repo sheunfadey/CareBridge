@@ -30,7 +30,7 @@ export function StatusCard({
   className,
 }: StatusCardProps) {
   return (
-    <Card className={cn("p-5", className)}>
+    <Card className={cn("p-4", className)}>
       <div className="flex items-center justify-between gap-3">
         <h2 className="font-heading text-base font-semibold text-brand-strong">
           {title}
@@ -38,7 +38,7 @@ export function StatusCard({
         {status ? <StatusBadge status={status.status} tone={status.tone} /> : null}
       </div>
 
-      <div className="mt-4">
+      <div className="mt-3">
         {loading ? (
           <div className="space-y-3" role="status" aria-label={`Loading ${title}`}>
             {Array.from({ length: 4 }).map((_, index) => (
@@ -57,7 +57,7 @@ export function StatusCard({
             {records.map((record) => (
               <div
                 key={record.label}
-                className="flex items-center justify-between gap-4 py-2.5 first:pt-0 last:pb-0"
+                className="flex items-center justify-between gap-4 py-2 first:pt-0 last:pb-0"
               >
                 <dt className="text-sm text-muted-foreground">{record.label}</dt>
                 <dd className="text-sm font-medium tabular-nums text-brand-strong">

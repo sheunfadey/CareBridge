@@ -60,7 +60,7 @@ export default async function AdminSettingsPage() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Platform administration"
         title="Platform settings"
@@ -80,7 +80,7 @@ export default async function AdminSettingsPage() {
           {rows.map((row) => (
             <div
               key={row.label}
-              className="flex flex-col gap-2 p-5 sm:flex-row sm:items-center sm:justify-between"
+              className="flex flex-col gap-2 p-4 sm:flex-row sm:items-center sm:justify-between"
             >
               <div className="space-y-1">
                 <p className="text-sm font-medium text-brand-strong">
@@ -107,7 +107,7 @@ export default async function AdminSettingsPage() {
         <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Policy safeguards
         </h2>
-        <Card className="p-5">
+        <Card className="p-4">
           <ul className="space-y-3">
             {policyNotes.map((note) => (
               <li key={note} className="flex gap-3 text-sm text-muted-foreground">

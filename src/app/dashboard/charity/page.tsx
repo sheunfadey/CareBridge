@@ -85,7 +85,7 @@ export default async function CharityPage({
     : false;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Charity"
         title={workspace ? workspace.name : "Charity and scholarships"}
@@ -163,8 +163,8 @@ export default async function CharityPage({
             />
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-2">
-            <Card className="p-5">
+          <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
+            <Card className="p-4">
               <div className="flex items-center justify-between gap-2">
                 <h2 className="font-heading text-lg font-semibold text-brand-strong">
                   Campaigns
@@ -206,7 +206,7 @@ export default async function CharityPage({
               )}
             </Card>
 
-            <Card className="p-5">
+            <Card className="p-4">
               <div className="flex items-center justify-between gap-2">
                 <h2 className="font-heading text-lg font-semibold text-brand-strong">
                   Recent donations
@@ -250,8 +250,8 @@ export default async function CharityPage({
         </>
       ) : null}
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Card className="p-5">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
+        <Card className="p-4">
           <div className="flex items-center gap-2">
             <ReceiptTextIcon className="size-5 text-brand-teal" aria-hidden="true" />
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
@@ -300,7 +300,7 @@ export default async function CharityPage({
           )}
         </Card>
 
-        <Card className="p-5">
+        <Card className="p-4">
           <div className="flex items-center gap-2">
             <BookOpenCheckIcon className="size-5 text-brand-teal" aria-hidden="true" />
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
@@ -370,7 +370,7 @@ export default async function CharityPage({
         </Card>
       </div>
 
-      <Card className="p-5">
+      <Card className="p-4">
         <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Open scholarship programmes
         </h2>

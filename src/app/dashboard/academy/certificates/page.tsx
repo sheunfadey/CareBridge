@@ -24,7 +24,7 @@ export default async function CertificatesPage() {
   const certificates = await listIssuedCertificates(user);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Academy"
         title="Certificates"
@@ -42,7 +42,7 @@ export default async function CertificatesPage() {
       />
 
       {certificates.length === 0 ? (
-        <Card className="p-6 text-center">
+        <Card className="p-5 text-center">
           <ShieldCheckIcon className="mx-auto size-8 text-muted-foreground" />
           <p className="mt-2 font-heading font-semibold text-brand-strong">
             No certificates yet
@@ -58,7 +58,7 @@ export default async function CertificatesPage() {
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
           {certificates.map((certificate) => (
-            <Card key={certificate.id} className="p-5">
+            <Card key={certificate.id} className="p-4">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="font-heading font-semibold text-brand-strong">

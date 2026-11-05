@@ -63,7 +63,7 @@ export default async function ManageCoursePage({
     user.isSuperAdmin || user.permissions.has("assessment_manage");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Academy management"
         title={course.title}
@@ -105,7 +105,7 @@ export default async function ManageCoursePage({
       </div>
 
       <Card className="overflow-hidden p-0">
-        <div className="flex flex-wrap items-start justify-between gap-3 border-b p-5">
+        <div className="flex flex-wrap items-start justify-between gap-3 border-b p-4">
           <div>
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Assessments
@@ -125,7 +125,7 @@ export default async function ManageCoursePage({
           ) : null}
         </div>
         {assessments.length === 0 ? (
-          <p className="p-5 text-sm text-muted-foreground">
+          <p className="p-4 text-sm text-muted-foreground">
             No assessments yet. Create one, add questions, then publish it.
           </p>
         ) : (
@@ -134,7 +134,7 @@ export default async function ManageCoursePage({
               <li key={assessment.id}>
                 <Link
                   href={`/dashboard/academy/manage/${course.id}/assessments/${assessment.id}`}
-                  className="flex flex-wrap items-center justify-between gap-3 p-5 text-sm transition hover:bg-muted/50"
+                  className="flex flex-wrap items-center justify-between gap-3 p-4 text-sm transition hover:bg-muted/50"
                 >
                   <div>
                     <p className="font-medium text-brand-strong">
@@ -169,7 +169,7 @@ export default async function ManageCoursePage({
         )}
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="space-y-4">
           <div className="flex items-center justify-between gap-3">
             <h2 className="font-heading text-base font-semibold text-brand-strong">
@@ -186,7 +186,7 @@ export default async function ManageCoursePage({
           </div>
 
           {course.modules.length === 0 ? (
-            <Card className="p-6 text-center">
+            <Card className="p-5 text-center">
               <p className="font-heading font-semibold text-brand-strong">
                 No modules yet
               </p>
@@ -197,7 +197,7 @@ export default async function ManageCoursePage({
           ) : (
             course.modules.map((module) => (
               <Card key={module.id} className="overflow-hidden">
-                <div className="flex items-start justify-between gap-3 border-b p-5">
+                <div className="flex items-start justify-between gap-3 border-b p-4">
                   <div>
                     <p className="font-heading font-semibold text-brand-strong">
                       Module {module.position}: {module.title}
@@ -223,7 +223,7 @@ export default async function ManageCoursePage({
                   ) : null}
                 </div>
                 {module.lessons.length === 0 ? (
-                  <p className="p-5 text-sm text-muted-foreground">
+                  <p className="p-4 text-sm text-muted-foreground">
                     No lessons in this module yet.
                   </p>
                 ) : (
@@ -261,7 +261,7 @@ export default async function ManageCoursePage({
         </div>
 
         <div className="space-y-4">
-          <Card className="p-5">
+          <Card className="p-4">
             <p className="font-heading font-semibold text-brand-strong">
               Course details
             </p>

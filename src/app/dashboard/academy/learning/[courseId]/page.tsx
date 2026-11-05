@@ -56,7 +56,7 @@ export default async function LearningCoursePage({
     : 0;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="My Learning"
         title={course.title}
@@ -74,7 +74,7 @@ export default async function LearningCoursePage({
         }
       />
 
-      <Card className="p-5">
+      <Card className="p-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="font-heading font-semibold text-brand-strong">
@@ -102,7 +102,7 @@ export default async function LearningCoursePage({
       </Card>
 
       <Card className="overflow-hidden p-0">
-        <div className="flex items-center gap-2 border-b p-5">
+        <div className="flex items-center gap-2 border-b p-4">
           <ClipboardCheckIcon className="size-5 text-brand-teal" aria-hidden="true" />
           <div>
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
@@ -115,13 +115,13 @@ export default async function LearningCoursePage({
           </div>
         </div>
         {assessments.length === 0 ? (
-          <p className="p-5 text-sm text-muted-foreground">
+          <p className="p-4 text-sm text-muted-foreground">
             No assessments have been published for this course yet.
           </p>
         ) : (
           <div className="divide-y divide-border">
             {assessments.map((assessment) => (
-              <div key={assessment.id} className="p-5">
+              <div key={assessment.id} className="p-4">
                 <AssessmentRunner
                   assessmentId={assessment.id}
                   title={assessment.title}
@@ -142,11 +142,11 @@ export default async function LearningCoursePage({
         )}
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="space-y-4">
           {course.modules.map((module) => (
             <Card key={module.id} className="overflow-hidden">
-              <div className="border-b p-5">
+              <div className="border-b p-4">
                 <p className="font-heading font-semibold text-brand-strong">
                   Module {module.position}: {module.title}
                 </p>
@@ -222,7 +222,7 @@ export default async function LearningCoursePage({
           ))}
         </div>
         <div className="space-y-4">
-          <Card className="p-5">
+          <Card className="p-4">
             <p className="font-heading font-semibold text-brand-strong">
               Resources
             </p>
@@ -256,7 +256,7 @@ export default async function LearningCoursePage({
             )}
           </Card>
           {course.completedAt ? (
-            <Card className="p-5 text-center">
+            <Card className="p-4 text-center">
               <PlayCircleIcon className="mx-auto size-8 text-brand-green" />
               <p className="mt-2 font-heading font-semibold text-brand-strong">
                 Course completed

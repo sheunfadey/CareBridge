@@ -47,7 +47,7 @@ export default async function ScholarshipsAdminPage({
   const canManage = await context.can("scholarship_manage");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Charity"
         title="Scholarships"

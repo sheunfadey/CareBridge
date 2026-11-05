@@ -14,7 +14,7 @@ export default async function NotificationsPage() {
   const notifications = await listNotifications(50);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Account"
         title="Notifications"

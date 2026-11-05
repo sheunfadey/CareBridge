@@ -28,7 +28,7 @@ export default async function NewJobPage() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Employment"
         title="Create a job posting"
@@ -46,7 +46,7 @@ export default async function NewJobPage() {
         }
       />
 
-      <Card className="p-5 sm:p-6">
+      <Card className="p-4 sm:p-5">
         <CreateJobForm organisations={organisations} />
       </Card>
     </div>
