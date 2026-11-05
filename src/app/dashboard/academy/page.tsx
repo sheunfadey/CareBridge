@@ -52,12 +52,19 @@ export default async function AcademyPage() {
               <Link href="/courses">Browse catalogue</Link>
             </Button>
             {canManage ? (
-              <Button asChild>
-                <Link href="/dashboard/academy/manage">
-                  <PlusIcon />
-                  Manage courses
-                </Link>
-              </Button>
+              <>
+                <Button variant="outline" asChild>
+                  <Link href="/dashboard/academy/manage/categories">
+                    Categories
+                  </Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/dashboard/academy/manage">
+                    <PlusIcon />
+                    Manage courses
+                  </Link>
+                </Button>
+              </>
             ) : null}
           </>
         }

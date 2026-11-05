@@ -7,6 +7,7 @@ import {
   SettingsIcon,
   ShieldAlertIcon,
   ShieldCheckIcon,
+  TagsIcon,
   UsersIcon,
 } from "lucide-react";
 
@@ -33,6 +34,12 @@ const sections = [
     description: "Approve, verify and manage organisations across every tenant.",
     href: "/dashboard/admin/organisations",
     icon: Building2Icon,
+  },
+  {
+    title: "Course categories",
+    description: "Manage the shared course taxonomy used by the Academy catalogue.",
+    href: "/dashboard/academy/manage/categories",
+    icon: TagsIcon,
   },
   {
     title: "Audit log",
