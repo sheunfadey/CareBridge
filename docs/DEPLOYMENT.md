@@ -35,6 +35,19 @@ in the hosting provider for production.
 Secrets belong only in server environment configuration. Only `NEXT_PUBLIC_*`
 values reach the browser.
 
+### Current production deployment
+
+- Vercel project: `ayb21/carebridge` (owner: `sheunfadey@gmail.com`)
+- Production URL: `https://carebridge-indol.vercel.app`
+- `NEXT_PUBLIC_APP_URL` must be set to that URL in Vercel.
+- Supabase Auth Site URL and redirect allow-list must include
+  `https://carebridge-indol.vercel.app/auth/callback` and
+  `https://carebridge-indol.vercel.app/reset-password`.
+- Paystack test keys are configured with `PAYSTACK_MODE=sandbox` and
+  `PAYSTACK_TRANSFERS_ENABLED=false`. Register
+  `https://carebridge-indol.vercel.app/api/payments/webhook/paystack` as the
+  Paystack webhook and use the same secret for `PAYSTACK_WEBHOOK_SECRET`.
+
 ## 3. Database setup
 
 1. Create the Supabase project.

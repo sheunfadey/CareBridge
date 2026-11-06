@@ -36,7 +36,8 @@ external configuration. It is updated as each phase lands.
   evaluations, incidents, completion records and agreement acceptance.
 - **Employment (Phase 5)**: job postings with draft/publish/close lifecycle,
   applications, applicant review, withdrawal, interviews and offers.
-- **Payments (Phase 6, complete; live provider pending credentials)**: Paystack
+- **Payments (Phase 6, complete; test provider configured, live keys pending)**:
+  Paystack
   provider abstraction, server-side verification, signature-checked and
   idempotent webhooks, paid course checkout, refunds, finance payment review and
   reconciliation pages.
@@ -77,14 +78,17 @@ external configuration. It is updated as each phase lands.
 
 ### Not yet implemented or not yet verified
 
-- **No provider credentials are configured.** Paystack checkout, refunds and
-  transfers have not been exercised end-to-end against sandbox or live. Add
-  `PAYSTACK_SECRET_KEY` (and `PAYSTACK_WEBHOOK_SECRET`) to enable checkout.
+- **Paystack test credentials are configured** on the production deployment. The
+  account currently returns “No active channel to process transaction”, so a test
+  charge cannot be completed until a payment channel is enabled in the Paystack
+  dashboard. Live keys are not configured.
 - **Provider transfers are disabled by default.** Even with a key, payouts can
   only be sent when `PAYSTACK_TRANSFERS_ENABLED=true`; the business must approve
   the arrangement first.
-- **No webhook is registered with Paystack** for this deployment. Until it is,
-  successful payments rely on the server-side verification on callback/refresh.
+- **The Paystack webhook URL is not registered yet.** Successful payments
+  currently rely on server-side verification during callback/refresh. Register
+  `https://<domain>/api/payments/webhook/paystack` with the same webhook secret
+  for durable webhook processing.
 - **Email delivery is not enabled.** `EMAIL_PROVIDER` defaults to `console`, so
   emails are logged, not delivered. Set `EMAIL_PROVIDER=resend` plus
   `EMAIL_PROVIDER_API_KEY` and a verified `EMAIL_FROM_ADDRESS` to deliver.
@@ -173,7 +177,8 @@ external configuration. It is updated as each phase lands.
 | ----------- | ---------- |
 | Email provider | API key + verified sender domain |
 | SMS provider | Provider account (later phase) |
-| Paystack checkout | Secret key + registered webhook URL and secret |
+| Paystack checkout | Test keys configured; payment channel activation + webhook registration |
+| Paystack live checkout | Live secret/public keys |
 | Paystack transfers | Business approval + `PAYSTACK_TRANSFERS_ENABLED=true` |
 | Error monitoring | DSN (optional) |
 
@@ -227,6 +232,6 @@ external configuration. It is updated as each phase lands.
 - Phase 7/8/9/10 SQL - migrations `0016`-`0036` apply cleanly, and the invariants
   pass against both an embedded PostgreSQL instance and the live project.
 
-Live provider-dependent flows (Paystack checkout/webhooks/refunds/transfers,
-Resend delivery, and non-course file uploads) remain pending credentials and are
-not claimed as verified.
+Live provider-dependent flows (Paystack live checkout/transfers and webhook
+registration, Resend delivery, and non-course file uploads) remain pending
+credentials and are not claimed as verified.

@@ -1,6 +1,6 @@
 import "server-only";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 import { getPublicEnv } from "@/lib/env";
 import { getPaymentProvider } from "@/lib/payments/provider";
@@ -25,6 +25,22 @@ export type VerifyPaymentResult = {
 
 function toJson(value: unknown): Json {
   return (value ?? {}) as Json;
+}
+
+async function resolveAppUrl(): Promise<string> {
+  const env = getPublicEnv();
+  try {
+    const requestHeaders = await headers();
+    const host =
+      requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host");
+    const proto = requestHeaders.get("x-forwarded-proto") ?? "https";
+    if (host) {
+      return `${proto}://${host}`;
+    }
+  } catch {
+    // Fall back to the configured public URL outside a request context.
+  }
+  return env.NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
 }
 
 /**
@@ -140,7 +156,7 @@ export async function createCourseCheckout(
   }
 
   const reference = `cb_${crypto.randomUUID().replaceAll("-", "")}`;
-  const env = getPublicEnv();
+  const appUrl = await resolveAppUrl();
 
   const { data: transaction, error: insertError } = await admin
     .from("payment_transactions")
@@ -184,7 +200,7 @@ export async function createCourseCheckout(
       amountMinorUnits: course.price_minor_units,
       currency: course.currency,
       reference,
-      callbackUrl: `${env.NEXT_PUBLIC_APP_URL}/api/payments/callback`,
+      callbackUrl: `${appUrl}/api/payments/callback`,
       metadata: {
         transaction_id: transaction.id,
         course_id: course.id,

@@ -115,7 +115,7 @@ non-super-admins from escalating themselves.
   publishing, published job browsing, applications with status tracking,
   employer applicant review, interviews and formal offers with candidate
   responses.
-- **Payments (Phase 6, complete; live checkout pending credentials)** - Paystack
+- **Payments (Phase 6, complete; test checkout configured)** - Paystack
   behind a provider abstraction, server-side verification, signed and idempotent
   webhooks, course checkout, refunds with an append-only ledger, and finance
   reconciliation pages.
