@@ -23,7 +23,7 @@ export async function SiteFooter() {
             <p className="max-w-xs text-sm text-white/70">
               {brand.shortDescription}
             </p>
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white/75">
               <a
                 href={`mailto:${brand.supportEmail}`}
                 className="underline-offset-4 hover:text-white hover:underline"
@@ -56,7 +56,7 @@ export async function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/50 sm:flex-row sm:items-center">
+        <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/70 sm:flex-row sm:items-center">
           <p>
             © {year} {brand.name}. {brand.tagline}
           </p>

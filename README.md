@@ -24,7 +24,7 @@ mobile-first).
 | 7 | Care-home operations | Complete (core modules) |
 | 8 | Charity & scholarships | Complete (core modules) |
 | 9 | Analytics & subscriptions | Complete (core modules) |
-| 10 | QA & production readiness | Not started |
+| 10 | QA & production readiness | Complete |
 
 ## Tech stack
 

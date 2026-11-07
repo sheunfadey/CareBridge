@@ -132,7 +132,7 @@
   --brand-sky: #0c2a4d;
   --brand-light-green: #0a2a1c;
   --brand-ivory: #071a3a;
-  --brand-slate: #a6b7c6;
+  --brand-slate: #c2cfdc;
   --brand-strong: #eaf2ff;
   --background: var(--brand-dark);
   --foreground: #eaf2ff;
@@ -145,7 +145,7 @@
   --secondary: #0c2a4d;
   --secondary-foreground: #eaf2ff;
   --muted: #0c2a4d;
-  --muted-foreground: #94a8b8;
+  --muted-foreground: #c2cfdc;
   --accent: #0c2a4d;
   --accent-foreground: #eaf2ff;
   --destructive: #ef6b6b;

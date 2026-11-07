@@ -42,7 +42,7 @@ export default function AuthLayout({ children }: LayoutProps<"/">) {
             employment pathways and care operations across Nigeria.
           </p>
         </div>
-        <p className="relative text-xs text-white/50">
+        <p className="relative text-xs text-white/70">
           {brand.name} · {brand.currency} · {brand.timeZone}
         </p>
       </aside>

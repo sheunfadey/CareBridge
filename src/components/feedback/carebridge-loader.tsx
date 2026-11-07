@@ -46,7 +46,7 @@ export function CareBridgeLoader({
         </div>
 
         <p className="mt-4 text-sm text-white/70">{message}</p>
-        <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-white/40">
+        <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-white/60">
           {brand.name}
         </p>
       </div>
