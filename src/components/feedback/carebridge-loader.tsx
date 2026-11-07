@@ -1,6 +1,6 @@
 import { cn } from "cn";
 
-import { AnimatedCareBridgeLogo } from "@/components/brand/animated-carebridge-logo";
+import { CareBridgeLogo } from "@/components/brand/carebridge-logo";
 import { brand } from "@/config/brand";
 
 type CareBridgeLoaderProps = {
@@ -35,11 +35,14 @@ export function CareBridgeLoader({
       />
 
       <div className="relative flex flex-col items-center px-6 text-center">
-        <AnimatedCareBridgeLogo
-          size={compact ? "lg" : "xl"}
-          tone="onDark"
-          showTagline
-        />
+        <div className="cb-loader-logo">
+          <CareBridgeLogo
+            variant="stacked"
+            size={compact ? "lg" : "xl"}
+            tone="onDark"
+            showTagline
+          />
+        </div>
 
         <div className="mt-8 h-px w-44 overflow-hidden rounded-full bg-white/15">
           <span className="cb-loader-line block h-full w-1/3 rounded-full bg-gradient-to-r from-brand-blue via-brand-bright-blue to-brand-green" />

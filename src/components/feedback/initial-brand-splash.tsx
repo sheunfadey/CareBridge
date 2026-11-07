@@ -12,7 +12,7 @@ export function InitialBrandSplash() {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setVisible(false), 1800);
+    const timer = window.setTimeout(() => setVisible(false), 1400);
     return () => window.clearTimeout(timer);
   }, []);
 
