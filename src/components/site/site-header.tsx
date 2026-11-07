@@ -9,6 +9,7 @@ import { useTheme } from "next-themes";
 
 import { CareBridgeLogo } from "@/components/brand/carebridge-logo";
 import { Button } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/client";
 import {
   Sheet,
   SheetClose,
@@ -23,7 +24,19 @@ import { cn } from "cn";
 function SiteHeaderContent() {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
+  const [signedIn, setSignedIn] = React.useState(false);
   const { theme, setTheme } = useTheme();
+
+  React.useEffect(() => {
+    let active = true;
+    const supabase = createClient();
+    void supabase.auth.getUser().then(({ data }) => {
+      if (active) setSignedIn(Boolean(data.user));
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
@@ -79,11 +92,15 @@ function SiteHeaderContent() {
             <MoonIcon className="absolute size-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           </Button>
           <Button variant="ghost" size="sm" asChild>
-            <Link href="/login">Sign in</Link>
+            <Link href={signedIn ? "/dashboard" : "/login"}>
+              {signedIn ? "Dashboard" : "Sign in"}
+            </Link>
           </Button>
-          <Button size="sm" asChild>
-            <Link href="/register">Get started</Link>
-          </Button>
+          {signedIn ? null : (
+            <Button size="sm" asChild>
+              <Link href="/register">Get started</Link>
+            </Button>
+          )}
         </div>
 
         <Sheet open={open} onOpenChange={setOpen}>
@@ -145,14 +162,18 @@ function SiteHeaderContent() {
                 </Button>
                 <SheetClose asChild>
                   <Button variant="outline" asChild>
-                    <Link href="/login">Sign in</Link>
+                    <Link href={signedIn ? "/dashboard" : "/login"}>
+                      {signedIn ? "Dashboard" : "Sign in"}
+                    </Link>
                   </Button>
                 </SheetClose>
-                <SheetClose asChild>
-                  <Button asChild>
-                    <Link href="/register">Get started</Link>
-                  </Button>
-                </SheetClose>
+                {signedIn ? null : (
+                  <SheetClose asChild>
+                    <Button asChild>
+                      <Link href="/register">Get started</Link>
+                    </Button>
+                  </SheetClose>
+                )}
               </div>
             </nav>
           </SheetContent>
