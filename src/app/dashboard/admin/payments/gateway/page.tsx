@@ -10,9 +10,11 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import { requireSuperAdminPage } from "@/server/admin/require-super-admin";
 import {
   areTransfersEnabled,
+  getPaymentGatewaySettings,
   isPaymentProviderConfigured,
 } from "@/lib/payments/provider";
 import { TestPaymentGatewayButton } from "@/features/payments/components/test-gateway-button";
+import { PaymentGatewayForm } from "@/features/payments/components/payment-gateway-form";
 
 export const metadata: Metadata = {
   title: "Payment gateway",
@@ -21,14 +23,15 @@ export const metadata: Metadata = {
 export default async function PaymentGatewayPage() {
   await requireSuperAdminPage("/dashboard/admin/payments/gateway");
 
-  const configured = isPaymentProviderConfigured();
-  const transfers = areTransfersEnabled();
-  const mode =
-    process.env.PAYSTACK_MODE?.toLowerCase() === "live" ? "Live" : "Sandbox";
+  const configured = await isPaymentProviderConfigured();
+  const transfers = await areTransfersEnabled();
+  const gateway = await getPaymentGatewaySettings();
+  const mode = gateway.mode === "live" ? "Live" : "Sandbox";
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
   const webhookUrl = `${appUrl.replace(/\/$/, "")}/api/payments/webhook/paystack`;
-  const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY;
-  const keyHint = publicKey ? `•••• ${publicKey.slice(-4)}` : "Not configured";
+  const keyHint = gateway.publicKey
+    ? `•••• ${gateway.publicKey.slice(-4)}`
+    : "Not configured";
 
   return (
     <div className="space-y-4 lg:space-y-5">
@@ -78,32 +81,37 @@ export default async function PaymentGatewayPage() {
           </div>
           <div className="space-y-2 text-sm text-muted-foreground">
             <p>
-              Test secret and public keys are read from the server environment.
-              Secrets are never shown in this console.
+              Enter or rotate Paystack keys here. Saved keys are server-side only
+              and are never returned to the browser.
             </p>
             <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="outline">PAYSTACK_SECRET_KEY</Badge>
+              <Badge variant="outline">Secret key</Badge>
               <StatusBadge
-                status={configured ? "active" : "inactive"}
-                label={configured ? "Configured" : "Missing"}
-                tone={configured ? "success" : "error"}
+                status={gateway.hasSecret ? "active" : "inactive"}
+                label={gateway.hasSecret ? "Configured" : "Missing"}
+                tone={gateway.hasSecret ? "success" : "error"}
               />
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="outline">PAYSTACK_WEBHOOK_SECRET</Badge>
+              <Badge variant="outline">Webhook secret</Badge>
               <StatusBadge
-                status={process.env.PAYSTACK_WEBHOOK_SECRET ? "active" : "inactive"}
-                label={
-                  process.env.PAYSTACK_WEBHOOK_SECRET ? "Configured" : "Missing"
-                }
-                tone={process.env.PAYSTACK_WEBHOOK_SECRET ? "success" : "error"}
+                status={gateway.hasWebhookSecret ? "active" : "inactive"}
+                label={gateway.hasWebhookSecret ? "Configured" : "Missing"}
+                tone={gateway.hasWebhookSecret ? "success" : "error"}
               />
             </div>
-            <p>
-              Add or rotate keys in Vercel → Project → Settings → Environment
-              Variables, then redeploy.
+            <p className="text-xs">
+              Active source:{" "}
+              {gateway.source === "database"
+                ? "saved gateway settings"
+                : "environment variables"}
             </p>
           </div>
+
+          <PaymentGatewayForm
+            mode={gateway.mode}
+            publicKey={gateway.publicKey}
+          />
           <TestPaymentGatewayButton />
         </Card>
 

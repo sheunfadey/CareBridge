@@ -8,6 +8,7 @@ import { adminService } from "@/server/admin/admin-service";
 import { isEmailDeliveryConfigured } from "@/lib/email/provider";
 import {
   areTransfersEnabled,
+  getPaymentGatewaySettings,
   isPaymentProviderConfigured,
 } from "@/lib/payments/provider";
 
@@ -28,10 +29,10 @@ export default async function AdminSettingsPage() {
 
   const serviceRole = adminService.isAvailable();
   const email = isEmailDeliveryConfigured();
-  const paymentProvider = isPaymentProviderConfigured();
-  const transfers = areTransfersEnabled();
-  const paystackMode =
-    process.env.PAYSTACK_MODE?.toLowerCase() === "live" ? "Live" : "Sandbox";
+  const paymentProvider = await isPaymentProviderConfigured();
+  const transfers = await areTransfersEnabled();
+  const gateway = await getPaymentGatewaySettings();
+  const paystackMode = gateway.mode === "live" ? "Live" : "Sandbox";
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
   const webhookUrl = `${appUrl.replace(/\/$/, "")}/api/payments/webhook/paystack`;
 

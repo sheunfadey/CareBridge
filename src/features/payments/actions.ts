@@ -17,6 +17,10 @@ import {
   verifyPaymentByReference,
 } from "@/server/payments/service";
 import { refundPaymentSchema } from "@/lib/validation/payments";
+import {
+  paymentGatewaySettingsSchema,
+  type PaymentGatewaySettingsInput,
+} from "@/lib/validation/payments";
 
 export type PaymentActionResult =
   | { ok: true; message: string; redirectTo?: string }
@@ -120,11 +124,90 @@ export async function verifyPaymentAction(
   }
 }
 
+export async function savePaymentGatewaySettingsAction(
+  input: PaymentGatewaySettingsInput,
+): Promise<PaymentActionResult> {
+  const parsed = paymentGatewaySettingsSchema.safeParse(input);
+  if (!parsed.success) {
+    const fieldErrors: Record<string, string[]> = {};
+    for (const issue of parsed.error.issues) {
+      const key = String(issue.path[0] ?? "form");
+      fieldErrors[key] = [...(fieldErrors[key] ?? []), issue.message];
+    }
+    return {
+      ok: false,
+      message: "Please correct the highlighted fields.",
+      fieldErrors,
+    };
+  }
+
+  try {
+    const user = await requireUser();
+    if (!user.isSuperAdmin) {
+      return {
+        ok: false,
+        message: "Only a platform super administrator can update payment keys.",
+      };
+    }
+
+    const admin = createAdminClient();
+    if (!admin) {
+      return {
+        ok: false,
+        message: "Payment settings require the service-role client.",
+      };
+    }
+
+    const payload: Record<string, unknown> = {
+      id: true,
+      provider: "paystack",
+      mode: parsed.data.mode,
+      updated_by: user.id,
+      updated_at: new Date().toISOString(),
+    };
+    const updated: string[] = ["mode"];
+    if (parsed.data.publicKey) {
+      payload.public_key = parsed.data.publicKey;
+      updated.push("public_key");
+    }
+    if (parsed.data.secretKey) {
+      payload.secret_key = parsed.data.secretKey;
+      updated.push("secret_key");
+    }
+    if (parsed.data.webhookSecret) {
+      payload.webhook_secret = parsed.data.webhookSecret;
+      updated.push("webhook_secret");
+    }
+
+    const { error } = await admin
+      .from("payment_gateway_settings")
+      .upsert(payload as never, { onConflict: "id" });
+
+    if (error) {
+      return { ok: false, message: "We could not save the payment settings." };
+    }
+
+    await recordAudit({
+      actorId: user.id,
+      action: "payment.gateway_settings_updated",
+      entityType: "payment_gateway_settings",
+      entityId: "paystack",
+      metadata: { mode: parsed.data.mode, updated },
+    });
+
+    revalidatePath("/dashboard/admin/payments/gateway");
+    revalidatePath("/dashboard/admin/settings");
+    revalidatePath("/dashboard/admin/system");
+    return { ok: true, message: "Paystack settings saved." };
+  } catch (error) {
+    return friendlyError(error);
+  }
+}
+
 export async function testPaymentGatewayAction(): Promise<{
   ok: boolean;
   message: string;
-}> {
-  try {
+}> {  try {
     const user = await requireUser();
     if (!user.isSuperAdmin) {
       return {
@@ -133,7 +216,7 @@ export async function testPaymentGatewayAction(): Promise<{
       };
     }
 
-    const provider = getPaymentProvider();
+    const provider = await getPaymentProvider();
     if (!provider.configured) {
       return {
         ok: false,
@@ -226,7 +309,7 @@ export async function refundPaymentAction(input: {
       };
     }
 
-    const provider = getPaymentProvider();
+    const provider = await getPaymentProvider();
     if (!provider.configured) {
       return { ok: false, message: "Payments are not configured." };
     }

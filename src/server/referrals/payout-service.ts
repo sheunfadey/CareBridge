@@ -22,7 +22,7 @@ export type PayoutTransferResult = {
 export async function attemptPayoutTransfer(
   payoutId: string,
 ): Promise<PayoutTransferResult> {
-  const provider = getPaymentProvider();
+  const provider = await getPaymentProvider();
   if (!provider.configured) {
     return { ok: false, message: "Payments are not configured on this server." };
   }

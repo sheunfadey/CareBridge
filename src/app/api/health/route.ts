@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { connection } from "next/server";
 
+import {
+  areTransfersEnabled,
+  getPaymentGatewaySettings,
+} from "@/lib/payments/provider";
+
 /**
  * Lightweight production health signal. It reports configuration booleans only
  * and never exposes secrets. Database reachability is checked by the smoke test
@@ -9,15 +14,16 @@ import { connection } from "next/server";
 export async function GET() {
   await connection();
 
+  const gateway = await getPaymentGatewaySettings();
   const checks = {
     supabaseConfigured: Boolean(
       process.env.NEXT_PUBLIC_SUPABASE_URL &&
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     ),
     serviceRoleConfigured: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
-    paymentsConfigured: Boolean(process.env.PAYSTACK_SECRET_KEY),
-    webhookSecretConfigured: Boolean(process.env.PAYSTACK_WEBHOOK_SECRET),
-    transfersEnabled: process.env.PAYSTACK_TRANSFERS_ENABLED === "true",
+    paymentsConfigured: gateway.hasSecret,
+    webhookSecretConfigured: gateway.hasWebhookSecret,
+    transfersEnabled: await areTransfersEnabled(),
     emailProvider: process.env.EMAIL_PROVIDER === "resend" ? "resend" : "console",
   };
 

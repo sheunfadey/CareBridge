@@ -9,6 +9,7 @@ import { getPlatformStats } from "@/server/admin/platform-stats";
 import { isEmailDeliveryConfigured } from "@/lib/email/provider";
 import {
   areTransfersEnabled,
+  getPaymentGatewaySettings,
   isPaymentProviderConfigured,
 } from "@/lib/payments/provider";
 
@@ -21,11 +22,11 @@ export default async function SystemPage() {
 
   const stats = await getPlatformStats();
   const serviceRole = adminService.isAvailable();
-  const payments = isPaymentProviderConfigured();
-  const transfers = areTransfersEnabled();
+  const payments = await isPaymentProviderConfigured();
+  const transfers = await areTransfersEnabled();
+  const gateway = await getPaymentGatewaySettings();
   const email = isEmailDeliveryConfigured();
-  const paystackMode =
-    process.env.PAYSTACK_MODE?.toLowerCase() === "live" ? "Live" : "Sandbox";
+  const paystackMode = gateway.mode === "live" ? "Live" : "Sandbox";
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
   const checks: {

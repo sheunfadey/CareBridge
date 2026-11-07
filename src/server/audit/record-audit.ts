@@ -90,6 +90,7 @@ export type AuditAction =
   | "payment.verified"
   | "payment.failed"
   | "payment.refunded"
+  | "payment.gateway_settings_updated"
   | "referral.partner.applied"
   | "referral.partner.reviewed"
   | "referral.policy.saved"

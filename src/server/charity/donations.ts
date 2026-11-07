@@ -29,7 +29,7 @@ export async function createDonationCheckout(
     message?: string;
   },
 ): Promise<DonationCheckoutResult> {
-  const provider = getPaymentProvider();
+  const provider = await getPaymentProvider();
   if (!provider.configured) {
     return {
       ok: false,

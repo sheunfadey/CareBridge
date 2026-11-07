@@ -52,7 +52,7 @@ export async function createCourseCheckout(
   user: CurrentUser,
   courseId: string,
 ): Promise<CheckoutResult> {
-  const provider = getPaymentProvider();
+  const provider = await getPaymentProvider();
   if (!provider.configured) {
     return {
       ok: false,
@@ -265,7 +265,7 @@ export async function createCourseCheckout(
 export async function verifyPaymentByReference(
   reference: string,
 ): Promise<VerifyPaymentResult> {
-  const provider = getPaymentProvider();
+  const provider = await getPaymentProvider();
   if (!provider.configured) {
     return {
       status: "unknown",
@@ -397,7 +397,7 @@ export async function processPaymentWebhook(
   rawBody: string,
   signature: string | null,
 ): Promise<WebhookResult> {
-  const provider = getPaymentProvider();
+  const provider = await getPaymentProvider();
   if (!provider.verifyWebhookSignature(rawBody, signature)) {
     return { status: 401, message: "Invalid signature" };
   }

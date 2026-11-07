@@ -4114,6 +4114,47 @@ export type Database = {
           },
         ]
       }
+      payment_gateway_settings: {
+        Row: {
+          id: boolean
+          mode: string
+          provider: string
+          public_key: string | null
+          secret_key: string | null
+          updated_at: string
+          updated_by: string | null
+          webhook_secret: string | null
+        }
+        Insert: {
+          id?: boolean
+          mode?: string
+          provider?: string
+          public_key?: string | null
+          secret_key?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          webhook_secret?: string | null
+        }
+        Update: {
+          id?: boolean
+          mode?: string
+          provider?: string
+          public_key?: string | null
+          secret_key?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          webhook_secret?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_gateway_settings_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       payment_refunds: {
         Row: {
           amount_minor_units: number

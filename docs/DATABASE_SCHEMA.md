@@ -32,6 +32,7 @@ preserved.
 | `0036` | Private Supabase Storage bucket and policies for uploaded course resources |
 | `0037` | Organisation creator select policy so a new organisation can be read back with `INSERT ... RETURNING` |
 | `0038` | Additional course resource kinds: spreadsheet and ZIP/archive |
+| `0039` | Server-only Paystack gateway settings entered by a superadmin |
 
 ## Core tenancy
 

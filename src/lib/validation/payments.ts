@@ -297,6 +297,34 @@ export const refundPaymentSchema = z.object({
 
 export type RefundPaymentInput = z.infer<typeof refundPaymentSchema>;
 
+export const paymentGatewaySettingsSchema = z
+  .object({
+    mode: z.enum(["sandbox", "live"]),
+    publicKey: z.string().trim().max(300).optional().or(z.literal("")),
+    secretKey: z.string().trim().max(300).optional().or(z.literal("")),
+    webhookSecret: z.string().trim().max(300).optional().or(z.literal("")),
+  })
+  .superRefine((value, context) => {
+    if (value.publicKey && !value.publicKey.startsWith("pk_")) {
+      context.addIssue({
+        code: "custom",
+        path: ["publicKey"],
+        message: "Paystack public keys start with pk_.",
+      });
+    }
+    if (value.secretKey && !value.secretKey.startsWith("sk_")) {
+      context.addIssue({
+        code: "custom",
+        path: ["secretKey"],
+        message: "Paystack secret keys start with sk_.",
+      });
+    }
+  });
+
+export type PaymentGatewaySettingsInput = z.infer<
+  typeof paymentGatewaySettingsSchema
+>;
+
 /**
  * Pure preview of a commission calculation. The authoritative calculation runs
  * in the database (`apply_payment_success`); this mirrors it for admin previews

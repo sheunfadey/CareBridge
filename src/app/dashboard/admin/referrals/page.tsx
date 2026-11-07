@@ -42,7 +42,7 @@ export default async function AdminReferralsPage() {
   ]);
 
   const data = await getAdminReferralData(user);
-  const transfersEnabled = areTransfersEnabled();
+  const transfersEnabled = await areTransfersEnabled();
   const currency = data.policies[0]?.currency ?? "NGN";
 
   const pendingPartners = data.partners.filter(
