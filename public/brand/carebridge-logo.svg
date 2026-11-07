@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700" fill="none" role="img" aria-label="CareBridge">
+    <g transform="translate(302 24) scale(0.58)">
+    <g stroke-linecap="round" stroke-linejoin="round">
+      <path d="M256 104C204 30 96 38 62 132C32 214 86 312 192 390" stroke="#087FE5" stroke-width="30"/>
+      <path d="M256 104C308 30 416 38 450 132C480 214 426 312 320 390" stroke="#20C840" stroke-width="30"/>
+      <path d="M256 104C204 30 96 38 62 132C32 214 86 312 192 390" stroke="#08B7F0" stroke-width="7" opacity="0.22"/>
+      <path d="M256 104C308 30 416 38 450 132C480 214 426 312 320 390" stroke="#FFFFFF" stroke-width="6" opacity="0.14"/>
+      <path d="M162 248L256 158L350 248" stroke="#102B5C" stroke-width="20"/>
+      <g fill="#102B5C">
+        <rect x="244" y="198" width="11" height="11" rx="2"/>
+        <rect x="261" y="198" width="11" height="11" rx="2"/>
+        <rect x="244" y="215" width="11" height="11" rx="2"/>
+        <rect x="261" y="215" width="11" height="11" rx="2"/>
+      </g>
+      <circle cx="198" cy="246" r="36" fill="#087FE5"/>
+      <path d="M150 360C146 304 168 280 198 274C228 280 250 304 246 360Z" fill="#087FE5"/>
+      <path d="M232 300C274 306 300 322 320 342" stroke="#087FE5" stroke-width="22"/>
+      <circle cx="326" cy="266" r="32" fill="#20C840"/>
+      <path d="M284 360C284 316 302 296 326 292C354 296 372 318 372 360Z" fill="#20C840"/>
+      <path d="M334 360V332C334 320 342 314 350 314C358 314 366 320 366 332V360" stroke="#FFFFFF" stroke-width="10"/>
+      <path d="M84 416C190 366 322 366 428 416" stroke="#FFFFFF" stroke-width="42"/>
+      <path d="M84 416C190 366 322 366 428 416" stroke="#087FE5" stroke-width="26"/>
+      <path d="M104 407C206 367 320 367 408 407" stroke="#08B7F0" stroke-width="6" opacity="0.5"/>
+    </g></g>
+    <text x="450" y="474" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="120" font-weight="700" letter-spacing="-4" fill="#102B5C">Care<tspan fill="#20C840">Bridge</tspan></text>
+    <text x="450" y="540" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-style="italic" fill="#172B4D">Learn to Care. Grow Your Career. Make a Difference.</text>
+    <path d="M250 600Q450 630 650 600" stroke="#20C840" stroke-width="7" fill="none" stroke-linecap="round"/>
+  </svg>

@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { AnimatedCareBridgeLogo } from "@/components/brand/animated-carebridge-logo";
 import { FaqAccordion } from "@/components/site/faq-accordion";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
 import {
@@ -46,8 +47,8 @@ export default function HomePage() {
     <>
       {/* Hero */}
       <SiteSection tone="ivory" className="relative overflow-hidden">
-        <div aria-hidden="true" className="pointer-events-none absolute -top-24 right-0 h-72 w-72 rounded-full bg-gradient-to-br from-brand-teal/10 to-brand-green/10 blur-3xl" />
-        <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 left-0 h-80 w-80 rounded-full bg-gradient-to-tr from-brand-coral/10 to-brand-sky/20 blur-3xl" />
+        <div aria-hidden="true" className="pointer-events-none absolute -top-24 right-0 h-72 w-72 rounded-full bg-gradient-to-br from-brand-blue/10 to-brand-green/10 blur-3xl" />
+        <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 left-0 h-80 w-80 rounded-full bg-gradient-to-tr from-brand-bright-blue/10 to-brand-sky/20 blur-3xl" />
         <div className="relative grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="space-y-6">
             <span className="inline-flex items-center gap-2 rounded-full border border-brand-teal/30 bg-gradient-to-r from-brand-sky/80 to-brand-green/10 px-3 py-1 text-xs font-medium text-brand-teal shadow-sm">
@@ -56,7 +57,7 @@ export default function HomePage() {
             </span>
             <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl lg:text-6xl">
               Build a Career in Care.
-              <span className="bg-gradient-to-r from-brand-teal via-brand-green to-brand-coral bg-clip-text text-transparent block">
+              <span className="bg-gradient-to-r from-brand-blue via-brand-green to-brand-bright-blue bg-clip-text text-transparent block">
                 Help Someone Live Better.
               </span>
             </h1>
@@ -67,7 +68,7 @@ export default function HomePage() {
               safe, dignified care.
             </p>
             <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" className="bg-gradient-to-r from-brand-teal to-brand-green shadow-lg transition hover:scale-[1.02] hover:shadow-xl" asChild>
+              <Button size="lg" className="bg-gradient-to-r from-brand-blue to-brand-green shadow-lg transition hover:scale-[1.02] hover:shadow-xl" asChild>
                 <Link href="/caregiver-training">Explore Training</Link>
               </Button>
               <Button size="lg" variant="outline" className="border-brand-teal/40 hover:bg-brand-sky/60" asChild>
@@ -81,13 +82,16 @@ export default function HomePage() {
           </div>
 
           <div className="relative">
-            <div aria-hidden="true" className="absolute -right-10 -top-10 hidden h-40 w-40 animate-float rounded-full bg-gradient-to-br from-brand-coral/20 to-brand-teal/10 blur-2xl lg:block" />
+            <div aria-hidden="true" className="absolute -right-10 -top-10 hidden h-40 w-40 animate-float rounded-full bg-gradient-to-br from-brand-bright-blue/20 to-brand-blue/10 blur-2xl lg:block" />
+            <div className="mb-6 flex justify-center lg:justify-start">
+              <AnimatedCareBridgeLogo size="lg" showTagline />
+            </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {[
-                { icon: GraduationCapIcon, title: "Structured training", body: "Modules, lessons and assessments that record real progress.", gradient: "from-brand-teal/15 to-brand-sky/40" },
-                { icon: ClipboardListIcon, title: "Practical competency", body: "Supervised placements with competency recorded as you go.", gradient: "from-brand-green/15 to-brand-ivory" },
+                { icon: GraduationCapIcon, title: "Structured training", body: "Modules, lessons and assessments that record real progress.", gradient: "from-brand-blue/15 to-brand-sky/40" },
+                { icon: ClipboardListIcon, title: "Practical competency", body: "Supervised placements with competency recorded as you go.", gradient: "from-brand-green/15 to-brand-light-green" },
                 { icon: Building2Icon, title: "Care operations", body: "Residents, staff, shifts, care records and reporting.", gradient: "from-brand-navy/10 to-brand-sky/30" },
-                { icon: HeartHandshakeIcon, title: "Charity and access", body: "Scholarships and campaigns that widen access to training.", gradient: "from-brand-coral/15 to-brand-ivory" },
+                { icon: HeartHandshakeIcon, title: "Charity and access", body: "Scholarships and campaigns that widen access to training.", gradient: "from-brand-bright-blue/15 to-brand-light-green" },
               ].map((card) => (
                 <div
                   key={card.title}
@@ -96,7 +100,7 @@ export default function HomePage() {
                   <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${card.gradient}`} />
                   <span
                     aria-hidden="true"
-                    className="relative flex size-10 items-center justify-center rounded-lg bg-gradient-to-br from-brand-teal to-brand-green text-white shadow-md transition-transform group-hover:scale-110"
+                    className="relative flex size-10 items-center justify-center rounded-lg bg-gradient-to-br from-brand-blue to-brand-green text-white shadow-md transition-transform group-hover:scale-110"
                   >
                     <card.icon className="size-5" />
                   </span>

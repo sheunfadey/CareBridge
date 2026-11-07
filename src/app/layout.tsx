@@ -44,16 +44,22 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/brand/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico" },
+      { url: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
     ],
-    apple: [{ url: "/brand/pwa-192.png", sizes: "192x192" }],
+    apple: [
+      {
+        url: "/brand/apple-touch-icon.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
   },
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: brand.colors.teal },
-    { media: "(prefers-color-scheme: dark)", color: brand.colors.dark },
+    { media: "(prefers-color-scheme: light)", color: brand.colors.navy },
+    { media: "(prefers-color-scheme: dark)", color: brand.colors.deepNavy },
   ],
   width: "device-width",
   initialScale: 1,

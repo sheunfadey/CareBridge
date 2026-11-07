@@ -36,17 +36,18 @@ import { brand } from "@/config/brand";
 
 const paletteTokens = [
   ["Primary navy", "brand-navy", brand.colors.navy],
-  ["Care teal", "brand-teal", brand.colors.teal],
-  ["Growth green", "brand-green", brand.colors.green],
-  ["Warm coral", "brand-coral", brand.colors.coral],
-  ["Soft sky", "brand-sky", brand.colors.sky],
-  ["Warm ivory", "brand-ivory", brand.colors.ivory],
+  ["Primary blue", "brand-blue", brand.colors.blue],
+  ["Bright blue", "brand-bright-blue", brand.colors.brightBlue],
+  ["Care green", "brand-green", brand.colors.green],
+  ["Deep green", "brand-deep-green", brand.colors.deepGreen],
+  ["Light green", "brand-light-green", brand.colors.lightGreen],
+  ["Light background", "brand-ivory", brand.colors.ivory],
   ["Primary text", "brand-ink", brand.colors.ink],
   ["Secondary text", "brand-slate", brand.colors.slate],
   ["Warning", "brand-warning", brand.colors.warning],
   ["Error", "brand-error", brand.colors.error],
   ["Success", "brand-success", brand.colors.success],
-  ["Dark surface", "brand-dark-surface", brand.colors.darkSurface],
+  ["Deep navy", "brand-dark-surface", brand.colors.darkSurface],
 ] as const;
 
 const typeScale = [

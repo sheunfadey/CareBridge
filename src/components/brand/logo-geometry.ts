@@ -13,8 +13,8 @@ export const logoGeometry = {
 } as const;
 
 export const logoTones = {
-  default: { figure: "#12304A", arch: "#0F8B8D", wordmark: "#12304A" },
-  onDark: { figure: "#EAF4F7", arch: "#2FB3B5", wordmark: "#FFFFFF" },
+  default: { figure: "#102B5C", arch: "#087FE5", wordmark: "#102B5C" },
+  onDark: { figure: "#FFFFFF", arch: "#08B7F0", wordmark: "#FFFFFF" },
 } as const;
 
 export type LogoSize = "sm" | "md" | "lg" | "xl";
@@ -24,8 +24,8 @@ export const logoSizeMap: Record<
   LogoSize,
   { icon: number; wordmark: string; tagline: string; gap: string }
 > = {
-  sm: { icon: 28, wordmark: "text-base", tagline: "text-[10px]", gap: "gap-2" },
-  md: { icon: 34, wordmark: "text-lg", tagline: "text-[11px]", gap: "gap-2.5" },
-  lg: { icon: 44, wordmark: "text-2xl", tagline: "text-xs", gap: "gap-3" },
-  xl: { icon: 64, wordmark: "text-4xl", tagline: "text-sm", gap: "gap-4" },
+  sm: { icon: 34, wordmark: "text-base", tagline: "text-[10px]", gap: "gap-2" },
+  md: { icon: 42, wordmark: "text-lg", tagline: "text-[11px]", gap: "gap-2.5" },
+  lg: { icon: 54, wordmark: "text-2xl", tagline: "text-xs", gap: "gap-3" },
+  xl: { icon: 72, wordmark: "text-4xl", tagline: "text-sm", gap: "gap-4" },
 };

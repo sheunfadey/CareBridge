@@ -1,5 +1,6 @@
 import { cn } from "cn";
 
+import { AnimatedCareBridgeLogo } from "@/components/brand/animated-carebridge-logo";
 import { LogoMark } from "@/components/brand/logo-mark";
 import {
   logoSizeMap,
@@ -9,10 +10,12 @@ import {
 import { brand } from "@/config/brand";
 
 type CareBridgeLogoProps = {
-  variant?: "full" | "stacked" | "icon";
+  variant?: "full" | "stacked" | "icon" | "light" | "dark";
   size?: LogoSize;
   tone?: LogoTone;
+  animated?: boolean;
   showTagline?: boolean;
+  showWordmark?: boolean;
   className?: string;
   markClassName?: string;
 };
@@ -21,33 +24,69 @@ export function CareBridgeLogo({
   variant = "full",
   size = "md",
   tone = "default",
+  animated = false,
   showTagline = false,
+  showWordmark = true,
   className,
   markClassName,
 }: CareBridgeLogoProps) {
   const scale = logoSizeMap[size];
+  const resolvedTone: LogoTone =
+    variant === "light"
+      ? "onDark"
+      : variant === "dark"
+        ? "default"
+        : tone;
+  const isIcon = variant === "icon" || !showWordmark;
+  const isStacked = variant === "stacked";
   const wordmarkColor =
-    tone === "mono"
-      ? "currentColor"
-      : tone === "onDark"
+    resolvedTone === "mono"
+      ? "text-current"
+      : resolvedTone === "onDark"
         ? "text-white"
         : "text-brand-strong";
+  const bridgeColor =
+    resolvedTone === "mono" ? "text-current" : "text-brand-green";
   const taglineColor =
-    tone === "onDark" ? "text-white/70" : "text-brand-slate";
+    resolvedTone === "onDark" ? "text-white/75" : "text-brand-slate";
 
-  if (variant === "icon") {
+  if (animated && !isIcon) {
+    return (
+      <AnimatedCareBridgeLogo
+        size={size}
+        tone={resolvedTone}
+        showTagline={showTagline}
+        className={className}
+      />
+    );
+  }
+
+  if (isIcon) {
     return (
       <span
         role="img"
         aria-label={brand.name}
         className={cn("inline-flex items-center", className)}
       >
-        <LogoMark size={scale.icon} tone={tone} className={markClassName} />
+        <LogoMark size={scale.icon} tone={resolvedTone} className={markClassName} />
       </span>
     );
   }
 
-  if (variant === "stacked") {
+  const wordmark = (
+    <span
+      className={cn(
+        "font-heading font-semibold tracking-[-0.035em]",
+        scale.wordmark,
+        wordmarkColor,
+      )}
+    >
+      Care
+      <span className={bridgeColor}>Bridge</span>
+    </span>
+  );
+
+  if (isStacked) {
     return (
       <span
         role="img"
@@ -58,21 +97,13 @@ export function CareBridgeLogo({
           className,
         )}
       >
-        <LogoMark size={scale.icon} tone={tone} className={markClassName} />
+        <LogoMark size={scale.icon} tone={resolvedTone} className={markClassName} />
         <span className="flex flex-col items-center gap-1">
-          <span
-            className={cn(
-              "font-heading font-semibold tracking-tight",
-              scale.wordmark,
-              wordmarkColor,
-            )}
-          >
-            {brand.name}
-          </span>
+          {wordmark}
           {showTagline ? (
             <span
               className={cn(
-                "max-w-[18rem] text-balance leading-snug",
+                "max-w-[22rem] text-balance leading-snug",
                 scale.tagline,
                 taglineColor,
               )}
@@ -91,17 +122,9 @@ export function CareBridgeLogo({
       aria-label={brand.name}
       className={cn("inline-flex items-center", scale.gap, className)}
     >
-      <LogoMark size={scale.icon} tone={tone} className={markClassName} />
+      <LogoMark size={scale.icon} tone={resolvedTone} className={markClassName} />
       <span className="flex flex-col leading-none">
-        <span
-          className={cn(
-            "font-heading font-semibold tracking-tight",
-            scale.wordmark,
-            wordmarkColor,
-          )}
-        >
-          {brand.name}
-        </span>
+        {wordmark}
         {showTagline ? (
           <span className={cn("mt-1.5", scale.tagline, taglineColor)}>
             {brand.tagline}

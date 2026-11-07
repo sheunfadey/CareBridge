@@ -27,7 +27,7 @@ export default function AuthLayout({ children }: LayoutProps<"/">) {
           className="pointer-events-none absolute inset-0 opacity-90"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 20% 20%, #0F8B8D33 0%, transparent 45%), radial-gradient(circle at 85% 75%, #2E9D6833 0%, transparent 45%)",
+              "radial-gradient(circle at 20% 20%, #087FE533 0%, transparent 45%), radial-gradient(circle at 85% 75%, #20C84033 0%, transparent 45%)",
           }}
         />
         <div className="relative">
