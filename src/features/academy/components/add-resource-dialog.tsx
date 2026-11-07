@@ -222,13 +222,17 @@ export function AddResourceDialog({
                       ? ".doc,.docx,.odt,.rtf,.txt,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                       : kind === "presentation"
                         ? ".ppt,.pptx,.odp,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation"
-                        : kind === "audio"
-                          ? "audio/*"
-                          : kind === "video"
-                            ? "video/*"
-                            : kind === "image"
-                              ? "image/*"
-                              : undefined
+                        : kind === "spreadsheet"
+                          ? ".xls,.xlsx,.ods,.csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv"
+                          : kind === "audio"
+                            ? "audio/*"
+                            : kind === "video"
+                              ? "video/*"
+                              : kind === "image"
+                                ? "image/*"
+                                : kind === "zip"
+                                  ? ".zip,.rar,.7z,application/zip,application/x-zip-compressed,application/x-rar-compressed,application/x-7z-compressed"
+                                  : undefined
                 }
                 onChange={(event) => setFile(event.target.files?.[0] ?? null)}
               />

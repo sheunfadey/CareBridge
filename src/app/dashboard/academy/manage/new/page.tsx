@@ -40,7 +40,7 @@ export default async function NewCoursePage() {
       <PageHeader
         eyebrow="Academy management"
         title="New course"
-        description="Create a draft course. You can add modules and lessons before publishing."
+        description="Create a draft course. After creating it, add modules and lessons, then upload PDFs, documents, audio, video, images, ZIP archives or links from Learning resources."
         breadcrumbs={[
           { label: "Dashboard", href: "/dashboard" },
           { label: "Academy", href: "/dashboard/academy" },

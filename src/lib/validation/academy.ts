@@ -179,9 +179,11 @@ export const LEARNING_RESOURCE_KINDS = [
   "document",
   "pdf",
   "presentation",
+  "spreadsheet",
   "audio",
   "video",
   "image",
+  "zip",
   "link",
   "other",
 ] as const;
@@ -193,9 +195,11 @@ export const learningResourceKindLabels: Record<
   document: "Document",
   pdf: "PDF",
   presentation: "Presentation",
+  spreadsheet: "Spreadsheet",
   audio: "Audio",
   video: "Video",
   image: "Image",
+  zip: "ZIP / archive",
   link: "Link",
   other: "Other",
 };

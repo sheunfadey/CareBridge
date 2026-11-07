@@ -90,6 +90,11 @@ export default async function ManageCoursePage({
             <Button variant="outline" asChild>
               <Link href={`/courses/${course.slug}`}>View public page</Link>
             </Button>
+            {canAddContent ? (
+              <Button variant="outline" asChild>
+                <a href="#learning-resources">Upload resource</a>
+              </Button>
+            ) : null}
             {canPublish ? (
               <PublishCourseButton
                 courseId={course.id}
@@ -180,7 +185,7 @@ export default async function ManageCoursePage({
         )}
       </Card>
 
-      <Card className="overflow-hidden p-0">
+      <Card id="learning-resources" className="scroll-mt-24 overflow-hidden p-0">
         <div className="flex flex-wrap items-start justify-between gap-3 border-b p-4">
           <div>
             <h2 className="font-heading text-lg font-semibold text-brand-strong">

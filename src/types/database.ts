@@ -7989,6 +7989,8 @@ export type Database = {
         | "image"
         | "link"
         | "other"
+        | "spreadsheet"
+        | "zip"
       medication_status:
         | "scheduled"
         | "administered"
@@ -8405,6 +8407,8 @@ export const Constants = {
         "image",
         "link",
         "other",
+        "spreadsheet",
+        "zip",
       ],
       medication_status: [
         "scheduled",

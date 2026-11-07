@@ -30,6 +30,8 @@ preserved.
 | `0034` | Course creator select policy so new drafts are readable with `INSERT ... RETURNING` |
 | `0035` | Course categories and typed learning resources |
 | `0036` | Private Supabase Storage bucket and policies for uploaded course resources |
+| `0037` | Organisation creator select policy so a new organisation can be read back with `INSERT ... RETURNING` |
+| `0038` | Additional course resource kinds: spreadsheet and ZIP/archive |
 
 ## Core tenancy
 
