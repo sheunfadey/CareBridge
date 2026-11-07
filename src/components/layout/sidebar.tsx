@@ -8,7 +8,7 @@ import * as LucideIcons from "lucide-react";
 import { cn } from "cn";
 
 import { CareBridgeLogo } from "@/components/brand/carebridge-logo";
-import { primaryNav } from "@/config/navigation";
+import { primaryNav, superAdminNav } from "@/config/navigation";
 import type { NavItem } from "@/config/navigation";
 import { Badge } from "@/components/ui/badge";
 
@@ -21,7 +21,7 @@ function NavIcon({ name, className }: { name: string; className?: string }) {
 }
 
 function isActivePath(pathname: string, href: string) {
-  if (href === "/dashboard") {
+  if (href === "/dashboard" || href === "/dashboard/admin") {
     return pathname === href;
   }
   return pathname === href || pathname.startsWith(`${href}/`);
@@ -42,7 +42,8 @@ export function Sidebar({
 }: SidebarProps) {
   const pathname = usePathname();
 
-  const visibleGroups = primaryNav
+  const navigation = isSuperAdmin ? superAdminNav : primaryNav;
+  const visibleGroups = navigation
     .map((group) => ({
       ...group,
       items: group.items.filter(

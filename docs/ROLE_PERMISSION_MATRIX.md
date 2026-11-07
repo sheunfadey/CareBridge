@@ -29,7 +29,7 @@ check.
 
 | Role | Capabilities |
 | --- | --- |
-| `super_admin` | All permissions; platform administration, all tenants and billing |
+| `super_admin` | Platform operations console only: organisations, users, subscriptions/plans, payments, reconciliation, referrals, system/APIs, audit and settings. Does not operate tenant care, academy or charity workspaces |
 | `platform_support` | Read-oriented support: users, organisations, courses, incidents, compliance, audit, subscription view |
 | `training_admin` | Academy management and publishing, assessments, internships, financial reporting, organisation subscription and reports |
 | `instructor` | Course creation, management and publishing, learning materials, assessments and practical assessment recording |

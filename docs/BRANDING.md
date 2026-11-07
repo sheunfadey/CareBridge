@@ -39,7 +39,8 @@ The CSS tokens live in `src/app/globals.css`; the shared colours live in
 - `CareBridgeLogo` — full, stacked, icon, light and dark variants.
 - `AnimatedCareBridgeLogo` — staged entrance animation.
 - `CareBridgeLoader` — full-screen navy loading scene.
+- `InitialBrandSplash` — one-time startup splash mounted by `AppProviders`.
 - `AppLoadingScreen` / `RouteLoadingFallback` — contained loading states.
 
-The hero uses the animated logo, and `src/app/loading.tsx` uses the full-screen
-loader. The dashboard keeps its compact skeleton loader during navigation.
+The hero uses the animated logo. Dashboard navigation uses the compact skeleton
+loader; the full-screen animation does not replay on every route change.

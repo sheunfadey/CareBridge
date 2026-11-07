@@ -16,6 +16,39 @@ export type NavGroup = {
   items: NavItem[];
 };
 
+export const superAdminNav: NavGroup[] = [
+  {
+    label: "Overview",
+    items: [
+      { label: "Platform overview", href: "/dashboard/admin", icon: "LayoutDashboard" },
+      { label: "Notifications", href: "/dashboard/notifications", icon: "Bell" },
+      { label: "Support inbox", href: "/dashboard/messages", icon: "MessageSquare" },
+    ],
+  },
+  {
+    label: "Platform",
+    items: [
+      { label: "Organisations", href: "/dashboard/admin/organisations", icon: "Building2" },
+      { label: "Users", href: "/dashboard/admin/users", icon: "Users" },
+      { label: "Subscriptions & plans", href: "/dashboard/admin/subscriptions", icon: "CreditCard" },
+      { label: "Payments", href: "/dashboard/admin/payments", icon: "Wallet" },
+      { label: "Reconciliation", href: "/dashboard/admin/reconciliation", icon: "Scale" },
+      { label: "Referral administration", href: "/dashboard/admin/referrals", icon: "BadgeDollarSign" },
+      { label: "Course categories", href: "/dashboard/academy/manage/categories", icon: "Tags" },
+      { label: "System & APIs", href: "/dashboard/admin/system", icon: "Activity" },
+      { label: "Audit log", href: "/dashboard/admin/audit", icon: "ScrollText" },
+      { label: "Platform settings", href: "/dashboard/admin/settings", icon: "Settings" },
+    ],
+  },
+  {
+    label: "Account",
+    items: [
+      { label: "Settings", href: "/dashboard/settings", icon: "Settings" },
+      { label: "Help Centre", href: "/dashboard/help", icon: "LifeBuoy" },
+    ],
+  },
+];
+
 export const primaryNav: NavGroup[] = [
   {
     label: "Overview",

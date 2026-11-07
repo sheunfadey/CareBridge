@@ -243,7 +243,16 @@ and write.
 - **History**. Messages are append-only; corrections are new messages. No direct
   insert, update or delete policies exist on messages.
 
-### Cross-tenant isolation
+### Platform operations console
+
+The platform super administrator is a monitoring and support role, not a tenant
+operator. The superadmin navigation and dashboard expose organisations, users,
+subscriptions and plans, payments, reconciliation, referral administration,
+course taxonomy, system/API health, audit and settings. Operational care, academy
+learning/management and charity workspaces stay with organisation owners and
+their teams. `/dashboard` redirects superadmins to `/dashboard/admin`.
+
+## Cross-tenant isolation
 
 `supabase/tests/rls_isolation.sql` seeds two tenants and asserts — as an
 authenticated user of tenant A — that tenant A cannot read or write tenant B's

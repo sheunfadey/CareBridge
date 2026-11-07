@@ -51,6 +51,10 @@ export default async function DashboardPage() {
     redirect("/login?redirectTo=%2Fdashboard");
   }
 
+  if (user.isSuperAdmin) {
+    redirect("/dashboard/admin");
+  }
+
   const [
     facts,
     care,

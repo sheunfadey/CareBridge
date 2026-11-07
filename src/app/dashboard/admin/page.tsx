@@ -2,13 +2,19 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import {
+  ActivityIcon,
+  BadgeDollarSignIcon,
   Building2Icon,
+  CreditCardIcon,
+  MessageSquareIcon,
+  ScaleIcon,
   ScrollTextIcon,
   SettingsIcon,
   ShieldAlertIcon,
   ShieldCheckIcon,
   TagsIcon,
   UsersIcon,
+  WalletIcon,
 } from "lucide-react";
 
 import { PageHeader } from "@/components/layout/page-header";
@@ -17,6 +23,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { getCurrentUser } from "@/server/auth/current-user";
 import { adminService } from "@/server/admin/admin-service";
+import { getPlatformStats } from "@/server/admin/platform-stats";
 
 export const metadata: Metadata = {
   title: "Platform administration",
@@ -36,10 +43,46 @@ const sections = [
     icon: Building2Icon,
   },
   {
+    title: "Subscriptions & plans",
+    description: "Plans, trials, lifecycle events, module limits and billing records.",
+    href: "/dashboard/admin/subscriptions",
+    icon: CreditCardIcon,
+  },
+  {
+    title: "Payments",
+    description: "Review customer payments, verification states and refunds.",
+    href: "/dashboard/admin/payments",
+    icon: WalletIcon,
+  },
+  {
+    title: "Reconciliation",
+    description: "Match provider settlements against the platform ledger.",
+    href: "/dashboard/admin/reconciliation",
+    icon: ScaleIcon,
+  },
+  {
+    title: "Referral administration",
+    description: "Commission policies, partner approvals and payout controls.",
+    href: "/dashboard/admin/referrals",
+    icon: BadgeDollarSignIcon,
+  },
+  {
     title: "Course categories",
     description: "Manage the shared course taxonomy used by the Academy catalogue.",
     href: "/dashboard/academy/manage/categories",
     icon: TagsIcon,
+  },
+  {
+    title: "Support messages",
+    description: "Organisation-scoped support conversations and message history.",
+    href: "/dashboard/messages",
+    icon: MessageSquareIcon,
+  },
+  {
+    title: "System & APIs",
+    description: "Health, integrations, API endpoints and maintenance status.",
+    href: "/dashboard/admin/system",
+    icon: ActivityIcon,
   },
   {
     title: "Audit log",
@@ -68,12 +111,13 @@ export default async function AdminPage() {
 
   const available = adminService.isAvailable();
 
-  const [pendingOrgCount, userCount] = available
+  const [pendingOrgCount, userCount, stats] = available
     ? await Promise.all([
         adminService.countPendingOrganisations(),
         adminService.countProfiles(),
+        getPlatformStats(),
       ])
-    : [null, null];
+    : [null, null, null];
 
   return (
     <div className="space-y-4 lg:space-y-5">
@@ -137,6 +181,61 @@ export default async function AdminPage() {
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             Required for cross-tenant writes
+          </p>
+        </Card>
+        <Card className="p-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
+            Active subscriptions
+          </p>
+          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+            {stats ? stats.activeSubscriptions : "—"}
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {stats ? `${stats.trialingSubscriptions} on trial` : "Awaiting data"}
+          </p>
+        </Card>
+        <Card className="p-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
+            Suspended
+          </p>
+          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+            {stats ? stats.suspendedSubscriptions : "—"}
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Read-only workspaces
+          </p>
+        </Card>
+        <Card className="p-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
+            Payments pending
+          </p>
+          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+            {stats ? stats.pendingPayments : "—"}
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Initiated or awaiting verification
+          </p>
+        </Card>
+        <Card className="p-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
+            Organisations
+          </p>
+          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+            {stats ? stats.organisations : "—"}
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            {stats ? `${stats.activeOrganisations} active` : "Awaiting data"}
+          </p>
+        </Card>
+        <Card className="p-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
+            Support conversations
+          </p>
+          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+            {stats ? stats.conversations : "—"}
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Organisation-scoped threads
           </p>
         </Card>
       </div>

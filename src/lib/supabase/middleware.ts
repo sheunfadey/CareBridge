@@ -62,5 +62,47 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  if (user && (pathname === "/dashboard" || pathname.startsWith("/onboarding"))) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("is_super_admin")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (profile?.is_super_admin) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/dashboard/admin";
+      url.search = "";
+      return NextResponse.redirect(url);
+    }
+  }
+
+  if (user && pathname.startsWith("/dashboard")) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("is_super_admin")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (profile?.is_super_admin) {
+      const allowed =
+        pathname.startsWith("/dashboard/admin") ||
+        pathname.startsWith("/dashboard/notifications") ||
+        pathname.startsWith("/dashboard/messages") ||
+        pathname.startsWith("/dashboard/settings") ||
+        pathname.startsWith("/dashboard/help") ||
+        pathname === "/dashboard/reports" ||
+        pathname.startsWith("/dashboard/reports/") ||
+        pathname.startsWith("/dashboard/academy/manage/categories");
+
+      if (!allowed) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/dashboard/admin";
+        url.search = "";
+        return NextResponse.redirect(url);
+      }
+    }
+  }
+
   return supabaseResponse;
 }

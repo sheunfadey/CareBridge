@@ -5,10 +5,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BellIcon,
+  Building2Icon,
   GraduationCapIcon,
   LayoutDashboardIcon,
   MenuIcon,
   MessageSquareIcon,
+  UsersIcon,
 } from "lucide-react";
 import { cn } from "cn";
 
@@ -22,14 +24,21 @@ import {
 } from "@/components/ui/sheet";
 
 function isActivePath(pathname: string, href: string) {
-  if (href === "/dashboard") return pathname === href;
+  if (href === "/dashboard" || href === "/dashboard/admin") return pathname === href;
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-const shortcuts = [
+const learnerShortcuts = [
   { label: "Home", href: "/dashboard", icon: LayoutDashboardIcon },
   { label: "Academy", href: "/dashboard/academy", icon: GraduationCapIcon },
   { label: "Messages", href: "/dashboard/messages", icon: MessageSquareIcon },
+  { label: "Alerts", href: "/dashboard/notifications", icon: BellIcon },
+] as const;
+
+const superAdminShortcuts = [
+  { label: "Overview", href: "/dashboard/admin", icon: LayoutDashboardIcon },
+  { label: "Organisations", href: "/dashboard/admin/organisations", icon: Building2Icon },
+  { label: "Users", href: "/dashboard/admin/users", icon: UsersIcon },
   { label: "Alerts", href: "/dashboard/notifications", icon: BellIcon },
 ] as const;
 
@@ -44,6 +53,7 @@ export function MobileNav({
 }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const shortcuts = isSuperAdmin ? superAdminShortcuts : learnerShortcuts;
 
   return (
     <nav
