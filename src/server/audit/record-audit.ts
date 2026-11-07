@@ -28,6 +28,7 @@ export type AuditAction =
   | "organisation.status.active"
   | "organisation.status.suspended"
   | "organisation.status.disabled"
+  | "organisation.integration_updated"
   | "organisation.verification.unverified"
   | "organisation.verification.pending"
   | "organisation.verification.verified"

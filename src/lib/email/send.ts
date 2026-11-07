@@ -10,8 +10,9 @@ import type { EmailMessage, EmailSendResult } from "@/lib/email/types";
  */
 export async function sendEmail(
   message: EmailMessage,
+  organisationId?: string | null,
 ): Promise<EmailSendResult> {
-  const provider = getEmailProvider();
+  const provider = await getEmailProvider(organisationId);
 
   if (!provider.isConfigured()) {
     return {

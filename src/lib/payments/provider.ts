@@ -11,9 +11,32 @@ type GatewaySettings = {
   publicKey: string | undefined;
 };
 
-async function loadGatewaySettings(): Promise<GatewaySettings> {
+async function loadGatewaySettings(
+  organisationId?: string | null,
+): Promise<GatewaySettings> {
   const admin = createAdminClient();
   if (admin) {
+    if (organisationId) {
+      const { data: organisationSettings } = await admin
+        .from("organisation_integrations")
+        .select("mode, public_key, secret_key, webhook_secret")
+        .eq("organisation_id", organisationId)
+        .eq("kind", "paystack")
+        .eq("is_enabled", true)
+        .maybeSingle();
+
+      if (organisationSettings?.secret_key?.trim()) {
+        return {
+          mode: organisationSettings.mode === "live" ? "live" : "sandbox",
+          secretKey: organisationSettings.secret_key.trim(),
+          webhookSecret:
+            organisationSettings.webhook_secret?.trim() ||
+            organisationSettings.secret_key.trim(),
+          publicKey: organisationSettings.public_key?.trim() || undefined,
+        };
+      }
+    }
+
     const { data } = await admin
       .from("payment_gateway_settings")
       .select("mode, public_key, secret_key, webhook_secret")
@@ -43,8 +66,10 @@ async function loadGatewaySettings(): Promise<GatewaySettings> {
   };
 }
 
-export async function getPaymentProvider(): Promise<PaymentProvider> {
-  const settings = await loadGatewaySettings();
+export async function getPaymentProvider(
+  organisationId?: string | null,
+): Promise<PaymentProvider> {
+  const settings = await loadGatewaySettings(organisationId);
   return createPaystackProvider({
     secretKey: settings.secretKey,
     webhookSecret: settings.webhookSecret,

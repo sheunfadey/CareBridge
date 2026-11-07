@@ -33,6 +33,7 @@ preserved.
 | `0037` | Organisation creator select policy so a new organisation can be read back with `INSERT ... RETURNING` |
 | `0038` | Additional course resource kinds: spreadsheet and ZIP/archive |
 | `0039` | Server-only Paystack gateway settings entered by a superadmin |
+| `0040` | Per-organisation Paystack, SMS, email and custom API integration settings |
 
 ## Core tenancy
 

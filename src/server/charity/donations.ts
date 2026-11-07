@@ -29,15 +29,6 @@ export async function createDonationCheckout(
     message?: string;
   },
 ): Promise<DonationCheckoutResult> {
-  const provider = await getPaymentProvider();
-  if (!provider.configured) {
-    return {
-      ok: false,
-      message:
-        "Online donations are not configured on this deployment yet. Please try again later.",
-    };
-  }
-
   if (
     !Number.isInteger(input.amountMinorUnits) ||
     input.amountMinorUnits < MIN_DONATION_MINOR_UNITS
@@ -68,6 +59,15 @@ export async function createDonationCheckout(
   }
   if (campaign.status !== "approved" || !campaign.is_public) {
     return { ok: false, message: "This campaign is not open for donations." };
+  }
+
+  const provider = await getPaymentProvider(campaign.organisation_id);
+  if (!provider.configured) {
+    return {
+      ok: false,
+      message:
+        "Online donations are not configured for this organisation yet. Please try again later.",
+    };
   }
 
   const today = new Date().toISOString().slice(0, 10);

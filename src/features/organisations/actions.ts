@@ -322,13 +322,16 @@ async function sendInvitationEmail(input: {
     expiresAt: input.expiresAt,
   });
 
-  const result = await sendEmail({
-    to: { email: input.email },
-    subject: email.subject,
-    html: email.html,
-    text: email.text,
-    tags: { type: "organisation_invitation" },
-  });
+  const result = await sendEmail(
+    {
+      to: { email: input.email },
+      subject: email.subject,
+      html: email.html,
+      text: email.text,
+      tags: { type: "organisation_invitation" },
+    },
+    input.organisationId,
+  );
 
   return result.ok;
 }

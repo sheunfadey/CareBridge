@@ -52,15 +52,6 @@ export async function createCourseCheckout(
   user: CurrentUser,
   courseId: string,
 ): Promise<CheckoutResult> {
-  const provider = await getPaymentProvider();
-  if (!provider.configured) {
-    return {
-      ok: false,
-      message:
-        "Online payments are not configured on this deployment yet. Please contact support.",
-    };
-  }
-
   const supabase = await createClient();
 
   const { data: course, error: courseError } = await supabase
@@ -83,6 +74,15 @@ export async function createCourseCheckout(
     return {
       ok: false,
       message: "This course is free. Use the enrol button instead.",
+    };
+  }
+
+  const provider = await getPaymentProvider(course.organisation_id);
+  if (!provider.configured) {
+    return {
+      ok: false,
+      message:
+        "Online payments are not configured for this organisation yet. Please contact support.",
     };
   }
 
@@ -265,21 +265,29 @@ export async function createCourseCheckout(
 export async function verifyPaymentByReference(
   reference: string,
 ): Promise<VerifyPaymentResult> {
-  const provider = await getPaymentProvider();
-  if (!provider.configured) {
-    return {
-      status: "unknown",
-      reference,
-      message: "Payments are not configured on this deployment.",
-    };
-  }
-
   const admin = createAdminClient();
   if (!admin) {
     return {
       status: "unknown",
       reference,
       message: "Payment verification is unavailable on this server.",
+    };
+  }
+
+  const { data: transaction } = await admin
+    .from("payment_transactions")
+    .select("organisation_id")
+    .eq("reference", reference)
+    .maybeSingle();
+
+  const provider = await getPaymentProvider(
+    transaction?.organisation_id ?? null,
+  );
+  if (!provider.configured) {
+    return {
+      status: "unknown",
+      reference,
+      message: "Payments are not configured for this organisation.",
     };
   }
 
@@ -397,11 +405,6 @@ export async function processPaymentWebhook(
   rawBody: string,
   signature: string | null,
 ): Promise<WebhookResult> {
-  const provider = await getPaymentProvider();
-  if (!provider.verifyWebhookSignature(rawBody, signature)) {
-    return { status: 401, message: "Invalid signature" };
-  }
-
   let payload: PaystackWebhookPayload;
   try {
     payload = JSON.parse(rawBody) as PaystackWebhookPayload;
@@ -422,6 +425,28 @@ export async function processPaymentWebhook(
   const admin = createAdminClient();
   if (!admin) {
     return { status: 503, message: "Server not configured" };
+  }
+
+  const reference =
+    typeof data.reference === "string"
+      ? data.reference
+      : typeof data.transaction_reference === "string"
+        ? data.transaction_reference
+        : null;
+
+  let organisationId: string | null = null;
+  if (reference) {
+    const { data: transaction } = await admin
+      .from("payment_transactions")
+      .select("organisation_id")
+      .eq("reference", reference)
+      .maybeSingle();
+    organisationId = transaction?.organisation_id ?? null;
+  }
+
+  const provider = await getPaymentProvider(organisationId);
+  if (!provider.verifyWebhookSignature(rawBody, signature)) {
+    return { status: 401, message: "Invalid signature" };
   }
 
   const eventId = webhookEventId(event, data);

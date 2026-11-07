@@ -3797,6 +3797,75 @@ export type Database = {
           },
         ]
       }
+      organisation_integrations: {
+        Row: {
+          config: Json
+          created_at: string
+          id: string
+          is_enabled: boolean
+          kind: Database["public"]["Enums"]["organisation_integration_kind"]
+          mode: string | null
+          organisation_id: string
+          provider: string
+          public_key: string | null
+          secret_key: string | null
+          sender_id: string | null
+          sender_name: string | null
+          updated_at: string
+          updated_by: string | null
+          webhook_secret: string | null
+        }
+        Insert: {
+          config?: Json
+          created_at?: string
+          id?: string
+          is_enabled?: boolean
+          kind: Database["public"]["Enums"]["organisation_integration_kind"]
+          mode?: string | null
+          organisation_id: string
+          provider?: string
+          public_key?: string | null
+          secret_key?: string | null
+          sender_id?: string | null
+          sender_name?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          webhook_secret?: string | null
+        }
+        Update: {
+          config?: Json
+          created_at?: string
+          id?: string
+          is_enabled?: boolean
+          kind?: Database["public"]["Enums"]["organisation_integration_kind"]
+          mode?: string | null
+          organisation_id?: string
+          provider?: string
+          public_key?: string | null
+          secret_key?: string | null
+          sender_id?: string | null
+          sender_name?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          webhook_secret?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "organisation_integrations_organisation_id_fkey"
+            columns: ["organisation_id"]
+            isOneToOne: false
+            referencedRelation: "organisations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "organisation_integrations_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organisation_invitations: {
         Row: {
           accepted_at: string | null
@@ -8053,6 +8122,7 @@ export type Database = {
         | "message"
       notification_priority: "low" | "normal" | "high"
       offer_status: "sent" | "accepted" | "declined" | "withdrawn" | "expired"
+      organisation_integration_kind: "paystack" | "sms" | "email" | "custom_api"
       organisation_status: "pending" | "active" | "suspended" | "disabled"
       organisation_type:
         | "platform_academy"
@@ -8474,6 +8544,7 @@ export const Constants = {
       ],
       notification_priority: ["low", "normal", "high"],
       offer_status: ["sent", "accepted", "declined", "withdrawn", "expired"],
+      organisation_integration_kind: ["paystack", "sms", "email", "custom_api"],
       organisation_status: ["pending", "active", "suspended", "disabled"],
       organisation_type: [
         "platform_academy",

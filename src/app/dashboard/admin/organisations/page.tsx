@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { PageHeader } from "@/components/layout/page-header";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
@@ -86,12 +88,21 @@ export default async function AdminOrganisationsPage() {
                       <StatusBadge status={org.status} />
                     </TableCell>
                     <TableCell>
-                      <OrganisationActions
-                        organisationId={org.id}
-                        organisationName={org.name}
-                        status={org.status}
-                        verificationStatus={org.verification_status}
-                      />
+                      <div className="flex flex-wrap items-center justify-end gap-2">
+                        <Button variant="outline" size="sm" asChild>
+                          <Link
+                            href={`/dashboard/admin/organisations/${org.id}/integrations`}
+                          >
+                            Integrations
+                          </Link>
+                        </Button>
+                        <OrganisationActions
+                          organisationId={org.id}
+                          organisationName={org.name}
+                          status={org.status}
+                          verificationStatus={org.verification_status}
+                        />
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -149,12 +160,21 @@ export default async function AdminOrganisationsPage() {
                       <StatusBadge status={org.verification_status} />
                     </TableCell>
                     <TableCell>
-                      <OrganisationActions
-                        organisationId={org.id}
-                        organisationName={org.name}
-                        status={org.status}
-                        verificationStatus={org.verification_status}
-                      />
+                      <div className="flex flex-wrap items-center justify-end gap-2">
+                        <Button variant="outline" size="sm" asChild>
+                          <Link
+                            href={`/dashboard/admin/organisations/${org.id}/integrations`}
+                          >
+                            Integrations
+                          </Link>
+                        </Button>
+                        <OrganisationActions
+                          organisationId={org.id}
+                          organisationName={org.name}
+                          status={org.status}
+                          verificationStatus={org.verification_status}
+                        />
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}

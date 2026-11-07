@@ -286,7 +286,7 @@ export async function refundPaymentAction(input: {
     const { data: transaction } = await admin
       .from("payment_transactions")
       .select(
-        "id, reference, status, amount_minor_units, refunded_amount_minor_units, currency, provider_reference",
+        "id, reference, status, amount_minor_units, refunded_amount_minor_units, currency, provider_reference, organisation_id",
       )
       .eq("reference", input.reference)
       .maybeSingle();
@@ -309,9 +309,9 @@ export async function refundPaymentAction(input: {
       };
     }
 
-    const provider = await getPaymentProvider();
+    const provider = await getPaymentProvider(transaction.organisation_id);
     if (!provider.configured) {
-      return { ok: false, message: "Payments are not configured." };
+      return { ok: false, message: "Payments are not configured for this organisation." };
     }
     if (!transaction.provider_reference) {
       return {
