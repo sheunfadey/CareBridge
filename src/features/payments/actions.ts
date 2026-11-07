@@ -120,6 +120,40 @@ export async function verifyPaymentAction(
   }
 }
 
+export async function testPaymentGatewayAction(): Promise<{
+  ok: boolean;
+  message: string;
+}> {
+  try {
+    const user = await requireUser();
+    if (!user.isSuperAdmin) {
+      return {
+        ok: false,
+        message: "Only a platform super administrator can test the payment gateway.",
+      };
+    }
+
+    const provider = getPaymentProvider();
+    if (!provider.configured) {
+      return {
+        ok: false,
+        message:
+          "Paystack is not configured. Add PAYSTACK_SECRET_KEY to the server environment.",
+      };
+    }
+
+    return await provider.testConnection();
+  } catch (error) {
+    return {
+      ok: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "The payment gateway test failed.",
+    };
+  }
+}
+
 export async function refundPaymentAction(input: {
   reference: string;
   amount: string;

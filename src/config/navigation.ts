@@ -32,6 +32,7 @@ export const superAdminNav: NavGroup[] = [
       { label: "Users", href: "/dashboard/admin/users", icon: "Users" },
       { label: "Subscriptions & plans", href: "/dashboard/admin/subscriptions", icon: "CreditCard" },
       { label: "Payments", href: "/dashboard/admin/payments", icon: "Wallet" },
+      { label: "Payment gateway", href: "/dashboard/admin/payments/gateway", icon: "PlugZap" },
       { label: "Reconciliation", href: "/dashboard/admin/reconciliation", icon: "Scale" },
       { label: "Referral administration", href: "/dashboard/admin/referrals", icon: "BadgeDollarSign" },
       { label: "Course categories", href: "/dashboard/academy/manage/categories", icon: "Tags" },

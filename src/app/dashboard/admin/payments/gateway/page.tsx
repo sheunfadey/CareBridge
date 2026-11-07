@@ -1,0 +1,168 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { CheckCircle2Icon, KeyRoundIcon, WebhookIcon } from "lucide-react";
+
+import { PageHeader } from "@/components/layout/page-header";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { StatusBadge } from "@/components/ui/status-badge";
+import { requireSuperAdminPage } from "@/server/admin/require-super-admin";
+import {
+  areTransfersEnabled,
+  isPaymentProviderConfigured,
+} from "@/lib/payments/provider";
+import { TestPaymentGatewayButton } from "@/features/payments/components/test-gateway-button";
+
+export const metadata: Metadata = {
+  title: "Payment gateway",
+};
+
+export default async function PaymentGatewayPage() {
+  await requireSuperAdminPage("/dashboard/admin/payments/gateway");
+
+  const configured = isPaymentProviderConfigured();
+  const transfers = areTransfersEnabled();
+  const mode =
+    process.env.PAYSTACK_MODE?.toLowerCase() === "live" ? "Live" : "Sandbox";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const webhookUrl = `${appUrl.replace(/\/$/, "")}/api/payments/webhook/paystack`;
+  const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY;
+  const keyHint = publicKey ? `•••• ${publicKey.slice(-4)}` : "Not configured";
+
+  return (
+    <div className="space-y-4 lg:space-y-5">
+      <PageHeader
+        eyebrow="Platform payments"
+        title="Paystack payment gateway"
+        description="Connection status and configuration for organisation course payments, donations and reconciliation."
+        breadcrumbs={[
+          { label: "Dashboard", href: "/dashboard/admin" },
+          { label: "Payments", href: "/dashboard/admin/payments" },
+          { label: "Payment gateway" },
+        ]}
+        actions={
+          <Button variant="outline" asChild>
+            <Link href="/courses/medication-support-in-care">
+              Open paid test course
+            </Link>
+          </Button>
+        }
+      />
+
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {[
+          ["Provider", configured ? "Paystack" : "Not configured"],
+          ["Mode", mode],
+          ["Public key", keyHint],
+          ["Transfers", transfers ? "Enabled" : "Disabled"],
+        ].map(([label, value]) => (
+          <Card key={label} className="p-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
+              {label}
+            </p>
+            <p className="mt-2 font-heading text-lg font-semibold text-brand-strong">
+              {value}
+            </p>
+          </Card>
+        ))}
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Card className="space-y-4 p-4">
+          <div className="flex items-center gap-2">
+            <KeyRoundIcon className="size-5 text-brand-teal" aria-hidden="true" />
+            <h2 className="font-heading text-base font-semibold text-brand-strong">
+              API credentials
+            </h2>
+          </div>
+          <div className="space-y-2 text-sm text-muted-foreground">
+            <p>
+              Test secret and public keys are read from the server environment.
+              Secrets are never shown in this console.
+            </p>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="outline">PAYSTACK_SECRET_KEY</Badge>
+              <StatusBadge
+                status={configured ? "active" : "inactive"}
+                label={configured ? "Configured" : "Missing"}
+                tone={configured ? "success" : "error"}
+              />
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="outline">PAYSTACK_WEBHOOK_SECRET</Badge>
+              <StatusBadge
+                status={process.env.PAYSTACK_WEBHOOK_SECRET ? "active" : "inactive"}
+                label={
+                  process.env.PAYSTACK_WEBHOOK_SECRET ? "Configured" : "Missing"
+                }
+                tone={process.env.PAYSTACK_WEBHOOK_SECRET ? "success" : "error"}
+              />
+            </div>
+            <p>
+              Add or rotate keys in Vercel → Project → Settings → Environment
+              Variables, then redeploy.
+            </p>
+          </div>
+          <TestPaymentGatewayButton />
+        </Card>
+
+        <Card className="space-y-3 p-4">
+          <div className="flex items-center gap-2">
+            <WebhookIcon className="size-5 text-brand-teal" aria-hidden="true" />
+            <h2 className="font-heading text-base font-semibold text-brand-strong">
+              Webhook
+            </h2>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Register this endpoint in Paystack → Settings → API Keys &amp;
+            Webhooks. Use the test secret key as the webhook secret.
+          </p>
+          <code className="block break-all rounded-md bg-muted/60 px-2.5 py-2 text-xs text-brand-strong">
+            {webhookUrl}
+          </code>
+          <div className="rounded-md border border-brand-warning/30 bg-brand-warning/5 p-3 text-xs text-muted-foreground">
+            <p className="font-medium text-brand-strong">Before testing checkout</p>
+            <p className="mt-1">
+              Enable at least one payment channel in the Paystack test dashboard.
+              Otherwise Paystack returns “No active channel to process
+              transaction”.
+            </p>
+          </div>
+        </Card>
+      </div>
+
+      <Card className="space-y-3 p-4">
+        <div className="flex items-center gap-2">
+          <CheckCircle2Icon className="size-5 text-brand-green" aria-hidden="true" />
+          <h2 className="font-heading text-base font-semibold text-brand-strong">
+            Paid course test
+          </h2>
+        </div>
+        <p className="text-sm text-muted-foreground">
+          Use the seed paid course “Medication Support in Care” (₦5,000) to test
+          checkout. Sign in as a student, open the course and choose the paid
+          enrolment action. Payment success is only shown after server-side
+          Paystack verification.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" asChild>
+            <Link href="/courses/medication-support-in-care">
+              Open course
+            </Link>
+          </Button>
+          <Button variant="outline" asChild>
+            <Link href="/dashboard/admin/payments">Review payments</Link>
+          </Button>
+          <Button variant="outline" asChild>
+            <Link href="/dashboard/admin/reconciliation">Reconciliation</Link>
+          </Button>
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Paystack test card: 4084 0840 8408 4081 · CVV 408 · PIN 0000 · OTP
+          123456. Use test mode only.
+        </p>
+      </Card>
+    </div>
+  );
+}

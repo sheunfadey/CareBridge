@@ -247,6 +247,26 @@ export function createPaystackProvider(options: {
       }
     },
 
+    async testConnection(): Promise<{ ok: boolean; message: string }> {
+      try {
+        const balances = await request<{ currency: string; balance: number }[]>(
+          "/balance",
+        );
+        return {
+          ok: true,
+          message: `Connected to Paystack in ${options.mode} mode. ${balances.length} currency balance${balances.length === 1 ? "" : "s"} available.`,
+        };
+      } catch (error) {
+        return {
+          ok: false,
+          message:
+            error instanceof Error
+              ? error.message
+              : "Could not reach the payment provider.",
+        };
+      }
+    },
+
     async createTransferRecipient(input): Promise<TransferRecipient> {
       if (!options.transfersEnabled) {
         throw new PaymentProviderError(

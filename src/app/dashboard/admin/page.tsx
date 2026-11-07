@@ -7,6 +7,7 @@ import {
   Building2Icon,
   CreditCardIcon,
   MessageSquareIcon,
+  PlugZapIcon,
   ScaleIcon,
   ScrollTextIcon,
   SettingsIcon,
@@ -53,6 +54,12 @@ const sections = [
     description: "Review customer payments, verification states and refunds.",
     href: "/dashboard/admin/payments",
     icon: WalletIcon,
+  },
+  {
+    title: "Payment gateway",
+    description: "Paystack credentials, connection test, webhook and paid-course testing.",
+    href: "/dashboard/admin/payments/gateway",
+    icon: PlugZapIcon,
   },
   {
     title: "Reconciliation",

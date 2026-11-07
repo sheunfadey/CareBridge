@@ -53,6 +53,7 @@ export interface PaymentProvider {
   ): Promise<InitializePaymentResult>;
   verifyTransaction(reference: string): Promise<VerifiedPayment>;
   verifyWebhookSignature(rawBody: string, signature: string | null): boolean;
+  testConnection(): Promise<{ ok: boolean; message: string }>;
   createTransferRecipient(input: {
     name: string;
     accountNumber: string;
