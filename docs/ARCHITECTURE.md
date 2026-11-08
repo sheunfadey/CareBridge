@@ -247,10 +247,11 @@ and write.
 
 The platform super administrator is a monitoring and support role, not a tenant
 operator. The superadmin navigation and dashboard expose organisations, users,
-subscriptions and plans, payments, reconciliation, referral administration,
-course taxonomy, system/API health, audit and settings. Operational care, academy
-learning/management and charity workspaces stay with organisation owners and
-their teams. `/dashboard` redirects superadmins to `/dashboard/admin`.
+subscriptions and plans, payments, payment gateway, reconciliation, system/API
+health, support, audit and settings. Operational care, academy learning and
+management, course taxonomy, charity and referral workspaces stay with
+organisation owners and their teams. `/dashboard` redirects superadmins to
+`/dashboard/admin`.
 
 ## Cross-tenant isolation
 

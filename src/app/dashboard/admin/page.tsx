@@ -3,7 +3,6 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import {
   ActivityIcon,
-  BadgeDollarSignIcon,
   Building2Icon,
   CreditCardIcon,
   MessageSquareIcon,
@@ -13,7 +12,6 @@ import {
   SettingsIcon,
   ShieldAlertIcon,
   ShieldCheckIcon,
-  TagsIcon,
   UsersIcon,
   WalletIcon,
 } from "lucide-react";
@@ -66,18 +64,6 @@ const sections = [
     description: "Match provider settlements against the platform ledger.",
     href: "/dashboard/admin/reconciliation",
     icon: ScaleIcon,
-  },
-  {
-    title: "Referral administration",
-    description: "Commission policies, partner approvals and payout controls.",
-    href: "/dashboard/admin/referrals",
-    icon: BadgeDollarSignIcon,
-  },
-  {
-    title: "Course categories",
-    description: "Manage the shared course taxonomy used by the Academy catalogue.",
-    href: "/dashboard/academy/manage/categories",
-    icon: TagsIcon,
   },
   {
     title: "Support messages",

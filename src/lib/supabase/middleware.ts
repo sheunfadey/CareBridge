@@ -92,8 +92,7 @@ export async function updateSession(request: NextRequest) {
         pathname.startsWith("/dashboard/settings") ||
         pathname.startsWith("/dashboard/help") ||
         pathname === "/dashboard/reports" ||
-        pathname.startsWith("/dashboard/reports/") ||
-        pathname.startsWith("/dashboard/academy/manage/categories");
+        pathname.startsWith("/dashboard/reports/");
 
       if (!allowed) {
         const url = request.nextUrl.clone();
