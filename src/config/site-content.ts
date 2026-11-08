@@ -5,9 +5,9 @@ export type FaqItem = {
 
 export const homeFaqs: FaqItem[] = [
   {
-    question: "What is CareBridge?",
+    question: "What is HillCrest?",
     answer:
-      "CareBridge is a platform that brings together caregiver training, supervised practical experience, employment pathways and care operations. Caregivers learn, build verified competency records and connect with employers, while care homes and agencies run their day-to-day operations in the same system.",
+      "HillCrest is a platform that brings together caregiver training, supervised practical experience, employment pathways and care operations. Caregivers learn, build verified competency records and connect with employers, while care homes and agencies run their day-to-day operations in the same system.",
   },
   {
     question: "How does caregiver training work?",
@@ -25,14 +25,14 @@ export const homeFaqs: FaqItem[] = [
       "Competency and training records are held in the platform, and employer and placement verification is carried out through defined review workflows. Verification status is shown clearly so that employers and families can make informed decisions. We only display verification that has actually been completed.",
   },
   {
-    question: "How do care homes and employers use CareBridge?",
+    question: "How do care homes and employers use HillCrest?",
     answer:
-      "Care homes use CareBridge for resident and staff records, shifts and scheduling, daily care records, care plans, incidents, inventory, purchases, expenses and invoices. Employers and recruiters use it to post vacancies, review verified candidates, and manage applications, interviews and offers.",
+      "Care homes use HillCrest for resident and staff records, shifts and scheduling, daily care records, care plans, incidents, inventory, purchases, expenses and invoices. Employers and recruiters use it to post vacancies, review verified candidates, and manage applications, interviews and offers.",
   },
   {
     question: "What is the referral programme?",
     answer:
-      "The referral programme lets partners introduce learners and organisations to CareBridge. Eligible referrals are tracked against a published commission policy, and commissions become payable only when they qualify under that policy. Financial records are append-only and changes are never applied silently to already-earned amounts.",
+      "The referral programme lets partners introduce learners and organisations to HillCrest. Eligible referrals are tracked against a published commission policy, and commissions become payable only when they qualify under that policy. Financial records are append-only and changes are never applied silently to already-earned amounts.",
   },
   {
     question: "How does the charity and scholarship work?",
@@ -42,7 +42,7 @@ export const homeFaqs: FaqItem[] = [
   {
     question: "Which countries and currencies are supported?",
     answer:
-      "CareBridge launches in Nigeria, with pricing in Nigerian Naira (NGN) and support for local payment methods. The platform is built so that additional regions can be supported over time.",
+      "HillCrest launches in Nigeria, with pricing in Nigerian Naira (NGN) and support for local payment methods. The platform is built so that additional regions can be supported over time.",
   },
 ];
 

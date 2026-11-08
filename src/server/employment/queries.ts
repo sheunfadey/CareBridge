@@ -198,7 +198,7 @@ export async function getPublishedJobs(): Promise<{
       applicationDeadline: job.application_deadline,
       publishedAt: job.published_at,
       organisationName:
-        singleRelation(job.organisations)?.name ?? "CareBridge employer",
+        singleRelation(job.organisations)?.name ?? "HillCrest employer",
     })),
   };
 }
@@ -243,7 +243,7 @@ export async function getJobDetail(id: string): Promise<JobDetail | null> {
     status: data.status,
     publishedAt: data.published_at,
     organisationName:
-      singleRelation(data.organisations)?.name ?? "CareBridge employer",
+      singleRelation(data.organisations)?.name ?? "HillCrest employer",
   };
 }
 
@@ -277,7 +277,7 @@ export async function getMyJobApplications(
         jobTitle: job.title,
         jobSlug: job.slug,
         organisationName:
-          singleRelation(job.organisations)?.name ?? "CareBridge employer",
+          singleRelation(job.organisations)?.name ?? "HillCrest employer",
         applicationDeadline: job.application_deadline,
         interviews: (row.interviews ?? [])
           .map((interview) => ({
@@ -446,7 +446,7 @@ export async function getOpenInternships(): Promise<{
       publishedAt: listing.published_at,
       organisationName:
         singleRelation(listing.organisations)?.name ??
-        "CareBridge placement provider",
+        "HillCrest placement provider",
     })),
   };
 }
@@ -489,7 +489,7 @@ export async function getInternshipDetail(
     publishedAt: data.published_at,
     organisationName:
       singleRelation(data.organisations)?.name ??
-      "CareBridge placement provider",
+      "HillCrest placement provider",
   };
 }
 
@@ -528,7 +528,7 @@ export async function getMyInternshipApplications(
         listingSlug: listing.slug,
         organisationName:
           singleRelation(listing.organisations)?.name ??
-          "CareBridge placement provider",
+          "HillCrest placement provider",
         applicationDeadline: listing.application_deadline,
         interviews: (row.interviews ?? [])
           .map((interview) => ({

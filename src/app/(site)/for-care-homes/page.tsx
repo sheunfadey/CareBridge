@@ -113,7 +113,7 @@ export default function ForCareHomesPage() {
           <SectionHeading
             eyebrow="Built for accountability"
             title="Access control, audit logging and append-only finances"
-            description="Operations need to be traceable. CareBridge keeps permissions explicit, actions logged and financial history immutable."
+            description="Operations need to be traceable. HillCrest keeps permissions explicit, actions logged and financial history immutable."
           />
           <div className="grid gap-4">
             {[
@@ -161,7 +161,7 @@ export default function ForCareHomesPage() {
             tone="onDark"
             align="center"
             title="Run your care home with clarity and control"
-            description="Get started with CareBridge for your organisation or talk to our team about your specific needs."
+            description="Get started with HillCrest for your organisation or talk to our team about your specific needs."
           />
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button size="lg" asChild>

@@ -40,7 +40,7 @@ export async function generateMetadata({
 
   return {
     title: course.title,
-    description: course.summary ?? "CareBridge Academy course",
+    description: course.summary ?? "HillCrest Academy course",
   };
 }
 
@@ -121,7 +121,7 @@ export default async function CourseDetailPage({
             <ul className="mt-4 space-y-3 text-sm">
               <li className="flex items-start gap-2">
                 <CheckCircle2Icon className="mt-0.5 size-4 text-brand-green" />
-                <span>Self-paced learning in your CareBridge dashboard</span>
+                <span>Self-paced learning in your HillCrest dashboard</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle2Icon className="mt-0.5 size-4 text-brand-green" />

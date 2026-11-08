@@ -30,7 +30,7 @@ export function createResendEmailProvider(config: ResendConfig): EmailProvider {
     async send(message: EmailMessage): Promise<EmailSendResult> {
       const from = formatAddress({
         email: config.fromAddress,
-        name: config.fromName ?? "CareBridge",
+        name: config.fromName ?? "HillCrest",
       });
       const to = (Array.isArray(message.to) ? message.to : [message.to]).map(
         formatAddress,

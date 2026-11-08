@@ -16,7 +16,7 @@ import { brand } from "@/config/brand";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "How to reach CareBridge: general enquiries, support, partnerships, safeguarding concerns and charity or scholarship questions, each with the right address to use.",
+    "How to reach HillCrest: general enquiries, support, partnerships, safeguarding concerns and charity or scholarship questions, each with the right address to use.",
 };
 
 const supportDomain = brand.supportEmail.split("@").pop() ?? "carebridge.ng";
@@ -25,7 +25,7 @@ const contactRoutes = [
   {
     icon: MessageCircleIcon,
     title: "General enquiries",
-    body: "Questions about CareBridge, what the platform covers, or which route to take for your situation.",
+    body: "Questions about HillCrest, what the platform covers, or which route to take for your situation.",
     email: `hello@${supportDomain}`,
   },
   {

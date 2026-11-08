@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { CareBridgeLogo } from "@/components/brand/carebridge-logo";
+import { HillCrestLogo } from "@/components/brand/carebridge-logo";
 import { brand } from "@/config/brand";
 
 export default function AuthLayout({ children }: LayoutProps<"/">) {
@@ -15,7 +15,7 @@ export default function AuthLayout({ children }: LayoutProps<"/">) {
             href="/"
             className="mb-8 inline-flex rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            <CareBridgeLogo size="md" />
+            <HillCrestLogo size="md" />
           </Link>
           {children}
         </div>
@@ -31,7 +31,7 @@ export default function AuthLayout({ children }: LayoutProps<"/">) {
           }}
         />
         <div className="relative">
-          <CareBridgeLogo size="md" tone="onDark" />
+          <HillCrestLogo size="md" tone="onDark" />
         </div>
         <div className="relative max-w-md space-y-4 text-white">
           <h2 className="font-heading text-3xl font-semibold leading-tight text-white">

@@ -56,7 +56,7 @@ export default async function DonationReceiptPage({
         <div className="flex items-start justify-between gap-4 border-b border-border pb-5">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand-teal">
-              CareBridge Charity
+              HillCrest Charity
             </p>
             <h2 className="mt-1 font-heading text-xl font-semibold text-brand-strong">
               Donation receipt

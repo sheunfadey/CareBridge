@@ -218,7 +218,7 @@ export function ResidentDialogForm({
     { name: "communicationNotes", label: "Communication needs", type: "textarea", defaultValue: resident?.communicationNotes ?? "" },
     { name: "accessibilityNeeds", label: "Accessibility needs", type: "textarea", defaultValue: resident?.accessibilityNeeds ?? "" },
     { name: "careRequirements", label: "Care requirements", type: "textarea", defaultValue: resident?.careRequirements ?? "" },
-    { name: "medicalNotes", label: "Medical notes", type: "textarea", defaultValue: resident?.medicalNotes ?? "", help: "Record observations and professional guidance. CareBridge does not diagnose." },
+    { name: "medicalNotes", label: "Medical notes", type: "textarea", defaultValue: resident?.medicalNotes ?? "", help: "Record observations and professional guidance. HillCrest does not diagnose." },
   ];
 
   return (
@@ -271,7 +271,7 @@ export function ContactDialogForm({ organisationId, residentId }: { organisation
 
 export function RelationshipDialogForm({ organisationId, residentId }: { organisationId: string; residentId: string }) {
   const fields: CareField[] = [
-    { name: "email", label: "Family member account email", type: "email", required: true, help: "They must already have a CareBridge account." },
+    { name: "email", label: "Family member account email", type: "email", required: true, help: "They must already have a HillCrest account." },
     { name: "relationship", label: "Relationship" },
     {
       name: "accessLevel",
@@ -929,7 +929,7 @@ export function MedicationDialogForm({
       trigger="Schedule medication"
       triggerVariant="outline"
       title="Schedule a medication record"
-      description="CareBridge records administration only. It does not recommend medicines or calculate doses."
+      description="HillCrest records administration only. It does not recommend medicines or calculate doses."
       submitLabel="Schedule"
       fields={fields}
       action={(values) =>

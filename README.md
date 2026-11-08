@@ -1,14 +1,14 @@
-# CareBridge
+# HillCrest
 
 **Learn to Care. Grow Your Career. Make a Difference.**
 
-CareBridge is a multi-tenant SaaS platform for caregiver training, verified
+HillCrest is a multi-tenant SaaS platform for caregiver training, verified
 practical experience, employment, care-home operations, referral commissions and
 charity programmes. It is designed for Nigeria first (NGN, `Africa/Lagos`,
 mobile-first).
 
 > This repository is under active phased construction. The full product and build
-> specification is in [`CareBridge_Plan.txt`](./CareBridge_Plan.txt).
+> specification is in [`HillCrest_Plan.txt`](./HillCrest_Plan.txt).
 
 ## Status
 
@@ -70,12 +70,12 @@ non-super-admins from escalating themselves.
 
 ## What is implemented (Phase 1)
 
-- **Design tokens** — official CareBridge palette as CSS variables and Tailwind
+- **Design tokens** — official HillCrest palette as CSS variables and Tailwind
   theme tokens (`src/app/globals.css`, `src/config/brand.ts`). Light and dark
   themes; no hard-coded brand colours in components.
 - **Brand assets** — original SVG logo (bridge arch + two figures), horizontal /
-  dark / monochrome variants, `LogoMark`, `CareBridgeLogo`,
-  `AnimatedCareBridgeLogo` (5-stage reveal respecting `prefers-reduced-motion`),
+  dark / monochrome variants, `LogoMark`, `HillCrestLogo`,
+  `AnimatedHillCrestLogo` (5-stage reveal respecting `prefers-reduced-motion`),
   favicon, PWA icon set and social sharing image (`public/brand`).
 - **Loading experience** — `AppLoadingScreen`, `PageLoadingSkeleton`,
   `InlineLoadingIndicator`, `RouteLoadingFallback`.
@@ -83,7 +83,7 @@ non-super-admins from escalating themselves.
   notifications and user menu, mobile navigation via `Sheet`, `PageHeader`,
   `DashboardShell`.
 - **UI primitives** — shadcn/ui components (buttons, forms, tables, dialogs,
-  menus, tabs, toasts, etc.) themed to CareBridge tokens, plus a `StatusBadge`
+  menus, tabs, toasts, etc.) themed to HillCrest tokens, plus a `StatusBadge`
   with a central status→tone map.
 - **Dashboard cards** — `StatCard`, `MetricCard`, `ProgressCard`,
   `ChartCard`, `ActionCard`, `StatusCard`, `AlertCard`, `RecentActivityCard`,

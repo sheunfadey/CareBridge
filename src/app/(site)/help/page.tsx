@@ -18,7 +18,7 @@ import type { FaqItem } from "@/config/site-content";
 export const metadata: Metadata = {
   title: "Help Centre",
   description:
-    "Self-service guidance for CareBridge: training programmes, account help, organisation setup, billing and referrals, and how to reach support when you need it.",
+    "Self-service guidance for HillCrest: training programmes, account help, organisation setup, billing and referrals, and how to reach support when you need it.",
 };
 
 const helpTopics = [
@@ -74,7 +74,7 @@ const helpTopics = [
 
 const popularFaqs: FaqItem[] = [
   {
-    question: "Where do I start if I am new to CareBridge?",
+    question: "Where do I start if I am new to HillCrest?",
     answer:
       "Create an account, then browse the caregiver training programmes to find the one that matches your experience. Everything you complete is attached to your profile from the start.",
   },
@@ -161,7 +161,7 @@ export default function HelpPage() {
         <SectionHeading
           eyebrow="Topics"
           title="Guidance by area"
-          description="Four areas cover most questions about using CareBridge."
+          description="Four areas cover most questions about using HillCrest."
         />
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {helpTopics.map((topic) => (

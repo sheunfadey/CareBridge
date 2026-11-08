@@ -48,7 +48,7 @@ export function ResetPasswordForm() {
   return (
     <AuthCard
       title="Choose a new password"
-      description="Set a strong password for your CareBridge account."
+      description="Set a strong password for your HillCrest account."
       footer={
         <span>
           <Link href="/login" className="font-medium text-brand-teal hover:underline">

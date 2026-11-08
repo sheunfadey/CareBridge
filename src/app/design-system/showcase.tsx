@@ -11,9 +11,9 @@ import {
   UsersIcon,
 } from "lucide-react";
 
-import { CareBridgeLogo } from "@/components/brand/carebridge-logo";
+import { HillCrestLogo } from "@/components/brand/carebridge-logo";
 import { LogoMark } from "@/components/brand/logo-mark";
-import { AnimatedCareBridgeLogo } from "@/components/brand/animated-carebridge-logo";
+import { AnimatedHillCrestLogo } from "@/components/brand/animated-carebridge-logo";
 import { PageHeader } from "@/components/layout/page-header";
 import { StatusBadge, statusToneMap } from "@/components/ui/status-badge";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -88,7 +88,7 @@ export function DesignSystemShowcase() {
     <div className="mx-auto w-full max-w-6xl space-y-10 px-4 py-8 sm:px-6">
       <PageHeader
         eyebrow="Phase 1"
-        title="CareBridge design system"
+        title="HillCrest design system"
         description="Central design tokens, brand assets and reusable components. Every surface in the platform draws from these primitives instead of hard-coded values."
         breadcrumbs={[{ label: "Design system" }]}
         actions={
@@ -104,13 +104,13 @@ export function DesignSystemShowcase() {
       >
         <div className="grid gap-4 md:grid-cols-3">
           <Card className="flex items-center justify-center p-8">
-            <CareBridgeLogo variant="full" size="lg" showTagline />
+            <HillCrestLogo variant="full" size="lg" showTagline />
           </Card>
           <Card className="flex items-center justify-center bg-brand-navy p-8">
-            <CareBridgeLogo variant="full" size="lg" tone="onDark" />
+            <HillCrestLogo variant="full" size="lg" tone="onDark" />
           </Card>
           <Card className="flex items-center justify-center p-8 text-brand-strong">
-            <CareBridgeLogo variant="stacked" size="md" tone="mono" />
+            <HillCrestLogo variant="stacked" size="md" tone="mono" />
           </Card>
         </div>
 
@@ -127,7 +127,7 @@ export function DesignSystemShowcase() {
             </p>
           </Card>
           <Card className="flex items-center justify-center bg-brand-dark p-8">
-            <AnimatedCareBridgeLogo size="lg" tone="onDark" />
+            <AnimatedHillCrestLogo size="lg" tone="onDark" />
           </Card>
         </div>
       </Section>

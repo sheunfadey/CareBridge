@@ -103,7 +103,7 @@ export function MobileNav({
           >
             <SheetTitle className="sr-only">Navigation</SheetTitle>
             <SheetDescription className="sr-only">
-              Primary navigation for CareBridge
+              Primary navigation for HillCrest
             </SheetDescription>
             <Sidebar
               isSuperAdmin={isSuperAdmin}

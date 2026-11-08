@@ -68,7 +68,7 @@ export const footerColumns: SiteNavGroup[] = [
   {
     label: "Platform",
     links: [
-      { label: "About CareBridge", href: "/about" },
+      { label: "About HillCrest", href: "/about" },
       { label: "How It Works", href: "/how-it-works" },
       { label: "Caregiver Training", href: "/caregiver-training" },
       { label: "Courses", href: "/courses" },

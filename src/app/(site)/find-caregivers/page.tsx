@@ -17,7 +17,7 @@ import { brand } from "@/config/brand";
 export const metadata: Metadata = {
   title: "Find Caregivers",
   description:
-    "How CareBridge helps families and individuals find caregivers, what caregiver verification actually means, and how to get started with care support.",
+    "How HillCrest helps families and individuals find caregivers, what caregiver verification actually means, and how to get started with care support.",
 };
 
 const howItWorks = [
@@ -117,7 +117,7 @@ export default function FindCaregiversPage() {
         <SectionHeading
           eyebrow="How it works"
           title="From requirements to arranged care"
-          description="Finding care is a three-stage process on CareBridge. You stay involved at each stage, and nothing is agreed on your behalf without your confirmation."
+          description="Finding care is a three-stage process on HillCrest. You stay involved at each stage, and nothing is agreed on your behalf without your confirmation."
         />
         <ol className="mt-10 grid gap-6 md:grid-cols-3">
           {howItWorks.map((step, index) => (
@@ -148,7 +148,7 @@ export default function FindCaregiversPage() {
           <SectionHeading
             eyebrow="What verification means"
             title="Honest verification, clearly explained"
-            description="Verification on CareBridge means specific things, and we would rather describe them plainly than overstate them."
+            description="Verification on HillCrest means specific things, and we would rather describe them plainly than overstate them."
           />
           <div className="grid gap-4">
             {verificationPoints.map((point) => (

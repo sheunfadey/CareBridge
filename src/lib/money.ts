@@ -1,5 +1,5 @@
 /**
- * Money helpers. CareBridge stores every amount as integer minor units (kobo
+ * Money helpers. HillCrest stores every amount as integer minor units (kobo
  * for NGN) and never uses floating point for financial arithmetic.
  */
 

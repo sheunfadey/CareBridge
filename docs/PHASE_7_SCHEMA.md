@@ -1,6 +1,6 @@
 # Phase 7 — Care-home operations: schema outline
 
-Source: `CareBridge_Plan.txt` §14 (care home and home-care operations) and §35
+Source: `HillCrest_Plan.txt` §14 (care home and home-care operations) and §35
 (data model). This document fixes the tenancy model, invariants and table shape
 before the migrations are written.
 

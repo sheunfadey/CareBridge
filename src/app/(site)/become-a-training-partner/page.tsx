@@ -19,14 +19,14 @@ import { brand } from "@/config/brand";
 export const metadata: Metadata = {
   title: "Become a Training Partner",
   description:
-    "Deliver caregiver training with CareBridge: run programmes, host supervised placements, contribute to the curriculum, and keep learner records and assessments in one system.",
+    "Deliver caregiver training with HillCrest: run programmes, host supervised placements, contribute to the curriculum, and keep learner records and assessments in one system.",
 };
 
 const partnerRoles = [
   {
     icon: PresentationIcon,
     title: "Deliver programmes",
-    body: "Run CareBridge training programmes for your own learners or cohorts, using the same structured modules, lessons and assessments that sit behind every programme on the platform.",
+    body: "Run HillCrest training programmes for your own learners or cohorts, using the same structured modules, lessons and assessments that sit behind every programme on the platform.",
   },
   {
     icon: UsersRoundIcon,
@@ -72,7 +72,7 @@ const applicationSteps = [
   {
     icon: GraduationCapIcon,
     title: "Get set up on the platform",
-    body: "Your organisation, trainers and programmes are set up in CareBridge, and you are shown how learner records, reviews and placements are handled.",
+    body: "Your organisation, trainers and programmes are set up in HillCrest, and you are shown how learner records, reviews and placements are handled.",
   },
   {
     icon: UsersRoundIcon,
@@ -169,7 +169,7 @@ export default function BecomeATrainingPartnerPage() {
       <SiteSection tone="sky">
         <SectionHeading
           eyebrow="What you get"
-          title="What CareBridge provides"
+          title="What HillCrest provides"
           description="So you can focus on teaching and supervising, rather than on maintaining training administration."
         />
         <div className="mt-10 grid gap-6 md:grid-cols-3">

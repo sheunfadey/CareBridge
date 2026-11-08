@@ -83,7 +83,7 @@ export default async function SystemPage() {
       <PageHeader
         eyebrow="Platform operations"
         title="System & APIs"
-        description="Health, integrations, API endpoints and maintenance status for the CareBridge platform."
+        description="Health, integrations, API endpoints and maintenance status for the HillCrest platform."
         breadcrumbs={[
           { label: "Dashboard", href: "/dashboard/admin" },
           { label: "System & APIs" },

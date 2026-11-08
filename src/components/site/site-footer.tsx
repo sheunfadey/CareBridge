@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { cacheLife } from "next/cache";
 
-import { CareBridgeLogo } from "@/components/brand/carebridge-logo";
+import { HillCrestLogo } from "@/components/brand/carebridge-logo";
 import { brand } from "@/config/brand";
 import { footerColumns } from "@/config/site-navigation";
 
@@ -19,7 +19,7 @@ export async function SiteFooter() {
       <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[1.2fr_3fr]">
           <div className="space-y-4">
-            <CareBridgeLogo size="md" tone="onDark" />
+            <HillCrestLogo size="md" tone="onDark" />
             <p className="max-w-xs text-sm text-white/70">
               {brand.shortDescription}
             </p>

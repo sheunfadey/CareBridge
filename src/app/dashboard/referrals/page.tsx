@@ -58,7 +58,7 @@ export default async function ReferralsPage() {
       <PageHeader
         eyebrow="Growth"
         title="Referral programme"
-        description="Introduce learners and organisations to CareBridge. Commissions follow the published policy and become payable only when they qualify."
+        description="Introduce learners and organisations to HillCrest. Commissions follow the published policy and become payable only when they qualify."
         breadcrumbs={[
           { label: "Dashboard", href: "/dashboard" },
           { label: "Referrals" },

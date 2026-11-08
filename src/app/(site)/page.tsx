@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { AnimatedCareBridgeLogo } from "@/components/brand/animated-carebridge-logo";
+import { AnimatedHillCrestLogo } from "@/components/brand/animated-carebridge-logo";
 import { FaqAccordion } from "@/components/site/faq-accordion";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
 import {
@@ -30,7 +30,7 @@ import { brand } from "@/config/brand";
 export const metadata: Metadata = {
   title: "Build a Career in Care",
   description:
-    "CareBridge brings together caregiver training, supervised practical experience, employment pathways and care operations on one platform.",
+    "HillCrest brings together caregiver training, supervised practical experience, employment pathways and care operations on one platform.",
 };
 
 const iconMap = {
@@ -84,7 +84,7 @@ export default function HomePage() {
           <div className="relative">
             <div aria-hidden="true" className="absolute -right-10 -top-10 hidden h-40 w-40 animate-float rounded-full bg-gradient-to-br from-brand-bright-blue/20 to-brand-blue/10 blur-2xl lg:block" />
             <div className="mb-6 flex justify-center lg:justify-start">
-              <AnimatedCareBridgeLogo size="lg" showTagline />
+              <AnimatedHillCrestLogo size="lg" showTagline />
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {[
@@ -120,7 +120,7 @@ export default function HomePage() {
         <SectionHeading
           eyebrow="Trust and verification"
           title="Substantiated, verifiable, never exaggerated"
-          description="We are deliberate about what we claim. These are the principles behind how CareBridge handles trust."
+          description="We are deliberate about what we claim. These are the principles behind how HillCrest handles trust."
         />
         <div className="mt-10 grid gap-6 sm:grid-cols-3">
           {[
@@ -163,9 +163,9 @@ export default function HomePage() {
         <div aria-hidden="true" className="pointer-events-none absolute -right-16 bottom-0 h-72 w-72 rounded-full bg-gradient-to-tr from-brand-coral/15 to-brand-sky/30 blur-3xl" />
         <div className="relative">
           <SectionHeading
-            eyebrow="How CareBridge works"
+            eyebrow="How HillCrest works"
             title="A pathway from learning to earning"
-            description="CareBridge is designed as a connected journey, so that what you learn, what you practise and the work you do all build on each other."
+            description="HillCrest is designed as a connected journey, so that what you learn, what you practise and the work you do all build on each other."
           />
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {homepageSteps.map((step) => (
@@ -343,7 +343,7 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="Referral programme"
             title="Earn by introducing people to better care"
-            description="Partners can refer learners and organisations to CareBridge. Eligible referrals are tracked against a published commission policy, and commissions become payable only when they qualify."
+            description="Partners can refer learners and organisations to HillCrest. Eligible referrals are tracked against a published commission policy, and commissions become payable only when they qualify."
           />
           <div className="flex flex-wrap gap-3 lg:justify-end">
             <Button size="lg" asChild>
@@ -374,7 +374,7 @@ export default function HomePage() {
           <SectionHeading
             align="center"
             title="Ready to start building a career in care?"
-            description="Create an account to begin training, or talk to us about bringing CareBridge to your organisation."
+            description="Create an account to begin training, or talk to us about bringing HillCrest to your organisation."
           />
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button size="lg" asChild>

@@ -17,7 +17,7 @@ const helpLinks = [
     href: "/faq",
   },
   {
-    title: "How CareBridge works",
+    title: "How HillCrest works",
     description: "The pathway from training through to employment.",
     href: "/how-it-works",
   },
@@ -28,7 +28,7 @@ const helpLinks = [
   },
   {
     title: "Verify a certificate",
-    description: "Check that a CareBridge certificate is valid and unrevoked.",
+    description: "Check that a HillCrest certificate is valid and unrevoked.",
     href: "/verify-certificate",
   },
 ];
@@ -39,7 +39,7 @@ export default function DashboardHelpPage() {
       <PageHeader
         eyebrow="Support"
         title="Help centre"
-        description="Find guidance on using CareBridge, or get in touch with the platform team."
+        description="Find guidance on using HillCrest, or get in touch with the platform team."
         breadcrumbs={[
           { label: "Dashboard", href: "/dashboard" },
           { label: "Help centre" },

@@ -1,6 +1,6 @@
 import { cn } from "cn";
 
-import { AnimatedCareBridgeLogo } from "@/components/brand/animated-carebridge-logo";
+import { AnimatedHillCrestLogo } from "@/components/brand/animated-carebridge-logo";
 import { LogoMark } from "@/components/brand/logo-mark";
 import {
   logoSizeMap,
@@ -9,7 +9,7 @@ import {
 } from "@/components/brand/logo-geometry";
 import { brand } from "@/config/brand";
 
-type CareBridgeLogoProps = {
+type HillCrestLogoProps = {
   variant?: "full" | "stacked" | "icon" | "light" | "dark";
   size?: LogoSize;
   tone?: LogoTone;
@@ -20,7 +20,7 @@ type CareBridgeLogoProps = {
   markClassName?: string;
 };
 
-export function CareBridgeLogo({
+export function HillCrestLogo({
   variant = "full",
   size = "md",
   tone = "default",
@@ -29,7 +29,7 @@ export function CareBridgeLogo({
   showWordmark = true,
   className,
   markClassName,
-}: CareBridgeLogoProps) {
+}: HillCrestLogoProps) {
   const scale = logoSizeMap[size];
   const resolvedTone: LogoTone =
     variant === "light"
@@ -52,7 +52,7 @@ export function CareBridgeLogo({
 
   if (animated && !isIcon) {
     return (
-      <AnimatedCareBridgeLogo
+      <AnimatedHillCrestLogo
         size={size}
         tone={resolvedTone}
         showTagline={showTagline}
@@ -81,8 +81,8 @@ export function CareBridgeLogo({
         wordmarkColor,
       )}
     >
-      Care
-      <span className={bridgeColor}>Bridge</span>
+      Hill
+      <span className={bridgeColor}>Crest</span>
     </span>
   );
 

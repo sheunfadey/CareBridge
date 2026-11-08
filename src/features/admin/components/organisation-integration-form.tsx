@@ -168,7 +168,7 @@ export function OrganisationIntegrationForm({
               id="email-sender-name"
               value={values.senderName}
               onChange={(event) => set("senderName", event.target.value)}
-              placeholder="CareBridge Training"
+              placeholder="HillCrest Training"
             />
           </div>
         ) : null}

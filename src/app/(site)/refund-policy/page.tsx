@@ -8,7 +8,7 @@ import { brand } from "@/config/brand";
 export const metadata: Metadata = {
   title: "Refund Policy",
   description:
-    "When a CareBridge purchase can be refunded, how to request a refund, how refunds are processed through our payment provider and what is not refundable.",
+    "When a HillCrest purchase can be refunded, how to request a refund, how refunds are processed through our payment provider and what is not refundable.",
 };
 
 export default function RefundPolicyPage() {

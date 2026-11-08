@@ -142,7 +142,7 @@ export default function ForEmployersPage() {
           <SectionHeading
             eyebrow="Verification you can rely on"
             title="Honest explanation of review workflows"
-            description="Verification on CareBridge means specific things. We describe them plainly so you can make informed decisions."
+            description="Verification on HillCrest means specific things. We describe them plainly so you can make informed decisions."
           />
           <div className="grid gap-4">
             {verificationPoints.map((point) => (
@@ -196,7 +196,7 @@ export default function ForEmployersPage() {
               </p>
             </div>
             <p className="mt-3 text-sm text-muted-foreground">
-              Whether you are placing for one client or managing a roster, we can talk through how to structure your workflow on CareBridge.
+              Whether you are placing for one client or managing a roster, we can talk through how to structure your workflow on HillCrest.
             </p>
             <div className="mt-6">
               <Button asChild>
@@ -213,7 +213,7 @@ export default function ForEmployersPage() {
             tone="onDark"
             align="center"
             title="Hire with records you can trust"
-            description="Start hiring on CareBridge or talk to our team about setting up your organisation."
+            description="Start hiring on HillCrest or talk to our team about setting up your organisation."
           />
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button size="lg" asChild>

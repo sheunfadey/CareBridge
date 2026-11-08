@@ -1,4 +1,4 @@
-import { CareBridgeLoader } from "@/components/feedback/carebridge-loader";
+import { HillCrestLoader } from "@/components/feedback/carebridge-loader";
 import { cn } from "cn";
 
 type AppLoadingScreenProps = {
@@ -8,12 +8,12 @@ type AppLoadingScreenProps = {
 };
 
 export function AppLoadingScreen({
-  message = "Preparing your CareBridge workspace...",
+  message = "Preparing your HillCrest workspace...",
   variant = "fullscreen",
   className,
 }: AppLoadingScreenProps) {
   return (
-    <CareBridgeLoader
+    <HillCrestLoader
       message={message}
       compact={variant === "contained"}
       className={cn(className)}

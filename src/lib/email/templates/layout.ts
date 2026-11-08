@@ -15,7 +15,7 @@ type LayoutProps = {
 const c = brand.colors;
 
 /**
- * Wraps body content in the CareBridge transactional email shell. All styling is
+ * Wraps body content in the HillCrest transactional email shell. All styling is
  * inlined because email clients do not support stylesheets or CSS variables.
  */
 export function emailLayout({

@@ -46,7 +46,7 @@ export default async function FamilyPortalPage() {
         <Card className="p-0">
           <EmptyState
             title="No resident records linked"
-            description="Ask the care home to link your CareBridge account to a resident. You will then see a summary here."
+            description="Ask the care home to link your HillCrest account to a resident. You will then see a summary here."
           />
         </Card>
       ) : (

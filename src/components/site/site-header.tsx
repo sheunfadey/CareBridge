@@ -7,7 +7,7 @@ import { Suspense } from "react";
 import { ChevronDownIcon, MenuIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 
-import { CareBridgeLogo } from "@/components/brand/carebridge-logo";
+import { HillCrestLogo } from "@/components/brand/carebridge-logo";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
 import {
@@ -45,7 +45,7 @@ function SiteHeaderContent() {
           href="/"
           className="rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <CareBridgeLogo size="sm" />
+          <HillCrestLogo size="sm" />
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-1 lg:flex">
@@ -199,7 +199,7 @@ function SiteHeaderFallback() {
           href="/"
           className="rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <CareBridgeLogo size="sm" />
+          <HillCrestLogo size="sm" />
         </Link>
       </div>
     </header>

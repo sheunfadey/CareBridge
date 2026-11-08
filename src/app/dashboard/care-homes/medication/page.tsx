@@ -51,7 +51,7 @@ export default async function MedicationPage({
       <PageHeader
         eyebrow="Care operations"
         title="Medication"
-        description="Administration records only. CareBridge does not recommend medicines or calculate doses; authorised staff record what was prescribed and given."
+        description="Administration records only. HillCrest does not recommend medicines or calculate doses; authorised staff record what was prescribed and given."
         breadcrumbs={[
           { label: "Dashboard", href: "/dashboard" },
           { label: "Care homes", href: "/dashboard/care-homes" },

@@ -56,7 +56,7 @@ export function ModulePlaceholder({
                 Planned for {phase}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                This module is part of the CareBridge roadmap and is not active
+                This module is part of the HillCrest roadmap and is not active
                 yet. Nothing here is simulated.
               </p>
             </div>

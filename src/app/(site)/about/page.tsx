@@ -12,9 +12,9 @@ import { SectionHeading, SiteSection } from "@/components/site/site-section";
 import { brand } from "@/config/brand";
 
 export const metadata: Metadata = {
-  title: "About CareBridge",
+  title: "About HillCrest",
   description:
-    "Why CareBridge exists and the principles behind how we build caregiver training, employment and care operations.",
+    "Why HillCrest exists and the principles behind how we build caregiver training, employment and care operations.",
 };
 
 export default function AboutPage() {
@@ -22,7 +22,7 @@ export default function AboutPage() {
     <>
       <SiteSection tone="ivory">
         <SectionHeading
-          eyebrow="About CareBridge"
+          eyebrow="About HillCrest"
           title="Careers in care, built on real capability"
           description={`${brand.name} exists to make it easier for people to build a career in care — and for the people receiving care to be supported by capable, verified professionals.`}
         />
@@ -70,7 +70,7 @@ export default function AboutPage() {
         <SectionHeading
           eyebrow="What we are building"
           title="One connected platform"
-          description="Rather than separate tools that do not talk to each other, CareBridge is a single platform where learning, practical experience, employment and care operations reinforce each other."
+          description="Rather than separate tools that do not talk to each other, HillCrest is a single platform where learning, practical experience, employment and care operations reinforce each other."
         />
         <ul className="mt-8 grid gap-4 sm:grid-cols-2">
           {[
@@ -100,7 +100,7 @@ export default function AboutPage() {
           <SectionHeading
             align="center"
             title="Build a career in care with us"
-            description="Whether you are starting out, hiring, or supporting the mission, there is a place for you on CareBridge."
+            description="Whether you are starting out, hiring, or supporting the mission, there is a place for you on HillCrest."
           />
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button size="lg" asChild>

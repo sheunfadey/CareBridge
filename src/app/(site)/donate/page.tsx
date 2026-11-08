@@ -16,7 +16,7 @@ import { brand } from "@/config/brand";
 export const metadata: Metadata = {
   title: "Donate",
   description:
-    "Support CareBridge scholarships and campaigns that widen access to quality caregiver training.",
+    "Support HillCrest scholarships and campaigns that widen access to quality caregiver training.",
 };
 
 const donationFaqs: FaqItem[] = [
@@ -26,7 +26,7 @@ const donationFaqs: FaqItem[] = [
       "Not yet. Secure online donations are being implemented as part of a later phase, together with transparent receipts and campaign reporting. We will not present a payment flow until it is genuinely live and verified.",
   },
   {
-    question: "How can I support CareBridge now?",
+    question: "How can I support HillCrest now?",
     answer:
       "You can register your interest through our contact page. If you represent an organisation that would like to sponsor scholarships or partner with a campaign, we would be glad to talk.",
   },
@@ -142,7 +142,7 @@ export default function DonatePage() {
       <SiteSection tone="sky">
         <SectionHeading
           eyebrow="Questions"
-          title="About giving to CareBridge"
+          title="About giving to HillCrest"
         />
         <div className="mt-8 max-w-3xl">
           <FaqAccordion items={donationFaqs} />

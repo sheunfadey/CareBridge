@@ -1,8 +1,8 @@
-# CareBridge Architecture
+# HillCrest Architecture
 
 ## Overview
 
-CareBridge is a multi-tenant SaaS platform built on Next.js App Router with a
+HillCrest is a multi-tenant SaaS platform built on Next.js App Router with a
 Supabase (PostgreSQL) backend. The architecture separates UI, business services,
 data access and integration adapters so that each layer can evolve and be tested
 independently.

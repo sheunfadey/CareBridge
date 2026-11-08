@@ -356,7 +356,7 @@ export default async function AdminReferralsPage() {
           {data.policies.length === 0 ? (
             <EmptyState
               title="No policy published"
-              description="Publish a policy before referral commissions can be calculated. CareBridge never invents a rate."
+              description="Publish a policy before referral commissions can be calculated. HillCrest never invents a rate."
             />
           ) : (
             <Table>

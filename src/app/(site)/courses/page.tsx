@@ -21,7 +21,7 @@ import { courseDifficultyLabels } from "@/lib/validation/academy";
 export const metadata: Metadata = {
   title: "Courses",
   description:
-    "Browse the CareBridge Academy catalogue. Enrol in published courses, track your progress and earn verifiable certificates.",
+    "Browse the HillCrest Academy catalogue. Enrol in published courses, track your progress and earn verifiable certificates.",
 };
 
 const programmeFeatures = [
@@ -38,7 +38,7 @@ const programmeFeatures = [
   {
     icon: ClipboardCheckIcon,
     title: "Finished with a certificate",
-    body: "Complete all required lessons to earn a verifiable CareBridge Academy certificate.",
+    body: "Complete all required lessons to earn a verifiable HillCrest Academy certificate.",
   },
 ] as const;
 
@@ -255,7 +255,7 @@ export default async function CoursesPage() {
           </div>
           <p className="inline-flex items-center gap-2 text-sm text-muted-foreground">
             <SparklesIcon className="size-4 text-brand-green" aria-hidden="true" />
-            Scholarships are available through the CareBridge charity programme.
+            Scholarships are available through the HillCrest charity programme.
           </p>
         </div>
       </SiteSection>

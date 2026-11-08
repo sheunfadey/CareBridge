@@ -132,7 +132,7 @@ export default async function AdminReconciliationPage() {
       <PageHeader
         eyebrow="Finance"
         title="Reconciliation"
-        description="Compare CareBridge records with the payment provider. Never confirm a payment from a browser redirect — verification always happens server-side."
+        description="Compare HillCrest records with the payment provider. Never confirm a payment from a browser redirect — verification always happens server-side."
         breadcrumbs={[
           { label: "Dashboard", href: "/dashboard" },
           { label: "Finance" },

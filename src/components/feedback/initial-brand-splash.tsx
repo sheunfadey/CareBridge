@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { CareBridgeLoader } from "@/components/feedback/carebridge-loader";
+import { HillCrestLoader } from "@/components/feedback/carebridge-loader";
 
 /**
  * One-time application startup splash. It is mounted once by AppProviders and
@@ -20,7 +20,7 @@ export function InitialBrandSplash() {
 
   return (
     <div className="fixed inset-0 z-[100]">
-      <CareBridgeLoader message="Preparing your CareBridge workspace..." />
+      <HillCrestLoader message="Preparing your HillCrest workspace..." />
     </div>
   );
 }

@@ -1,19 +1,19 @@
 import { cn } from "cn";
 
-import { CareBridgeLogo } from "@/components/brand/carebridge-logo";
+import { HillCrestLogo } from "@/components/brand/carebridge-logo";
 import { brand } from "@/config/brand";
 
-type CareBridgeLoaderProps = {
+type HillCrestLoaderProps = {
   message?: string;
   compact?: boolean;
   className?: string;
 };
 
-export function CareBridgeLoader({
-  message = "Preparing your CareBridge workspace...",
+export function HillCrestLoader({
+  message = "Preparing your HillCrest workspace...",
   compact = false,
   className,
-}: CareBridgeLoaderProps) {
+}: HillCrestLoaderProps) {
   return (
     <div
       role="status"
@@ -36,7 +36,7 @@ export function CareBridgeLoader({
 
       <div className="relative flex flex-col items-center px-6 text-center">
         <div className="cb-loader-logo">
-          <CareBridgeLogo
+          <HillCrestLogo
             variant="stacked"
             size={compact ? "lg" : "xl"}
             tone="onDark"

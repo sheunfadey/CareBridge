@@ -436,7 +436,7 @@ export async function linkResidentFamilyAction(input: {
       return {
         ok: false,
         message:
-          "No CareBridge account uses that email. Ask them to register first, then link the account.",
+          "No HillCrest account uses that email. Ask them to register first, then link the account.",
         fieldErrors: { email: ["No account found for this email."] },
       };
     }
@@ -569,7 +569,7 @@ export async function saveStaffAction(input: {
     if (!profile) {
       return {
         ok: false,
-        message: "No CareBridge account uses that email.",
+        message: "No HillCrest account uses that email.",
         fieldErrors: { email: ["No account found for this email."] },
       };
     }

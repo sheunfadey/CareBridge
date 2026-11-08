@@ -8,7 +8,7 @@ import { brand } from "@/config/brand";
 export const metadata: Metadata = {
   title: "Accessibility Statement",
   description:
-    "CareBridge's commitment to accessible design, the measures we have taken, the limitations we are still working on and how to report a barrier.",
+    "HillCrest's commitment to accessible design, the measures we have taken, the limitations we are still working on and how to report a barrier.",
 };
 
 export default function AccessibilityPage() {

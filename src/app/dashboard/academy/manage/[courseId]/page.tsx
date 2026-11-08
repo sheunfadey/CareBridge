@@ -111,7 +111,7 @@ export default async function ManageCoursePage({
           {courseDifficultyLabels[course.difficulty]}
         </Badge>
         <Badge variant="secondary">
-          {course.organisationName ?? "CareBridge platform"}
+          {course.organisationName ?? "HillCrest platform"}
         </Badge>
         <Badge variant="secondary">{course.programmeTitle}</Badge>
         <span className="text-xs text-muted-foreground">

@@ -60,11 +60,11 @@ export function LoginForm() {
 
   return (
     <AuthCard
-      title="Sign in to CareBridge"
+      title="Sign in to HillCrest"
       description="Welcome back. Continue where you left off."
       footer={
         <span>
-          New to CareBridge?{" "}
+          New to HillCrest?{" "}
           <Link
             href="/register"
             className="font-medium text-brand-teal hover:underline"

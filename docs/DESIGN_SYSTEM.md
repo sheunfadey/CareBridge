@@ -1,4 +1,4 @@
-# CareBridge Design System
+# HillCrest Design System
 
 ## Palette (design tokens)
 
@@ -56,8 +56,8 @@ Files in `public/brand`:
 React components in `src/components/brand`:
 
 - `LogoMark` — icon only, size/tone props
-- `CareBridgeLogo` — `full` / `stacked` / `icon`, light/dark/mono tones, optional tagline
-- `AnimatedCareBridgeLogo` — 5-stage reveal (logo → arch draw → care pulse →
+- `HillCrestLogo` — `full` / `stacked` / `icon`, light/dark/mono tones, optional tagline
+- `AnimatedHillCrestLogo` — 5-stage reveal (logo → arch draw → care pulse →
   wordmark → tagline). Respects `prefers-reduced-motion`.
 
 Regenerate PNGs after editing SVGs: `node scripts/generate-brand-assets.mjs`.

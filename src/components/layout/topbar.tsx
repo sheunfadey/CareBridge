@@ -83,7 +83,7 @@ export function Topbar({
         <SheetContent side="left" className="w-[280px] max-w-[85vw] border-none bg-sidebar p-0">
           <SheetTitle className="sr-only">Navigation</SheetTitle>
           <SheetDescription className="sr-only">
-            Primary navigation for CareBridge
+            Primary navigation for HillCrest
           </SheetDescription>
           <Sidebar
             isSuperAdmin={isSuperAdmin}
@@ -96,14 +96,14 @@ export function Topbar({
       <Link
         href="/dashboard"
         className="flex items-center gap-2 lg:hidden"
-        aria-label="CareBridge dashboard"
+        aria-label="HillCrest dashboard"
       >
         <LogoMark size={24} />
       </Link>
 
       <div className="hidden flex-1 items-center lg:flex">
         <label className="relative w-full max-w-md">
-          <span className="sr-only">Search CareBridge</span>
+          <span className="sr-only">Search HillCrest</span>
           <SearchIcon
             aria-hidden="true"
             className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"

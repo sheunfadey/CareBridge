@@ -14,7 +14,7 @@ import { SectionHeading, SiteSection } from "@/components/site/site-section";
 export const metadata: Metadata = {
   title: "How It Works",
   description:
-    "The CareBridge pathway: learn, practise, get verified and work — with care operations and charity support alongside.",
+    "The HillCrest pathway: learn, practise, get verified and work — with care operations and charity support alongside.",
 };
 
 const stages = [
@@ -51,7 +51,7 @@ export default function HowItWorksPage() {
         <SectionHeading
           eyebrow="How it works"
           title="A pathway from learning to working"
-          description="CareBridge is built as a sequence of connected stages, so that each step builds on the last and nothing is left to chance."
+          description="HillCrest is built as a sequence of connected stages, so that each step builds on the last and nothing is left to chance."
         />
       </SiteSection>
 
@@ -96,7 +96,7 @@ export default function HowItWorksPage() {
           <SectionHeading
             eyebrow="Alongside the pathway"
             title="Operations and support that hold it together"
-            description="Care homes run their operations on CareBridge, and the charity widens access so that cost is not a barrier to starting."
+            description="Care homes run their operations on HillCrest, and the charity widens access so that cost is not a barrier to starting."
           />
           <div className="grid gap-4">
             {[
@@ -136,7 +136,7 @@ export default function HowItWorksPage() {
           <SectionHeading
             align="center"
             title="Start your pathway today"
-            description="Begin with training, or reach out to partner with CareBridge."
+            description="Begin with training, or reach out to partner with HillCrest."
           />
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button size="lg" asChild>

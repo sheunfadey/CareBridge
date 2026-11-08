@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700" fill="none" role="img" aria-label="CareBridge">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700" fill="none" role="img" aria-label="HillCrest">
     <g transform="translate(302 24) scale(0.58)">
     <g stroke-linecap="round" stroke-linejoin="round">
       <path d="M256 104C204 30 96 38 62 132C32 214 86 312 192 390" stroke="#087FE5" stroke-width="30"/>
@@ -22,7 +22,7 @@
       <path d="M84 416C190 366 322 366 428 416" stroke="#087FE5" stroke-width="26"/>
       <path d="M104 407C206 367 320 367 408 407" stroke="#08B7F0" stroke-width="6" opacity="0.5"/>
     </g></g>
-    <text x="450" y="474" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="120" font-weight="700" letter-spacing="-4" fill="#102B5C">Care<tspan fill="#20C840">Bridge</tspan></text>
+    <text x="450" y="474" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="120" font-weight="700" letter-spacing="-4" fill="#102B5C">Hill<tspan fill="#20C840">Crest</tspan></text>
     <text x="450" y="540" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-style="italic" fill="#172B4D">Learn to Care. Grow Your Career. Make a Difference.</text>
     <path d="M250 600Q450 630 650 600" stroke="#20C840" stroke-width="7" fill="none" stroke-linecap="round"/>
   </svg>

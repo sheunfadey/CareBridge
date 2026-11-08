@@ -114,7 +114,7 @@ export default async function CertificatesPage() {
       )}
 
       <p className="text-xs text-muted-foreground">
-        Certificates confirm completion of CareBridge Academy course content.
+        Certificates confirm completion of HillCrest Academy course content.
         They are not a government licence or an external professional
         accreditation.
       </p>

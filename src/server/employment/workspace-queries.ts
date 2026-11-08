@@ -620,7 +620,7 @@ export async function getJobApplicationWorkspace(
       employmentType: job.employment_type,
       organisationId: job.organisation_id,
       organisationName:
-        singleRelation(job.organisations)?.name ?? "CareBridge employer",
+        singleRelation(job.organisations)?.name ?? "HillCrest employer",
     },
     interviews,
     offer: offer
@@ -699,7 +699,7 @@ export async function getInternshipApplicationWorkspace(
       organisationId: listing.organisation_id,
       organisationName:
         singleRelation(listing.organisations)?.name ??
-        "CareBridge placement provider",
+        "HillCrest placement provider",
       startDate: listing.start_date,
       endDate: listing.end_date,
       expectedHours: listing.expected_hours,

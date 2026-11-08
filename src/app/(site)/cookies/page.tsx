@@ -8,7 +8,7 @@ import { brand } from "@/config/brand";
 export const metadata: Metadata = {
   title: "Cookie and Privacy Preferences",
   description:
-    "What cookies and similar technologies CareBridge uses, the categories we apply, why some are required for sign-in, and how to control your preferences.",
+    "What cookies and similar technologies HillCrest uses, the categories we apply, why some are required for sign-in, and how to control your preferences.",
 };
 
 export default function CookiesPage() {

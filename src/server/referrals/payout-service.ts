@@ -149,7 +149,7 @@ export async function attemptPayoutTransfer(
     const transfer = await provider.initiateTransfer({
       amountMinorUnits: Number(payout.amount_minor_units),
       recipientCode,
-      reason: `CareBridge referral payout ${payout.id.slice(0, 8)}`,
+      reason: `HillCrest referral payout ${payout.id.slice(0, 8)}`,
       reference: transferReference,
     });
 

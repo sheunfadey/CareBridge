@@ -40,7 +40,7 @@ export default async function AcademyPage() {
     <div className="space-y-4 lg:space-y-5">
       <PageHeader
         eyebrow="Academy"
-        title="CareBridge Academy"
+        title="HillCrest Academy"
         description="Learn at your pace, track progress across courses and collect verifiable certificates when you complete them."
         breadcrumbs={[
           { label: "Dashboard", href: "/dashboard" },

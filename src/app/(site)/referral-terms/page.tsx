@@ -8,7 +8,7 @@ import { brand } from "@/config/brand";
 export const metadata: Metadata = {
   title: "Referral Programme Terms",
   description:
-    "How to join the CareBridge referral programme, how referrals are attributed, how commission is earned and paid out, and the rules for partners.",
+    "How to join the HillCrest referral programme, how referrals are attributed, how commission is earned and paid out, and the rules for partners.",
 };
 
 export default function ReferralTermsPage() {

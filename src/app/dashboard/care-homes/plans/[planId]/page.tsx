@@ -104,7 +104,7 @@ export default async function CarePlanDetailPage({
             Approval workflow
           </h2>
           <p className="text-sm text-muted-foreground">
-            CareBridge does not diagnose conditions or replace professional
+            HillCrest does not diagnose conditions or replace professional
             clinical judgement. Plans are drafted, submitted for approval, then
             activated.
           </p>

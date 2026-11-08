@@ -1,6 +1,6 @@
 # Phase 9 — Analytics, reporting and subscriptions
 
-Source: `CareBridge_Plan.txt` §20 (analytics and reporting) and §26 (billing and
+Source: `HillCrest_Plan.txt` §20 (analytics and reporting) and §26 (billing and
 SaaS subscriptions).
 
 ## Subscription model

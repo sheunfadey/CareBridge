@@ -59,7 +59,7 @@ export function RegisterForm() {
 
   return (
     <AuthCard
-      title="Create your CareBridge account"
+      title="Create your HillCrest account"
       description="Start your caregiver journey or manage care operations."
       footer={
         <span>

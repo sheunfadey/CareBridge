@@ -10,7 +10,7 @@ import { VerifyCertificateForm } from "@/features/academy/components/verify-cert
 export const metadata: Metadata = {
   title: "Verify a certificate",
   description:
-    "Check a CareBridge Academy certificate using its verification code.",
+    "Check a HillCrest Academy certificate using its verification code.",
 };
 
 export default function VerifyCertificatePage() {
@@ -25,7 +25,7 @@ export default function VerifyCertificatePage() {
             <SectionHeading
               align="center"
               eyebrow="Certificate verification"
-              title="Check a CareBridge certificate"
+              title="Check a HillCrest certificate"
               description="Enter the verification code printed on the certificate. Verification is public and does not require an account."
             />
           </div>

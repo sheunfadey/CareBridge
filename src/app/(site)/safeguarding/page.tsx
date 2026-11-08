@@ -8,7 +8,7 @@ import { brand } from "@/config/brand";
 export const metadata: Metadata = {
   title: "Safeguarding Policy",
   description:
-    "How CareBridge handles safeguarding concerns about children and vulnerable adults, how to report a concern, and how concerns are reviewed and escalated.",
+    "How HillCrest handles safeguarding concerns about children and vulnerable adults, how to report a concern, and how concerns are reviewed and escalated.",
 };
 
 export default function SafeguardingPage() {

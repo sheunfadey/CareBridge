@@ -1,6 +1,6 @@
 # Deployment
 
-CareBridge is a Next.js 16 application backed by Supabase (Postgres, Auth and
+HillCrest is a Next.js 16 application backed by Supabase (Postgres, Auth and
 RLS). Vercel is the reference hosting target; any Node.js host that supports
 Next.js works.
 

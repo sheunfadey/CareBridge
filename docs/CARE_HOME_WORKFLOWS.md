@@ -59,7 +59,7 @@ membership and the relevant care permission.
   a change summary.
 - Workflow: draft → pending approval → active → archived, with rejection.
 - Restricted plans are visible only to `care_plan_manage`.
-- CareBridge does not diagnose conditions or replace clinical judgement.
+- HillCrest does not diagnose conditions or replace clinical judgement.
 
 ## Medication
 

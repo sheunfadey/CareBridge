@@ -39,7 +39,7 @@ export default async function JobsPage() {
       <PageHeader
         eyebrow="Employment"
         title="Careers in care"
-        description="Explore verified care roles, apply with your CareBridge profile and follow every application in one place."
+        description="Explore verified care roles, apply with your HillCrest profile and follow every application in one place."
         breadcrumbs={[
           { label: "Dashboard", href: "/dashboard" },
           { label: "Jobs" },

@@ -1,13 +1,13 @@
 export const brand = {
-  name: "CareBridge",
-  legalName: "CareBridge",
+  name: "HillCrest",
+  legalName: "HillCrest",
   tagline: "Learn to Care. Grow Your Career. Make a Difference.",
   shortDescription:
     "Caregiver training, verified practical experience, employment pathways and care-home operations in one platform.",
   locale: "en-NG",
   timeZone: "Africa/Lagos",
   currency: "NGN",
-  supportEmail: "support@carebridge.ng",
+  supportEmail: "support@hillcrest.ng",
   colors: {
     navy: "#102B5C",
     deepNavy: "#071A3A",

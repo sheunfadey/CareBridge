@@ -8,7 +8,7 @@ import { brand } from "@/config/brand";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "How CareBridge collects, uses, shares and protects personal data across training, employment, care operations, referrals and charitable giving.",
+    "How HillCrest collects, uses, shares and protects personal data across training, employment, care operations, referrals and charitable giving.",
 };
 
 export default function PrivacyPage() {

@@ -11,7 +11,7 @@ import {
 import type { LogoSize, LogoTone } from "@/components/brand/logo-geometry";
 import { brand } from "@/config/brand";
 
-type AnimatedCareBridgeLogoProps = {
+type AnimatedHillCrestLogoProps = {
   size?: LogoSize;
   tone?: LogoTone;
   showTagline?: boolean;
@@ -34,12 +34,12 @@ const wordmarkSizes: Record<LogoSize, string> = {
   xl: "text-4xl sm:text-5xl",
 };
 
-export function AnimatedCareBridgeLogo({
+export function AnimatedHillCrestLogo({
   size = "lg",
   tone = "default",
   showTagline = true,
   className,
-}: AnimatedCareBridgeLogoProps) {
+}: AnimatedHillCrestLogoProps) {
   const reduceMotion = useReducedMotion();
   const emblemTone: EmblemTone =
     tone === "onDark" ? "light" : tone === "mono" ? "mono" : "dark";
@@ -194,9 +194,9 @@ export function AnimatedCareBridgeLogo({
         )}
         {...(animate(0.98) ?? {})}
       >
-        Care
+        Hill
         <span className={tone === "mono" ? "text-current" : "text-brand-green"}>
-          Bridge
+          Crest
         </span>
       </motion.span>
 

@@ -24,7 +24,7 @@ export default function GlobalError({
         <div className="w-full max-w-lg space-y-6">
           <LogoMark size={40} />
           <ErrorState
-            title="CareBridge could not start"
+            title="HillCrest could not start"
             description="An unexpected error occurred while loading the application. Try again, or contact support if the problem continues."
             action={<Button onClick={reset}>Try again</Button>}
           />

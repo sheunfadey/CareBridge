@@ -146,7 +146,7 @@ export default async function VerifyCodePage({ params }: VerifyCodePageProps) {
             <Link href="/verify-certificate">Verify another certificate</Link>
           </Button>
           <Button variant="outline" asChild>
-            <Link href="/courses">Browse CareBridge courses</Link>
+            <Link href="/courses">Browse HillCrest courses</Link>
           </Button>
         </div>
       </div>

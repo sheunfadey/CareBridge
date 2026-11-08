@@ -162,7 +162,7 @@ export function CreateCourseForm({
               <SelectValue placeholder="Select an owner" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="platform">CareBridge platform</SelectItem>
+              <SelectItem value="platform">HillCrest platform</SelectItem>
               {organisations.map((organisation) => (
                 <SelectItem key={organisation.id} value={organisation.id}>
                   {organisation.name}

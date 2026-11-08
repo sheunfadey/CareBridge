@@ -1,4 +1,4 @@
-# CareBridge brand system
+# HillCrest brand system
 
 ## Palette
 
@@ -36,9 +36,9 @@ The CSS tokens live in `src/app/globals.css`; the shared colours live in
 
 - `LogoEmblem` — the shared vector emblem.
 - `LogoMark` — icon-only mark.
-- `CareBridgeLogo` — full, stacked, icon, light and dark variants.
-- `AnimatedCareBridgeLogo` — staged entrance animation.
-- `CareBridgeLoader` — full-screen navy loading scene.
+- `HillCrestLogo` — full, stacked, icon, light and dark variants.
+- `AnimatedHillCrestLogo` — staged entrance animation.
+- `HillCrestLoader` — full-screen navy loading scene.
 - `InitialBrandSplash` — one-time startup splash mounted by `AppProviders`.
 - `AppLoadingScreen` / `RouteLoadingFallback` — contained loading states.
 

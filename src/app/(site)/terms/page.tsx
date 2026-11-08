@@ -8,7 +8,7 @@ import { brand } from "@/config/brand";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
-    "The terms that govern your use of CareBridge: accounts, acceptable use, training, organisations, payments, referrals, donations, liability and governing law.",
+    "The terms that govern your use of HillCrest: accounts, acceptable use, training, organisations, payments, referrals, donations, liability and governing law.",
 };
 
 export default function TermsPage() {

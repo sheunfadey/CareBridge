@@ -1,6 +1,6 @@
 # Phase 8 — Charity, donations and scholarships
 
-Source: `CareBridge_Plan.txt` §17 and the data-model list.
+Source: `HillCrest_Plan.txt` §17 and the data-model list.
 
 ## Tenancy
 

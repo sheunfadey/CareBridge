@@ -11,7 +11,7 @@ import { homeFaqs, type FaqItem } from "@/config/site-content";
 export const metadata: Metadata = {
   title: "Frequently Asked Questions",
   description:
-    "Answers about CareBridge caregiver training, placements, employment, care-home operations, referrals, payments and charity support.",
+    "Answers about HillCrest caregiver training, placements, employment, care-home operations, referrals, payments and charity support.",
 };
 
 const groupedFaqs: { title: string; items: FaqItem[] }[] = [
@@ -69,7 +69,7 @@ const groupedFaqs: { title: string; items: FaqItem[] }[] = [
     title: "For organisations",
     items: [
       {
-        question: "What does a care home use CareBridge for?",
+        question: "What does a care home use HillCrest for?",
         answer:
           "Residents and staff records, shift planning, daily care records, maintained care plans, incident logging with an escalation path, inventory and purchases, invoices and operational reporting.",
       },
@@ -96,12 +96,12 @@ const groupedFaqs: { title: string; items: FaqItem[] }[] = [
       {
         question: "What currency are prices charged in?",
         answer:
-          "CareBridge launches in Nigeria, so pricing is in Nigerian Naira (NGN) and local payment methods are supported. The platform is built so that additional regions can be supported over time.",
+          "HillCrest launches in Nigeria, so pricing is in Nigerian Naira (NGN) and local payment methods are supported. The platform is built so that additional regions can be supported over time.",
       },
       {
         question: "How does the referral programme work?",
         answer:
-          "Partners introduce learners and organisations to CareBridge. Eligible referrals are tracked against a published commission policy, and commissions become payable only when they qualify under that policy.",
+          "Partners introduce learners and organisations to HillCrest. Eligible referrals are tracked against a published commission policy, and commissions become payable only when they qualify under that policy.",
       },
       {
         question: "Can a referral commission be changed once it has been recorded?",
@@ -178,7 +178,7 @@ export default function FaqPage() {
               On this page
             </p>
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              {["About CareBridge", ...groupedFaqs.map((group) => group.title)].map(
+              {["About HillCrest", ...groupedFaqs.map((group) => group.title)].map(
                 (heading) => (
                   <li key={heading} className="flex gap-3">
                     <span
@@ -196,7 +196,7 @@ export default function FaqPage() {
 
       <SiteSection>
         <SectionHeading
-          eyebrow="About CareBridge"
+          eyebrow="About HillCrest"
           title="General questions"
           description="The starting point: what the platform is, how training works, and how the different parts fit together."
         />

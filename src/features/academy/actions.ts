@@ -195,7 +195,7 @@ export async function createCourseAction(
     const slug = await uniqueCourseSlug(supabase, parsed.data.title);
     const organisationName =
       user.organisations.find((org) => org.organisationId === organisationId)
-        ?.organisationName ?? "CareBridge Academy";
+        ?.organisationName ?? "HillCrest Academy";
 
     const { data: course, error } = await supabase
       .from("courses")

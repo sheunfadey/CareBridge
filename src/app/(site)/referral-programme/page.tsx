@@ -15,14 +15,14 @@ import { SectionHeading, SiteSection } from "@/components/site/site-section";
 export const metadata: Metadata = {
   title: "Referral Programme",
   description:
-    "CareBridge referral programme: who can join, how referrals are tracked, commissions follow a published policy and become payable only when they qualify, financial history is append-only.",
+    "HillCrest referral programme: who can join, how referrals are tracked, commissions follow a published policy and become payable only when they qualify, financial history is append-only.",
 };
 
 const whoCanJoin = [
   {
     icon: UsersIcon,
     title: "Partners and organisations",
-    body: "Care homes, training partners, agencies and organisations that can introduce learners or organisations to CareBridge.",
+    body: "Care homes, training partners, agencies and organisations that can introduce learners or organisations to HillCrest.",
   },
   {
     icon: HandCoinsIcon,
@@ -38,7 +38,7 @@ const howItWorksSteps = [
   },
   {
     title: "Refer",
-    body: "Introduce learners or organisations to CareBridge using your referral path as described in the programme.",
+    body: "Introduce learners or organisations to HillCrest using your referral path as described in the programme.",
   },
   {
     title: "Track",
@@ -59,7 +59,7 @@ export default function ReferralProgrammePage() {
             <SectionHeading
               eyebrow="Referral Programme"
               title="Refer partners and earn when it qualifies"
-              description="The referral programme lets partners introduce learners and organisations to CareBridge. Commissions follow a published policy and become payable only when they qualify."
+              description="The referral programme lets partners introduce learners and organisations to HillCrest. Commissions follow a published policy and become payable only when they qualify."
             />
             <div className="flex flex-wrap items-center gap-3">
               <Button size="lg" asChild>
@@ -99,7 +99,7 @@ export default function ReferralProgrammePage() {
         <SectionHeading
           eyebrow="Who it is for"
           title="Partners who can join"
-          description="The programme is open to partners who can introduce qualified learners or organisations to CareBridge."
+          description="The programme is open to partners who can introduce qualified learners or organisations to HillCrest."
         />
         <div className="mt-10 grid gap-6 md:grid-cols-2">
           {whoCanJoin.map((item) => (

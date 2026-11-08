@@ -111,7 +111,7 @@ export default async function DashboardPage() {
         description={
           roleNames.length > 0
             ? `Your workspace as ${roleNames.join(", ")}. Metrics below come from live data only.`
-            : "Your CareBridge workspace. Metrics below come from live data only."
+            : "Your HillCrest workspace. Metrics below come from live data only."
         }
         breadcrumbs={[{ label: "Dashboard" }]}
         actions={

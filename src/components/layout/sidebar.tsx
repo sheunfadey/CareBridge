@@ -7,7 +7,7 @@ import { ChevronDownIcon } from "lucide-react";
 import * as LucideIcons from "lucide-react";
 import { cn } from "cn";
 
-import { CareBridgeLogo } from "@/components/brand/carebridge-logo";
+import { HillCrestLogo } from "@/components/brand/carebridge-logo";
 import { primaryNav, superAdminNav } from "@/config/navigation";
 import type { NavItem } from "@/config/navigation";
 import { Badge } from "@/components/ui/badge";
@@ -105,7 +105,7 @@ export function Sidebar({
           onClick={onNavigate}
           className="inline-flex rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
         >
-          <CareBridgeLogo size="sm" tone="onDark" />
+          <HillCrestLogo size="sm" tone="onDark" />
         </Link>
       </div>
 
