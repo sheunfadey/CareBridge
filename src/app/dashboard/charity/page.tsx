@@ -142,24 +142,28 @@ export default async function CharityPage({
               value={adminSummary.activeCampaigns}
               hint={`${adminSummary.pendingApprovals} awaiting approval`}
               icon={<HeartHandshakeIcon aria-hidden="true" />}
+              href={`/dashboard/charity/campaigns?organisation=${workspace!.organisationId}`}
             />
             <MetricCard
               label="Received"
               value={formatMoney(adminSummary.receivedMinorUnits, "NGN")}
               hint="Verified donations net of refunds"
               icon={<HandHeartIcon aria-hidden="true" />}
+              href={`/dashboard/charity/donations?organisation=${workspace!.organisationId}`}
             />
             <MetricCard
               label="Committed"
               value={formatMoney(adminSummary.committedMinorUnits, "NGN")}
               hint={`${formatMoney(adminSummary.disbursedMinorUnits, "NGN")} disbursed`}
               icon={<WalletIcon aria-hidden="true" />}
+              href={`/dashboard/charity/reports?organisation=${workspace!.organisationId}`}
             />
             <MetricCard
               label="Scholarships awarded"
               value={formatMoney(adminSummary.awardedMinorUnits, "NGN")}
               hint={`${adminSummary.awardsCount} awards · ${adminSummary.studentsSponsored} students`}
               icon={<BookOpenCheckIcon aria-hidden="true" />}
+              href={`/dashboard/charity/scholarships?organisation=${workspace!.organisationId}`}
             />
           </div>
 

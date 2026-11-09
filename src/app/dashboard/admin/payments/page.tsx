@@ -110,17 +110,20 @@ export default async function AdminPaymentsPage({
           label="Successful payments"
           value={summary.successfulCount}
           icon={<WalletIcon aria-hidden="true" />}
+          href="/dashboard/admin/payments?status=successful"
         />
         <MetricCard
           label="Collected"
           value={formatMoney(summary.successfulMinorUnits, "NGN")}
           icon={<CircleDollarSignIcon aria-hidden="true" />}
           hint="Before refunds"
+          href="/dashboard/admin/payments?status=successful"
         />
         <MetricCard
           label="Refunded"
           value={formatMoney(summary.refundedMinorUnits, "NGN")}
           icon={<RefreshCwIcon aria-hidden="true" />}
+          href="/dashboard/admin/payments?status=refunded"
         />
         <MetricCard
           label="Awaiting verification"
@@ -131,6 +134,7 @@ export default async function AdminPaymentsPage({
               ? `${summary.mismatchCount} reconciliation mismatch(es)`
               : "No mismatches recorded"
           }
+          href="/dashboard/admin/payments?status=pending"
         />
       </div>
 

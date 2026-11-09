@@ -212,24 +212,28 @@ export default async function DashboardPage() {
               value={care.activeResidents}
               hint={`${care.onLeaveResidents} on leave`}
               icon={<UsersIcon aria-hidden="true" />}
+              href={`/dashboard/care-homes/residents?organisation=${care.organisationId}`}
             />
             <MetricCard
               label="Shifts today"
               value={care.shiftsToday}
               hint={`${care.coverageGaps} coverage gaps`}
               icon={<CalendarClockIcon aria-hidden="true" />}
+              href={`/dashboard/care-homes/roster?organisation=${care.organisationId}`}
             />
             <MetricCard
               label="Open incidents"
               value={care.openIncidents}
               hint="Requires review or closure"
               icon={<ShieldAlertIcon aria-hidden="true" />}
+              href={`/dashboard/care-homes/incidents?organisation=${care.organisationId}`}
             />
             <MetricCard
               label="Outstanding invoices"
               value={formatMoney(care.outstandingMinorUnits, "NGN")}
               hint={`${care.facilities} facilities`}
               icon={<ReceiptTextIcon aria-hidden="true" />}
+              href={`/dashboard/care-homes/invoices?organisation=${care.organisationId}`}
             />
           </div>
         </section>
@@ -253,24 +257,28 @@ export default async function DashboardPage() {
               value={charityAdmin.activeCampaigns}
               hint="Approved and public"
               icon={<HeartHandshakeIcon aria-hidden="true" />}
+              href={`/dashboard/charity/campaigns?organisation=${charityAdmin.organisationId}`}
             />
             <MetricCard
               label="Donations received"
               value={formatMoney(charityAdmin.receivedMinorUnits, "NGN")}
               hint="Net of refunds"
               icon={<WalletIcon aria-hidden="true" />}
+              href={`/dashboard/charity/donations?organisation=${charityAdmin.organisationId}`}
             />
             <MetricCard
               label="Committed funds"
               value={formatMoney(charityAdmin.committedMinorUnits, "NGN")}
               hint="Allocated to campaign purposes"
               icon={<ReceiptTextIcon aria-hidden="true" />}
+              href={`/dashboard/charity/reports?organisation=${charityAdmin.organisationId}`}
             />
             <MetricCard
               label="Scholarships"
               value={charityAdmin.awardsCount}
               hint={`${charityAdmin.studentsSponsored} students sponsored`}
               icon={<GraduationCapIcon aria-hidden="true" />}
+              href={`/dashboard/charity/scholarships?organisation=${charityAdmin.organisationId}`}
             />
           </div>
         </section>
@@ -292,24 +300,28 @@ export default async function DashboardPage() {
               value={formatMoney(referralPartner.approvedMinorUnits, "NGN")}
               hint="Available to request"
               icon={<WalletIcon aria-hidden="true" />}
+              href="/dashboard/referrals#request-payout"
             />
             <MetricCard
               label="Pending commissions"
               value={formatMoney(referralPartner.pendingMinorUnits, "NGN")}
               hint="Awaiting eligibility or approval"
               icon={<CalendarClockIcon aria-hidden="true" />}
+              href="/dashboard/referrals#commission-ledger"
             />
             <MetricCard
               label="In payout"
               value={formatMoney(referralPartner.inPayoutMinorUnits, "NGN")}
               hint="Held against a payout request"
               icon={<CreditCardIcon aria-hidden="true" />}
+              href="/dashboard/referrals#payout-requests"
             />
             <MetricCard
               label="Paid to date"
               value={formatMoney(referralPartner.paidMinorUnits, "NGN")}
               hint="Confirmed transfers"
               icon={<Share2Icon aria-hidden="true" />}
+              href="/dashboard/referrals#payout-requests"
             />
           </div>
         </section>
@@ -326,10 +338,10 @@ export default async function DashboardPage() {
             </Button>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
-            <MetricCard label="Published jobs" value={employer.publishedJobs} hint={`${employer.draftJobs} drafts`} icon={<Building2Icon />} />
-            <MetricCard label="Applications" value={employer.applications} hint="Across your roles" icon={<UsersIcon />} />
-            <MetricCard label="Shortlisted" value={employer.shortlisted} hint="Awaiting interview or offer" icon={<BookOpenCheckIcon />} />
-            <MetricCard label="Hired" value={employer.hired} hint="Recorded outcomes" icon={<GraduationCapIcon />} />
+            <MetricCard label="Published jobs" value={employer.publishedJobs} hint={`${employer.draftJobs} drafts`} icon={<Building2Icon />} href="/dashboard/jobs/manage" />
+            <MetricCard label="Applications" value={employer.applications} hint="Across your roles" icon={<UsersIcon />} href="/dashboard/jobs/manage" />
+            <MetricCard label="Shortlisted" value={employer.shortlisted} hint="Awaiting interview or offer" icon={<BookOpenCheckIcon />} href="/dashboard/jobs/manage" />
+            <MetricCard label="Hired" value={employer.hired} hint="Recorded outcomes" icon={<GraduationCapIcon />} href="/dashboard/jobs/manage" />
           </div>
         </section>
       ) : null}
@@ -345,10 +357,10 @@ export default async function DashboardPage() {
             </Button>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
-            <MetricCard label="Active enrolments" value={academy.myEnrolments} hint="Your learning" icon={<BookOpenCheckIcon />} />
-            <MetricCard label="Completed courses" value={academy.myCompleted} hint={`${academy.myCertificates} certificates`} icon={<GraduationCapIcon />} />
+            <MetricCard label="Active enrolments" value={academy.myEnrolments} hint="Your learning" icon={<BookOpenCheckIcon />} href="/dashboard/academy/learning" />
+            <MetricCard label="Completed courses" value={academy.myCompleted} hint={`${academy.myCertificates} certificates`} icon={<GraduationCapIcon />} href="/dashboard/academy/certificates" />
             {academy.managedCourses > 0 ? (
-              <MetricCard label="Managed courses" value={academy.managedCourses} hint={`${academy.publishedCourses} published`} icon={<BookOpenCheckIcon />} />
+              <MetricCard label="Managed courses" value={academy.managedCourses} hint={`${academy.publishedCourses} published`} icon={<BookOpenCheckIcon />} href="/dashboard/academy/manage" />
             ) : null}
           </div>
         </section>
@@ -364,10 +376,10 @@ export default async function DashboardPage() {
               </Button>
             </div>
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              <MetricCard label="Payments pending" value={finance.pendingPayments} hint="Awaiting provider verification" icon={<CreditCardIcon />} />
-              <MetricCard label="Reconciliation mismatches" value={finance.mismatches} hint="Flagged for review" icon={<AlertTriangleIcon />} />
-              <MetricCard label="Refunds in progress" value={finance.refundsInProgress} hint="Requested or processing" icon={<ReceiptTextIcon />} />
-              <MetricCard label="Payouts awaiting action" value={finance.pendingPayouts} hint="Pending or approved" icon={<WalletIcon />} />
+              <MetricCard label="Payments pending" value={finance.pendingPayments} hint="Awaiting provider verification" icon={<CreditCardIcon />} href="/dashboard/admin/payments?status=pending" />
+              <MetricCard label="Reconciliation mismatches" value={finance.mismatches} hint="Flagged for review" icon={<AlertTriangleIcon />} href="/dashboard/admin/reconciliation" />
+              <MetricCard label="Refunds in progress" value={finance.refundsInProgress} hint="Requested or processing" icon={<ReceiptTextIcon />} href="/dashboard/admin/payments" />
+              <MetricCard label="Payouts awaiting action" value={finance.pendingPayouts} hint="Pending or approved" icon={<WalletIcon />} href="/dashboard/admin/referrals" />
             </div>
           </section>
         ) : null}
@@ -386,9 +398,9 @@ export default async function DashboardPage() {
             </Button>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
-            <MetricCard label="Donations" value={myCharity.donationsCount} hint={formatMoney(myCharity.donatedMinorUnits, "NGN")} icon={<HeartHandshakeIcon />} />
-            <MetricCard label="Scholarship applications" value={myCharity.applicationsCount} hint="Submitted" icon={<BookOpenCheckIcon />} />
-            <MetricCard label="Awards" value={myCharity.awardsCount} hint={`${myCharity.pendingAwards} awaiting response`} icon={<GraduationCapIcon />} />
+            <MetricCard label="Donations" value={myCharity.donationsCount} hint={formatMoney(myCharity.donatedMinorUnits, "NGN")} icon={<HeartHandshakeIcon />} href="/dashboard/charity/donations" />
+            <MetricCard label="Scholarship applications" value={myCharity.applicationsCount} hint="Submitted" icon={<BookOpenCheckIcon />} href="/dashboard/charity/scholarships" />
+            <MetricCard label="Awards" value={myCharity.awardsCount} hint={`${myCharity.pendingAwards} awaiting response`} icon={<GraduationCapIcon />} href="/dashboard/charity/scholarships" />
           </div>
         </section>
       ) : null}
@@ -438,9 +450,29 @@ export default async function DashboardPage() {
           </div>
         )}
         <div className="grid grid-cols-3 gap-3">
-          <MetricCard label="Organisations" value={facts.organisationCount} hint="Workspaces you belong to" icon={<Building2Icon />} />
-          <MetricCard label="Active members" value={facts.activeMembershipCount} hint="Across your organisations" icon={<UsersIcon />} />
-          <MetricCard label="Pending invitations" value={facts.pendingInvitationCount} hint="Awaiting acceptance" icon={<UsersIcon />} />
+          <MetricCard label="Organisations" value={facts.organisationCount} hint="Workspaces you belong to" icon={<Building2Icon />} href="/dashboard/organisation" />
+          <MetricCard
+            label="Active members"
+            value={facts.activeMembershipCount}
+            hint="Across your organisations"
+            icon={<UsersIcon />}
+            href={
+              primaryOrganisation
+                ? `/dashboard/organisation/${primaryOrganisation.organisationId}`
+                : "/dashboard/organisation"
+            }
+          />
+          <MetricCard
+            label="Pending invitations"
+            value={facts.pendingInvitationCount}
+            hint="Awaiting acceptance"
+            icon={<UsersIcon />}
+            href={
+              primaryOrganisation
+                ? `/dashboard/organisation/${primaryOrganisation.organisationId}`
+                : "/dashboard/organisation"
+            }
+          />
         </div>
       </section>
     </div>

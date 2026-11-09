@@ -151,24 +151,28 @@ export default async function ReferralsPage() {
               value={formatMoney(data.balance.approvedMinorUnits, currency)}
               icon={<WalletIcon aria-hidden="true" />}
               hint="Available to request"
+              href="#request-payout"
             />
             <MetricCard
               label="Pending"
               value={formatMoney(data.balance.pendingMinorUnits, currency)}
               icon={<ClockIcon aria-hidden="true" />}
               hint="Awaiting eligibility or approval"
+              href="#commission-ledger"
             />
             <MetricCard
               label="In payout"
               value={formatMoney(data.balance.inPayoutMinorUnits, currency)}
               icon={<CircleDollarSignIcon aria-hidden="true" />}
               hint="Held against a payout request"
+              href="#payout-requests"
             />
             <MetricCard
               label="Paid to date"
               value={formatMoney(data.balance.paidMinorUnits, currency)}
               icon={<BadgeCheckIcon aria-hidden="true" />}
               hint="Confirmed transfers"
+              href="#payout-requests"
             />
           </div>
 
@@ -186,7 +190,7 @@ export default async function ReferralsPage() {
               <ReferralLinkCard code={partner.code} baseUrl={baseUrl} />
             </Card>
 
-            <Card className="space-y-3 p-5">
+            <Card id="request-payout" className="space-y-3 p-5">
               <div className="flex items-center gap-2">
                 <WalletIcon
                   className="size-5 text-brand-teal"
@@ -218,7 +222,7 @@ export default async function ReferralsPage() {
             <PayoutAccountForm account={data.account} />
           </Card>
 
-          <Card className="overflow-hidden p-0">
+          <Card id="commission-ledger" className="overflow-hidden p-0">
             <div className="border-b border-border p-4">
               <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Commission ledger
@@ -271,7 +275,7 @@ export default async function ReferralsPage() {
             )}
           </Card>
 
-          <Card className="overflow-hidden p-0">
+          <Card id="payout-requests" className="overflow-hidden p-0">
             <div className="border-b border-border p-4">
               <h2 className="font-heading text-lg font-semibold text-brand-strong">
                 Payout requests

@@ -53,6 +53,9 @@ export default async function CareHomesPage({
   const canManageResidents = userHasPermission(user, "resident_manage");
   const dashboard = await getCareDashboard(workspace, facility?.id);
   const residents = facility ? await listResidentOptions(workspace, facility.id) : [];
+  const careQuery = `organisation=${workspace.organisationId}${
+    facility ? `&facility=${facility.id}` : ""
+  }`;
 
   return (
     <div className="space-y-4 lg:space-y-5">
@@ -116,42 +119,49 @@ export default async function CareHomesPage({
               value={dashboard.activeResidents}
               hint={`${dashboard.onLeaveResidents} on leave`}
               icon={<UsersIcon aria-hidden="true" />}
+              href={`/dashboard/care-homes/residents?${careQuery}`}
             />
             <MetricCard
               label="Active staff"
               value={dashboard.activeStaff}
               hint={`${dashboard.shiftsToday} shifts today`}
               icon={<CalendarClockIcon aria-hidden="true" />}
+              href={`/dashboard/care-homes/staff?${careQuery}`}
             />
             <MetricCard
               label="Coverage gaps"
               value={dashboard.coverageGaps}
               hint="Unfilled places in today's rosters"
               icon={<AlertTriangleIcon aria-hidden="true" />}
+              href={`/dashboard/care-homes/roster?${careQuery}`}
             />
             <MetricCard
               label="Open incidents"
               value={dashboard.openIncidents}
               hint={`${dashboard.highSeverityIncidents} high or critical`}
               icon={<ShieldAlertIcon aria-hidden="true" />}
+              href={`/dashboard/care-homes/incidents?${careQuery}`}
             />
             <MetricCard
               label="Outstanding invoices"
               value={formatMoney(dashboard.outstandingMinorUnits, "NGN")}
               hint={`${dashboard.outstandingInvoices.length} invoices shown`}
               icon={<CircleDollarSignIcon aria-hidden="true" />}
+              href={`/dashboard/care-homes/invoices?${careQuery}`}
             />
             <MetricCard
               label="Low stock"
               value={dashboard.lowStock.length}
               hint="Items at or below reorder level"
               icon={<PackageIcon aria-hidden="true" />}
+              href={`/dashboard/care-homes/inventory?${careQuery}`}
             />
             <MetricCard
               label="Compliance alerts"
               value={dashboard.expiringCompliance}
               hint="Staff with expired or unverified records"
               icon={<BedDoubleIcon aria-hidden="true" />}
+              href={`/dashboard/care-homes/staff?${careQuery}`}
             />
           </div>
 

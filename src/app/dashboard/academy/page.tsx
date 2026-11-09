@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 
 import { PageHeader } from "@/components/layout/page-header";
+import { MetricCard } from "@/components/dashboard/metric-card";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -74,39 +75,24 @@ export default async function AcademyPage() {
         aria-label="Your learning overview"
         className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4"
       >
-        <Card className="p-3.5">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
-            Active enrolments
-          </p>
-          <p className="mt-2 font-heading text-2xl font-semibold sm:text-3xl text-brand-strong">
-            {facts.activeEnrolments}
-          </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            In progress now
-          </p>
-        </Card>
-        <Card className="p-3.5">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
-            Completed
-          </p>
-          <p className="mt-2 font-heading text-2xl font-semibold sm:text-3xl text-brand-strong">
-            {facts.completedCourses}
-          </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Courses finished
-          </p>
-        </Card>
-        <Card className="p-3.5">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
-            Certificates
-          </p>
-          <p className="mt-2 font-heading text-2xl font-semibold sm:text-3xl text-brand-strong">
-            {facts.certificates}
-          </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Valid, unrevoked
-          </p>
-        </Card>
+        <MetricCard
+          label="Active enrolments"
+          value={facts.activeEnrolments}
+          hint="In progress now"
+          href="/dashboard/academy/learning"
+        />
+        <MetricCard
+          label="Completed"
+          value={facts.completedCourses}
+          hint="Courses finished"
+          href="/dashboard/academy/learning"
+        />
+        <MetricCard
+          label="Certificates"
+          value={facts.certificates}
+          hint="Valid, unrevoked"
+          href="/dashboard/academy/certificates"
+        />
         <Card className="p-3.5">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Catalogue

@@ -146,27 +146,34 @@ export default async function AdminReconciliationPage() {
           value={summary.successfulCount}
           icon={<ShieldCheckIcon aria-hidden="true" />}
           hint={formatMoney(summary.successfulMinorUnits, "NGN")}
+          href="/dashboard/admin/payments?status=successful"
         />
         <MetricCard
           label="Awaiting verification"
           value={summary.pendingCount}
           icon={<ClockIcon aria-hidden="true" />}
+          href="/dashboard/admin/payments?status=pending"
         />
         <MetricCard
           label="Needs review"
           value={needsAttention.length}
           icon={<AlertTriangleIcon aria-hidden="true" />}
           hint="Mismatch or flagged by verification"
+          href="#needs-attention"
         />
         <MetricCard
           label="Refunded"
           value={formatMoney(summary.refundedMinorUnits, "NGN")}
           icon={<CircleDollarSignIcon aria-hidden="true" />}
+          href="/dashboard/admin/payments?status=refunded"
         />
       </div>
 
       {needsAttention.length > 0 ? (
-        <Card className="overflow-hidden border-brand-warning/40 p-0">
+        <Card
+          id="needs-attention"
+          className="overflow-hidden border-brand-warning/40 p-0"
+        >
           <div className="border-b border-border bg-brand-warning/10 p-4">
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
               Needs attention

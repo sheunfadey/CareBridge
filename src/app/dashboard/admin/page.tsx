@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import {
   ActivityIcon,
+  ArrowUpRightIcon,
   Building2Icon,
   CreditCardIcon,
   MessageSquareIcon,
@@ -19,7 +20,6 @@ import {
 import { PageHeader } from "@/components/layout/page-header";
 import { Card } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
 import { getCurrentUser } from "@/server/auth/current-user";
 import { adminService } from "@/server/admin/admin-service";
 import { getPlatformStats } from "@/server/admin/platform-stats";
@@ -91,6 +91,35 @@ const sections = [
   },
 ] as const;
 
+function AdminStat({
+  href,
+  label,
+  value,
+  hint,
+}: {
+  href: string;
+  label: string;
+  value: string | number;
+  hint: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+    >
+      <Card className="h-full p-3.5 transition group-hover:-translate-y-0.5 group-hover:ring-brand-teal/40">
+        <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
+          {label}
+        </p>
+        <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
+          {value}
+        </p>
+        <p className="mt-1 text-xs text-muted-foreground">{hint}</p>
+      </Card>
+    </Link>
+  );
+}
+
 export default async function AdminPage() {
   const user = await getCurrentUser();
 
@@ -143,117 +172,87 @@ export default async function AdminPage() {
       </Alert>
 
       <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-        <Card className="p-3.5">
-          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
-            Pending organisations
-          </p>
-          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
-            {pendingOrgCount && pendingOrgCount.ok ? pendingOrgCount.data : "—"}
-          </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Awaiting approval or verification
-          </p>
-        </Card>
-        <Card className="p-3.5">
-          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
-            Accounts
-          </p>
-          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
-            {userCount && userCount.ok ? userCount.data : "—"}
-          </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Visible to platform administration
-          </p>
-        </Card>
-        <Card className="p-3.5">
-          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
-            Service-role client
-          </p>
-          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
-            {available ? "Ready" : "Off"}
-          </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Required for cross-tenant writes
-          </p>
-        </Card>
-        <Card className="p-3.5">
-          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
-            Active subscriptions
-          </p>
-          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
-            {stats ? stats.activeSubscriptions : "—"}
-          </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            {stats ? `${stats.trialingSubscriptions} on trial` : "Awaiting data"}
-          </p>
-        </Card>
-        <Card className="p-3.5">
-          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
-            Suspended
-          </p>
-          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
-            {stats ? stats.suspendedSubscriptions : "—"}
-          </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Read-only workspaces
-          </p>
-        </Card>
-        <Card className="p-3.5">
-          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
-            Payments pending
-          </p>
-          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
-            {stats ? stats.pendingPayments : "—"}
-          </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Initiated or awaiting verification
-          </p>
-        </Card>
-        <Card className="p-3.5">
-          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
-            Organisations
-          </p>
-          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
-            {stats ? stats.organisations : "—"}
-          </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            {stats ? `${stats.activeOrganisations} active` : "Awaiting data"}
-          </p>
-        </Card>
-        <Card className="p-3.5">
-          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
-            Support conversations
-          </p>
-          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
-            {stats ? stats.conversations : "—"}
-          </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Organisation-scoped threads
-          </p>
-        </Card>
+        <AdminStat
+          href="/dashboard/admin/organisations"
+          label="Pending organisations"
+          value={pendingOrgCount && pendingOrgCount.ok ? pendingOrgCount.data : "—"}
+          hint="Awaiting approval or verification"
+        />
+        <AdminStat
+          href="/dashboard/admin/users"
+          label="Accounts"
+          value={userCount && userCount.ok ? userCount.data : "—"}
+          hint="Visible to platform administration"
+        />
+        <AdminStat
+          href="/dashboard/admin/system"
+          label="Service-role client"
+          value={available ? "Ready" : "Off"}
+          hint="Required for cross-tenant writes"
+        />
+        <AdminStat
+          href="/dashboard/admin/subscriptions"
+          label="Active subscriptions"
+          value={stats ? stats.activeSubscriptions : "—"}
+          hint={stats ? `${stats.trialingSubscriptions} on trial` : "Awaiting data"}
+        />
+        <AdminStat
+          href="/dashboard/admin/subscriptions"
+          label="Suspended"
+          value={stats ? stats.suspendedSubscriptions : "—"}
+          hint="Read-only workspaces"
+        />
+        <AdminStat
+          href="/dashboard/admin/payments"
+          label="Payments pending"
+          value={stats ? stats.pendingPayments : "—"}
+          hint="Initiated or awaiting verification"
+        />
+        <AdminStat
+          href="/dashboard/admin/organisations"
+          label="Organisations"
+          value={stats ? stats.organisations : "—"}
+          hint={stats ? `${stats.activeOrganisations} active` : "Awaiting data"}
+        />
+        <AdminStat
+          href="/dashboard/messages"
+          label="Support conversations"
+          value={stats ? stats.conversations : "—"}
+          hint="Organisation-scoped threads"
+        />
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
         {sections.map((section) => (
-          <Card key={section.href} className="flex flex-col gap-2.5 p-3.5">
-            <span
-              aria-hidden="true"
-              className="flex size-9 items-center justify-center rounded-md bg-brand-sky text-brand-teal"
-            >
-              <section.icon className="size-4.5" />
-            </span>
-            <div>
-              <p className="font-heading font-semibold text-brand-strong">
-                {section.title}
-              </p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {section.description}
-              </p>
-            </div>
-            <Button variant="outline" size="sm" className="w-fit" asChild>
-              <Link href={section.href}>Open</Link>
-            </Button>
-          </Card>
+          <Link
+            key={section.href}
+            href={section.href}
+            className="group block h-full rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <Card className="flex h-full flex-col gap-2.5 p-3.5 transition group-hover:-translate-y-0.5 group-hover:ring-brand-teal/40">
+              <span
+                aria-hidden="true"
+                className="flex size-9 items-center justify-center rounded-md bg-brand-sky text-brand-teal"
+              >
+                <section.icon className="size-4.5" />
+              </span>
+              <div>
+                <p className="font-heading font-semibold text-brand-strong">
+                  {section.title}
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {section.description}
+                </p>
+              </div>
+              <span className="mt-auto inline-flex items-center gap-1 pt-1 text-xs font-medium text-brand-teal">
+                Open
+                <ArrowUpRightIcon
+                  aria-hidden="true"
+                  className="size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </span>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>
