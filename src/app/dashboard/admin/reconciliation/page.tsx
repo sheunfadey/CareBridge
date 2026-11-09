@@ -159,7 +159,11 @@ export default async function AdminReconciliationPage() {
           value={needsAttention.length}
           icon={<AlertTriangleIcon aria-hidden="true" />}
           hint="Mismatch or flagged by verification"
-          href="#needs-attention"
+          href={
+            needsAttention.length > 0
+              ? "#needs-attention"
+              : "/dashboard/admin/payments?reconciliation=review_required"
+          }
         />
         <MetricCard
           label="Refunded"
