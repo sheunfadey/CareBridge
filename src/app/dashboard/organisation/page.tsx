@@ -40,7 +40,7 @@ export default async function OrganisationListPage() {
             <Building2Icon className="size-6" aria-hidden="true" />
           </span>
           <div className="space-y-1">
-            <h2 className="font-heading text-lg font-semibold text-brand-strong">
+            <h2 className="font-heading text-base font-semibold sm:text-lg text-brand-strong">
               No organisation yet
             </h2>
             <p className="text-sm text-muted-foreground">
@@ -56,7 +56,7 @@ export default async function OrganisationListPage() {
           </CreateOrganisationDialog>
         </Card>
       ) : (
-        <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <ul className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3">
           {organisations.map((org) => (
             <li key={org.id}>
               <Link
@@ -64,18 +64,18 @@ export default async function OrganisationListPage() {
                 className="group block h-full rounded-xl bg-card p-4 ring-1 ring-foreground/10 transition hover:ring-brand-teal/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <span className="flex size-10 items-center justify-center rounded-lg bg-brand-sky text-brand-teal">
-                    <Building2Icon className="size-5" aria-hidden="true" />
+                  <span className="flex size-9 items-center justify-center rounded-md bg-brand-sky text-brand-teal">
+                    <Building2Icon className="size-4.5" aria-hidden="true" />
                   </span>
                   <StatusBadge status={org.status} />
                 </div>
-                <h2 className="mt-4 font-heading text-base font-semibold text-brand-strong">
+                <h2 className="mt-3 font-heading text-base font-semibold text-brand-strong">
                   {org.name}
                 </h2>
                 <p className="text-sm text-muted-foreground">
                   {organisationTypeLabels[org.type]}
                 </p>
-                <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                   {org.isOwner ? (
                     <span className="inline-flex items-center gap-1 rounded-full bg-brand-sky px-2 py-0.5 text-brand-teal">
                       <ShieldCheckIcon className="size-3.5" aria-hidden="true" />

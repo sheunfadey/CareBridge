@@ -69,14 +69,14 @@ export default async function JobsPage() {
           description="New care roles appear here as employers publish them. Check back soon."
         />
       ) : (
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="grid gap-3 sm:gap-4 lg:grid-cols-2">
           {jobs.map((job) => (
             <Card key={job.id} className="flex flex-col p-4">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <Link
                     href={`/dashboard/jobs/${job.id}`}
-                    className="font-heading text-lg font-semibold text-brand-strong hover:text-brand-teal"
+                    className="font-heading text-base font-semibold sm:text-lg text-brand-strong hover:text-brand-teal"
                   >
                     {job.title}
                   </Link>

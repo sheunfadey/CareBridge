@@ -145,7 +145,7 @@ export default async function ReferralsPage() {
 
       {partner?.status === "approved" ? (
         <>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
             <MetricCard
               label="Approved balance"
               value={formatMoney(data.balance.approvedMinorUnits, currency)}
@@ -172,7 +172,7 @@ export default async function ReferralsPage() {
             />
           </div>
 
-          <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-5">
             <Card className="space-y-3 p-5">
               <div className="flex items-center gap-2">
                 <Share2Icon
@@ -327,7 +327,7 @@ export default async function ReferralsPage() {
             )}
           </Card>
 
-          <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-5">
             <Card className="overflow-hidden p-0">
               <div className="border-b border-border p-4">
                 <h2 className="font-heading text-lg font-semibold text-brand-strong">

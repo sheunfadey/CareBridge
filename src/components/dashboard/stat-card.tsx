@@ -23,31 +23,33 @@ export function StatCard({
   className,
 }: StatCardProps) {
   return (
-    <Card className={cn("p-4", className)}>
-      <div className="flex items-center gap-3">
+    <Card className={cn("h-full p-3 sm:p-3.5", className)}>
+      <div className="flex items-center gap-2.5">
         {Icon ? (
           <span
             aria-hidden="true"
-            className="flex size-9 items-center justify-center rounded-lg bg-brand-sky text-brand-teal"
+            className="flex size-8 shrink-0 items-center justify-center rounded-md bg-brand-sky text-brand-teal"
           >
-            <Icon className="size-4.5" />
+            <Icon className="size-4" />
           </span>
         ) : null}
         <div className="min-w-0">
-          <p className="truncate text-xs font-medium text-muted-foreground">
+          <p className="truncate text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
             {label}
           </p>
           {loading ? (
-            <Skeleton className="mt-1.5 h-5 w-16" />
+            <Skeleton className="mt-1 h-5 w-16" />
           ) : (
-            <p className="font-heading text-lg font-semibold tabular-nums text-brand-strong">
+            <p className="truncate font-heading text-base font-semibold tabular-nums text-brand-strong sm:text-lg">
               {value}
             </p>
           )}
         </div>
       </div>
       {caption ? (
-        <p className="mt-2 text-xs text-muted-foreground">{caption}</p>
+        <p className="mt-1.5 text-[11px] leading-snug text-muted-foreground sm:text-xs">
+          {caption}
+        </p>
       ) : null}
     </Card>
   );

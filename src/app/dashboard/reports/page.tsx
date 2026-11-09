@@ -83,7 +83,7 @@ export default async function ReportsPage({
         }
       />
 
-      <Card className="p-4">
+      <Card className="p-3.5">
         <form className="flex flex-wrap items-end gap-3" method="get">
           <div>
             <label htmlFor="report" className="mb-1 block text-xs text-muted-foreground">
@@ -156,8 +156,8 @@ export default async function ReportsPage({
         </form>
       </Card>
 
-      <div className="grid gap-4 lg:gap-5 lg:grid-cols-[220px_1fr]">
-        <Card className="p-4">
+      <div className="grid gap-4 lg:gap-5 lg:grid-cols-[200px_1fr]">
+        <Card className="p-3.5">
           <h2 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             Report catalogue
           </h2>
@@ -190,7 +190,7 @@ export default async function ReportsPage({
 
         <Card className="overflow-hidden p-0">
           <div className="border-b border-border p-4">
-            <h2 className="font-heading text-lg font-semibold text-brand-strong">
+            <h2 className="font-heading text-base font-semibold sm:text-lg text-brand-strong">
               {result?.report.label ?? "Report"}
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">

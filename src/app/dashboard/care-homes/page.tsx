@@ -88,9 +88,9 @@ export default async function CareHomesPage({
       />
 
       {facilities.length === 0 ? (
-        <Card className="space-y-4 p-5">
+        <Card className="space-y-3 p-4">
           <div>
-            <h2 className="font-heading text-lg font-semibold text-brand-strong">
+            <h2 className="font-heading text-base font-semibold sm:text-lg text-brand-strong">
               Set up your first facility
             </h2>
             <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
@@ -110,7 +110,7 @@ export default async function CareHomesPage({
 
       {facilities.length > 0 ? (
         <>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
             <MetricCard
               label="Active residents"
               value={dashboard.activeResidents}
@@ -155,10 +155,10 @@ export default async function CareHomesPage({
             />
           </div>
 
-          <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
-            <Card className="p-4">
+          <div className="grid gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-5">
+            <Card className="p-3.5">
               <div className="flex items-center justify-between gap-2">
-                <h2 className="font-heading text-lg font-semibold text-brand-strong">
+                <h2 className="font-heading text-base font-semibold sm:text-lg text-brand-strong">
                   Occupancy
                 </h2>
                 <BedDoubleIcon className="size-5 text-brand-teal" aria-hidden="true" />
@@ -195,9 +195,9 @@ export default async function CareHomesPage({
               )}
             </Card>
 
-            <Card className="p-4">
+            <Card className="p-3.5">
               <div className="flex items-center justify-between gap-2">
-                <h2 className="font-heading text-lg font-semibold text-brand-strong">
+                <h2 className="font-heading text-base font-semibold sm:text-lg text-brand-strong">
                   Today&apos;s shifts
                 </h2>
                 <CalendarClockIcon className="size-5 text-brand-teal" aria-hidden="true" />
@@ -234,9 +234,9 @@ export default async function CareHomesPage({
             </Card>
           </div>
 
-          <div className="grid gap-4 lg:gap-5 lg:grid-cols-3">
-            <Card className="p-4">
-              <h2 className="font-heading text-lg font-semibold text-brand-strong">
+          <div className="grid gap-3 sm:gap-4 lg:grid-cols-3 lg:gap-5">
+            <Card className="p-3.5">
+              <h2 className="font-heading text-base font-semibold sm:text-lg text-brand-strong">
                 Incidents needing attention
               </h2>
               {dashboard.recentIncidents.length === 0 ? (
@@ -268,8 +268,8 @@ export default async function CareHomesPage({
               )}
             </Card>
 
-            <Card className="p-4">
-              <h2 className="font-heading text-lg font-semibold text-brand-strong">
+            <Card className="p-3.5">
+              <h2 className="font-heading text-base font-semibold sm:text-lg text-brand-strong">
                 Low stock
               </h2>
               {dashboard.lowStock.length === 0 ? (
@@ -296,8 +296,8 @@ export default async function CareHomesPage({
               </Link>
             </Card>
 
-            <Card className="p-4">
-              <h2 className="font-heading text-lg font-semibold text-brand-strong">
+            <Card className="p-3.5">
+              <h2 className="font-heading text-base font-semibold sm:text-lg text-brand-strong">
                 Outstanding invoices
               </h2>
               {dashboard.outstandingInvoices.length === 0 ? (

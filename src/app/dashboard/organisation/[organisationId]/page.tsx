@@ -76,21 +76,21 @@ export default async function OrganisationDetailPage({
         }
       />
 
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-3 gap-3">
         <Card className="flex items-center gap-3 p-4">
-          <span className="flex size-10 items-center justify-center rounded-lg bg-brand-sky text-brand-teal">
-            <Building2Icon className="size-5" aria-hidden="true" />
+          <span className="flex size-9 items-center justify-center rounded-md bg-brand-sky text-brand-teal">
+            <Building2Icon className="size-4.5" aria-hidden="true" />
           </span>
           <div>
             <p className="text-xs text-muted-foreground">Status</p>
             <StatusBadge status={detail.summary.status} />
           </div>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-xs text-muted-foreground">Verification</p>
           <StatusBadge status={detail.summary.verificationStatus} />
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-xs text-muted-foreground">Active members</p>
           <p className="font-heading text-2xl font-semibold text-brand-strong">
             {detail.summary.memberCount}
@@ -98,7 +98,7 @@ export default async function OrganisationDetailPage({
         </Card>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-3 sm:gap-4 lg:grid-cols-2">
         <Card className="space-y-3 p-4">
           <h2 className="font-heading text-base font-semibold text-brand-strong">
             Verification

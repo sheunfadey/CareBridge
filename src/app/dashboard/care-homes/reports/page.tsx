@@ -73,35 +73,35 @@ export default async function ReportsPage({
         active="/reports"
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <Card className="p-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Active residents</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {reports.occupancy.reduce((sum, row) => sum + row.activeResidents, 0)}
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Shifts with gaps</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {reports.staffing.filter((row) => row.coverageGap > 0).length}
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Expenses</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {formatMoney(totalExpenses, "NGN")}
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Outstanding invoices</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {formatMoney(outstanding, "NGN")}
           </p>
         </Card>
       </div>
 
-      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
-        <Card className="p-4">
+      <div className="grid gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-5">
+        <Card className="p-3.5">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">Occupancy</h2>
           <ul className="mt-3 divide-y divide-border">
             {reports.occupancy.map((row) => (
@@ -117,7 +117,7 @@ export default async function ReportsPage({
           </ul>
         </Card>
 
-        <Card className="p-4">
+        <Card className="p-3.5">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Upcoming staffing coverage
           </h2>
@@ -185,7 +185,7 @@ export default async function ReportsPage({
         )}
       </Card>
 
-      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
+      <div className="grid gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-5">
         <Card className="overflow-hidden p-0">
           <div className="border-b border-border p-4">
             <h2 className="font-heading text-lg font-semibold text-brand-strong">

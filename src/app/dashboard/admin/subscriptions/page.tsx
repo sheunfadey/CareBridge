@@ -69,28 +69,28 @@ export default async function AdminSubscriptionsPage() {
         actions={<PlanDialogForm />}
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <Card className="p-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Organisations</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {summary.organisations}
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Active / trial / grace</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {summary.activeOrTrial}
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Past due</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {summary.pastDue}
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Recorded subscription payments</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {formatMoney(summary.recordedPaymentsMinorUnits, "NGN")}
           </p>
           <p className="text-xs text-muted-foreground">

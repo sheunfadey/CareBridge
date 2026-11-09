@@ -362,7 +362,7 @@ export default async function ResidentRecordPage({
         ) : null}
       </Card>
 
-      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
+      <div className="grid gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-5">
         <Card className="space-y-3 p-4">
           <div className="flex items-center gap-2">
             <PillIcon className="size-5 text-brand-teal" aria-hidden="true" />
@@ -479,7 +479,7 @@ export default async function ResidentRecordPage({
         </Card>
       ) : null}
 
-      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
+      <div className="grid gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-5">
         <Card className="space-y-3 p-4">
           <div className="flex items-center gap-2">
             <ShieldAlertIcon className="size-5 text-brand-teal" aria-hidden="true" />

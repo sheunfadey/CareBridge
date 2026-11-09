@@ -94,7 +94,7 @@ export default async function DailyCarePage({
         active="/care"
       />
 
-      <Card className="p-4">
+      <Card className="p-3.5">
         <form className="flex flex-wrap items-end gap-2" method="get">
           <input type="hidden" name="organisation" value={context.workspace.organisationId} />
           {context.facility ? (
@@ -118,22 +118,22 @@ export default async function DailyCarePage({
         </form>
       </Card>
 
-      <div className="grid gap-4 sm:grid-cols-3">
-        <Card className="p-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Records</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {records.length}
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Awaiting review</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {needsReview.length}
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Completed / refused / deferred</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {records.filter((record) => record.status === "completed").length} /{" "}
             {records.filter((record) => record.status === "refused").length} /{" "}
             {records.filter((record) => record.status === "deferred").length}

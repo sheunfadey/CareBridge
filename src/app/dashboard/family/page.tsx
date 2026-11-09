@@ -50,14 +50,14 @@ export default async function FamilyPortalPage() {
           />
         </Card>
       ) : (
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="grid gap-3 sm:gap-4 lg:grid-cols-2">
           {residents.map((resident) => (
-            <Card key={resident.residentId} className="space-y-4 p-4">
+            <Card key={resident.residentId} className="space-y-3 p-3.5">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2">
                     <HeartHandshakeIcon className="size-5 text-brand-teal" aria-hidden="true" />
-                    <h2 className="font-heading text-lg font-semibold text-brand-strong">
+                    <h2 className="font-heading text-base font-semibold sm:text-lg text-brand-strong">
                       {resident.firstName} {resident.lastName}
                     </h2>
                   </div>

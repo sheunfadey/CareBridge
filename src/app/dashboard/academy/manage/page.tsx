@@ -65,7 +65,7 @@ export default async function ManageCoursesPage() {
       />
 
       {courses.length === 0 ? (
-        <Card className="p-5 text-center">
+        <Card className="p-4 text-center">
           <FileCogIcon className="mx-auto size-8 text-muted-foreground" />
           <p className="mt-2 font-heading font-semibold text-brand-strong">
             No courses yet

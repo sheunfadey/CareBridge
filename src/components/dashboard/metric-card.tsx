@@ -31,13 +31,15 @@ export function MetricCard({
   className,
 }: MetricCardProps) {
   return (
-    <Card className={cn("p-4", className)}>
-      <div className="flex items-start justify-between gap-3">
-        <p className="text-sm font-medium text-muted-foreground">{label}</p>
+    <Card className={cn("h-full p-3 sm:p-3.5", className)}>
+      <div className="flex items-start justify-between gap-2">
+        <p className="min-w-0 text-[11px] font-semibold uppercase leading-tight tracking-wide text-muted-foreground">
+          {label}
+        </p>
         {icon ? (
           <span
             aria-hidden="true"
-            className="flex size-8 items-center justify-center rounded-lg bg-brand-sky text-brand-teal [&_svg]:size-4"
+            className="flex size-7 shrink-0 items-center justify-center rounded-md bg-brand-sky text-brand-teal [&_svg]:size-3.5"
           >
             {icon}
           </span>
@@ -46,19 +48,19 @@ export function MetricCard({
 
       {loading ? (
         <>
-          <Skeleton className="mt-2 h-7 w-24" />
-          <Skeleton className="mt-2 h-3 w-32" />
+          <Skeleton className="mt-2 h-6 w-20" />
+          <Skeleton className="mt-1.5 h-3 w-28" />
         </>
       ) : (
         <>
-          <div className="mt-2 flex items-center gap-2">
-            <p className="font-heading text-2xl font-semibold tabular-nums text-brand-strong">
+          <div className="mt-1.5 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+            <p className="min-w-0 truncate font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
               {empty ? "—" : value}
             </p>
             {trend ? (
               <span
                 className={cn(
-                  "rounded-full px-2 py-0.5 text-xs font-medium tabular-nums",
+                  "rounded-full px-1.5 py-0.5 text-[10px] font-medium tabular-nums",
                   trend.value >= 0
                     ? "bg-brand-success/10 text-brand-success"
                     : "bg-brand-error/10 text-brand-error",
@@ -70,12 +72,14 @@ export function MetricCard({
             ) : null}
           </div>
           {status ? (
-            <div className="mt-2">
+            <div className="mt-1.5">
               <StatusBadge status={status.status} tone={status.tone} />
             </div>
           ) : null}
           {hint ? (
-            <p className="mt-2 text-xs text-muted-foreground">{hint}</p>
+            <p className="mt-1 text-[11px] leading-snug text-muted-foreground sm:text-xs">
+              {hint}
+            </p>
           ) : null}
         </>
       )}

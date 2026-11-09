@@ -195,9 +195,9 @@ export default async function DashboardPage() {
       ) : null}
 
       {care ? (
-        <section className="space-y-4" aria-label="Care operations">
+        <section className="space-y-3" aria-label="Care operations">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-heading text-lg font-semibold text-brand-strong">
+            <h2 className="font-heading text-base font-semibold text-brand-strong sm:text-lg">
               Care operations · {care.workspaceName}
             </h2>
             <Button size="sm" variant="outline" asChild>
@@ -206,7 +206,7 @@ export default async function DashboardPage() {
               </Link>
             </Button>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
             <MetricCard
               label="Active residents"
               value={care.activeResidents}
@@ -236,9 +236,9 @@ export default async function DashboardPage() {
       ) : null}
 
       {charityAdmin ? (
-        <section className="space-y-4" aria-label="Charity">
+        <section className="space-y-3" aria-label="Charity">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-heading text-lg font-semibold text-brand-strong">
+            <h2 className="font-heading text-base font-semibold text-brand-strong sm:text-lg">
               Charity · {charityAdmin.workspaceName}
             </h2>
             <Button size="sm" variant="outline" asChild>
@@ -247,7 +247,7 @@ export default async function DashboardPage() {
               </Link>
             </Button>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
             <MetricCard
               label="Active campaigns"
               value={charityAdmin.activeCampaigns}
@@ -277,16 +277,16 @@ export default async function DashboardPage() {
       ) : null}
 
       {referralPartner ? (
-        <section className="space-y-4" aria-label="Referral partner">
+        <section className="space-y-3" aria-label="Referral partner">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-heading text-lg font-semibold text-brand-strong">
+            <h2 className="font-heading text-base font-semibold text-brand-strong sm:text-lg">
               Referral partner · {referralPartner.code}
             </h2>
             <Button size="sm" variant="outline" asChild>
               <Link href="/dashboard/referrals">Open referrals</Link>
             </Button>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
             <MetricCard
               label="Approved balance"
               value={formatMoney(referralPartner.approvedMinorUnits, "NGN")}
@@ -316,16 +316,16 @@ export default async function DashboardPage() {
       ) : null}
 
       {employer ? (
-        <section className="space-y-4" aria-label="Employer">
+        <section className="space-y-3" aria-label="Employer">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-heading text-lg font-semibold text-brand-strong">
+            <h2 className="font-heading text-base font-semibold text-brand-strong sm:text-lg">
               Employment
             </h2>
             <Button size="sm" variant="outline" asChild>
               <Link href="/dashboard/jobs/manage">Manage jobs</Link>
             </Button>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
             <MetricCard label="Published jobs" value={employer.publishedJobs} hint={`${employer.draftJobs} drafts`} icon={<Building2Icon />} />
             <MetricCard label="Applications" value={employer.applications} hint="Across your roles" icon={<UsersIcon />} />
             <MetricCard label="Shortlisted" value={employer.shortlisted} hint="Awaiting interview or offer" icon={<BookOpenCheckIcon />} />
@@ -334,17 +334,17 @@ export default async function DashboardPage() {
         </section>
       ) : null}
 
-      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
-        <section className="space-y-4" aria-label="Academy">
+      <div className="grid gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-5">
+        <section className="space-y-3" aria-label="Academy">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-heading text-lg font-semibold text-brand-strong">
+            <h2 className="font-heading text-base font-semibold text-brand-strong sm:text-lg">
               Academy
             </h2>
             <Button size="sm" variant="outline" asChild>
               <Link href="/dashboard/academy">Open academy</Link>
             </Button>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
             <MetricCard label="Active enrolments" value={academy.myEnrolments} hint="Your learning" icon={<BookOpenCheckIcon />} />
             <MetricCard label="Completed courses" value={academy.myCompleted} hint={`${academy.myCertificates} certificates`} icon={<GraduationCapIcon />} />
             {academy.managedCourses > 0 ? (
@@ -354,16 +354,16 @@ export default async function DashboardPage() {
         </section>
 
         {finance ? (
-          <section className="space-y-4" aria-label="Finance">
+          <section className="space-y-3" aria-label="Finance">
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <h2 className="font-heading text-lg font-semibold text-brand-strong">
+              <h2 className="font-heading text-base font-semibold text-brand-strong sm:text-lg">
                 Finance
               </h2>
               <Button size="sm" variant="outline" asChild>
                 <Link href="/dashboard/admin/payments">Review payments</Link>
               </Button>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
               <MetricCard label="Payments pending" value={finance.pendingPayments} hint="Awaiting provider verification" icon={<CreditCardIcon />} />
               <MetricCard label="Reconciliation mismatches" value={finance.mismatches} hint="Flagged for review" icon={<AlertTriangleIcon />} />
               <MetricCard label="Refunds in progress" value={finance.refundsInProgress} hint="Requested or processing" icon={<ReceiptTextIcon />} />
@@ -376,16 +376,16 @@ export default async function DashboardPage() {
       {myCharity.donationsCount > 0 ||
       myCharity.applicationsCount > 0 ||
       myCharity.awardsCount > 0 ? (
-        <section className="space-y-4" aria-label="My charity activity">
+        <section className="space-y-3" aria-label="My charity activity">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h2 className="font-heading text-lg font-semibold text-brand-strong">
+            <h2 className="font-heading text-base font-semibold text-brand-strong sm:text-lg">
               My charity and scholarships
             </h2>
             <Button size="sm" variant="outline" asChild>
               <Link href="/dashboard/charity">Open charity</Link>
             </Button>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
             <MetricCard label="Donations" value={myCharity.donationsCount} hint={formatMoney(myCharity.donatedMinorUnits, "NGN")} icon={<HeartHandshakeIcon />} />
             <MetricCard label="Scholarship applications" value={myCharity.applicationsCount} hint="Submitted" icon={<BookOpenCheckIcon />} />
             <MetricCard label="Awards" value={myCharity.awardsCount} hint={`${myCharity.pendingAwards} awaiting response`} icon={<GraduationCapIcon />} />
@@ -393,8 +393,8 @@ export default async function DashboardPage() {
         </section>
       ) : null}
 
-      <section className="space-y-4" aria-label="Your organisations">
-        <h2 className="font-heading text-lg font-semibold text-brand-strong">
+      <section className="space-y-3" aria-label="Your organisations">
+        <h2 className="font-heading text-base font-semibold text-brand-strong sm:text-lg">
           Your organisations
         </h2>
         {user.organisations.length === 0 ? (
@@ -406,9 +406,9 @@ export default async function DashboardPage() {
             .
           </Card>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3">
             {user.organisations.map((organisation) => (
-              <Card key={organisation.organisationId} className="space-y-2 p-4">
+              <Card key={organisation.organisationId} className="space-y-2 p-3.5">
                 <p className="font-heading text-base font-semibold text-brand-strong">
                   {organisation.organisationName}
                 </p>
@@ -437,7 +437,7 @@ export default async function DashboardPage() {
             ))}
           </div>
         )}
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid grid-cols-3 gap-3">
           <MetricCard label="Organisations" value={facts.organisationCount} hint="Workspaces you belong to" icon={<Building2Icon />} />
           <MetricCard label="Active members" value={facts.activeMembershipCount} hint="Across your organisations" icon={<UsersIcon />} />
           <MetricCard label="Pending invitations" value={facts.pendingInvitationCount} hint="Awaiting acceptance" icon={<UsersIcon />} />

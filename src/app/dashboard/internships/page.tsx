@@ -116,14 +116,14 @@ export default async function InternshipsPage() {
             description="New supervised placements appear here as providers publish them."
           />
         ) : (
-          <div className="grid gap-4 lg:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 lg:grid-cols-2">
             {internships.map((listing) => (
               <Card key={listing.id} className="flex flex-col p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
                     <Link
                       href={`/dashboard/internships/${listing.id}`}
-                      className="font-heading text-lg font-semibold text-brand-strong hover:text-brand-teal"
+                      className="font-heading text-base font-semibold sm:text-lg text-brand-strong hover:text-brand-teal"
                     >
                       {listing.title}
                     </Link>

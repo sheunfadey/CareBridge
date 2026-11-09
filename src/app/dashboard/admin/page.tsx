@@ -142,89 +142,89 @@ export default async function AdminPage() {
         </AlertDescription>
       </Alert>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <Card className="p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+        <Card className="p-3.5">
+          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
             Pending organisations
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
             {pendingOrgCount && pendingOrgCount.ok ? pendingOrgCount.data : "—"}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             Awaiting approval or verification
           </p>
         </Card>
-        <Card className="p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
+        <Card className="p-3.5">
+          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
             Accounts
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
             {userCount && userCount.ok ? userCount.data : "—"}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             Visible to platform administration
           </p>
         </Card>
-        <Card className="p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
+        <Card className="p-3.5">
+          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
             Service-role client
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
             {available ? "Ready" : "Off"}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             Required for cross-tenant writes
           </p>
         </Card>
-        <Card className="p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
+        <Card className="p-3.5">
+          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
             Active subscriptions
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
             {stats ? stats.activeSubscriptions : "—"}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             {stats ? `${stats.trialingSubscriptions} on trial` : "Awaiting data"}
           </p>
         </Card>
-        <Card className="p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
+        <Card className="p-3.5">
+          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
             Suspended
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
             {stats ? stats.suspendedSubscriptions : "—"}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             Read-only workspaces
           </p>
         </Card>
-        <Card className="p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
+        <Card className="p-3.5">
+          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
             Payments pending
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
             {stats ? stats.pendingPayments : "—"}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             Initiated or awaiting verification
           </p>
         </Card>
-        <Card className="p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
+        <Card className="p-3.5">
+          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
             Organisations
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
             {stats ? stats.organisations : "—"}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             {stats ? `${stats.activeOrganisations} active` : "Awaiting data"}
           </p>
         </Card>
-        <Card className="p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
+        <Card className="p-3.5">
+          <p className="text-[11px] font-semibold uppercase leading-tight tracking-wide text-brand-teal">
             Support conversations
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+          <p className="mt-1.5 font-heading text-2xl font-semibold tabular-nums text-brand-strong sm:text-3xl">
             {stats ? stats.conversations : "—"}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
@@ -233,14 +233,14 @@ export default async function AdminPage() {
         </Card>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
         {sections.map((section) => (
-          <Card key={section.href} className="flex flex-col gap-3 p-4">
+          <Card key={section.href} className="flex flex-col gap-2.5 p-3.5">
             <span
               aria-hidden="true"
-              className="flex size-10 items-center justify-center rounded-lg bg-brand-sky text-brand-teal"
+              className="flex size-9 items-center justify-center rounded-md bg-brand-sky text-brand-teal"
             >
-              <section.icon className="size-5" />
+              <section.icon className="size-4.5" />
             </span>
             <div>
               <p className="font-heading font-semibold text-brand-strong">

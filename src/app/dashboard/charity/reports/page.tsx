@@ -75,31 +75,31 @@ export default async function CharityReportsPage({
         active="/reports"
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <Card className="p-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Donations received</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {formatMoney(received, "NGN")}
           </p>
           <p className="text-xs text-muted-foreground">Net of refunds</p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Committed</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {formatMoney(committed, "NGN")}
           </p>
           <p className="text-xs text-muted-foreground">Allocated to campaign purposes</p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Disbursed</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {formatMoney(disbursed, "NGN")}
           </p>
           <p className="text-xs text-muted-foreground">Approved and paid expenses</p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Scholarships awarded</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {formatMoney(awarded, "NGN")}
           </p>
         </Card>

@@ -100,22 +100,22 @@ export default async function InvoiceDetailPage({
         active="/invoices"
       />
 
-      <div className="grid gap-4 sm:grid-cols-3">
-        <Card className="p-4">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Invoice total</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {formatMoney(invoice.totalMinorUnits, "NGN")}
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Paid</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {formatMoney(invoice.paidMinorUnits, "NGN")}
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Outstanding</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {formatMoney(invoice.outstandingMinorUnits, "NGN")}
           </p>
         </Card>
@@ -155,8 +155,8 @@ export default async function InvoiceDetailPage({
         </Table>
       </Card>
 
-      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
-        <Card className="p-4">
+      <div className="grid gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-5">
+        <Card className="p-3.5">
           <h2 className="font-heading text-lg font-semibold text-brand-strong">
             Payments
           </h2>

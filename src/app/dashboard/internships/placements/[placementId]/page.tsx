@@ -114,7 +114,7 @@ export default async function PlacementDetailPage({
         }
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         <Card className="space-y-1 p-4">
           <p className="text-xs text-muted-foreground">Candidate</p>
           <p className="font-heading font-semibold text-brand-strong">

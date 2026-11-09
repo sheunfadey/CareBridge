@@ -283,7 +283,7 @@ export default async function OrganisationBillingPage({
         </Card>
       </div>
 
-      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
+      <div className="grid gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-5">
         <Card className="overflow-hidden p-0">
           <div className="border-b border-border p-4">
             <h2 className="font-heading text-lg font-semibold text-brand-strong">

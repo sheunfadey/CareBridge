@@ -72,46 +72,46 @@ export default async function AcademyPage() {
 
       <section
         aria-label="Your learning overview"
-        className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+        className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4"
       >
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Active enrolments
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+          <p className="mt-2 font-heading text-2xl font-semibold sm:text-3xl text-brand-strong">
             {facts.activeEnrolments}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             In progress now
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Completed
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+          <p className="mt-2 font-heading text-2xl font-semibold sm:text-3xl text-brand-strong">
             {facts.completedCourses}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             Courses finished
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Certificates
           </p>
-          <p className="mt-2 font-heading text-3xl font-semibold text-brand-strong">
+          <p className="mt-2 font-heading text-2xl font-semibold sm:text-3xl text-brand-strong">
             {facts.certificates}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             Valid, unrevoked
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
             Catalogue
           </p>
-          <p className="mt-2 flex items-center gap-2 font-heading text-lg font-semibold text-brand-strong">
+          <p className="mt-2 flex items-center gap-2 font-heading text-base font-semibold sm:text-lg text-brand-strong">
             <GraduationCapIcon className="size-5" />
             Browse courses
           </p>
@@ -131,7 +131,7 @@ export default async function AcademyPage() {
           </Button>
         </div>
         {active.length === 0 ? (
-          <Card className="p-5 text-center">
+          <Card className="p-4 text-center">
             <BookOpenIcon className="mx-auto size-8 text-muted-foreground" />
             <p className="mt-2 font-heading font-semibold text-brand-strong">
               No courses in progress
@@ -144,7 +144,7 @@ export default async function AcademyPage() {
             </Button>
           </Card>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
             {active.slice(0, 4).map((course) => {
               const progress = course.totalLessons
                 ? Math.round(
@@ -152,7 +152,7 @@ export default async function AcademyPage() {
                   )
                 : 0;
               return (
-                <Card key={course.enrolmentId} className="p-4">
+                <Card key={course.enrolmentId} className="p-3.5">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="font-heading font-semibold text-brand-strong">
@@ -197,9 +197,9 @@ export default async function AcademyPage() {
               Completed courses
             </h2>
           </div>
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
             {completed.slice(0, 4).map((course) => (
-              <Card key={course.enrolmentId} className="p-4">
+              <Card key={course.enrolmentId} className="p-3.5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="font-heading font-semibold text-brand-strong">

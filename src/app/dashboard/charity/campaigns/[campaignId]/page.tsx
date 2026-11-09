@@ -111,32 +111,32 @@ export default async function CampaignDetailPage({
         active="/campaigns"
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <Card className="p-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Funding target</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {formatMoney(campaign.fundingTargetMinorUnits, campaign.currency)}
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Received (net)</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {formatMoney(campaign.receivedMinorUnits, campaign.currency)}
           </p>
           <p className="text-xs text-muted-foreground">{progress}% of target</p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Committed</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {formatMoney(campaign.committedMinorUnits, campaign.currency)}
           </p>
           <p className="text-xs text-muted-foreground">
             {formatMoney(campaign.disbursedMinorUnits, campaign.currency)} disbursed
           </p>
         </Card>
-        <Card className="p-4">
+        <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Uncommitted</p>
-          <p className="mt-1 font-heading text-2xl font-semibold text-brand-strong">
+          <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">
             {formatMoney(available, campaign.currency)}
           </p>
         </Card>
@@ -186,7 +186,7 @@ export default async function CampaignDetailPage({
         </Card>
       ) : null}
 
-      <Card className="p-4">
+      <Card className="p-3.5">
         <h2 className="font-heading text-lg font-semibold text-brand-strong">
           Review history
         </h2>
@@ -213,7 +213,7 @@ export default async function CampaignDetailPage({
         )}
       </Card>
 
-      <div className="grid gap-4 lg:gap-5 lg:grid-cols-2">
+      <div className="grid gap-3 sm:gap-4 lg:grid-cols-2 lg:gap-5">
         <Card className="overflow-hidden p-0">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border p-4">
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
@@ -367,7 +367,7 @@ export default async function CampaignDetailPage({
         )}
       </Card>
 
-      <Card className="p-4">
+      <Card className="p-3.5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <h2 className="font-heading text-lg font-semibold text-brand-strong">
