@@ -76,11 +76,12 @@ them or use `any` to silence TypeScript.
 
 ## Progress
 
-Built phase by phase (see `CareBridge_Plan.txt` §35). Phase 1 (brand + design
-system) is complete. Phase 2 (authentication and multi-tenancy) is in progress:
-schema, RLS, roles/permissions, auth flows, organisations/invitations and the
-dashboard data wiring are implemented and verified. Remaining: branded email
-delivery (Phase 3), storage, and an automated test runner.
+Built phase by phase (see `CareBridge_Plan.txt` §35). Phases 0-10 are
+implemented; `README.md` and `docs/KNOWN_LIMITATIONS.md` are the current source
+of truth for what is verified. Account settings (profile, avatar, password and
+notification preferences) are implemented. Provider-dependent flows still
+pending credentials: Paystack live checkout/transfers and webhook registration,
+Resend email delivery, and SMS.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

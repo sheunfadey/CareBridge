@@ -71,11 +71,21 @@ When a subscription is past due, suspended or expired:
 - reads and CSV exports remain available;
 - the UI shows a read-only banner and links to billing.
 
+## Storage objects
+
+- `course-resources` is a private bucket. Course managers can upload and delete;
+  enrolled learners can read; non-private resources on published public courses
+  are readable by signed-in users.
+- `avatars` is a public bucket for profile photos. Reads are public; inserts,
+  updates and deletes are restricted to objects under the caller's own
+  `<user_id>/` folder. The bucket only accepts JPEG, PNG and WebP up to 2 MB.
+
 ## Service role
 
 The service-role key bypasses RLS and is used only for trusted operations after a
 permission check, such as applying verified payments, platform billing queries,
-email lookups and applicant profile display. It is never shipped to the browser.
+email lookups, applicant profile display and server-mediated avatar uploads. It
+is never shipped to the browser.
 
 ## Testing
 

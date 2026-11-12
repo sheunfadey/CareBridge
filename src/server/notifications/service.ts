@@ -43,6 +43,20 @@ export async function createNotification(
     return false;
   }
 
+  // High-priority notices (safeguarding, payment failures, account security)
+  // are always delivered in-app. Everything else respects the user's choice.
+  if (input.priority !== "high") {
+    const { data: preferences } = await client
+      .from("user_notification_preferences")
+      .select("in_app_enabled")
+      .eq("user_id", input.userId)
+      .maybeSingle();
+
+    if (preferences && preferences.in_app_enabled === false) {
+      return false;
+    }
+  }
+
   const { error } = await client.from("notifications").insert({
     user_id: input.userId,
     title: input.title,

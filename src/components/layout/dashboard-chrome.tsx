@@ -21,6 +21,7 @@ export async function DashboardChrome({ children }: { children: ReactNode }) {
           ? {
               name: user.fullName ?? user.email,
               email: user.email,
+              avatarUrl: user.avatarUrl ?? undefined,
               organisation: primaryOrganisation?.organisationName,
             }
           : undefined

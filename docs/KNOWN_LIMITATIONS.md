@@ -8,8 +8,10 @@ external configuration. It is updated as each phase lands.
 ### Implemented and verified
 
 - **Supabase project** `teejjgzkvvgmsvtblncr` is active and healthy. Migrations
-  `0001`-`0040` are applied and in sync. The earlier project
-  (`ggizvtzlhdciykfmdsjl`) was deleted; this project replaces it.
+  `0001`-`0040` are applied and in sync; `0041` is committed and awaiting
+  `npm run db:push` (the CLI session needs re-authentication). The avatars bucket
+  from `0041` was created through the storage API so the flow works today. The
+  earlier project (`ggizvtzlhdciykfmdsjl`) was deleted; this project replaces it.
 - **Identity & multi-tenancy schema**: `profiles`, `organisations`,
   `organisation_memberships`, `roles`, `permissions`, `role_permissions`,
   `user_role_assignments`, `organisation_invitations`,
@@ -67,11 +69,17 @@ external configuration. It is updated as each phase lands.
   organisation subscriptions with lifecycle events and separate subscription
   payments; database-enforced user, facility and module limits; and read-only
   suspended/expired workspaces that keep records readable and exportable.
-- **Notifications**: in-app notification centre and unread counts.
+- **Notifications**: in-app notification centre and unread counts. Normal
+  priority notices respect `user_notification_preferences.in_app_enabled`;
+  high-priority notices are always delivered.
+- **Account settings**: editable name, phone, state and city; an optional profile
+  photo stored in the public `avatars` bucket; password change with
+  current-password re-authentication; and per-channel notification preferences
+  (in-app, email, SMS). Every change is audited.
 - **Test runner** (Vitest): `npm test` runs unit tests for the permission
   registry, validation schemas, money and commission calculations, email
-  templates, admin-service contracts, navigation, care, charity and billing
-  validation.
+  templates, admin-service contracts, navigation, account settings, care,
+  charity and billing validation.
 - **Cross-tenant isolation test** (`supabase/tests/rls_isolation.sql`) - passes
   against the live database for migrations `0001`-`0040`, including care,
   charity, scholarship, subscription, read-only and module-limit isolation.
@@ -106,8 +114,11 @@ external configuration. It is updated as each phase lands.
   cross-organisation conversations, message editing/deletion, retention
   automation or moderator export. Messages are permanent, and notification
   delivery is in-app only until an email provider is configured.
-- **File uploads** are enabled only for course learning resources. Other
-  document-heavy areas still use references rather than uploaded files.
+- **File uploads** are enabled for course learning resources and profile photos.
+  Other document-heavy areas still use references rather than uploaded files.
+- **Notification delivery** is only implemented in-app. Email and SMS preference
+  choices are stored and will be honoured once those transports are configured;
+  email delivery is still console-only unless a provider is set.
 - **No end-to-end browser tests.** Unit tests (Vitest) and the SQL RLS isolation
   test exist; Playwright is not yet set up. Phase 6, 7 and 8 pages have been
   driven with seeded fixtures over authenticated HTTP requests, but not in an
@@ -140,9 +151,11 @@ external configuration. It is updated as each phase lands.
   - feature limits/read-only guards cover the primary academy, employment, care
     and charity write tables; a few secondary tables still rely on RLS and server
     action checks rather than a subscription trigger.
-- **Profile editing and notification preferences** are not implemented; the
-  settings pages are read-only or marked as planned.
 - **Dashboard top-bar search** is not wired to a search backend.
+- **Migration `0041` (avatars bucket and policies)** is committed but not yet in
+  the linked project's migration history; the bucket was created through the
+  storage API so avatar uploads work, and `npm run db:push` should be run once
+  the Supabase CLI session is authenticated to record the policy migration.
 
 ### Intentional behaviour
 
@@ -186,7 +199,7 @@ external configuration. It is updated as each phase lands.
 
 - `npm run lint` - clean
 - `npm run typecheck` - clean
-- `npm test` - 111 unit tests pass (13 files)
+- `npm test` - 124 unit tests pass (14 files)
 - `npm run build` - succeeds (production build)
 - Unauthenticated smoke test - `/`, `/login`, `/register`, `/forgot-password`,
   `/reset-password`, `/verify-email` return HTTP 200; `/dashboard` returns 307 to
@@ -212,6 +225,10 @@ external configuration. It is updated as each phase lands.
   platform subscription administration. A suspended subscription produced the
   read-only banner while care data remained readable. A CSV export wrote a
   `report.exported` audit record containing the filters and timestamp.
+- Account settings smoke test (linked project, disposable user, removed
+  afterwards) - 9/9 checks passed: profile row creation, profile update
+  persistence, notification preference upsert and read-back, avatar upload to the
+  `avatars` bucket, public avatar read and saving the public URL on the profile.
 - Family portal and care workflow smoke test (production server, disposable
   fixtures, removed afterwards) - 10/10 checks passed. A full-access family
   account saw its linked resident; a summary-access account saw only its summary

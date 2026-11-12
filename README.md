@@ -145,6 +145,10 @@ non-super-admins from escalating themselves.
   database-enforced user, facility and module limits. Suspended or expired
   subscriptions make a workspace read-only while keeping records readable and
   exportable.
+- **Account settings** - editable name, phone and location, an optional profile
+  photo, password change with current-password re-authentication, and
+  per-channel notification preferences. In-app delivery honours the preference
+  for normal notices while high-priority notices are always delivered.
 - **Theme & responsiveness** - light/dark theme toggle, mobile navigation and
   responsive dashboard layouts.
 
@@ -175,6 +179,8 @@ non-super-admins from escalating themselves.
 | `/dashboard/admin/reconciliation` | Provider reconciliation |
 | `/dashboard/admin/referrals` | Partner, commission and payout administration |
 | `/dashboard/organisation/*` | Organisation and membership management |
+| `/dashboard/settings` | Profile, avatar, password and organisation summary |
+| `/dashboard/settings/notifications` | Notification channel preferences |
 | `/dashboard/notifications` | Notification centre |
 | `/dashboard/admin` | Super-admin platform administration |
 | `/design-system` | Internal design-system showcase |

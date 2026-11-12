@@ -17,6 +17,11 @@ export type CurrentUser = {
   id: string;
   email: string;
   fullName: string | null;
+  phone: string | null;
+  state: string | null;
+  city: string | null;
+  avatarUrl: string | null;
+  timezone: string;
   isSuperAdmin: boolean;
   roles: RoleKey[];
   organisations: OrgMembership[];
@@ -51,7 +56,9 @@ async function buildCurrentUser(
     await Promise.all([
       supabase
         .from("profiles")
-        .select("full_name, is_super_admin")
+        .select(
+          "full_name, phone, state, city, avatar_url, timezone, is_super_admin",
+        )
         .eq("id", user.id)
         .maybeSingle(),
       supabase
@@ -114,6 +121,11 @@ async function buildCurrentUser(
     id: user.id,
     email: user.email ?? "",
     fullName: profile?.full_name ?? null,
+    phone: profile?.phone ?? null,
+    state: profile?.state ?? null,
+    city: profile?.city ?? null,
+    avatarUrl: profile?.avatar_url ?? null,
+    timezone: profile?.timezone ?? "Africa/Lagos",
     isSuperAdmin,
     roles: Array.from(allRoles),
     organisations,

@@ -34,6 +34,7 @@ preserved.
 | `0038` | Additional course resource kinds: spreadsheet and ZIP/archive |
 | `0039` | Server-only Paystack gateway settings entered by a superadmin |
 | `0040` | Per-organisation Paystack, SMS, email and custom API integration settings |
+| `0041` | Public `avatars` storage bucket with owner-only write policies |
 
 ## Core tenancy
 
@@ -131,6 +132,10 @@ Helper functions: `subscription_effective_status`, `organisation_can_write`,
 13. Uploaded course resources live in the private `course-resources` storage
     bucket under `course/<course_id>/`. Course managers can upload/delete;
     enrolled learners can read, with signed URLs generated on demand.
+14. Profile photos live in the public `avatars` bucket under
+    `<user_id>/avatar`. A signed-in user may only write or delete their own
+    object; the public URL is stored in `profiles.avatar_url` with a cache-busting
+    query string. JPEG, PNG and WebP files up to 2 MB are accepted.
 
 ## Changing the schema
 

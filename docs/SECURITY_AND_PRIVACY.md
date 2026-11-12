@@ -73,8 +73,8 @@ Audit writes must not break a user flow; failures are logged server-side.
 - Only `NEXT_PUBLIC_*` variables reach the browser.
 - `SUPABASE_SERVICE_ROLE_KEY` and Paystack secrets are server-only.
 - The service-role client is used only for trusted operations after permission
-  checks (payment application, platform admin queries, email lookup and
-  applicant profile display).
+  checks (payment application, platform admin queries, email lookup, applicant
+  profile display and server-mediated avatar uploads).
 - Rotate compromised keys immediately and redeploy. Never commit `.env.local`.
 
 ## Data minimisation and exports
@@ -85,6 +85,8 @@ Audit writes must not break a user flow; failures are logged server-side.
 - Public campaign pages expose only opted-in display names and amounts, never
   donor contact details.
 - Employment outcomes are only reported when marked shareable.
+- Profile photos are optional and public by design; uploads are restricted to
+  image types and 2 MB, and a user can remove their photo at any time.
 
 ## Transport and browser protections
 
