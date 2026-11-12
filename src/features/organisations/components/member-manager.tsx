@@ -113,17 +113,20 @@ export function MemberManager({
             <TableBody>
               {activeMembers.map((member) => (
                 <TableRow key={member.membershipId}>
-                  <TableCell>
-                    <div className="flex flex-col">
+                  <TableCell className="whitespace-normal">
+                    <div className="flex min-w-0 flex-col">
                       <span className="font-medium text-brand-strong">
                         {member.fullName ?? member.email}
                       </span>
-                      <span className="text-xs text-muted-foreground">
+                      <span
+                        title={member.email}
+                        className="block max-w-[150px] truncate text-xs text-muted-foreground sm:max-w-[260px]"
+                      >
                         {member.email}
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="whitespace-normal">
                     <div className="flex flex-wrap gap-1.5">
                       {member.isOwner ? (
                         <Badge variant="secondary">Owner</Badge>

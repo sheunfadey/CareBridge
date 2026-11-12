@@ -61,7 +61,7 @@ export default async function SettingsPage() {
           <dl className="space-y-2 text-sm">
             <div className="flex justify-between gap-4">
               <dt className="text-muted-foreground">Email</dt>
-              <dd className="truncate font-medium text-brand-strong">
+              <dd className="max-w-[60%] break-all text-right font-medium text-brand-strong">
                 {user.email}
               </dd>
             </div>

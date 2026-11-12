@@ -119,7 +119,7 @@ export default async function IncidentsPage({
               id="incident-status"
               name="status"
               defaultValue={status}
-              className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+              className="h-9 rounded-md border border-input bg-background px-3 text-base sm:text-sm"
             >
               <option value="all">All statuses</option>
               {CARE_INCIDENT_STATUSES.map((value) => (
@@ -137,7 +137,7 @@ export default async function IncidentsPage({
               id="incident-severity"
               name="severity"
               defaultValue={severity}
-              className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+              className="h-9 rounded-md border border-input bg-background px-3 text-base sm:text-sm"
             >
               <option value="all">All severities</option>
               {CARE_INCIDENT_SEVERITIES.map((value) => (

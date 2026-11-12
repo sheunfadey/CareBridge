@@ -76,8 +76,8 @@ export default async function OrganisationDetailPage({
         }
       />
 
-      <div className="grid grid-cols-3 gap-3">
-        <Card className="flex items-center gap-3 p-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <Card className="flex flex-row items-center gap-3 p-4">
           <span className="flex size-9 items-center justify-center rounded-md bg-brand-sky text-brand-teal">
             <Building2Icon className="size-4.5" aria-hidden="true" />
           </span>

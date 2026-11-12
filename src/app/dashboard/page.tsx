@@ -418,7 +418,7 @@ export default async function DashboardPage() {
             .
           </Card>
         ) : (
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 xl:grid-cols-3">
             {user.organisations.map((organisation) => (
               <Card key={organisation.organisationId} className="space-y-2 p-3.5">
                 <p className="font-heading text-base font-semibold text-brand-strong">
@@ -449,7 +449,7 @@ export default async function DashboardPage() {
             ))}
           </div>
         )}
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <MetricCard label="Organisations" value={facts.organisationCount} hint="Workspaces you belong to" icon={<Building2Icon />} href="/dashboard/organisation" />
           <MetricCard
             label="Active members"

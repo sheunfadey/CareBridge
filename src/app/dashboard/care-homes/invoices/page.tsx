@@ -137,7 +137,7 @@ export default async function InvoicesPage({
               id="invoice-status"
               name="status"
               defaultValue={status}
-              className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+              className="h-9 rounded-md border border-input bg-background px-3 text-base sm:text-sm"
             >
               <option value="all">All statuses</option>
               {SERVICE_INVOICE_STATUSES.map((value) => (

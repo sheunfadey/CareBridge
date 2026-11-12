@@ -93,7 +93,7 @@ export default async function ReportsPage({
               id="report"
               name="report"
               defaultValue={selectedKey}
-              className="h-9 max-w-80 rounded-md border border-input bg-background px-3 text-sm"
+              className="h-9 max-w-80 rounded-md border border-input bg-background px-3 text-base sm:text-sm"
             >
               {REPORTS.map((report) => (
                 <option key={report.key} value={report.key}>
@@ -111,7 +111,7 @@ export default async function ReportsPage({
               type="date"
               name="from"
               defaultValue={from}
-              className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+              className="h-9 rounded-md border border-input bg-background px-3 text-base sm:text-sm"
             />
           </div>
           <div>
@@ -123,7 +123,7 @@ export default async function ReportsPage({
               type="date"
               name="to"
               defaultValue={to}
-              className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+              className="h-9 rounded-md border border-input bg-background px-3 text-base sm:text-sm"
             />
           </div>
           <div>
@@ -137,7 +137,7 @@ export default async function ReportsPage({
               id="organisation"
               name="organisation"
               defaultValue={organisationId ?? ""}
-              className="h-9 max-w-64 rounded-md border border-input bg-background px-3 text-sm"
+              className="h-9 max-w-64 rounded-md border border-input bg-background px-3 text-base sm:text-sm"
             >
               <option value="">All my organisations</option>
               {organisations.map((organisation) => (

@@ -101,7 +101,11 @@ export default async function AcademyPage() {
             <GraduationCapIcon className="size-5" />
             Browse courses
           </p>
-          <Button variant="link" className="mt-1 h-auto px-0" asChild>
+          <Button
+            variant="link"
+            className="mt-1 h-auto whitespace-normal px-0 text-left"
+            asChild
+          >
             <Link href="/courses">View published courses</Link>
           </Button>
         </Card>

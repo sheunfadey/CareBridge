@@ -1374,7 +1374,7 @@ export function InvoiceDialogForm({
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
               <div>
                 <Label>Facility</Label>
-                <select className="mt-1 h-9 w-full rounded-md border border-input bg-background px-3 text-sm" value={facilityId} onChange={(event) => setFacilityId(event.target.value)}>
+                <select className="mt-1 h-9 w-full rounded-md border border-input bg-background px-3 text-base sm:text-sm" value={facilityId} onChange={(event) => setFacilityId(event.target.value)}>
                   {facilities.map((facility) => (
                     <option key={facility.id} value={facility.id}>{facility.name}</option>
                   ))}
@@ -1382,7 +1382,7 @@ export function InvoiceDialogForm({
               </div>
               <div>
                 <Label>Resident (optional)</Label>
-                <select className="mt-1 h-9 w-full rounded-md border border-input bg-background px-3 text-sm" value={residentId} onChange={(event) => setResidentId(event.target.value)}>
+                <select className="mt-1 h-9 w-full rounded-md border border-input bg-background px-3 text-base sm:text-sm" value={residentId} onChange={(event) => setResidentId(event.target.value)}>
                   <option value="">Not linked to a resident</option>
                   {residents.map((resident) => (
                     <option key={resident.id} value={resident.id}>{resident.name} · {resident.reference}</option>

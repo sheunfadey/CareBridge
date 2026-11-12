@@ -53,7 +53,7 @@ type CareFormProps = {
 };
 
 const inputClass =
-  "h-9 w-full rounded-md border border-input bg-background px-3 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "h-9 w-full rounded-md border border-input bg-background px-3 text-base sm:text-sm shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 function initialValues(fields: CareField[]): Record<string, string | boolean> {
   return Object.fromEntries(

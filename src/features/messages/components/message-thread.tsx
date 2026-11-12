@@ -102,11 +102,16 @@ export function MessageThread({
           maxLength={4000}
           aria-label="Message"
         />
-        <div className="flex items-center justify-between gap-3">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-muted-foreground">
             Messages are permanent and visible to everyone in this conversation.
           </p>
-          <Button type="button" onClick={send} disabled={isPending}>
+          <Button
+            type="button"
+            onClick={send}
+            disabled={isPending}
+            className="w-full sm:w-auto"
+          >
             {isPending ? (
               <Loader2Icon className="animate-spin" />
             ) : (

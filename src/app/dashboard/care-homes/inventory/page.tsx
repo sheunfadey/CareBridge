@@ -103,11 +103,11 @@ export default async function InventoryPage({
               name="q"
               defaultValue={params.q ?? ""}
               placeholder="Search item or SKU"
-              className="h-9 flex-1 rounded-md border border-input bg-background px-3 text-sm"
+              className="h-9 flex-1 rounded-md border border-input bg-background px-3 text-base sm:text-sm"
             />
             <button
               type="submit"
-              className="h-9 rounded-md border border-input px-3 text-sm font-medium hover:bg-muted"
+              className="h-9 rounded-md border border-input px-3 text-base sm:text-sm font-medium hover:bg-muted"
             >
               Search
             </button>

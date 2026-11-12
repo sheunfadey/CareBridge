@@ -134,7 +134,13 @@ export default async function MessagesPage({ searchParams }: MessagesPageProps) 
           )}
         </Card>
 
-        <Card className="min-h-[420px] overflow-hidden p-0">
+        <Card
+          className={
+            conversation
+              ? "min-h-[420px] overflow-hidden p-0"
+              : "hidden min-h-[420px] overflow-hidden p-0 lg:block"
+          }
+        >
           {conversation ? (
             <MessageThread conversation={conversation} />
           ) : (

@@ -109,7 +109,7 @@ export default async function DailyCarePage({
               type="date"
               name="date"
               defaultValue={date}
-              className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+              className="h-9 rounded-md border border-input bg-background px-3 text-base sm:text-sm"
             />
           </div>
           <Button type="submit" variant="outline">
