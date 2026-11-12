@@ -8,10 +8,9 @@ external configuration. It is updated as each phase lands.
 ### Implemented and verified
 
 - **Supabase project** `teejjgzkvvgmsvtblncr` is active and healthy. Migrations
-  `0001`-`0040` are applied and in sync; `0041` is committed and awaiting
-  `npm run db:push` (the CLI session needs re-authentication). The avatars bucket
-  from `0041` was created through the storage API so the flow works today. The
-  earlier project (`ggizvtzlhdciykfmdsjl`) was deleted; this project replaces it.
+  `0001`-`0041` are applied and in sync, including the `avatars` bucket and its
+  owner-only storage policies. The earlier project (`ggizvtzlhdciykfmdsjl`) was
+  deleted; this project replaces it.
 - **Identity & multi-tenancy schema**: `profiles`, `organisations`,
   `organisation_memberships`, `roles`, `permissions`, `role_permissions`,
   `user_role_assignments`, `organisation_invitations`,
@@ -81,8 +80,10 @@ external configuration. It is updated as each phase lands.
   templates, admin-service contracts, navigation, account settings, care,
   charity and billing validation.
 - **Cross-tenant isolation test** (`supabase/tests/rls_isolation.sql`) - passes
-  against the live database for migrations `0001`-`0040`, including care,
+  against the live database for migrations `0001`-`0041`, including care,
   charity, scholarship, subscription, read-only and module-limit isolation.
+  Avatar storage policies are verified directly against `pg_policies` (the SQL
+  test does not exercise the storage schema).
 
 ### Not yet implemented or not yet verified
 
@@ -152,10 +153,6 @@ external configuration. It is updated as each phase lands.
     and charity write tables; a few secondary tables still rely on RLS and server
     action checks rather than a subscription trigger.
 - **Dashboard top-bar search** is not wired to a search backend.
-- **Migration `0041` (avatars bucket and policies)** is committed but not yet in
-  the linked project's migration history; the bucket was created through the
-  storage API so avatar uploads work, and `npm run db:push` should be run once
-  the Supabase CLI session is authenticated to record the policy migration.
 
 ### Intentional behaviour
 
@@ -241,12 +238,12 @@ external configuration. It is updated as each phase lands.
   referrer, permissions, HSTS) were present and the server log contained no
   runtime errors.
 - `npm run db:test:rls` - cross-tenant isolation assertions hold for the applied
-  schema through migration `0040`, including Phase 6 payment/commission, Phase 7
+  schema through migration `0041`, including Phase 6 payment/commission, Phase 7
   care, Phase 8 campaign/donation/scholarship, Phase 9 subscription/read-only,
   module-limit isolation, academy assessment answer-key/attempt isolation,
   academy course management and category/resource scope, and
   organisation-scoped messaging.
-- Phase 7/8/9/10 SQL - migrations `0016`-`0040` apply cleanly, and the invariants
+- Phase 7/8/9/10 SQL - migrations `0016`-`0041` apply cleanly, and the invariants
   pass against both an embedded PostgreSQL instance and the live project.
 
 Live provider-dependent flows (Paystack live checkout/transfers and webhook
