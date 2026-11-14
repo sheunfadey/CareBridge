@@ -3,7 +3,7 @@ import type { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
 import type { PermissionKey } from "@/lib/permissions/registry";
 import { ROLE_PERMISSIONS } from "@/lib/permissions/registry";
-import type { RoleKey } from "@/types/database";
+import type { PortalMode, RoleKey } from "@/types/database";
 
 export type OrgMembership = {
   organisationId: string;
@@ -22,6 +22,7 @@ export type CurrentUser = {
   city: string | null;
   avatarUrl: string | null;
   timezone: string;
+  activePortal: PortalMode;
   isSuperAdmin: boolean;
   roles: RoleKey[];
   organisations: OrgMembership[];
@@ -57,7 +58,7 @@ async function buildCurrentUser(
       supabase
         .from("profiles")
         .select(
-          "full_name, phone, state, city, avatar_url, timezone, is_super_admin",
+          "full_name, phone, state, city, avatar_url, timezone, active_portal, is_super_admin",
         )
         .eq("id", user.id)
         .maybeSingle(),
@@ -126,6 +127,7 @@ async function buildCurrentUser(
     city: profile?.city ?? null,
     avatarUrl: profile?.avatar_url ?? null,
     timezone: profile?.timezone ?? "Africa/Lagos",
+    activePortal: profile?.active_portal ?? "student",
     isSuperAdmin,
     roles: Array.from(allRoles),
     organisations,

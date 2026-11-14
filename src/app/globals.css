@@ -31,6 +31,17 @@
   --color-brand-dark: var(--brand-dark);
   --color-brand-dark-surface: var(--brand-dark-surface);
 
+  --color-portal-cream: var(--portal-cream);
+  --color-portal-peach: var(--portal-peach);
+  --color-portal-peach-strong: var(--portal-peach-strong);
+  --color-portal-lavender: var(--portal-lavender);
+  --color-portal-lavender-strong: var(--portal-lavender-strong);
+  --color-portal-sky: var(--portal-sky);
+  --color-portal-sky-strong: var(--portal-sky-strong);
+  --color-portal-mint: var(--portal-mint);
+  --color-portal-mint-strong: var(--portal-mint-strong);
+  --color-portal-ink: var(--portal-ink);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -90,7 +101,18 @@
   --brand-dark: #071a3a;
   --brand-dark-surface: #0b2347;
 
-  --background: var(--brand-ivory);
+  --portal-cream: #f8f2e8;
+  --portal-peach: #f8d3b5;
+  --portal-peach-strong: #d97b45;
+  --portal-lavender: #e2dcfa;
+  --portal-lavender-strong: #7461c9;
+  --portal-sky: #d8ecfa;
+  --portal-sky-strong: #2f7fae;
+  --portal-mint: #dcefdf;
+  --portal-mint-strong: #357a4e;
+  --portal-ink: #1c2434;
+
+  --background: var(--portal-cream);
   --foreground: var(--brand-ink);
   --card: #ffffff;
   --card-foreground: var(--brand-ink);
@@ -113,7 +135,7 @@
   --chart-3: var(--brand-navy);
   --chart-4: var(--brand-bright-blue);
   --chart-5: var(--brand-warning);
-  --radius: 0.75rem;
+  --radius: 1rem;
 
   --sidebar: var(--brand-navy);
   --sidebar-foreground: #eaf2ff;
@@ -134,6 +156,16 @@
   --brand-ivory: #071a3a;
   --brand-slate: #c2cfdc;
   --brand-strong: #eaf2ff;
+  --portal-cream: #071a3a;
+  --portal-peach: #4a2f22;
+  --portal-peach-strong: #f2b58a;
+  --portal-lavender: #302b4f;
+  --portal-lavender-strong: #b7a9f5;
+  --portal-sky: #163347;
+  --portal-sky-strong: #8cc7e8;
+  --portal-mint: #173328;
+  --portal-mint-strong: #8fd0a5;
+  --portal-ink: #eaf2ff;
   --background: var(--brand-dark);
   --foreground: #eaf2ff;
   --card: #0b2347;

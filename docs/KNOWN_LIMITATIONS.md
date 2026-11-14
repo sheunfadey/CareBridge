@@ -8,7 +8,7 @@ external configuration. It is updated as each phase lands.
 ### Implemented and verified
 
 - **Supabase project** `teejjgzkvvgmsvtblncr` is active and healthy. Migrations
-  `0001`-`0041` are applied and in sync, including the `avatars` bucket and its
+  `0001`-`0042` are applied and in sync, including the `avatars` bucket and its
   owner-only storage policies. The earlier project (`ggizvtzlhdciykfmdsjl`) was
   deleted; this project replaces it.
 - **Identity & multi-tenancy schema**: `profiles`, `organisations`,
@@ -75,12 +75,17 @@ external configuration. It is updated as each phase lands.
   photo stored in the public `avatars` bucket; password change with
   current-password re-authentication; and per-channel notification preferences
   (in-app, email, SMS). Every change is audited.
+- **Dual portal homes**: learners and working caregivers can switch between a
+  student home (learning progress, courses, recent activity) and a caregiver
+  home (shifts, placements, applications, training) from the account menu or
+  settings. The preference is stored on `profiles.active_portal`; the previous
+  comprehensive dashboard remains at `/dashboard/overview`.
 - **Test runner** (Vitest): `npm test` runs unit tests for the permission
   registry, validation schemas, money and commission calculations, email
   templates, admin-service contracts, navigation, account settings, care,
   charity and billing validation.
 - **Cross-tenant isolation test** (`supabase/tests/rls_isolation.sql`) - passes
-  against the live database for migrations `0001`-`0041`, including care,
+  against the live database for migrations `0001`-`0042`, including care,
   charity, scholarship, subscription, read-only and module-limit isolation.
   Avatar storage policies are verified directly against `pg_policies` (the SQL
   test does not exercise the storage schema).
@@ -238,12 +243,12 @@ external configuration. It is updated as each phase lands.
   referrer, permissions, HSTS) were present and the server log contained no
   runtime errors.
 - `npm run db:test:rls` - cross-tenant isolation assertions hold for the applied
-  schema through migration `0041`, including Phase 6 payment/commission, Phase 7
+  schema through migration `0042`, including Phase 6 payment/commission, Phase 7
   care, Phase 8 campaign/donation/scholarship, Phase 9 subscription/read-only,
   module-limit isolation, academy assessment answer-key/attempt isolation,
   academy course management and category/resource scope, and
   organisation-scoped messaging.
-- Phase 7/8/9/10 SQL - migrations `0016`-`0041` apply cleanly, and the invariants
+- Phase 7/8/9/10 SQL - migrations `0016`-`0042` apply cleanly, and the invariants
   pass against both an embedded PostgreSQL instance and the live project.
 
 Live provider-dependent flows (Paystack live checkout/transfers and webhook

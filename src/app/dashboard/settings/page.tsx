@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { PasswordForm } from "@/features/account/components/password-form";
 import { ProfileSettings } from "@/features/account/components/profile-settings";
+import { switchPortalAction } from "@/features/portal/actions";
 import { getCurrentUser } from "@/server/auth/current-user";
 
 export const metadata: Metadata = {
@@ -112,6 +113,40 @@ export default async function SettingsPage() {
                 <Link href="/dashboard/notifications">Open notifications</Link>
               </Button>
             </div>
+          </div>
+        </Card>
+
+        <Card className="space-y-3 p-4 lg:col-span-2">
+          <div>
+            <h2 className="font-heading text-base font-semibold text-brand-strong">
+              Portal
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Choose the home that matches what you are doing today. Your
+              permissions and records do not change.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <form action={switchPortalAction}>
+              <input type="hidden" name="portal" value="student" />
+              <Button
+                type="submit"
+                variant={user.activePortal === "student" ? "default" : "outline"}
+                disabled={user.activePortal === "student"}
+              >
+                Student portal
+              </Button>
+            </form>
+            <form action={switchPortalAction}>
+              <input type="hidden" name="portal" value="caregiver" />
+              <Button
+                type="submit"
+                variant={user.activePortal === "caregiver" ? "default" : "outline"}
+                disabled={user.activePortal === "caregiver"}
+              >
+                Caregiver portal
+              </Button>
+            </form>
           </div>
         </Card>
 

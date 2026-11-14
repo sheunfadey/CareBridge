@@ -29,6 +29,7 @@ export async function DashboardChrome({ children }: { children: ReactNode }) {
       isSuperAdmin={user?.isSuperAdmin ?? false}
       permissions={user ? Array.from(user.permissions) : []}
       notifications={notifications}
+      activePortal={user?.activePortal ?? "student"}
     >
       {children}
     </DashboardShell>

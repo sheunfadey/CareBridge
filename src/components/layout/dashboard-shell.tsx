@@ -1,5 +1,7 @@
 import type { ComponentProps, ReactNode } from "react";
 
+import type { PortalMode } from "@/types/database";
+
 import { Sidebar } from "@/components/layout/sidebar";
 import { Topbar } from "@/components/layout/topbar";
 import { MobileNav } from "@/components/layout/mobile-nav";
@@ -10,6 +12,7 @@ type DashboardShellProps = {
   isSuperAdmin?: boolean;
   permissions?: string[];
   notifications?: ComponentProps<typeof Topbar>["notifications"];
+  activePortal?: PortalMode;
 };
 
 export function DashboardShell({
@@ -18,12 +21,17 @@ export function DashboardShell({
   isSuperAdmin = false,
   permissions = [],
   notifications,
+  activePortal,
 }: DashboardShellProps) {
   return (
     <div className="flex min-h-svh bg-background">
       <aside className="hidden w-64 shrink-0 lg:block">
         <div className="fixed inset-y-0 left-0 w-64">
-          <Sidebar isSuperAdmin={isSuperAdmin} permissions={permissions} />
+          <Sidebar
+            isSuperAdmin={isSuperAdmin}
+            permissions={permissions}
+            activePortal={activePortal}
+          />
         </div>
       </aside>
 
@@ -33,6 +41,7 @@ export function DashboardShell({
           isSuperAdmin={isSuperAdmin}
           permissions={permissions}
           notifications={notifications}
+          activePortal={activePortal}
         />
         <main
           id="main-content"
@@ -45,6 +54,7 @@ export function DashboardShell({
       <MobileNav
         isSuperAdmin={isSuperAdmin}
         permissions={permissions}
+        activePortal={activePortal}
         unreadNotifications={
           notifications?.filter((notification) => !notification.read).length ??
           0

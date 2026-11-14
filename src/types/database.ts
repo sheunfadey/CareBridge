@@ -4525,6 +4525,7 @@ export type Database = {
       profiles: {
         Row: {
           account_type: Database["public"]["Enums"]["account_type"] | null
+          active_portal: Database["public"]["Enums"]["portal_mode"]
           avatar_url: string | null
           city: string | null
           created_at: string
@@ -4541,6 +4542,7 @@ export type Database = {
         }
         Insert: {
           account_type?: Database["public"]["Enums"]["account_type"] | null
+          active_portal?: Database["public"]["Enums"]["portal_mode"]
           avatar_url?: string | null
           city?: string | null
           created_at?: string
@@ -4557,6 +4559,7 @@ export type Database = {
         }
         Update: {
           account_type?: Database["public"]["Enums"]["account_type"] | null
+          active_portal?: Database["public"]["Enums"]["portal_mode"]
           avatar_url?: string | null
           city?: string | null
           created_at?: string
@@ -8160,6 +8163,7 @@ export type Database = {
         | "active"
         | "completed"
         | "terminated"
+      portal_mode: "student" | "caregiver"
       programme_status: "active" | "archived"
       purchase_request_status:
         | "draft"
@@ -8587,6 +8591,7 @@ export const Constants = {
         "completed",
         "terminated",
       ],
+      portal_mode: ["student", "caregiver"],
       programme_status: ["active", "archived"],
       purchase_request_status: [
         "draft",
@@ -8728,6 +8733,8 @@ export type RoleKey =
   | "finance_officer"
   | "compliance_officer"
   | "family_member";
+
+export type PortalMode = Database["public"]["Enums"]["portal_mode"];
 
 export type NotificationCategory =
   Database["public"]["Enums"]["notification_category"];

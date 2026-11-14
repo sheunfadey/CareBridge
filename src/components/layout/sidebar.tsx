@@ -11,6 +11,7 @@ import { HillCrestLogo } from "@/components/brand/carebridge-logo";
 import { primaryNav, superAdminNav } from "@/config/navigation";
 import type { NavGroup, NavItem } from "@/config/navigation";
 import { Badge } from "@/components/ui/badge";
+import type { PortalMode } from "@/types/database";
 
 function NavIcon({ name, className }: { name: string; className?: string }) {
   const Icon = (
@@ -75,11 +76,13 @@ function NavLink({
 function NavGroups({
   groups,
   activeGroupLabel,
+  defaultOpenGroups,
   pathname,
   onNavigate,
 }: {
   groups: NavGroup[];
   activeGroupLabel: string | undefined;
+  defaultOpenGroups: string[];
   pathname: string;
   onNavigate?: () => void;
 }) {
@@ -87,7 +90,11 @@ function NavGroups({
     Record<string, boolean>
   >(() =>
     Object.fromEntries(
-      groups.map((group) => [group.label, group.label !== activeGroupLabel]),
+      groups.map((group) => [
+        group.label,
+        group.label !== activeGroupLabel &&
+          !defaultOpenGroups.includes(group.label),
+      ]),
     ),
   );
 
@@ -141,6 +148,7 @@ type SidebarProps = {
   onNavigate?: () => void;
   isSuperAdmin?: boolean;
   permissions?: string[];
+  activePortal?: PortalMode;
 };
 
 export function Sidebar({
@@ -148,10 +156,16 @@ export function Sidebar({
   onNavigate,
   isSuperAdmin = false,
   permissions = [],
+  activePortal = "student",
 }: SidebarProps) {
   const pathname = usePathname();
 
   const navigation = isSuperAdmin ? superAdminNav : primaryNav;
+  const defaultOpenGroups = isSuperAdmin
+    ? []
+    : activePortal === "caregiver"
+      ? ["Operations", "Career", "Academy", "Communication"]
+      : ["Academy", "Career", "Communication"];
 
   const canSee = React.useCallback(
     (item: NavItem) =>
@@ -198,6 +212,11 @@ export function Sidebar({
         >
           <HillCrestLogo size="sm" tone="onDark" />
         </Link>
+        {!isSuperAdmin ? (
+          <p className="mt-2 inline-flex rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-sidebar-foreground/70">
+            {activePortal} portal
+          </p>
+        ) : null}
       </div>
 
       <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1">
@@ -216,9 +235,10 @@ export function Sidebar({
 
         <div className="space-y-4 border-t border-sidebar-border/60 pt-3">
           <NavGroups
-            key={pathname}
+            key={`${pathname}-${activePortal}`}
             groups={visibleGroups}
             activeGroupLabel={activeGroupLabel}
+            defaultOpenGroups={defaultOpenGroups}
             pathname={pathname}
             onNavigate={onNavigate}
           />

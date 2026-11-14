@@ -149,6 +149,10 @@ non-super-admins from escalating themselves.
   photo, password change with current-password re-authentication, and
   per-channel notification preferences. In-app delivery honours the preference
   for normal notices while high-priority notices are always delivered.
+- **Dual portal homes** - a learner-focused student home and a work-focused
+  caregiver home, switchable from the account menu or settings. Both use real
+  learning, shift, placement and application data; the full cross-module
+  dashboard remains at `/dashboard/overview`.
 - **Theme & responsiveness** - light/dark theme toggle, mobile navigation and
   responsive dashboard layouts.
 
@@ -161,7 +165,8 @@ non-super-admins from escalating themselves.
 | `/internships`, `/for-employers` | Public programme pages |
 | `/verify-certificate` | Public certificate verification |
 | `/login`, `/register`, `/forgot-password`, `/reset-password` | Authentication |
-| `/dashboard` | Authenticated overview |
+| `/dashboard` | Student or caregiver home, depending on the saved portal |
+| `/dashboard/overview` | Full cross-module workspace overview |
 | `/dashboard/academy/*` | Learning, assessments, management and certificates |
 | `/dashboard/messages` | Organisation-scoped conversations, read receipts and replies |
 | `/dashboard/internships/*` | Placement browse, apply and management |

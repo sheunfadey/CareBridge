@@ -108,6 +108,7 @@ export const primaryNav: NavSection = {
     {
       label: "Account",
       items: [
+        { label: "Workspace overview", href: "/dashboard/overview", icon: "LayoutDashboard" },
         { label: "Organisation", href: "/dashboard/organisation", icon: "Building2" },
         { label: "Family portal", href: "/dashboard/family", icon: "HeartHandshake" },
         { label: "Settings", href: "/dashboard/settings", icon: "Settings" },

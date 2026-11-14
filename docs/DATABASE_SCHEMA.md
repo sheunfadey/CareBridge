@@ -35,13 +35,15 @@ preserved.
 | `0039` | Server-only Paystack gateway settings entered by a superadmin |
 | `0040` | Per-organisation Paystack, SMS, email and custom API integration settings |
 | `0041` | Public `avatars` storage bucket with owner-only write policies |
+| `0042` | Profile `active_portal` preference (`student` / `caregiver`) |
 
 ## Core tenancy
 
 - `organisations` (`care_home`, `home_care_agency`, `charity`, `training_provider`,
   `recruitment_partner`, `employer`/corporate, `platform_academy`).
 - `profiles`, `organisation_memberships`, `user_role_assignments`,
-  `organisation_invitations`.
+  `organisation_invitations`. `profiles.active_portal` stores the user's chosen
+  student or caregiver home; it changes presentation only, never permissions.
 - `roles`, `permissions`, `role_permissions`.
 - `audit_logs`, `notifications`, `user_notification_preferences`.
 

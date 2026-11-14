@@ -29,6 +29,7 @@ export type AuditAction =
   | "account.avatar_removed"
   | "account.password_changed"
   | "account.notification_preferences_updated"
+  | "account.portal_switched"
   | "organisation.status.pending"
   | "organisation.status.active"
   | "organisation.status.suspended"

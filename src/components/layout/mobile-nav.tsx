@@ -6,15 +6,18 @@ import { usePathname } from "next/navigation";
 import {
   BellIcon,
   Building2Icon,
+  CalendarDaysIcon,
   GraduationCapIcon,
   LayoutDashboardIcon,
   MenuIcon,
   MessageSquareIcon,
+  ShieldCheckIcon,
   UsersIcon,
 } from "lucide-react";
 import { cn } from "cn";
 
 import { Sidebar } from "@/components/layout/sidebar";
+import type { PortalMode } from "@/types/database";
 import {
   Sheet,
   SheetContent,
@@ -35,6 +38,13 @@ const learnerShortcuts = [
   { label: "Alerts", href: "/dashboard/notifications", icon: BellIcon },
 ] as const;
 
+const caregiverShortcuts = [
+  { label: "Home", href: "/dashboard", icon: LayoutDashboardIcon },
+  { label: "Roster", href: "/dashboard/care-homes/roster", icon: CalendarDaysIcon },
+  { label: "Log care", href: "/dashboard/care-homes/care", icon: ShieldCheckIcon },
+  { label: "Messages", href: "/dashboard/messages", icon: MessageSquareIcon },
+] as const;
+
 const superAdminShortcuts = [
   { label: "Overview", href: "/dashboard/admin", icon: LayoutDashboardIcon },
   { label: "Organisations", href: "/dashboard/admin/organisations", icon: Building2Icon },
@@ -46,14 +56,25 @@ export function MobileNav({
   isSuperAdmin = false,
   permissions = [],
   unreadNotifications = 0,
+  activePortal = "student",
 }: {
   isSuperAdmin?: boolean;
   permissions?: string[];
   unreadNotifications?: number;
+  activePortal?: PortalMode;
 }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = React.useState(false);
-  const shortcuts = isSuperAdmin ? superAdminShortcuts : learnerShortcuts;
+  const isCareWorker =
+    permissions.includes("shift_view") ||
+    permissions.includes("care_record_manage") ||
+    permissions.includes("resident_view");
+
+  const shortcuts = isSuperAdmin
+    ? superAdminShortcuts
+    : activePortal === "caregiver" && isCareWorker
+      ? caregiverShortcuts
+      : learnerShortcuts;
 
   return (
     <nav
@@ -108,6 +129,7 @@ export function MobileNav({
             <Sidebar
               isSuperAdmin={isSuperAdmin}
               permissions={permissions}
+              activePortal={activePortal}
               onNavigate={() => setMenuOpen(false)}
             />
           </SheetContent>

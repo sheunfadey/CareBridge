@@ -2,7 +2,17 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { ChevronDownIcon, LogOutIcon, MenuIcon, MoonIcon, SearchIcon, SunIcon } from "lucide-react";
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  GraduationCapIcon,
+  HeartHandshakeIcon,
+  LogOutIcon,
+  MenuIcon,
+  MoonIcon,
+  SearchIcon,
+  SunIcon,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "cn";
 
@@ -26,8 +36,10 @@ import {
 } from "@/components/ui/sheet";
 import { Sidebar } from "@/components/layout/sidebar";
 import { logoutAction } from "@/features/auth/actions";
+import { switchPortalAction } from "@/features/portal/actions";
 import { NotificationBell } from "@/features/notifications/components/notification-bell";
 import type { NotificationItem } from "@/server/notifications/service";
+import type { PortalMode } from "@/types/database";
 
 type TopbarProps = {
   user?: {
@@ -39,6 +51,7 @@ type TopbarProps = {
   notifications?: NotificationItem[];
   isSuperAdmin?: boolean;
   permissions?: string[];
+  activePortal?: PortalMode;
   className?: string;
 };
 
@@ -47,6 +60,7 @@ export function Topbar({
   notifications = [],
   isSuperAdmin = false,
   permissions = [],
+  activePortal = "student",
   className,
 }: TopbarProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -158,7 +172,7 @@ export function Topbar({
               />
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuContent align="end" className="w-64">
             <DropdownMenuLabel>
               <span className="block text-sm font-medium">{user.name}</span>
               <span className="block text-xs font-normal text-muted-foreground">
@@ -166,8 +180,47 @@ export function Topbar({
               </span>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
+            <DropdownMenuLabel className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+              Switch portal
+            </DropdownMenuLabel>
+            <form action={switchPortalAction}>
+              <input type="hidden" name="portal" value="student" />
+              <DropdownMenuItem asChild>
+                <button
+                  type="submit"
+                  className="flex w-full items-center gap-2"
+                  disabled={activePortal === "student"}
+                >
+                  <GraduationCapIcon />
+                  Student portal
+                  {activePortal === "student" ? (
+                    <CheckIcon className="ml-auto size-4 text-brand-blue" />
+                  ) : null}
+                </button>
+              </DropdownMenuItem>
+            </form>
+            <form action={switchPortalAction}>
+              <input type="hidden" name="portal" value="caregiver" />
+              <DropdownMenuItem asChild>
+                <button
+                  type="submit"
+                  className="flex w-full items-center gap-2"
+                  disabled={activePortal === "caregiver"}
+                >
+                  <HeartHandshakeIcon />
+                  Caregiver portal
+                  {activePortal === "caregiver" ? (
+                    <CheckIcon className="ml-auto size-4 text-brand-blue" />
+                  ) : null}
+                </button>
+              </DropdownMenuItem>
+            </form>
+            <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <Link href="/dashboard/settings">Profile & settings</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/dashboard/overview">Workspace overview</Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/dashboard/settings/notifications">
