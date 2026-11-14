@@ -166,6 +166,11 @@ export function Sidebar({
     : activePortal === "caregiver"
       ? ["Operations", "Career", "Academy", "Communication"]
       : ["Academy", "Career", "Communication"];
+  const sidebarLabel = pathname.startsWith("/dashboard/care-homes")
+    ? "Care workspace"
+    : pathname.startsWith("/dashboard/organisation")
+      ? "Organisation"
+      : `${activePortal} portal`;
 
   const canSee = React.useCallback(
     (item: NavItem) =>
@@ -214,7 +219,7 @@ export function Sidebar({
         </Link>
         {!isSuperAdmin ? (
           <p className="mt-2 inline-flex rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-sidebar-foreground/70">
-            {activePortal} portal
+            {sidebarLabel}
           </p>
         ) : null}
       </div>
