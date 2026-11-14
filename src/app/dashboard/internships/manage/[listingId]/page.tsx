@@ -4,7 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { UsersIcon } from "lucide-react";
 
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { CareerPageHeader } from "@/features/employment/components/career-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -50,8 +50,8 @@ export default async function ManageInternshipPage({
   const { applicants } = await getInternshipApplicants(listing.id);
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CareerPageHeader tone="lavender" icon="graduation"
         eyebrow="Internships"
         title={listing.title}
         description={`${[listing.city, listing.state]

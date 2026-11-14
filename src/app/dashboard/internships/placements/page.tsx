@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { BriefcaseBusinessIcon, CalendarDaysIcon, UsersIcon } from "lucide-react";
 
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { CareerPageHeader } from "@/features/employment/components/career-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -37,8 +37,8 @@ export default async function PlacementsPage() {
     : [];
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CareerPageHeader tone="lavender" icon="graduation"
         eyebrow="Internships"
         title="Placements"
         description="Track active placements, weekly logs, attendance, evaluations and completion records."

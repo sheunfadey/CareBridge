@@ -9,7 +9,7 @@ import {
   PhoneIcon,
 } from "lucide-react";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { CareerPageHeader } from "@/features/employment/components/career-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -81,8 +81,8 @@ export default async function InternshipCandidatePage({ params }: PageProps) {
       : [];
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CareerPageHeader tone="lavender" icon="graduation"
         eyebrow="Candidate"
         title={application.applicantName}
         description={`${listing.title} · ${listing.organisationName}`}

@@ -8,7 +8,7 @@ import {
   UsersIcon,
 } from "lucide-react";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { CareerPageHeader } from "@/features/employment/components/career-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -86,8 +86,8 @@ export default async function InternshipDetailPage({
     "Location not specified";
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CareerPageHeader tone="lavender" icon="graduation"
         eyebrow={listing.organisationName}
         title={listing.title}
         description={listing.summary ?? undefined}
@@ -104,7 +104,7 @@ export default async function InternshipDetailPage({
       />
 
       <div className="grid gap-4 lg:gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="space-y-4 lg:space-y-5">
+        <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
           <Card className="space-y-4 p-4">
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
               <span className="flex items-center gap-1">

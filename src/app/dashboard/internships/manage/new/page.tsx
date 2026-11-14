@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { CareerPageHeader } from "@/features/employment/components/career-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { CreateInternshipForm } from "@/features/employment/components/create-internship-form";
@@ -28,8 +28,8 @@ export default async function NewInternshipPage() {
   );
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CareerPageHeader tone="lavender" icon="graduation"
         eyebrow="Internships"
         title="Create a placement"
         description="Describe the supervised placement. You can save a draft and open it when ready."

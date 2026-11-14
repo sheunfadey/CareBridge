@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { BriefcaseIcon, MapPinIcon } from "lucide-react";
 
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { CareerPageHeader } from "@/features/employment/components/career-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -35,8 +35,8 @@ export default async function JobsPage() {
   const appliedJobs = new Set(myApplications.map((application) => application.jobId));
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CareerPageHeader
         eyebrow="Employment"
         title="Careers in care"
         description="Explore verified care roles, apply with your HillCrest profile and follow every application in one place."
@@ -71,7 +71,7 @@ export default async function JobsPage() {
       ) : (
         <div className="grid gap-3 sm:gap-4 lg:grid-cols-2">
           {jobs.map((job) => (
-            <Card key={job.id} className="flex flex-col p-4">
+            <Card key={job.id} className="flex flex-col rounded-[var(--radius-2xl)] bg-card/90 p-4">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <Link

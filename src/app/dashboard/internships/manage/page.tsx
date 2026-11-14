@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { PlusIcon } from "lucide-react";
 
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { CareerPageHeader } from "@/features/employment/components/career-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { InternshipStatusSelect } from "@/features/employment/components/status-actions";
@@ -28,8 +28,8 @@ export default async function ManageInternshipsPage() {
   const listings = await getManagedInternships(user);
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CareerPageHeader tone="lavender" icon="graduation"
         eyebrow="Internships"
         title="Manage placements"
         description="Create supervised placements, open them to applicants and review candidates."
