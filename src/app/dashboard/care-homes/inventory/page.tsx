@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { CareNav } from "@/components/care/care-nav";
 import { FacilitySelect } from "@/components/care/facility-select";
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { CarePageHeader } from "@/features/care/components/care-page-header";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
@@ -58,8 +58,8 @@ export default async function InventoryPage({
   const canManage = userHasPermission(context.user, "inventory_manage");
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CarePageHeader
         eyebrow="Care operations"
         title="Inventory"
         description="Stock levels are derived from append-only movements. A balance cannot change without a movement row."

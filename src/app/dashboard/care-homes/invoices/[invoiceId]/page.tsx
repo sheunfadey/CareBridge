@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CareNav } from "@/components/care/care-nav";
-import { PageHeader } from "@/components/layout/page-header";
+import { CarePageHeader } from "@/features/care/components/care-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -56,8 +56,8 @@ export default async function InvoiceDetailPage({
   const canManage = userHasPermission(context.user, "invoice_manage");
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CarePageHeader
         eyebrow="Invoice"
         title={invoice.invoiceNumber}
         description={`${invoice.payerName}${invoice.residentName ? ` · ${invoice.residentName}` : ""} · due ${formatDate(invoice.dueDate)}`}

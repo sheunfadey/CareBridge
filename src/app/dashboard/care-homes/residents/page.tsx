@@ -5,19 +5,11 @@ import { SearchIcon } from "lucide-react";
 import { CareNav } from "@/components/care/care-nav";
 import { FacilitySelect } from "@/components/care/facility-select";
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { CarePageHeader } from "@/features/care/components/care-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { StatusBadge } from "@/components/ui/status-badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { ResidentDialogForm } from "@/features/care/components/care-forms";
 import { formatDate } from "@/lib/format";
 import { RESIDENT_STATUSES, residentStatusLabels } from "@/lib/validation/care";
@@ -61,8 +53,8 @@ export default async function ResidentsPage({
   const canManage = userHasPermission(context.user, "resident_manage");
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CarePageHeader
         eyebrow="Care operations"
         title="Residents"
         description="Resident records, contacts, consents and care plans. Access is restricted and logged."
@@ -128,8 +120,8 @@ export default async function ResidentsPage({
         </form>
       </Card>
 
-      <Card className="overflow-hidden p-0">
-        {residents.length === 0 ? (
+      {residents.length === 0 ? (
+        <Card className="p-0">
           <EmptyState
             title="No residents found"
             description={
@@ -138,66 +130,83 @@ export default async function ResidentsPage({
                 : "Resident records will appear here once they are added."
             }
           />
-        ) : (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Resident</TableHead>
-                <TableHead>Reference</TableHead>
-                <TableHead>Room</TableHead>
-                <TableHead>Facility</TableHead>
-                <TableHead>Admitted</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {residents.map((resident) => (
-                <TableRow key={resident.id}>
-                  <TableCell>
+        </Card>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {residents.map((resident) => {
+            const initials = `${resident.firstName[0] ?? ""}${
+              resident.lastName[0] ?? ""
+            }`.toUpperCase();
+            return (
+              <article
+                key={resident.id}
+                className="flex flex-col rounded-[var(--radius-2xl)] bg-card/90 p-4 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
+              >
+                <div className="flex items-start gap-3">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-portal-mint text-sm font-semibold text-portal-mint-strong">
+                    {initials || "R"}
+                  </span>
+                  <div className="min-w-0 flex-1">
                     <Link
                       href={`/dashboard/care-homes/residents/${resident.id}`}
-                      className="font-medium text-brand-strong hover:text-brand-teal"
+                      className="font-heading text-base font-semibold text-brand-strong hover:text-brand-blue"
                     >
                       {resident.firstName} {resident.lastName}
                     </Link>
-                    {resident.preferredName ? (
-                      <p className="text-xs text-muted-foreground">
-                        Prefers {resident.preferredName}
-                      </p>
-                    ) : null}
-                  </TableCell>
-                  <TableCell className="font-mono text-xs text-muted-foreground">
+                    <p className="truncate text-xs text-muted-foreground">
+                      {resident.preferredName
+                        ? `Prefers ${resident.preferredName}`
+                        : resident.reference}
+                    </p>
+                  </div>
+                  <StatusBadge
+                    status={resident.status}
+                    label={residentStatusLabels[resident.status]}
+                  />
+                </div>
+
+                <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <dt className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                      Room
+                    </dt>
+                    <dd className="mt-0.5 font-medium text-brand-strong">
+                      {resident.roomNumber ?? "—"}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                      Admitted
+                    </dt>
+                    <dd className="mt-0.5 text-brand-strong">
+                      {formatDate(resident.admissionDate)}
+                    </dd>
+                  </div>
+                  <div className="col-span-2">
+                    <dt className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                      Facility
+                    </dt>
+                    <dd className="mt-0.5 truncate text-brand-strong">
+                      {resident.facilityName ?? "—"}
+                    </dd>
+                  </div>
+                </dl>
+
+                <div className="mt-auto flex items-center justify-between gap-3 pt-4">
+                  <span className="font-mono text-[11px] text-muted-foreground">
                     {resident.reference}
-                  </TableCell>
-                  <TableCell className="text-sm text-muted-foreground">
-                    {resident.roomNumber ?? "—"}
-                  </TableCell>
-                  <TableCell className="text-sm text-muted-foreground">
-                    {resident.facilityName ?? "—"}
-                  </TableCell>
-                  <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
-                    {formatDate(resident.admissionDate)}
-                  </TableCell>
-                  <TableCell>
-                    <StatusBadge
-                      status={resident.status}
-                      label={residentStatusLabels[resident.status]}
-                    />
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Button asChild size="sm" variant="outline">
-                      <Link href={`/dashboard/care-homes/residents/${resident.id}`}>
-                        Open record
-                      </Link>
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
-      </Card>
+                  </span>
+                  <Button asChild size="sm" className="rounded-full">
+                    <Link href={`/dashboard/care-homes/residents/${resident.id}`}>
+                      Open record
+                    </Link>
+                  </Button>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 import { CareNav } from "@/components/care/care-nav";
-import { PageHeader } from "@/components/layout/page-header";
+import { CarePageHeader } from "@/features/care/components/care-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -81,8 +81,8 @@ export default async function ResidentRecordPage({
     : [];
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CarePageHeader
         eyebrow={resident.facilityName ?? "Resident"}
         title={`${resident.firstName} ${resident.lastName}`}
         description={`${resident.reference}${resident.roomNumber ? ` · Room ${resident.roomNumber}` : ""}${resident.preferredName ? ` · Prefers ${resident.preferredName}` : ""}`}
@@ -188,7 +188,7 @@ export default async function ResidentRecordPage({
           </div>
         </Card>
 
-        <div className="space-y-4 lg:space-y-5">
+        <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
           <Card className="space-y-3 p-4">
             <div className="flex items-center gap-2">
               <PhoneIcon className="size-5 text-brand-teal" aria-hidden="true" />

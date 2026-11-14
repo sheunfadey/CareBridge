@@ -4,7 +4,7 @@ import Link from "next/link";
 import { CareNav } from "@/components/care/care-nav";
 import { FacilitySelect } from "@/components/care/facility-select";
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { CarePageHeader } from "@/features/care/components/care-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -44,8 +44,8 @@ export default async function CarePlansPage({
   const plans = await listCarePlans(context.workspace, context.facility?.id);
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CarePageHeader
         eyebrow="Care operations"
         title="Care plans"
         description="Versioned care plans with an approval workflow. Restricted plans are only visible to plan managers."

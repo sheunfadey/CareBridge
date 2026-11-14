@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { CareNav } from "@/components/care/care-nav";
 import { FacilitySelect } from "@/components/care/facility-select";
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { CarePageHeader } from "@/features/care/components/care-page-header";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
@@ -49,8 +49,8 @@ export default async function RosterPage({
   }
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CarePageHeader
         eyebrow="Care operations"
         title="Roster"
         description="Shifts for the next 14 days. Overlaps and missing qualifications are rejected by the database."
@@ -86,7 +86,7 @@ export default async function RosterPage({
           />
         </Card>
       ) : (
-        <div className="space-y-4 lg:space-y-5">
+        <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
           {Array.from(groups.entries()).map(([day, dayShifts]) => (
             <section key={day} className="space-y-3">
               <h2 className="font-heading text-base font-semibold text-brand-strong">

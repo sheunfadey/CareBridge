@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { CareNav } from "@/components/care/care-nav";
 import { FacilitySelect } from "@/components/care/facility-select";
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { CarePageHeader } from "@/features/care/components/care-page-header";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
@@ -51,8 +51,8 @@ export default async function ReportsPage({
   );
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CarePageHeader
         eyebrow="Care operations"
         title="Reports"
         description="Occupancy, staffing coverage, training compliance, incidents, stock, expenses and invoice ageing. Aggregates never expose resident names."

@@ -3,17 +3,9 @@ import type { Metadata } from "next";
 import { CareNav } from "@/components/care/care-nav";
 import { FacilitySelect } from "@/components/care/facility-select";
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { CarePageHeader } from "@/features/care/components/care-page-header";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import {
   DocumentDialogForm,
   QualificationDialogForm,
@@ -47,8 +39,8 @@ export default async function StaffPage({
   const staff = await listStaff(context.workspace);
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CarePageHeader
         eyebrow="Care operations"
         title="Staff"
         description="Staff records, qualifications, training and document expiry. Shift assignment is blocked when required qualifications are missing."
@@ -72,99 +64,111 @@ export default async function StaffPage({
         active="/staff"
       />
 
-      <Card className="overflow-hidden p-0">
-        {staff.length === 0 ? (
+      {staff.length === 0 ? (
+        <Card className="p-0">
           <EmptyState
             title="No staff profiles yet"
             description="Add a profile for each care staff member. They must already be a workspace member."
           />
-        ) : (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Staff member</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Started</TableHead>
-                <TableHead>Compliance</TableHead>
-                <TableHead className="text-right">Records</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {staff.map((member) => {
-                const issues =
-                  member.expiringQualifications +
-                  member.expiredTraining +
-                  member.expiredDocuments;
-                return (
-                  <TableRow key={member.id}>
-                    <TableCell>
-                      <p className="font-medium text-brand-strong">
-                        {member.fullName ?? "Unnamed staff member"}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {member.email ?? "No email"}
-                      </p>
-                    </TableCell>
-                    <TableCell className="text-sm text-muted-foreground">
+        </Card>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {staff.map((member) => {
+            const issues =
+              member.expiringQualifications +
+              member.expiredTraining +
+              member.expiredDocuments;
+            const initials = (member.fullName ?? "Staff")
+              .split(/\s+/)
+              .slice(0, 2)
+              .map((part) => part[0]?.toUpperCase() ?? "")
+              .join("");
+            return (
+              <article
+                key={member.id}
+                className="flex flex-col rounded-[var(--radius-2xl)] bg-card/90 p-4 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
+              >
+                <div className="flex items-start gap-3">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-portal-lavender text-sm font-semibold text-portal-lavender-strong">
+                    {initials || "S"}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-heading text-base font-semibold text-brand-strong">
+                      {member.fullName ?? "Unnamed staff member"}
+                    </p>
+                    <p className="truncate text-xs text-muted-foreground">
+                      {member.email ?? "No email"}
+                    </p>
+                  </div>
+                  <StatusBadge
+                    status={member.employmentStatus}
+                    label={
+                      careEmploymentStatusLabels[
+                        member.employmentStatus as CareEmploymentStatus
+                      ]
+                    }
+                  />
+                </div>
+
+                <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <dt className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                      Role
+                    </dt>
+                    <dd className="mt-0.5 truncate font-medium text-brand-strong">
                       {member.jobTitle ?? "—"}
-                    </TableCell>
-                    <TableCell>
-                      <StatusBadge
-                        status={member.employmentStatus}
-                        label={
-                          careEmploymentStatusLabels[
-                            member.employmentStatus as CareEmploymentStatus
-                          ]
-                        }
-                      />
-                    </TableCell>
-                    <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-[11px] uppercase tracking-wide text-muted-foreground">
+                      Started
+                    </dt>
+                    <dd className="mt-0.5 text-brand-strong">
                       {member.startDate ? formatDate(member.startDate) : "—"}
-                    </TableCell>
-                    <TableCell>
-                      <div className="space-y-1 text-xs">
-                        <p className="text-muted-foreground">
-                          {member.qualifications} qualification
-                          {member.qualifications === 1 ? "" : "s"}
-                        </p>
-                        {issues > 0 ? (
-                          <p className="font-medium text-brand-error">
-                            {issues} record{issues === 1 ? "" : "s"} need attention
-                          </p>
-                        ) : (
-                          <p className="text-brand-teal">Records current</p>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex flex-wrap justify-end gap-2">
-                        <StaffAvailabilityDialogForm
-                          organisationId={context.workspace.organisationId}
-                          staffId={member.id}
-                          availability={member.availability}
-                        />
-                        <QualificationDialogForm
-                          organisationId={context.workspace.organisationId}
-                          staffId={member.id}
-                        />
-                        <TrainingDialogForm
-                          organisationId={context.workspace.organisationId}
-                          staffId={member.id}
-                        />
-                        <DocumentDialogForm
-                          organisationId={context.workspace.organisationId}
-                          staffId={member.id}
-                        />
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        )}
-      </Card>
+                    </dd>
+                  </div>
+                </dl>
+
+                <div className="mt-3 flex items-center justify-between gap-2 rounded-xl bg-brand-navy/5 px-3 py-2 text-xs">
+                  <span className="text-muted-foreground">
+                    {member.qualifications} qualification
+                    {member.qualifications === 1 ? "" : "s"}
+                  </span>
+                  {issues > 0 ? (
+                    <span className="font-semibold text-brand-error">
+                      {issues} need attention
+                    </span>
+                  ) : (
+                    <span className="font-semibold text-portal-mint-strong">
+                      Records current
+                    </span>
+                  )}
+                </div>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <StaffAvailabilityDialogForm
+                    organisationId={context.workspace.organisationId}
+                    staffId={member.id}
+                    availability={member.availability}
+                  />
+                  <QualificationDialogForm
+                    organisationId={context.workspace.organisationId}
+                    staffId={member.id}
+                  />
+                  <TrainingDialogForm
+                    organisationId={context.workspace.organisationId}
+                    staffId={member.id}
+                  />
+                  <DocumentDialogForm
+                    organisationId={context.workspace.organisationId}
+                    staffId={member.id}
+                  />
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
 
       <Card className="p-4">
         <h2 className="font-heading text-base font-semibold text-brand-strong">
