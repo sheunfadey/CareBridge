@@ -219,6 +219,7 @@ export type ManagedCourse = {
   organisationName: string | null;
   programmeTitle: string;
   categoryName: string | null;
+  coverImageUrl: string | null;
   moduleCount: number;
   enrolmentCount: number;
   updatedAt: string;
@@ -254,6 +255,7 @@ export type ManagedCourseDetail = {
   summary: string | null;
   description: string | null;
   category: string | null;
+  coverImageUrl: string | null;
   difficulty: CourseDifficulty;
   estimatedMinutes: number;
   learningOutcomes: string[];
@@ -723,7 +725,7 @@ export async function listManagedCourses(
   let query = supabase
     .from("courses")
     .select(
-      "id, title, slug, status, difficulty, is_public, organisation_id, category, updated_at, course_categories(name), programmes(title), organisations(name), course_modules(id), course_enrolments(id)",
+      "id, title, slug, status, difficulty, is_public, organisation_id, category, cover_image_url, updated_at, course_categories(name), programmes(title), organisations(name), course_modules(id), course_enrolments(id)",
     )
     .order("updated_at", { ascending: false });
 
@@ -752,6 +754,7 @@ export async function listManagedCourses(
       organisationName: organisation?.name ?? null,
       programmeTitle: programme?.title ?? "HillCrest Academy",
       categoryName: category?.name ?? course.category,
+      coverImageUrl: course.cover_image_url,
       moduleCount: course.course_modules?.length ?? 0,
       enrolmentCount: course.course_enrolments?.length ?? 0,
       updatedAt: course.updated_at,
@@ -1143,7 +1146,7 @@ export async function getManagedCourseDetail(
   const { data, error } = await supabase
     .from("courses")
     .select(
-      "id, title, slug, summary, description, category, course_categories(name), difficulty, estimated_minutes, learning_outcomes, prerequisites, scholarship_eligible, certificate_enabled, status, is_public, organisation_id, programme_id, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, content, video_url, estimated_minutes, position, is_required, is_preview))",
+      "id, title, slug, summary, description, category, cover_image_url, course_categories(name), difficulty, estimated_minutes, learning_outcomes, prerequisites, scholarship_eligible, certificate_enabled, status, is_public, organisation_id, programme_id, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, content, video_url, estimated_minutes, position, is_required, is_preview))",
     )
     .eq("id", courseId)
     .maybeSingle();
@@ -1187,6 +1190,7 @@ export async function getManagedCourseDetail(
     summary: data.summary,
     description: data.description,
     category: singleRelation(data.course_categories)?.name ?? data.category,
+    coverImageUrl: data.cover_image_url,
     difficulty: data.difficulty,
     estimatedMinutes: data.estimated_minutes,
     learningOutcomes: data.learning_outcomes,

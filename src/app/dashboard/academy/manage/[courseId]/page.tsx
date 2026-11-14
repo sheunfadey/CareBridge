@@ -74,7 +74,7 @@ export default async function ManageCoursePage({
     user.isSuperAdmin || user.permissions.has("assessment_manage");
 
   return (
-    <div className="space-y-4 lg:space-y-5">
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
       <PageHeader
         eyebrow="Academy management"
         title={course.title}
@@ -105,19 +105,32 @@ export default async function ManageCoursePage({
         }
       />
 
-      <div className="flex flex-wrap items-center gap-2">
-        <StatusBadge status={course.status} />
-        <Badge variant="outline">
-          {courseDifficultyLabels[course.difficulty]}
-        </Badge>
-        <Badge variant="secondary">
-          {course.organisationName ?? "HillCrest platform"}
-        </Badge>
-        <Badge variant="secondary">{course.programmeTitle}</Badge>
-        <span className="text-xs text-muted-foreground">
-          {course.totalLessons} lesson{course.totalLessons === 1 ? "" : "s"} ·{" "}
-          {course.estimatedMinutes} min
-        </span>
+      <div className="flex flex-col gap-4 rounded-[var(--radius-2xl)] bg-card/90 p-4 ring-1 ring-foreground/10 sm:flex-row sm:items-center">
+        <div
+          role="img"
+          aria-label={course.title}
+          className="h-20 w-full shrink-0 rounded-xl bg-portal-peach bg-cover bg-center sm:w-28"
+          style={
+            course.coverImageUrl
+              ? { backgroundImage: `url("${course.coverImageUrl}")` }
+              : undefined
+          }
+        />
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
+          <StatusBadge status={course.status} />
+          <Badge variant="outline">
+            {courseDifficultyLabels[course.difficulty]}
+          </Badge>
+          <Badge variant="secondary">
+            {course.organisationName ?? "HillCrest platform"}
+          </Badge>
+          <Badge variant="secondary">{course.programmeTitle}</Badge>
+          <span className="text-xs text-muted-foreground">
+            {course.totalLessons} lesson{course.totalLessons === 1 ? "" : "s"} ·{" "}
+            {course.estimatedMinutes} min · {course.modules.length} module
+            {course.modules.length === 1 ? "" : "s"}
+          </span>
+        </div>
       </div>
 
       <Card className="overflow-hidden p-0">
