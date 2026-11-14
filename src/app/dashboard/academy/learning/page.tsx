@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { BookOpenIcon } from "lucide-react";
+import { BookOpenIcon, GraduationCapIcon } from "lucide-react";
 
 import { PageHeader } from "@/components/layout/page-header";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { StatusBadge } from "@/components/ui/status-badge";
+import { AcademyCourseCard } from "@/features/academy/components/academy-course-card";
+import { PortalSection } from "@/features/portal/components/portal-ui";
 import { getCurrentUser } from "@/server/auth/current-user";
 import { getMyLearning } from "@/server/academy/queries";
 
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 type MyLearningPageProps = {
-  searchParams: Promise<{ payment?: string; reference?: string }>;
+  searchParams: Promise<{ payment?: string; reference?: string; status?: string }>;
 };
 
 const paymentNotices: Record<
@@ -50,6 +50,12 @@ const paymentNotices: Record<
   },
 };
 
+const filters = [
+  { key: "all", label: "All courses" },
+  { key: "active", label: "In progress" },
+  { key: "completed", label: "Completed" },
+] as const;
+
 export default async function MyLearningPage({
   searchParams,
 }: MyLearningPageProps) {
@@ -59,12 +65,22 @@ export default async function MyLearningPage({
     redirect("/login?redirectTo=/dashboard/academy/learning");
   }
 
-  const { payment } = await searchParams;
+  const { payment, status } = await searchParams;
   const notice = payment ? paymentNotices[payment] : null;
   const learning = await getMyLearning(user.id);
+  const filter =
+    status === "active" || status === "completed" ? status : "all";
+  const visible =
+    filter === "all"
+      ? learning
+      : learning.filter((course) => course.status === filter);
+  const activeCount = learning.filter((course) => course.status === "active").length;
+  const completedCount = learning.filter(
+    (course) => course.status === "completed",
+  ).length;
 
   return (
-    <div className="space-y-4 lg:space-y-5">
+    <div className="mx-auto w-full max-w-5xl space-y-6 pb-6">
       <PageHeader
         eyebrow="Academy"
         title="My Learning"
@@ -75,7 +91,11 @@ export default async function MyLearningPage({
           { label: "My Learning" },
         ]}
         actions={
-          <Button variant="outline" asChild>
+          <Button
+            variant="outline"
+            className="rounded-full border-brand-navy/15 bg-card/70"
+            asChild
+          >
             <Link href="/courses">Browse catalogue</Link>
           </Button>
         }
@@ -88,72 +108,81 @@ export default async function MyLearningPage({
         </Alert>
       ) : null}
 
+      <div className="flex flex-wrap gap-2">
+        {filters.map((item) => {
+          const count =
+            item.key === "all"
+              ? learning.length
+              : item.key === "active"
+                ? activeCount
+                : completedCount;
+          const active = filter === item.key;
+          return (
+            <Link
+              key={item.key}
+              href={
+                item.key === "all"
+                  ? "/dashboard/academy/learning"
+                  : `/dashboard/academy/learning?status=${item.key}`
+              }
+              className={
+                active
+                  ? "inline-flex items-center gap-1.5 rounded-full bg-brand-navy px-3.5 py-1.5 text-xs font-semibold text-white"
+                  : "inline-flex items-center gap-1.5 rounded-full bg-card/80 px-3.5 py-1.5 text-xs font-semibold text-brand-strong ring-1 ring-foreground/10 transition hover:bg-card"
+              }
+            >
+              {item.label}
+              <span
+                className={
+                  active
+                    ? "rounded-full bg-white/15 px-1.5 py-0.5 text-[10px]"
+                    : "rounded-full bg-brand-navy/5 px-1.5 py-0.5 text-[10px]"
+                }
+              >
+                {count}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+
       {learning.length === 0 ? (
-        <Card className="p-5 text-center">
-          <BookOpenIcon className="mx-auto size-8 text-muted-foreground" />
-          <p className="mt-2 font-heading font-semibold text-brand-strong">
+        <div className="rounded-[var(--radius-2xl)] bg-card/85 p-6 text-center ring-1 ring-foreground/10 sm:p-8">
+          <BookOpenIcon className="mx-auto size-9 text-portal-lavender-strong" />
+          <p className="mt-3 font-heading text-lg font-semibold text-brand-strong">
             You are not enrolled in any courses yet
           </p>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
             Enrol in a published course to start learning.
           </p>
-          <Button className="mt-4" asChild>
+          <Button className="mt-4 rounded-full" asChild>
             <Link href="/courses">Browse courses</Link>
           </Button>
-        </Card>
-      ) : (
-        <div className="grid gap-4 md:grid-cols-2">
-          {learning.map((course) => {
-            const progress = course.totalLessons
-              ? Math.round((course.completedLessons / course.totalLessons) * 100)
-              : 0;
-            return (
-              <Card key={course.enrolmentId} className="p-4">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="font-heading font-semibold text-brand-strong">
-                      {course.title}
-                    </p>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {course.summary}
-                    </p>
-                  </div>
-                  <StatusBadge status={course.status} />
-                </div>
-                <div className="mt-4 space-y-2">
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span>
-                      {course.completedLessons} / {course.totalLessons} lessons
-                    </span>
-                    <span>{progress}%</span>
-                  </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-muted">
-                    <div
-                      className="h-full bg-brand-teal transition-all"
-                      style={{ width: `${progress}%` }}
-                    />
-                  </div>
-                </div>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <Button asChild>
-                    <Link href={`/dashboard/academy/learning/${course.courseId}`}>
-                      {course.status === "completed"
-                        ? "Review course"
-                        : "Continue learning"}
-                    </Link>
-                  </Button>
-                  {course.status === "completed" && course.certificateCode ? (
-                    <Button variant="outline" asChild>
-                      <Link href={`/verify-certificate/${course.certificateCode}`}>
-                        View certificate
-                      </Link>
-                    </Button>
-                  ) : null}
-                </div>
-              </Card>
-            );
-          })}
         </div>
+      ) : visible.length === 0 ? (
+        <div className="rounded-[var(--radius-2xl)] bg-card/85 p-6 text-center ring-1 ring-foreground/10">
+          <GraduationCapIcon className="mx-auto size-8 text-portal-mint-strong" />
+          <p className="mt-2 font-heading font-semibold text-brand-strong">
+            Nothing in this view yet
+          </p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {filter === "completed"
+              ? "Completed courses will appear here."
+              : "Courses you enrol in will appear here."}
+          </p>
+        </div>
+      ) : (
+        <PortalSection>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {visible.map((course, index) => (
+              <AcademyCourseCard
+                key={course.enrolmentId}
+                course={course}
+                index={index}
+              />
+            ))}
+          </div>
+        </PortalSection>
       )}
     </div>
   );

@@ -98,6 +98,8 @@ export type MyLearningCourse = {
   title: string;
   slug: string;
   summary: string | null;
+  coverImageUrl: string | null;
+  category: string | null;
   difficulty: CourseDifficulty;
   estimatedMinutes: number;
   courseStatus: CourseStatus;
@@ -626,7 +628,7 @@ export async function getMyLearning(userId: string): Promise<MyLearningCourse[]>
   const { data, error } = await supabase
     .from("course_enrolments")
     .select(
-      "id, status, enrolled_at, completed_at, course_id, courses(id, title, slug, summary, difficulty, estimated_minutes, status, certificate_enabled, course_modules(id, lessons(id)))",
+      "id, status, enrolled_at, completed_at, course_id, courses(id, title, slug, summary, cover_image_url, category, difficulty, estimated_minutes, status, certificate_enabled, course_modules(id, lessons(id)))",
     )
     .eq("user_id", userId)
     .order("enrolled_at", { ascending: false });
@@ -688,6 +690,8 @@ export async function getMyLearning(userId: string): Promise<MyLearningCourse[]>
         title: course.title,
         slug: course.slug,
         summary: course.summary,
+        coverImageUrl: course.cover_image_url,
+        category: course.category,
         difficulty: course.difficulty,
         estimatedMinutes: course.estimated_minutes,
         courseStatus: course.status,

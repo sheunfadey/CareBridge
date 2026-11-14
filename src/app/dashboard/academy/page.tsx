@@ -2,20 +2,24 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import {
-  BookOpenIcon,
+  BookOpenCheckIcon,
   GraduationCapIcon,
+  LayersIcon,
   PlusIcon,
   ShieldCheckIcon,
+  SparklesIcon,
 } from "lucide-react";
 
-import { PageHeader } from "@/components/layout/page-header";
-import { MetricCard } from "@/components/dashboard/metric-card";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { StatusBadge } from "@/components/ui/status-badge";
+import { AcademyCourseCard } from "@/features/academy/components/academy-course-card";
+import {
+  OverviewTile,
+  PortalSection,
+  SectionHeading,
+} from "@/features/portal/components/portal-ui";
+import { brand } from "@/config/brand";
 import { getCurrentUser } from "@/server/auth/current-user";
 import { getAcademyFacts, getMyLearning } from "@/server/academy/queries";
-import { brand } from "@/config/brand";
 
 export const metadata: Metadata = {
   title: "Academy",
@@ -36,201 +40,196 @@ export default async function AcademyPage() {
   const canManage = user.isSuperAdmin || user.permissions.has("course_manage");
   const active = learning.filter((course) => course.status === "active");
   const completed = learning.filter((course) => course.status === "completed");
+  const lessonsCompleted = learning.reduce(
+    (total, course) => total + course.completedLessons,
+    0,
+  );
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
-        eyebrow="Academy"
-        title="HillCrest Academy"
-        description="Learn at your pace, track progress across courses and collect verifiable certificates when you complete them."
-        breadcrumbs={[
-          { label: "Dashboard", href: "/dashboard" },
-          { label: "Academy" },
-        ]}
-        actions={
-          <>
-            <Button variant="outline" asChild>
-              <Link href="/courses">Browse catalogue</Link>
-            </Button>
-            {canManage ? (
-              <>
-                <Button variant="outline" asChild>
-                  <Link href="/dashboard/academy/manage/categories">
-                    Categories
-                  </Link>
-                </Button>
-                <Button asChild>
-                  <Link href="/dashboard/academy/manage">
-                    <PlusIcon />
-                    Manage courses
-                  </Link>
-                </Button>
-              </>
-            ) : null}
-          </>
-        }
-      />
-
-      <section
-        aria-label="Your learning overview"
-        className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4"
-      >
-        <MetricCard
-          label="Active enrolments"
-          value={facts.activeEnrolments}
-          hint="In progress now"
-          href="/dashboard/academy/learning"
-        />
-        <MetricCard
-          label="Completed"
-          value={facts.completedCourses}
-          hint="Courses finished"
-          href="/dashboard/academy/learning"
-        />
-        <MetricCard
-          label="Certificates"
-          value={facts.certificates}
-          hint="Valid, unrevoked"
-          href="/dashboard/academy/certificates"
-        />
-        <Card className="p-3.5">
-          <p className="text-xs font-semibold uppercase tracking-wide text-brand-teal">
-            Catalogue
-          </p>
-          <p className="mt-2 flex items-center gap-2 font-heading text-base font-semibold sm:text-lg text-brand-strong">
-            <GraduationCapIcon className="size-5" />
-            Browse courses
-          </p>
-          <Button
-            variant="link"
-            className="mt-1 h-auto whitespace-normal px-0 text-left"
-            asChild
-          >
-            <Link href="/courses">View published courses</Link>
-          </Button>
-        </Card>
-      </section>
-
-      <section className="space-y-4">
-        <div className="flex items-center justify-between gap-3">
-          <h2 className="font-heading text-base font-semibold text-brand-strong">
-            Continue learning
-          </h2>
-          <Button variant="outline" size="sm" asChild>
-            <Link href="/dashboard/academy/learning">View all</Link>
-          </Button>
+    <div className="mx-auto w-full max-w-5xl space-y-7 pb-6">
+      <PortalSection>
+        <div className="relative overflow-hidden rounded-[2rem] bg-portal-peach p-5 sm:p-7">
+          <span
+            aria-hidden="true"
+            className="absolute -right-10 -top-16 size-52 rounded-full border-[18px] border-white/25"
+          />
+          <span
+            aria-hidden="true"
+            className="absolute -bottom-20 right-24 size-44 rounded-full bg-white/15"
+          />
+          <div className="relative max-w-2xl">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/55 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#7b4a2c] dark:text-[#f3c6a6]">
+              <GraduationCapIcon className="size-3.5" />
+              {brand.name} Academy
+            </span>
+            <h1 className="mt-3 font-heading text-3xl font-semibold leading-tight tracking-[-0.03em] text-brand-strong sm:text-4xl">
+              Learn something new today
+            </h1>
+            <p className="mt-2 max-w-xl text-sm text-brand-navy/70 sm:text-base dark:text-foreground/70">
+              Learn at your pace, track every lesson, and collect verifiable
+              certificates when you complete a course.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <Button
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
+                <Link href="/courses">
+                  <BookOpenCheckIcon />
+                  Browse catalogue
+                </Link>
+              </Button>
+              {canManage ? (
+                <>
+                  <Button
+                    variant="outline"
+                    className="rounded-full border-brand-navy/15 bg-white/60"
+                    asChild
+                  >
+                    <Link href="/dashboard/academy/manage/categories">
+                      Categories
+                    </Link>
+                  </Button>
+                  <Button
+                    className="rounded-full bg-white/70 text-brand-navy hover:bg-white"
+                    asChild
+                  >
+                    <Link href="/dashboard/academy/manage">
+                      <PlusIcon />
+                      Manage courses
+                    </Link>
+                  </Button>
+                </>
+              ) : null}
+            </div>
+          </div>
         </div>
+      </PortalSection>
+
+      <PortalSection delay={0.05}>
+        <SectionHeading
+          title="Your learning"
+          actionHref="/dashboard/academy/learning"
+          actionLabel="View all"
+        />
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          <OverviewTile
+            label="Active courses"
+            value={facts.activeEnrolments}
+            hint="In progress now"
+            icon={<LayersIcon className="size-4.5" />}
+            tone="lavender"
+            index={0}
+          />
+          <OverviewTile
+            label="Completed"
+            value={facts.completedCourses}
+            hint="Courses finished"
+            icon={<GraduationCapIcon className="size-4.5" />}
+            tone="mint"
+            index={1}
+          />
+          <OverviewTile
+            label="Certificates"
+            value={facts.certificates}
+            hint="Valid and unrevoked"
+            icon={<ShieldCheckIcon className="size-4.5" />}
+            tone="sky"
+            index={2}
+          />
+          <OverviewTile
+            label="Lessons done"
+            value={lessonsCompleted}
+            hint="Across all courses"
+            icon={<BookOpenCheckIcon className="size-4.5" />}
+            tone="peach"
+            index={3}
+          />
+        </div>
+      </PortalSection>
+
+      <PortalSection delay={0.1}>
+        <SectionHeading
+          title="Continue learning"
+          actionHref="/dashboard/academy/learning"
+        />
         {active.length === 0 ? (
-          <Card className="p-4 text-center">
-            <BookOpenIcon className="mx-auto size-8 text-muted-foreground" />
-            <p className="mt-2 font-heading font-semibold text-brand-strong">
-              No courses in progress
+          <div className="rounded-[var(--radius-2xl)] bg-card/85 p-6 text-center ring-1 ring-foreground/10 sm:p-8">
+            <SparklesIcon className="mx-auto size-9 text-portal-peach-strong" />
+            <p className="mt-3 font-heading text-lg font-semibold text-brand-strong">
+              Your next course is waiting
             </p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Browse the catalogue and enrol to start learning.
+            <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
+              Browse the catalogue and enrol in a published course to start
+              building your learning history.
             </p>
-            <Button className="mt-4" asChild>
+            <Button className="mt-4 rounded-full" asChild>
               <Link href="/courses">Browse courses</Link>
             </Button>
-          </Card>
+          </div>
         ) : (
-          <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
-            {active.slice(0, 4).map((course) => {
-              const progress = course.totalLessons
-                ? Math.round(
-                    (course.completedLessons / course.totalLessons) * 100,
-                  )
-                : 0;
-              return (
-                <Card key={course.enrolmentId} className="p-3.5">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="font-heading font-semibold text-brand-strong">
-                        {course.title}
-                      </p>
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {course.summary}
-                      </p>
-                    </div>
-                    <StatusBadge status={course.status} />
-                  </div>
-                  <div className="mt-4 space-y-2">
-                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                      <span>
-                        {course.completedLessons} / {course.totalLessons} lessons
-                      </span>
-                      <span>{progress}%</span>
-                    </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-muted">
-                      <div
-                        className="h-full bg-brand-teal transition-all"
-                        style={{ width: `${progress}%` }}
-                      />
-                    </div>
-                  </div>
-                  <Button className="mt-4" asChild>
-                    <Link href={`/dashboard/academy/learning/${course.courseId}`}>
-                      Continue
-                    </Link>
-                  </Button>
-                </Card>
-              );
-            })}
-          </div>
-        )}
-      </section>
-
-      {completed.length > 0 ? (
-        <section className="space-y-4">
-          <div className="flex items-center justify-between gap-3">
-            <h2 className="font-heading text-base font-semibold text-brand-strong">
-              Completed courses
-            </h2>
-          </div>
-          <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
-            {completed.slice(0, 4).map((course) => (
-              <Card key={course.enrolmentId} className="p-3.5">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="font-heading font-semibold text-brand-strong">
-                      {course.title}
-                    </p>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {course.certificateEnabled
-                        ? "Certificate available"
-                        : "Completed"}
-                    </p>
-                  </div>
-                  <StatusBadge status="completed" />
-                </div>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <Button variant="outline" asChild>
-                    <Link href={`/dashboard/academy/learning/${course.courseId}`}>
-                      Review course
-                    </Link>
-                  </Button>
-                  {course.certificateId && course.certificateCode ? (
-                    <Button variant="outline" asChild>
-                      <Link href={`/verify-certificate/${course.certificateCode}`}>
-                        <ShieldCheckIcon />
-                        Verify certificate
-                      </Link>
-                    </Button>
-                  ) : null}
-                </div>
-              </Card>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {active.slice(0, 4).map((course, index) => (
+              <AcademyCourseCard
+                key={course.enrolmentId}
+                course={course}
+                index={index}
+              />
             ))}
           </div>
-        </section>
+        )}
+      </PortalSection>
+
+      {completed.length > 0 ? (
+        <PortalSection delay={0.05}>
+          <SectionHeading title="Completed courses" />
+          <div className="grid gap-4 sm:grid-cols-2">
+            {completed.slice(0, 4).map((course, index) => (
+              <AcademyCourseCard
+                key={course.enrolmentId}
+                course={course}
+                index={index}
+              />
+            ))}
+          </div>
+        </PortalSection>
       ) : null}
 
-      <p className="text-xs text-muted-foreground">
-        Certificates issued by {brand.name} are verifiable at{" "}
-        <Link href="/verify-certificate" className="underline">
-          /verify-certificate
-        </Link>
-        .
-      </p>
+      <PortalSection delay={0.05}>
+        <div className="overflow-hidden rounded-[var(--radius-2xl)] bg-brand-navy p-5 text-white">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold text-white/80">
+                <ShieldCheckIcon className="size-3.5" />
+                Verifiable certificates
+              </span>
+              <p className="mt-3 font-heading text-xl font-semibold tracking-[-0.02em] text-white">
+                Keep every achievement in one place
+              </p>
+              <p className="mt-1 text-sm text-white/70">
+                Certificates issued by {brand.name} can be verified without
+                signing in.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                className="rounded-xl bg-white text-brand-navy hover:bg-white/90"
+                asChild
+              >
+                <Link href="/dashboard/academy/certificates">
+                  My certificates
+                </Link>
+              </Button>
+              <Button
+                className="rounded-xl bg-white/10 text-white hover:bg-white/15"
+                asChild
+              >
+                <Link href="/verify-certificate">Verify a certificate</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </PortalSection>
     </div>
   );
 }
