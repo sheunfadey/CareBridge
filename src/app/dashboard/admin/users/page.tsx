@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { AdminPageHeader } from "@/features/admin/components/admin-page-header";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
@@ -25,8 +25,8 @@ export default async function AdminUsersPage() {
   const result = await adminService.listProfiles({ limit: 100 });
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <AdminPageHeader
         eyebrow="Platform administration"
         title="User management"
         description="Review accounts and control account status. Every change is recorded in the audit log."

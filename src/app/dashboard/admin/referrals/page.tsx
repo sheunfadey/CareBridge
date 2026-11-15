@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { AlertTriangleIcon } from "lucide-react";
 
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { AdminPageHeader } from "@/features/admin/components/admin-page-header";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
@@ -56,8 +56,8 @@ export default async function AdminReferralsPage() {
   );
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <AdminPageHeader
         eyebrow="Finance"
         title="Referrals and commissions"
         description="Approve partners, publish commission policy, review the append-only ledger and approve payouts. Provider transfers stay disabled until explicitly enabled."

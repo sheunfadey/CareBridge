@@ -4,7 +4,7 @@ import { AlertTriangleIcon, CircleDollarSignIcon, ClockIcon, ShieldCheckIcon } f
 
 import { MetricCard } from "@/components/dashboard/metric-card";
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { AdminPageHeader } from "@/features/admin/components/admin-page-header";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
@@ -128,8 +128,8 @@ export default async function AdminReconciliationPage() {
   const needsAttention = [...mismatches, ...reviewRequired];
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <AdminPageHeader
         eyebrow="Finance"
         title="Reconciliation"
         description="Compare HillCrest records with the payment provider. Never confirm a payment from a browser redirect — verification always happens server-side."

@@ -4,7 +4,7 @@ import { CircleDollarSignIcon, RefreshCwIcon, WalletIcon } from "lucide-react";
 
 import { MetricCard } from "@/components/dashboard/metric-card";
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { AdminPageHeader } from "@/features/admin/components/admin-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -93,8 +93,8 @@ export default async function AdminPaymentsPage({
   const canRefund = userHasPermission(user, "refund_process");
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <AdminPageHeader
         eyebrow="Finance"
         title="Payments"
         description="Every payment is verified against the provider before it affects an account. Refunds are recorded in an append-only financial history."

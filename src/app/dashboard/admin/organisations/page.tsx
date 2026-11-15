@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { AdminPageHeader } from "@/features/admin/components/admin-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -31,8 +31,8 @@ export default async function AdminOrganisationsPage() {
   ]);
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <AdminPageHeader
         eyebrow="Platform administration"
         title="Organisations"
         description="Approve, verify and manage organisations across every tenant. Decisions require an audit reason."

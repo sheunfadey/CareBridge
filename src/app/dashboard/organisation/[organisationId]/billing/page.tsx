@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { WorkspacePageHeader } from "@/features/organisations/components/workspace-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -71,8 +71,8 @@ export default async function OrganisationBillingPage({
   const membersUsed = summary.usage.activeMembers + summary.usage.pendingInvitations;
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <WorkspacePageHeader
         eyebrow="Organisation billing"
         title={summary.organisationName}
         description="Subscription plan, feature limits and billing history. Subscription billing is separate from training, donations and payouts."

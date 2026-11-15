@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeftIcon } from "lucide-react";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { AdminPageHeader } from "@/features/admin/components/admin-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { requireSuperAdminPage } from "@/server/admin/require-super-admin";
@@ -45,8 +45,8 @@ export default async function OrganisationIntegrationsPage({
   const byKind = new Map(integrations.map((row) => [row.kind, row]));
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <AdminPageHeader
         eyebrow="Organisation integrations"
         title={organisation.name}
         description="Configure payment, SMS, email and custom API credentials for this organisation. Secrets are stored server-side and never returned to the browser."

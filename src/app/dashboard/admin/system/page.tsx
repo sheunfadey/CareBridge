@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { AdminPageHeader } from "@/features/admin/components/admin-page-header";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { requireSuperAdminPage } from "@/server/admin/require-super-admin";
@@ -79,8 +79,8 @@ export default async function SystemPage() {
   ];
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <AdminPageHeader
         eyebrow="Platform operations"
         title="System & APIs"
         description="Health, integrations, API endpoints and maintenance status for the HillCrest platform."

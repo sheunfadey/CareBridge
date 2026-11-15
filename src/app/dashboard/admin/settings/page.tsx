@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { AdminPageHeader } from "@/features/admin/components/admin-page-header";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { requireSuperAdminPage } from "@/server/admin/require-super-admin";
@@ -86,8 +86,8 @@ export default async function AdminSettingsPage() {
   ];
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <AdminPageHeader
         eyebrow="Platform administration"
         title="Platform settings"
         description="Read-only configuration status for the current environment, and platform policy safeguards."

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Building2Icon, PlusIcon, ShieldCheckIcon, UsersIcon } from "lucide-react";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { WorkspacePageHeader } from "@/features/organisations/components/workspace-page-header";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card } from "@/components/ui/card";
@@ -18,8 +18,8 @@ export default async function OrganisationListPage() {
   const organisations = await listOrganisationsForUser();
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <WorkspacePageHeader
         eyebrow="Account"
         title="Organisations"
         description="Workspaces you belong to. Each organisation has its own members, roles and permissions."

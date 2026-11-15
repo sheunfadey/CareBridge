@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { AdminPageHeader } from "@/features/admin/components/admin-page-header";
 import { Card } from "@/components/ui/card";
 import {
   Table,
@@ -23,8 +23,8 @@ export default async function AdminAuditPage() {
   const result = await adminService.listAuditLogs(100);
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <AdminPageHeader
         eyebrow="Platform administration"
         title="Audit log"
         description="A read-only record of administrative and security events. Audit records are append-only."

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { Building2Icon } from "lucide-react";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { WorkspacePageHeader } from "@/features/organisations/components/workspace-page-header";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card } from "@/components/ui/card";
@@ -55,8 +55,8 @@ export default async function OrganisationDetailPage({
     : null;
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <WorkspacePageHeader
         eyebrow={organisationTypeLabels[detail.summary.type]}
         title={detail.summary.name}
         description="Manage members, invitations and roles for this workspace."

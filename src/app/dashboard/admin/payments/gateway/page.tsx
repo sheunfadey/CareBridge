@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle2Icon, KeyRoundIcon, WebhookIcon } from "lucide-react";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { AdminPageHeader } from "@/features/admin/components/admin-page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -34,8 +34,8 @@ export default async function PaymentGatewayPage() {
     : "Not configured";
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <AdminPageHeader
         eyebrow="Platform payments"
         title="Paystack payment gateway"
         description="Connection status and configuration for organisation course payments, donations and reconciliation."

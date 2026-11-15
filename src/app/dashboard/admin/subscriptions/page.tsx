@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { AdminPageHeader } from "@/features/admin/components/admin-page-header";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
@@ -56,8 +56,8 @@ export default async function AdminSubscriptionsPage() {
   const period = defaultPaymentPeriod();
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <AdminPageHeader
         eyebrow="Platform billing"
         title="Subscriptions"
         description="Configure plans, manage organisation subscriptions and record subscription payments. Subscription billing is separate from training, donations and payouts."

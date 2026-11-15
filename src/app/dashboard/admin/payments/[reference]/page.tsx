@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeftIcon } from "lucide-react";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { AdminPageHeader } from "@/features/admin/components/admin-page-header";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
@@ -53,8 +53,8 @@ export default async function AdminPaymentDetailPage({
   const canVerify = userHasPermission(user, "payment_review");
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <AdminPageHeader
         eyebrow="Finance"
         title={payment.reference}
         description={`${paymentPurposeLabels[payment.purpose as PaymentPurposeOption] ?? payment.purpose} · ${payment.payerEmail}`}

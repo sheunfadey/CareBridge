@@ -17,7 +17,7 @@ import {
   WalletIcon,
 } from "lucide-react";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { AdminPageHeader } from "@/features/admin/components/admin-page-header";
 import { Card } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { getCurrentUser } from "@/server/auth/current-user";
@@ -142,8 +142,8 @@ export default async function AdminPage() {
     : [null, null, null];
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <AdminPageHeader
         eyebrow="Platform"
         title="Administration"
         description="Super-admin-only capabilities that operate across every tenant. Every action is recorded in the audit log."
