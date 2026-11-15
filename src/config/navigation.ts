@@ -80,6 +80,14 @@ const communicationGroup: NavGroup = {
   ],
 };
 
+const communityGroup: NavGroup = {
+  label: "Community",
+  items: [
+    { label: "Referrals", href: "/dashboard/referrals", icon: "Share2" },
+    { label: "Charity", href: "/dashboard/charity", icon: "HeartHandshake" },
+  ],
+};
+
 const accountGroup: NavGroup = {
   label: "Account",
   items: [
@@ -91,67 +99,6 @@ const accountGroup: NavGroup = {
   ],
 };
 
-const managementGroups: NavGroup[] = [
-  {
-    label: "Management",
-    items: [
-      { label: "Manage courses", href: "/dashboard/academy/manage", icon: "FileCog", permissions: ["course_manage"] },
-      { label: "Categories", href: "/dashboard/academy/manage/categories", icon: "Tags", permissions: ["course_manage"] },
-      { label: "Referrals", href: "/dashboard/referrals", icon: "Share2" },
-      { label: "Charity", href: "/dashboard/charity", icon: "HeartHandshake" },
-    ],
-  },
-  {
-    label: "Finance",
-    items: [
-      {
-        label: "Payments",
-        href: "/dashboard/admin/payments",
-        icon: "CreditCard",
-        permissions: ["payment_review"],
-      },
-      {
-        label: "Reconciliation",
-        href: "/dashboard/admin/reconciliation",
-        icon: "Scale",
-        permissions: ["payment_review"],
-      },
-      {
-        label: "Referral administration",
-        href: "/dashboard/admin/referrals",
-        icon: "BadgeDollarSign",
-        permissions: [
-          "referral_rules_manage",
-          "commission_approve",
-          "payout_approve",
-        ],
-      },
-      {
-        label: "Subscriptions",
-        href: "/dashboard/admin/subscriptions",
-        icon: "CreditCard",
-        permissions: ["billing_manage"],
-      },
-      {
-        label: "Reports",
-        href: "/dashboard/reports",
-        icon: "BarChart3",
-        permissions: ["report_view"],
-      },
-    ],
-  },
-  {
-    label: "Platform",
-    items: [
-      {
-        label: "Administration",
-        href: "/dashboard/admin",
-        icon: "ShieldCheck",
-        superAdminOnly: true,
-      },
-    ],
-  },
-];
 
 /** Learner-first navigation. */
 export const studentNav: NavSection = {
@@ -176,9 +123,9 @@ export const studentNav: NavSection = {
         { label: "Placements", href: "/dashboard/internships/placements", icon: "ClipboardCheck" },
       ],
     },
+    communityGroup,
     communicationGroup,
     accountGroup,
-    ...managementGroups,
   ],
 };
 
@@ -216,9 +163,9 @@ export const caregiverNav: NavSection = {
         { label: "Certificates", href: "/dashboard/academy/certificates", icon: "ShieldCheck" },
       ],
     },
+    communityGroup,
     communicationGroup,
     accountGroup,
-    ...managementGroups,
   ],
 };
 
