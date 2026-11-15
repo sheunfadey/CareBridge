@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { CharityNav } from "@/components/charity/charity-nav";
-import { PageHeader } from "@/components/layout/page-header";
+import { CharityPageHeader } from "@/features/charity/components/charity-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -72,8 +72,8 @@ export default async function CampaignDetailPage({
       : 0;
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CharityPageHeader
         eyebrow="Charity campaign"
         title={campaign.title}
         description={`${campaign.purpose} · ${formatDate(campaign.startsOn)}${campaign.endsOn ? ` – ${formatDate(campaign.endsOn)}` : ""}`}

@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 
 import { CharityNav } from "@/components/charity/charity-nav";
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { CharityPageHeader } from "@/features/charity/components/charity-page-header";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
@@ -49,8 +49,8 @@ export default async function DonationsPage({
   ]);
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CharityPageHeader
         eyebrow="Charity"
         title="Donations"
         description="Your donation history, receipts and acknowledgement preferences. Charity staff see verified campaign donations for their workspace."

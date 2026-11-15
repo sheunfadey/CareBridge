@@ -11,7 +11,7 @@ import {
 
 import { CharityNav } from "@/components/charity/charity-nav";
 import { MetricCard } from "@/components/dashboard/metric-card";
-import { PageHeader } from "@/components/layout/page-header";
+import { CharityPageHeader } from "@/features/charity/components/charity-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -85,8 +85,8 @@ export default async function CharityPage({
     : false;
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CharityPageHeader
         eyebrow="Charity"
         title={workspace ? workspace.name : "Charity and scholarships"}
         description={

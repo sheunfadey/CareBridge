@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { CharityNav } from "@/components/charity/charity-nav";
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { CharityPageHeader } from "@/features/charity/components/charity-page-header";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
@@ -57,8 +57,8 @@ export default async function CharityReportsPage({
   );
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CharityPageHeader
         eyebrow="Charity"
         title="Reports"
         description="Separate reporting for donation income, committed funds, campaign disbursements and scholarship awards. Donations are never shown as unrestricted revenue."

@@ -59,16 +59,19 @@ export function CharityNav({
   }
 
   return (
-    <nav aria-label="Charity workspace" className="flex flex-wrap gap-1.5">
+    <nav
+      aria-label="Charity workspace"
+      className="flex gap-1.5 overflow-x-auto pb-1 lg:flex-wrap lg:overflow-visible"
+    >
       {visible.map((item) => (
         <Link
           key={item.segment || "overview"}
           href={href(item.segment)}
           className={cn(
-            "rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
+            "shrink-0 whitespace-nowrap rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
             active === item.segment
-              ? "border-brand-teal bg-brand-teal/10 text-brand-strong"
-              : "border-border text-muted-foreground hover:border-brand-teal/40 hover:text-brand-strong",
+              ? "bg-brand-navy text-white"
+              : "bg-card/70 text-muted-foreground ring-1 ring-foreground/10 hover:text-brand-strong hover:ring-brand-navy/20",
           )}
         >
           {item.label}

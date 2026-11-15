@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { CharityNav } from "@/components/charity/charity-nav";
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { CharityPageHeader } from "@/features/charity/components/charity-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -42,8 +42,8 @@ export default async function ImpactPage({
   const canManage = await context.can("charity_campaign_manage");
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <CharityPageHeader
         eyebrow="Charity"
         title="Impact reports"
         description="Published updates show donors how campaign funds were used. Drafts remain internal until published."

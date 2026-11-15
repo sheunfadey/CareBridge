@@ -40,6 +40,8 @@
   --color-portal-sky-strong: var(--portal-sky-strong);
   --color-portal-mint: var(--portal-mint);
   --color-portal-mint-strong: var(--portal-mint-strong);
+  --color-portal-rose: var(--portal-rose);
+  --color-portal-rose-strong: var(--portal-rose-strong);
   --color-portal-ink: var(--portal-ink);
 
   --color-sidebar-ring: var(--sidebar-ring);
@@ -110,6 +112,8 @@
   --portal-sky-strong: #2f7fae;
   --portal-mint: #dcefdf;
   --portal-mint-strong: #357a4e;
+  --portal-rose: #f7d9dd;
+  --portal-rose-strong: #a94f60;
   --portal-ink: #1c2434;
 
   --background: var(--portal-cream);
@@ -165,6 +169,8 @@
   --portal-sky-strong: #8cc7e8;
   --portal-mint: #173328;
   --portal-mint-strong: #8fd0a5;
+  --portal-rose: #43232a;
+  --portal-rose-strong: #f0b3be;
   --portal-ink: #eaf2ff;
   --background: var(--brand-dark);
   --foreground: #eaf2ff;

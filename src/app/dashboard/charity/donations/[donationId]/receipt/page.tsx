@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { CharityPageHeader } from "@/features/charity/components/charity-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -36,7 +36,7 @@ export default async function DonationReceiptPage({
 
   return (
     <div className="mx-auto max-w-2xl space-y-4 lg:space-y-5">
-      <PageHeader
+      <CharityPageHeader
         eyebrow="Donation receipt"
         title={receipt.receiptReference ?? "Receipt"}
         description="This receipt records a donation to a charity campaign. Donations are held separately from commercial revenue."
