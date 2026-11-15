@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { HeartHandshakeIcon } from "lucide-react";
 
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { PortalPageHeader } from "@/features/portal/components/portal-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
@@ -26,8 +26,8 @@ export default async function FamilyPortalPage() {
   const residents = await listFamilyResidents();
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <PortalPageHeader tone="mint"
         eyebrow="Family access"
         title="Family portal"
         description="Summary information for residents linked to your account. Clinical records, incidents, medication and billing are not shown here."

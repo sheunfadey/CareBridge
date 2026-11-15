@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { PortalPageHeader } from "@/features/portal/components/portal-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { NotificationPreferencesForm } from "@/features/account/components/notification-preferences-form";
@@ -24,8 +24,8 @@ export default async function NotificationSettingsPage() {
   const emailAvailable = emailDeliveryAvailable();
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <PortalPageHeader tone="sky"
         eyebrow="Account"
         title="Notification preferences"
         description="Choose which updates you receive and where they are delivered."

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { PortalPageHeader } from "@/features/portal/components/portal-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { PasswordForm } from "@/features/account/components/password-form";
@@ -21,8 +21,8 @@ export default async function SettingsPage() {
   }
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <PortalPageHeader tone="lavender"
         eyebrow="Account"
         title="Settings"
         description="Manage your profile, password and notification preferences."

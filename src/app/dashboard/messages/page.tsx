@@ -3,7 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { MessageSquareIcon, PlusIcon } from "lucide-react";
 
-import { PageHeader } from "@/components/layout/page-header";
+import { PortalPageHeader } from "@/features/portal/components/portal-page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -44,8 +44,8 @@ export default async function MessagesPage({ searchParams }: MessagesPageProps) 
     : null;
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <PortalPageHeader tone="lavender"
         eyebrow="Communication"
         title="Messages"
         description="Private conversations with active members of your organisations. Messages are permanent, organisation-scoped and visible only to the people in the conversation."

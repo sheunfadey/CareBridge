@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { PortalPageHeader } from "@/features/portal/components/portal-page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -68,8 +68,8 @@ export default async function ReportsPage({
   if (organisationId) exportQuery.set("organisation", organisationId);
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <PortalPageHeader tone="sky"
         eyebrow="Reporting"
         title="Reports"
         description="Role-appropriate operational and financial reports. CSV exports require export permission and are recorded in the audit log."

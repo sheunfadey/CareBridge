@@ -11,7 +11,7 @@ import {
 
 import { MetricCard } from "@/components/dashboard/metric-card";
 import { EmptyState } from "@/components/feedback/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { PortalPageHeader } from "@/features/portal/components/portal-page-header";
 import { Card } from "@/components/ui/card";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
@@ -54,8 +54,8 @@ export default async function ReferralsPage() {
   const partner = data.partner;
 
   return (
-    <div className="space-y-4 lg:space-y-5">
-      <PageHeader
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
+      <PortalPageHeader tone="peach"
         eyebrow="Growth"
         title="Referral programme"
         description="Introduce learners and organisations to HillCrest. Commissions follow the published policy and become payable only when they qualify."
