@@ -24,7 +24,7 @@ export function AdminPageHeader({
   return (
     <header
       className={cn(
-        "relative overflow-hidden rounded-[2rem] bg-portal-sky p-5 sm:p-6",
+        "relative overflow-hidden rounded-[2rem] bg-portal-sky p-4 sm:p-5",
         className,
       )}
     >
@@ -41,7 +41,7 @@ export function AdminPageHeader({
           <ShieldCheckIcon className="size-3.5" />
           {eyebrow}
         </span>
-        <h1 className="mt-3 font-heading text-2xl font-semibold tracking-[-0.03em] text-brand-strong sm:text-3xl">
+        <h1 className="mt-3 font-heading text-xl font-semibold tracking-[-0.03em] text-brand-strong sm:text-2xl">
           {title}
         </h1>
         {description ? (

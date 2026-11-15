@@ -23,7 +23,7 @@ export default async function CertificatesPage() {
   const certificates = await listIssuedCertificates(user);
 
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-6 pb-6">
+    <div className="mx-auto w-full max-w-5xl space-y-5 pb-5">
       <PageHeader
         eyebrow="Academy"
         title="Certificates"
@@ -62,7 +62,7 @@ export default async function CertificatesPage() {
         </div>
       ) : (
         <PortalSection>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             {certificates.map((certificate) => (
               <article
                 key={certificate.id}

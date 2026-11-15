@@ -33,12 +33,18 @@ export function AcademyCourseCard({
         ease: [0.22, 1, 0.36, 1],
       }}
       whileHover={reduceMotion ? undefined : { y: -3 }}
-      className="group flex flex-col overflow-hidden rounded-[var(--radius-2xl)] bg-card/90 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.4)] ring-1 ring-foreground/10"
+      className="group relative flex flex-col overflow-hidden rounded-[var(--radius-2xl)] bg-card/90 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.4)] ring-1 ring-foreground/10"
     >
+      <Link
+        href={`/dashboard/academy/learning/${course.courseId}`}
+        aria-label={`Open ${course.title}`}
+        tabIndex={-1}
+        className="absolute inset-0 z-10 rounded-[var(--radius-2xl)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      />
       <div
         role="img"
         aria-label={course.title}
-        className="relative h-32 bg-portal-lavender bg-cover bg-center sm:h-36"
+        className="relative h-24 bg-portal-lavender bg-cover bg-center sm:h-28"
         style={
           course.coverImageUrl
             ? { backgroundImage: `url("${course.coverImageUrl}")` }
@@ -54,7 +60,7 @@ export function AcademyCourseCard({
         </span>
       </div>
 
-      <div className="flex flex-1 flex-col p-4">
+      <div className="flex flex-1 flex-col p-3.5">
         <div className="flex items-start justify-between gap-3">
           <h3 className="line-clamp-2 font-heading text-base font-semibold text-brand-strong">
             {course.title}
@@ -86,7 +92,7 @@ export function AcademyCourseCard({
           </p>
         </div>
 
-        <div className="mt-auto flex flex-wrap gap-2 pt-4">
+        <div className="relative z-20 mt-auto flex flex-wrap gap-2 pt-4">
           <Button className="flex-1 rounded-full" size="sm" asChild>
             <Link href={`/dashboard/academy/learning/${course.courseId}`}>
               {completed ? "Review course" : "Continue learning"}

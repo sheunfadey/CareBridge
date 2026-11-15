@@ -128,7 +128,7 @@ export function CaregiverDashboard({
   );
 
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-7 pb-6">
+    <div className="mx-auto w-full max-w-5xl space-y-6 pb-5">
       <WelcomeHero
         name={user.name}
         email={user.email}
@@ -155,6 +155,7 @@ export function CaregiverDashboard({
             icon={<CalendarDaysIcon className="size-4.5" />}
             tone="sky"
             index={0}
+            href="/dashboard/care-homes/roster"
           />
           <OverviewTile
             label="Active placements"
@@ -163,6 +164,7 @@ export function CaregiverDashboard({
             icon={<UserCheckIcon className="size-4.5" />}
             tone="mint"
             index={1}
+            href="/dashboard/internships/placements"
           />
           <OverviewTile
             label="Job applications"
@@ -171,6 +173,7 @@ export function CaregiverDashboard({
             icon={<BriefcaseIcon className="size-4.5" />}
             tone="peach"
             index={2}
+            href="/dashboard/jobs/applications"
           />
           <OverviewTile
             label="Training"
@@ -179,6 +182,7 @@ export function CaregiverDashboard({
             icon={<GraduationCapIcon className="size-4.5" />}
             tone="lavender"
             index={3}
+            href="/dashboard/academy/learning"
           />
         </div>
       </PortalSection>
@@ -189,9 +193,20 @@ export function CaregiverDashboard({
           <div className="space-y-3">
             {nextShift ? (
               <>
-                <ShiftCard shift={nextShift} highlight />
+                <Link
+                  href="/dashboard/care-homes/roster"
+                  className="block rounded-[var(--radius-2xl)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  <ShiftCard shift={nextShift} highlight />
+                </Link>
                 {otherShifts.map((shift) => (
-                  <ShiftCard key={shift.id} shift={shift} />
+                  <Link
+                    key={shift.id}
+                    href="/dashboard/care-homes/roster"
+                    className="block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <ShiftCard shift={shift} />
+                  </Link>
                 ))}
               </>
             ) : (
@@ -270,7 +285,7 @@ export function CaregiverDashboard({
                 Keep your care skills current with a short course.
               </p>
               <Button className="mt-4 rounded-full" asChild>
-                <Link href="/courses">Browse courses</Link>
+                <Link href="/dashboard/academy/learning">Open My Learning</Link>
               </Button>
             </div>
           )}
@@ -338,24 +353,26 @@ export function CaregiverDashboard({
             {data.applications.length > 0 ? (
               <ul className="divide-y divide-brand-navy/5">
                 {data.applications.slice(0, 3).map((application) => (
-                  <li
-                    key={application.id}
-                    className="flex items-center gap-3 py-3 first:pt-0 last:pb-0"
-                  >
-                    <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-portal-peach text-portal-peach-strong">
-                      <BriefcaseIcon className="size-4" />
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium text-brand-strong">
-                        {application.roleTitle}
-                      </p>
-                      <p className="truncate text-xs text-muted-foreground">
-                        {application.organisationName}
-                      </p>
-                    </div>
-                    <span className="shrink-0 rounded-full bg-brand-navy/5 px-2 py-1 text-[10px] font-semibold capitalize text-brand-strong">
-                      {statusLabel(application.status)}
-                    </span>
+                  <li key={application.id}>
+                    <Link
+                      href="/dashboard/jobs/applications"
+                      className="flex items-center gap-3 py-3 first:pt-0 last:pb-0"
+                    >
+                      <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-portal-peach text-portal-peach-strong">
+                        <BriefcaseIcon className="size-4" />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-brand-strong">
+                          {application.roleTitle}
+                        </p>
+                        <p className="truncate text-xs text-muted-foreground">
+                          {application.organisationName}
+                        </p>
+                      </div>
+                      <span className="shrink-0 rounded-full bg-brand-navy/5 px-2 py-1 text-[10px] font-semibold capitalize text-brand-strong">
+                        {statusLabel(application.status)}
+                      </span>
+                    </Link>
                   </li>
                 ))}
               </ul>

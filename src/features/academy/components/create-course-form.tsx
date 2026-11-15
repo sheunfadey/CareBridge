@@ -118,7 +118,7 @@ export function CreateCourseForm({
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
       {error ? <FormAlert tone="error">{error}</FormAlert> : null}
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="course-programme">Programme</Label>
           <Select
@@ -301,7 +301,7 @@ export function CreateCourseForm({
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="course-outcomes">
             Learning outcomes (one per line)

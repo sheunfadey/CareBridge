@@ -155,6 +155,7 @@ export function OverviewTile({
   icon,
   tone,
   index = 0,
+  href,
 }: {
   label: string;
   value: string | number;
@@ -162,11 +163,12 @@ export function OverviewTile({
   icon: ReactNode;
   tone: TileTone;
   index?: number;
+  href?: string;
 }) {
   const reduceMotion = useReducedMotion();
   const palette = tileTones[tone];
 
-  return (
+  const tile = (
     <motion.div
       initial={reduceMotion ? false : { opacity: 0, y: 16, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -177,34 +179,52 @@ export function OverviewTile({
       }}
       whileHover={reduceMotion ? undefined : { y: -3 }}
       className={cn(
-        "relative min-h-[135px] overflow-hidden rounded-[var(--radius-2xl)] p-4 shadow-[0_8px_24px_-18px_rgb(16_43_92/0.5)]",
+        "relative min-h-[112px] overflow-hidden rounded-[var(--radius-2xl)] p-3.5 shadow-[0_8px_24px_-18px_rgb(16_43_92/0.5)]",
         palette.card,
+        href && "group block h-full",
       )}
     >
       <span
         aria-hidden="true"
-        className="absolute -right-6 -top-7 size-24 rounded-full border-[10px] border-white/25"
+        className="absolute -right-6 -top-7 size-20 rounded-full border-[8px] border-white/25"
       />
       <span
         aria-hidden="true"
-        className="absolute -bottom-8 -right-1 size-20 rounded-full bg-white/15"
+        className="absolute -bottom-8 -right-1 size-16 rounded-full bg-white/15"
       />
-      <span
-        className={cn(
-          "relative flex size-9 items-center justify-center rounded-xl",
-          palette.icon,
-        )}
-      >
-        {icon}
-      </span>
-      <p className={cn("relative mt-4 text-sm font-medium", palette.label)}>
+      <div className="relative flex items-start justify-between gap-2">
+        <span
+          className={cn(
+            "flex size-8 items-center justify-center rounded-lg [&_svg]:size-4",
+            palette.icon,
+          )}
+        >
+          {icon}
+        </span>
+        {href ? (
+          <ArrowUpRightIcon className="size-3.5 text-portal-ink/35 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        ) : null}
+      </div>
+      <p className={cn("relative mt-2.5 text-xs font-medium", palette.label)}>
         {label}
       </p>
-      <p className="relative mt-0.5 font-heading text-2xl font-semibold tracking-[-0.03em] text-portal-ink">
+      <p className="relative mt-0.5 font-heading text-xl font-semibold tracking-[-0.03em] text-portal-ink">
         {value}
       </p>
-      <p className={cn("relative mt-0.5 text-xs", palette.hint)}>{hint}</p>
+      <p className={cn("relative mt-0.5 text-[11px]", palette.hint)}>{hint}</p>
     </motion.div>
+  );
+
+  if (!href) return tile;
+
+  return (
+    <Link
+      href={href}
+      aria-label={`${label}: ${value}`}
+      className="block h-full rounded-[var(--radius-2xl)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+    >
+      {tile}
+    </Link>
   );
 }
 
@@ -322,12 +342,18 @@ export function CourseCard({
       initial={reduceMotion ? false : { opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={reduceMotion ? undefined : { y: -3 }}
-      className="flex flex-col overflow-hidden rounded-[var(--radius-2xl)] bg-card/90 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.4)] ring-1 ring-foreground/10"
+      className="relative flex flex-col overflow-hidden rounded-[var(--radius-2xl)] bg-card/90 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.4)] ring-1 ring-foreground/10"
     >
+      <Link
+        href={`/dashboard/academy/learning/${course.courseId}`}
+        aria-label={`Open ${course.title}`}
+        tabIndex={-1}
+        className="absolute inset-0 z-10 rounded-[var(--radius-2xl)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      />
       <div
         role="img"
         aria-label={course.title}
-        className="relative h-28 bg-portal-peach bg-cover bg-center sm:h-32"
+        className="relative h-24 bg-portal-peach bg-cover bg-center sm:h-28"
         style={
           course.coverImageUrl
             ? { backgroundImage: `url("${course.coverImageUrl}")` }
@@ -339,7 +365,7 @@ export function CourseCard({
           {course.progressPercent}% complete
         </span>
       </div>
-      <div className="flex flex-1 flex-col p-4">
+      <div className="flex flex-1 flex-col p-3.5">
         <h3 className="line-clamp-2 font-heading text-base font-semibold text-brand-strong">
           {course.title}
         </h3>

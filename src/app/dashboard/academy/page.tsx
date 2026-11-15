@@ -46,9 +46,9 @@ export default async function AcademyPage() {
   );
 
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-7 pb-6">
+    <div className="mx-auto w-full max-w-5xl space-y-6 pb-5">
       <PortalSection>
-        <div className="relative overflow-hidden rounded-[2rem] bg-portal-peach p-5 sm:p-7">
+        <div className="relative overflow-hidden rounded-[2rem] bg-portal-peach p-4 sm:p-6">
           <span
             aria-hidden="true"
             className="absolute -right-10 -top-16 size-52 rounded-full border-[18px] border-white/25"
@@ -62,7 +62,7 @@ export default async function AcademyPage() {
               <GraduationCapIcon className="size-3.5" />
               {brand.name} Academy
             </span>
-            <h1 className="mt-3 font-heading text-3xl font-semibold leading-tight tracking-[-0.03em] text-brand-strong sm:text-4xl">
+            <h1 className="mt-3 font-heading text-2xl font-semibold leading-tight tracking-[-0.03em] text-brand-strong sm:text-3xl">
               Learn something new today
             </h1>
             <p className="mt-2 max-w-xl text-sm text-brand-navy/70 sm:text-base dark:text-foreground/70">
@@ -120,6 +120,7 @@ export default async function AcademyPage() {
             icon={<LayersIcon className="size-4.5" />}
             tone="lavender"
             index={0}
+            href="/dashboard/academy/learning"
           />
           <OverviewTile
             label="Completed"
@@ -128,6 +129,7 @@ export default async function AcademyPage() {
             icon={<GraduationCapIcon className="size-4.5" />}
             tone="mint"
             index={1}
+            href="/dashboard/academy/learning?status=completed"
           />
           <OverviewTile
             label="Certificates"
@@ -136,6 +138,7 @@ export default async function AcademyPage() {
             icon={<ShieldCheckIcon className="size-4.5" />}
             tone="sky"
             index={2}
+            href="/dashboard/academy/certificates"
           />
           <OverviewTile
             label="Lessons done"
@@ -144,6 +147,7 @@ export default async function AcademyPage() {
             icon={<BookOpenCheckIcon className="size-4.5" />}
             tone="peach"
             index={3}
+            href="/dashboard/academy/learning"
           />
         </div>
       </PortalSection>
@@ -168,7 +172,7 @@ export default async function AcademyPage() {
             </Button>
           </div>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             {active.slice(0, 4).map((course, index) => (
               <AcademyCourseCard
                 key={course.enrolmentId}
@@ -183,7 +187,7 @@ export default async function AcademyPage() {
       {completed.length > 0 ? (
         <PortalSection delay={0.05}>
           <SectionHeading title="Completed courses" />
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             {completed.slice(0, 4).map((course, index) => (
               <AcademyCourseCard
                 key={course.enrolmentId}

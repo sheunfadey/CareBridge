@@ -71,7 +71,13 @@ export default async function JobsPage() {
       ) : (
         <div className="grid gap-3 sm:gap-4 lg:grid-cols-2">
           {jobs.map((job) => (
-            <Card key={job.id} className="flex flex-col rounded-[var(--radius-2xl)] bg-card/90 p-4">
+            <Card key={job.id} className="relative flex flex-col rounded-[var(--radius-2xl)] bg-card/90 p-4">
+              <Link
+                href={`/dashboard/jobs/${job.id}`}
+                aria-label={`Open ${job.title}`}
+                tabIndex={-1}
+                className="absolute inset-0 z-10 rounded-[var(--radius-2xl)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              />
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <Link

@@ -43,7 +43,7 @@ export function PortalPageHeader({
   return (
     <header
       className={cn(
-        "relative overflow-hidden rounded-[2rem] p-5 sm:p-6",
+        "relative overflow-hidden rounded-[2rem] p-4 sm:p-5",
         tones[tone],
         className,
       )}
@@ -68,7 +68,7 @@ export function PortalPageHeader({
             {eyebrow}
           </span>
         ) : null}
-        <h1 className="mt-3 font-heading text-2xl font-semibold tracking-[-0.03em] text-brand-strong sm:text-3xl">
+        <h1 className="mt-3 font-heading text-xl font-semibold tracking-[-0.03em] text-brand-strong sm:text-2xl">
           {title}
         </h1>
         {description ? (

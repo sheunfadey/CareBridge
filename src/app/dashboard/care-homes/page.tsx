@@ -55,11 +55,14 @@ export default async function CareHomesPage({
   const canManageResidents = userHasPermission(user, "resident_manage");
   const dashboard = await getCareDashboard(workspace, facility?.id);
   const residents = facility ? await listResidentOptions(workspace, facility.id) : [];
+  const careQuery = `organisation=${workspace.organisationId}${
+    facility ? `&facility=${facility.id}` : ""
+  }`;
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-6 pb-6">
+    <div className="mx-auto w-full max-w-6xl space-y-5 pb-5">
       <PortalSection>
-        <div className="relative overflow-hidden rounded-[2rem] bg-portal-mint p-5 sm:p-7">
+        <div className="relative overflow-hidden rounded-[2rem] bg-portal-mint p-4 sm:p-6">
           <span
             aria-hidden="true"
             className="absolute -right-12 -top-16 size-56 rounded-full border-[18px] border-white/25"
@@ -136,6 +139,7 @@ export default async function CareHomesPage({
                 icon={<UsersIcon className="size-4.5" />}
                 tone="mint"
                 index={0}
+                href={`/dashboard/care-homes/residents?${careQuery}`}
               />
               <OverviewTile
                 label="Active staff"
@@ -144,6 +148,7 @@ export default async function CareHomesPage({
                 icon={<CalendarClockIcon className="size-4.5" />}
                 tone="lavender"
                 index={1}
+                href={`/dashboard/care-homes/staff?${careQuery}`}
               />
               <OverviewTile
                 label="Coverage gaps"
@@ -152,6 +157,7 @@ export default async function CareHomesPage({
                 icon={<AlertTriangleIcon className="size-4.5" />}
                 tone="peach"
                 index={2}
+                href={`/dashboard/care-homes/roster?${careQuery}`}
               />
               <OverviewTile
                 label="Open incidents"
@@ -160,6 +166,7 @@ export default async function CareHomesPage({
                 icon={<ShieldAlertIcon className="size-4.5" />}
                 tone="sky"
                 index={3}
+                href={`/dashboard/care-homes/incidents?${careQuery}`}
               />
             </div>
           </PortalSection>
@@ -168,9 +175,12 @@ export default async function CareHomesPage({
             <PortalSection delay={0.05}>
               <div className="h-full rounded-[var(--radius-2xl)] bg-card/85 p-4 ring-1 ring-foreground/10 sm:p-5">
                 <div className="flex items-center justify-between gap-2">
-                  <h2 className="font-heading text-lg font-semibold text-brand-strong">
+                  <Link
+                    href={`/dashboard/care-homes/residents?${careQuery}`}
+                    className="font-heading text-lg font-semibold text-brand-strong hover:text-brand-blue"
+                  >
                     Occupancy
-                  </h2>
+                  </Link>
                   <BedDoubleIcon className="size-5 text-portal-mint-strong" />
                 </div>
                 {dashboard.occupancy.length === 0 ? (
@@ -211,9 +221,12 @@ export default async function CareHomesPage({
             <PortalSection delay={0.1}>
               <div className="h-full rounded-[var(--radius-2xl)] bg-card/85 p-4 ring-1 ring-foreground/10 sm:p-5">
                 <div className="flex items-center justify-between gap-2">
-                  <h2 className="font-heading text-lg font-semibold text-brand-strong">
+                  <Link
+                    href={`/dashboard/care-homes/roster?${careQuery}`}
+                    className="font-heading text-lg font-semibold text-brand-strong hover:text-brand-blue"
+                  >
                     Today&apos;s shifts
-                  </h2>
+                  </Link>
                   <CalendarClockIcon className="size-5 text-portal-lavender-strong" />
                 </div>
                 {dashboard.upcomingShifts.length === 0 ? (
@@ -258,9 +271,12 @@ export default async function CareHomesPage({
             <div className="grid gap-4 lg:grid-cols-3">
               <div className="rounded-[var(--radius-2xl)] bg-card/85 p-4 ring-1 ring-foreground/10">
                 <div className="flex items-center justify-between gap-2">
-                  <h2 className="font-heading text-base font-semibold text-brand-strong">
+                  <Link
+                    href={`/dashboard/care-homes/incidents?${careQuery}`}
+                    className="font-heading text-base font-semibold text-brand-strong hover:text-brand-blue"
+                  >
                     Incidents
-                  </h2>
+                  </Link>
                   <ShieldAlertIcon className="size-4.5 text-brand-warning" />
                 </div>
                 {dashboard.recentIncidents.length === 0 ? (
@@ -294,9 +310,12 @@ export default async function CareHomesPage({
 
               <div className="rounded-[var(--radius-2xl)] bg-card/85 p-4 ring-1 ring-foreground/10">
                 <div className="flex items-center justify-between gap-2">
-                  <h2 className="font-heading text-base font-semibold text-brand-strong">
+                  <Link
+                    href={`/dashboard/care-homes/inventory?${careQuery}`}
+                    className="font-heading text-base font-semibold text-brand-strong hover:text-brand-blue"
+                  >
                     Low stock
-                  </h2>
+                  </Link>
                   <PackageIcon className="size-4.5 text-portal-peach-strong" />
                 </div>
                 {dashboard.lowStock.length === 0 ? (
@@ -330,9 +349,12 @@ export default async function CareHomesPage({
 
               <div className="rounded-[var(--radius-2xl)] bg-card/85 p-4 ring-1 ring-foreground/10">
                 <div className="flex items-center justify-between gap-2">
-                  <h2 className="font-heading text-base font-semibold text-brand-strong">
+                  <Link
+                    href={`/dashboard/care-homes/invoices?${careQuery}`}
+                    className="font-heading text-base font-semibold text-brand-strong hover:text-brand-blue"
+                  >
                     Invoices
-                  </h2>
+                  </Link>
                   <CircleDollarSignIcon className="size-4.5 text-portal-sky-strong" />
                 </div>
                 <p className="mt-2 font-heading text-xl font-semibold tabular-nums text-brand-strong">

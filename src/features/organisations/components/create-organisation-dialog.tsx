@@ -139,7 +139,7 @@ export function CreateOrganisationDialog({ children }: { children: ReactNode }) 
             />
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="org-state">State (optional)</Label>
               <Input id="org-state" {...register("state")} />

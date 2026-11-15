@@ -1371,7 +1371,7 @@ export function InvoiceDialogForm({
             </p>
             {error ? <p className="mt-3 text-sm text-destructive">{error}</p> : null}
 
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
               <div>
                 <Label>Facility</Label>
                 <select className="mt-1 h-9 w-full rounded-md border border-input bg-background px-3 text-base sm:text-sm" value={facilityId} onChange={(event) => setFacilityId(event.target.value)}>

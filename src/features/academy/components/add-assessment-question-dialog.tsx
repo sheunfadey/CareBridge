@@ -130,7 +130,7 @@ export function AddAssessmentQuestionDialog({
             />
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="question-type">Answer type</Label>
               <select
@@ -172,7 +172,7 @@ export function AddAssessmentQuestionDialog({
             </div>
           ) : (
             <>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-3 sm:grid-cols-2">
                 {(["A", "B", "C", "D"] as const).map((letter) => (
                   <div key={letter} className="space-y-2">
                     <Label htmlFor={`question-option-${letter}`}>

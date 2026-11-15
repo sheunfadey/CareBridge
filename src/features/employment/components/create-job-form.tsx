@@ -105,7 +105,7 @@ export function CreateJobForm({ organisations }: CreateJobFormProps) {
     <form onSubmit={onSubmit} className="space-y-6" noValidate>
       {error ? <FormAlert tone="error">{error}</FormAlert> : null}
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="job-organisation">Hiring organisation</Label>
           <Select value={organisationId} onValueChange={setOrganisationId}>
@@ -177,7 +177,7 @@ export function CreateJobForm({ organisations }: CreateJobFormProps) {
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="job-duties">Key duties (one per line)</Label>
           <Textarea id="job-duties" name="duties" rows={5} />
@@ -195,7 +195,7 @@ export function CreateJobForm({ organisations }: CreateJobFormProps) {
         <Textarea id="job-skills" name="skills" rows={4} />
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="job-experience">Experience requirements</Label>
           <Textarea id="job-experience" name="experienceRequirements" rows={3} />
@@ -208,7 +208,7 @@ export function CreateJobForm({ organisations }: CreateJobFormProps) {
 
       <div className="space-y-3 rounded-xl border p-4">
         <p className="text-sm font-medium">Compensation</p>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-3 sm:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="job-salary-min">Minimum monthly salary (NGN)</Label>
             <Input id="job-salary-min" name="salaryMin" type="number" min={0} />

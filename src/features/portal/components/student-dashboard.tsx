@@ -41,7 +41,7 @@ export function StudentDashboard({
   showWorkspaceOverview: boolean;
 }) {
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-7 pb-6">
+    <div className="mx-auto w-full max-w-5xl space-y-6 pb-5">
       <WelcomeHero
         name={user.name}
         email={user.email}
@@ -68,6 +68,7 @@ export function StudentDashboard({
             icon={<Clock3Icon className="size-4.5" />}
             tone="peach"
             index={0}
+            href="/dashboard/academy/learning"
           />
           <OverviewTile
             label="Lessons"
@@ -76,6 +77,7 @@ export function StudentDashboard({
             icon={<BookOpenCheckIcon className="size-4.5" />}
             tone="lavender"
             index={1}
+            href="/dashboard/academy/learning"
           />
           <OverviewTile
             label="Progress"
@@ -84,6 +86,7 @@ export function StudentDashboard({
             icon={<TargetIcon className="size-4.5" />}
             tone="sky"
             index={2}
+            href="/dashboard/academy/learning"
           />
           <OverviewTile
             label="Certificates"
@@ -92,6 +95,7 @@ export function StudentDashboard({
             icon={<ShieldCheckIcon className="size-4.5" />}
             tone="mint"
             index={3}
+            href="/dashboard/academy/certificates"
           />
         </div>
       </PortalSection>
@@ -108,28 +112,30 @@ export function StudentDashboard({
               {data.recentLessons.length > 0 ? (
                 <ul className="divide-y divide-brand-navy/5">
                   {data.recentLessons.map((lesson) => (
-                    <li
-                      key={lesson.id}
-                      className="flex items-start gap-3 py-2.5 first:pt-0 last:pb-0"
-                    >
-                      <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-portal-mint text-portal-mint-strong">
-                        <BookOpenCheckIcon className="size-4" />
-                      </span>
-                      <div className="min-w-0">
-                        <p className="truncate text-sm font-medium text-brand-strong">
-                          {lesson.title}
-                        </p>
-                        <p className="truncate text-xs text-muted-foreground">
-                          {lesson.courseTitle}
-                        </p>
-                      </div>
-                      <span className="ml-auto shrink-0 text-[11px] text-muted-foreground">
-                        {new Intl.DateTimeFormat("en-NG", {
-                          day: "numeric",
-                          month: "short",
-                          timeZone: "Africa/Lagos",
-                        }).format(new Date(lesson.completedAt))}
-                      </span>
+                    <li key={lesson.id}>
+                      <Link
+                        href={`/dashboard/academy/learning/${lesson.courseId}`}
+                        className="flex items-start gap-3 py-2.5 first:pt-0 last:pb-0"
+                      >
+                        <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-portal-mint text-portal-mint-strong">
+                          <BookOpenCheckIcon className="size-4" />
+                        </span>
+                        <div className="min-w-0">
+                          <p className="truncate text-sm font-medium text-brand-strong">
+                            {lesson.title}
+                          </p>
+                          <p className="truncate text-xs text-muted-foreground">
+                            {lesson.courseTitle}
+                          </p>
+                        </div>
+                        <span className="ml-auto shrink-0 text-[11px] text-muted-foreground">
+                          {new Intl.DateTimeFormat("en-NG", {
+                            day: "numeric",
+                            month: "short",
+                            timeZone: "Africa/Lagos",
+                          }).format(new Date(lesson.completedAt))}
+                        </span>
+                      </Link>
                     </li>
                   ))}
                 </ul>

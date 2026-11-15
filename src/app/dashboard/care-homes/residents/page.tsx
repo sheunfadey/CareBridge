@@ -132,7 +132,7 @@ export default async function ResidentsPage({
           />
         </Card>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
           {residents.map((resident) => {
             const initials = `${resident.firstName[0] ?? ""}${
               resident.lastName[0] ?? ""
@@ -140,8 +140,14 @@ export default async function ResidentsPage({
             return (
               <article
                 key={resident.id}
-                className="flex flex-col rounded-[var(--radius-2xl)] bg-card/90 p-4 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
+                className="relative flex flex-col rounded-[var(--radius-2xl)] bg-card/90 p-4 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
               >
+                <Link
+                  href={`/dashboard/care-homes/residents/${resident.id}`}
+                  aria-label={`Open ${resident.firstName} ${resident.lastName}`}
+                  tabIndex={-1}
+                  className="absolute inset-0 z-10 rounded-[var(--radius-2xl)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                />
                 <div className="flex items-start gap-3">
                   <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-portal-mint text-sm font-semibold text-portal-mint-strong">
                     {initials || "R"}

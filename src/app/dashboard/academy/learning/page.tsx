@@ -80,7 +80,7 @@ export default async function MyLearningPage({
   ).length;
 
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-6 pb-6">
+    <div className="mx-auto w-full max-w-5xl space-y-5 pb-5">
       <PageHeader
         eyebrow="Academy"
         title="My Learning"
@@ -173,7 +173,7 @@ export default async function MyLearningPage({
         </div>
       ) : (
         <PortalSection>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             {visible.map((course, index) => (
               <AcademyCourseCard
                 key={course.enrolmentId}

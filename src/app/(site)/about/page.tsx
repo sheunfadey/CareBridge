@@ -72,7 +72,7 @@ export default function AboutPage() {
           title="One connected platform"
           description="Rather than separate tools that do not talk to each other, HillCrest is a single platform where learning, practical experience, employment and care operations reinforce each other."
         />
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+        <ul className="mt-8 grid gap-3 sm:grid-cols-2">
           {[
             "Structured caregiver training with assessments and practical competency.",
             "Internships and placements with supervised evaluation.",

@@ -51,7 +51,7 @@ export default function DashboardHelpPage() {
         }
       />
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2">
         {helpLinks.map((link) => (
           <Card key={link.href} className="flex flex-col p-4">
             <span className="flex size-10 items-center justify-center rounded-full bg-brand-sky text-brand-teal">

@@ -130,7 +130,7 @@ export function AddLessonDialog({
               &quot;##&quot;.
             </p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="lesson-minutes">Estimated minutes</Label>
               <Input

@@ -74,6 +74,7 @@ export type StudentDashboardData = {
   recentLessons: {
     id: string;
     title: string;
+    courseId: string;
     courseTitle: string;
     completedAt: string;
   }[];
@@ -263,6 +264,7 @@ export async function getStudentDashboardData(
       {
         id: row.id,
         title: lesson.title,
+        courseId: courseId ?? "",
         courseTitle: course.title,
         completedAt: row.completed_at,
       },

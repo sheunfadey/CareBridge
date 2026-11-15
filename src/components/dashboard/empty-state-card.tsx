@@ -10,7 +10,7 @@ export function EmptyStateCard({ items }: { items?: StatItem[] }) {
   }
 
   return (
-    <dl className="grid gap-4 sm:grid-cols-2">
+    <dl className="grid gap-3 sm:grid-cols-2">
       {items.map((item) => (
         <div
           key={item.label}

@@ -132,7 +132,7 @@ export function CareForm({
       {error ? <FormAlert tone="error">{error}</FormAlert> : null}
       {success ? <FormAlert tone="success">{success}</FormAlert> : null}
 
-      <div className={columns === 2 ? "grid gap-4 sm:grid-cols-2" : "space-y-4"}>
+      <div className={columns === 2 ? "grid gap-3 sm:grid-cols-2" : "space-y-4"}>
         {fields.map((field) => (
           <div
             key={field.name}

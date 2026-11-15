@@ -86,7 +86,7 @@ export default function HomePage() {
             <div className="mb-6 flex justify-center lg:justify-start">
               <AnimatedHillCrestLogo size="lg" showTagline />
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-2">
               {[
                 { icon: GraduationCapIcon, title: "Structured training", body: "Modules, lessons and assessments that record real progress.", gradient: "from-brand-blue/15 to-brand-sky/40" },
                 { icon: ClipboardListIcon, title: "Practical competency", body: "Supervised placements with competency recorded as you go.", gradient: "from-brand-green/15 to-brand-light-green" },

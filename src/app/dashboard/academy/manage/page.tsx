@@ -50,9 +50,9 @@ export default async function ManageCoursesPage() {
   );
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-7 pb-6">
+    <div className="mx-auto w-full max-w-6xl space-y-6 pb-5">
       <PortalSection>
-        <div className="relative overflow-hidden rounded-[2rem] bg-portal-lavender p-5 sm:p-7">
+        <div className="relative overflow-hidden rounded-[2rem] bg-portal-lavender p-4 sm:p-6">
           <span
             aria-hidden="true"
             className="absolute -right-10 -top-14 size-48 rounded-full border-[16px] border-white/25"
@@ -107,6 +107,7 @@ export default async function ManageCoursesPage() {
             icon={<LayersIcon className="size-4.5" />}
             tone="lavender"
             index={0}
+            href="#courses"
           />
           <OverviewTile
             label="Published"
@@ -115,6 +116,7 @@ export default async function ManageCoursesPage() {
             icon={<BookOpenCheckIcon className="size-4.5" />}
             tone="mint"
             index={1}
+            href="#courses"
           />
           <OverviewTile
             label="Drafts"
@@ -123,6 +125,7 @@ export default async function ManageCoursesPage() {
             icon={<FileCogIcon className="size-4.5" />}
             tone="peach"
             index={2}
+            href="#courses"
           />
           <OverviewTile
             label="Enrolments"
@@ -131,11 +134,13 @@ export default async function ManageCoursesPage() {
             icon={<UsersIcon className="size-4.5" />}
             tone="sky"
             index={3}
+            href="#courses"
           />
         </div>
       </PortalSection>
 
-      <PortalSection delay={0.1}>
+      <PortalSection delay={0.1} className="scroll-mt-24">
+        <div id="courses" />
         <SectionHeading title="Courses" />
         {courses.length === 0 ? (
           <div className="rounded-[var(--radius-2xl)] bg-card/85 p-6 text-center ring-1 ring-foreground/10 sm:p-8">
@@ -153,16 +158,22 @@ export default async function ManageCoursesPage() {
             ) : null}
           </div>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {courses.map((course) => (
               <article
                 key={course.id}
-                className="flex flex-col overflow-hidden rounded-[var(--radius-2xl)] bg-card/90 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.4)] ring-1 ring-foreground/10"
+                className="relative flex flex-col overflow-hidden rounded-[var(--radius-2xl)] bg-card/90 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.4)] ring-1 ring-foreground/10"
               >
+                <Link
+                  href={`/dashboard/academy/manage/${course.id}`}
+                  aria-label={`Open ${course.title}`}
+                  tabIndex={-1}
+                  className="absolute inset-0 z-10 rounded-[var(--radius-2xl)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                />
                 <div
                   role="img"
                   aria-label={course.title}
-                  className="relative h-28 bg-portal-lavender bg-cover bg-center"
+                  className="relative h-24 bg-portal-lavender bg-cover bg-center"
                   style={
                     course.coverImageUrl
                       ? { backgroundImage: `url("${course.coverImageUrl}")` }
@@ -177,7 +188,7 @@ export default async function ManageCoursesPage() {
                     {course.categoryName ?? "No category"}
                   </span>
                 </div>
-                <div className="flex flex-1 flex-col p-4">
+                <div className="flex flex-1 flex-col p-3.5">
                   <h2 className="line-clamp-2 font-heading text-base font-semibold text-brand-strong">
                     {course.title}
                   </h2>

@@ -94,7 +94,7 @@ export default async function ExpensesPage({
         active="/expenses"
       />
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2">
         <Card className="p-3.5">
           <p className="text-sm text-muted-foreground">Recorded spend</p>
           <p className="mt-1 font-heading text-xl font-semibold tabular-nums text-brand-strong sm:text-2xl">

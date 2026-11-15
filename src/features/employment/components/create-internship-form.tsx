@@ -142,7 +142,7 @@ export function CreateInternshipForm({
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="internship-start">Start date</Label>
           <Input id="internship-start" name="startDate" type="date" />
@@ -186,7 +186,7 @@ export function CreateInternshipForm({
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="internship-requirements">
             Requirements (one per line)

@@ -45,7 +45,7 @@ export function DashboardShell({
         />
         <main
           id="main-content"
-          className="mx-auto w-full max-w-[1500px] flex-1 px-3 py-3 pb-24 sm:px-4 sm:py-4 md:px-5 lg:px-7 lg:py-5 lg:pb-7"
+          className="mx-auto w-full max-w-[1360px] flex-1 px-3 py-2.5 pb-24 sm:px-4 sm:py-3.5 md:px-5 lg:px-6 lg:py-4 lg:pb-7"
         >
           <div className="w-full overflow-x-hidden">{children}</div>
         </main>
