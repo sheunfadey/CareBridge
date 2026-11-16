@@ -58,7 +58,7 @@ export default async function AcademyPage() {
             className="absolute -bottom-20 right-24 size-44 rounded-full bg-white/15"
           />
           <div className="relative max-w-2xl">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/55 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#7b4a2c] dark:text-[#f3c6a6]">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#7b4a2c]">
               <GraduationCapIcon className="size-3.5" />
               {brand.name} Academy
             </span>

@@ -72,7 +72,7 @@ export default async function CareHomesPage({
             className="absolute -bottom-24 right-32 size-48 rounded-full bg-white/15"
           />
           <div className="relative">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-portal-mint-strong">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#326946]">
               <BedDoubleIcon className="size-3.5" />
               Care operations
             </span>

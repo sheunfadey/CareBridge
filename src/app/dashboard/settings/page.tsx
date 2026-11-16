@@ -8,7 +8,10 @@ import { Card } from "@/components/ui/card";
 import { PasswordForm } from "@/features/account/components/password-form";
 import { ProfileSettings } from "@/features/account/components/profile-settings";
 import { switchPortalAction } from "@/features/portal/actions";
-import { getCurrentUser } from "@/server/auth/current-user";
+import {
+  canUseTrainerPortal,
+  getCurrentUser,
+} from "@/server/auth/current-user";
 
 export const metadata: Metadata = {
   title: "Settings",
@@ -147,6 +150,18 @@ export default async function SettingsPage() {
                 Caregiver portal
               </Button>
             </form>
+            {canUseTrainerPortal(user) ? (
+              <form action={switchPortalAction}>
+                <input type="hidden" name="portal" value="trainer" />
+                <Button
+                  type="submit"
+                  variant={user.activePortal === "trainer" ? "default" : "outline"}
+                  disabled={user.activePortal === "trainer"}
+                >
+                  Trainer portal
+                </Button>
+              </form>
+            ) : null}
           </div>
         </Card>
 

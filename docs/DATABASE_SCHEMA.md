@@ -36,6 +36,8 @@ preserved.
 | `0040` | Per-organisation Paystack, SMS, email and custom API integration settings |
 | `0041` | Public `avatars` storage bucket with owner-only write policies |
 | `0042` | Profile `active_portal` preference (`student` / `caregiver`) |
+| `0043` | Add `trainer` portal mode |
+| `0044`–`0045` | Default trainers into the trainer portal and organisation admins into the caregiver workspace |
 
 ## Core tenancy
 

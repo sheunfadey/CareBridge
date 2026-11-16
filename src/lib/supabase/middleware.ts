@@ -87,6 +87,9 @@ export async function updateSession(request: NextRequest) {
     if (profile?.is_super_admin) {
       const allowed =
         pathname.startsWith("/dashboard/admin") ||
+        pathname.startsWith("/dashboard/academy") ||
+        pathname.startsWith("/dashboard/trainer") ||
+        pathname.startsWith("/dashboard/overview") ||
         pathname.startsWith("/dashboard/notifications") ||
         pathname.startsWith("/dashboard/messages") ||
         pathname.startsWith("/dashboard/settings") ||

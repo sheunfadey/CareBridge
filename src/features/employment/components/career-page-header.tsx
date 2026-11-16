@@ -6,15 +6,15 @@ import { cn } from "cn";
 const tones = {
   peach: {
     panel: "bg-portal-peach",
-    badge: "bg-white/60 text-[#7b4a2c] dark:text-[#f3c6a6]",
+    badge: "bg-white/80 text-[#7b4a2c]",
   },
   lavender: {
     panel: "bg-portal-lavender",
-    badge: "bg-white/60 text-portal-lavender-strong dark:text-[#c9bdf7]",
+    badge: "bg-white/80 text-[#52458f]",
   },
   sky: {
     panel: "bg-portal-sky",
-    badge: "bg-white/60 text-portal-sky-strong dark:text-[#a9d6ee]",
+    badge: "bg-white/80 text-[#2b6385]",
   },
 } as const;
 

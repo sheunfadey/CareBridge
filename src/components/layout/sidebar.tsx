@@ -8,7 +8,12 @@ import * as LucideIcons from "lucide-react";
 import { cn } from "cn";
 
 import { HillCrestLogo } from "@/components/brand/carebridge-logo";
-import { caregiverNav, studentNav, superAdminNav } from "@/config/navigation";
+import {
+  caregiverNav,
+  studentNav,
+  superAdminNav,
+  trainerNav,
+} from "@/config/navigation";
 import type { NavGroup, NavItem } from "@/config/navigation";
 import { Badge } from "@/components/ui/badge";
 import type { PortalMode } from "@/types/database";
@@ -164,17 +169,23 @@ export function Sidebar({
     ? superAdminNav
     : activePortal === "caregiver"
       ? caregiverNav
-      : studentNav;
+      : activePortal === "trainer"
+        ? trainerNav
+        : studentNav;
   const defaultOpenGroups = isSuperAdmin
     ? []
     : activePortal === "caregiver"
-      ? ["Care work", "Work", "Communication"]
-      : ["Academy", "Career", "Communication"];
+      ? ["Care work", "Work", "Course Studio", "Communication"]
+      : activePortal === "trainer"
+        ? ["Course Studio", "Learner performance", "Communication"]
+        : ["Academy", "Career", "Communication"];
   const sidebarLabel = pathname.startsWith("/dashboard/care-homes")
     ? "Care workspace"
     : pathname.startsWith("/dashboard/organisation")
       ? "Organisation"
-      : `${activePortal} portal`;
+      : activePortal === "trainer"
+        ? "Trainer studio"
+        : `${activePortal} portal`;
 
   const canSee = React.useCallback(
     (item: NavItem) =>

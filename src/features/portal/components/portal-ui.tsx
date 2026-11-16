@@ -12,25 +12,25 @@ import { Button } from "@/components/ui/button";
 const tileTones = {
   peach: {
     card: "bg-portal-peach",
-    icon: "bg-white/55 text-portal-peach-strong",
+    icon: "bg-white/55 dark:bg-white/10 text-portal-peach-strong",
     label: "text-[#7b4a2c] dark:text-[#f3c6a6]",
     hint: "text-[#8d634c] dark:text-[#d9b498]",
   },
   lavender: {
     card: "bg-portal-lavender",
-    icon: "bg-white/55 text-portal-lavender-strong",
+    icon: "bg-white/55 dark:bg-white/10 text-portal-lavender-strong",
     label: "text-[#52458f] dark:text-[#c9bdf7]",
     hint: "text-[#71679f] dark:text-[#a99ed6]",
   },
   sky: {
     card: "bg-portal-sky",
-    icon: "bg-white/55 text-portal-sky-strong",
+    icon: "bg-white/55 dark:bg-white/10 text-portal-sky-strong",
     label: "text-[#2b6385] dark:text-[#a9d6ee]",
     hint: "text-[#537f99] dark:text-[#8bb4cb]",
   },
   mint: {
     card: "bg-portal-mint",
-    icon: "bg-white/55 text-portal-mint-strong",
+    icon: "bg-white/55 dark:bg-white/10 text-portal-mint-strong",
     label: "text-[#326946] dark:text-[#a8d8b7]",
     hint: "text-[#5c846a] dark:text-[#8bb59a]",
   },

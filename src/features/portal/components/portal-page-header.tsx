@@ -12,11 +12,11 @@ const tones = {
 } as const;
 
 const badgeTones = {
-  peach: "text-[#7b4a2c] dark:text-[#f3c6a6]",
-  lavender: "text-portal-lavender-strong dark:text-[#c9bdf7]",
-  sky: "text-portal-sky-strong dark:text-[#a9d6ee]",
-  mint: "text-portal-mint-strong dark:text-[#a8d8b7]",
-  rose: "text-portal-rose-strong dark:text-[#f0b3be]",
+  peach: "text-[#7b4a2c]",
+  lavender: "text-[#52458f]",
+  sky: "text-[#2b6385]",
+  mint: "text-[#326946]",
+  rose: "text-[#a94f60]",
 } as const;
 
 /**
@@ -60,7 +60,7 @@ export function PortalPageHeader({
         {eyebrow ? (
           <span
             className={cn(
-              "inline-flex items-center gap-1.5 rounded-full bg-white/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em]",
+              "inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em]",
               badgeTones[tone],
             )}
           >

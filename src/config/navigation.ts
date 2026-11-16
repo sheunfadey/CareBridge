@@ -43,6 +43,14 @@ export const superAdminNav: NavSection = {
       ],
     },
     {
+      label: "Academy",
+      items: [
+        { label: "Course Studio", href: "/dashboard/academy/manage", icon: "FileCog" },
+        { label: "Categories", href: "/dashboard/academy/manage/categories", icon: "Tags" },
+        { label: "Gradebook", href: "/dashboard/trainer/gradebook", icon: "ClipboardCheck" },
+      ],
+    },
+    {
       label: "Platform",
       items: [
         { label: "Organisations", href: "/dashboard/admin/organisations", icon: "Building2" },
@@ -164,9 +172,51 @@ export const caregiverNav: NavSection = {
         { label: "Job applications", href: "/dashboard/jobs/applications", icon: "FileText" },
       ],
     },
+    {
+      label: "Course Studio",
+      items: [
+        { label: "Manage courses", href: "/dashboard/academy/manage", icon: "FileCog", permissions: ["course_manage", "course_publish", "learning_material_manage"] },
+        { label: "Categories", href: "/dashboard/academy/manage/categories", icon: "Tags", permissions: ["course_manage"] },
+        { label: "Gradebook", href: "/dashboard/trainer/gradebook", icon: "ClipboardCheck", permissions: ["assessment_grade", "assessment_manage", "course_manage"] },
+      ],
+    },
     communityGroup,
     communicationGroup,
     caregiverAccountGroup,
+  ],
+};
+
+const trainerAccountGroup: NavGroup = {
+  label: "Account",
+  items: [
+    { label: "Workspace overview", href: "/dashboard/overview", icon: "LayoutDashboard" },
+    { label: "Organisation", href: "/dashboard/organisation", icon: "Building2" },
+    { label: "Settings", href: "/dashboard/settings", icon: "Settings" },
+    { label: "Help Centre", href: "/dashboard/help", icon: "LifeBuoy" },
+  ],
+};
+
+/** Course creation, assessment and learner-performance navigation for trainers. */
+export const trainerNav: NavSection = {
+  pinned: [{ label: "Trainer studio", href: "/dashboard", icon: "Presentation" }],
+  groups: [
+    {
+      label: "Course Studio",
+      items: [
+        { label: "Manage courses", href: "/dashboard/academy/manage", icon: "FileCog", permissions: ["course_manage", "course_publish", "learning_material_manage"] },
+        { label: "New course", href: "/dashboard/academy/manage/new", icon: "PlusCircle", permissions: ["course_manage"] },
+        { label: "Categories", href: "/dashboard/academy/manage/categories", icon: "Tags", permissions: ["course_manage"] },
+      ],
+    },
+    {
+      label: "Learner performance",
+      items: [
+        { label: "Gradebook", href: "/dashboard/trainer/gradebook", icon: "ClipboardCheck", permissions: ["assessment_grade", "assessment_manage", "course_manage"] },
+        { label: "Reports", href: "/dashboard/reports", icon: "BarChart3", permissions: ["report_view"] },
+      ],
+    },
+    communicationGroup,
+    trainerAccountGroup,
   ],
 };
 

@@ -10,6 +10,7 @@ import {
   LogOutIcon,
   MenuIcon,
   MoonIcon,
+  PresentationIcon,
   SearchIcon,
   SunIcon,
 } from "lucide-react";
@@ -75,6 +76,12 @@ export function Topbar({
     .slice(0, 2)
     .map((part) => part.charAt(0).toUpperCase())
     .join("");
+  const canTrain =
+    permissions.includes("course_manage") ||
+    permissions.includes("course_publish") ||
+    permissions.includes("learning_material_manage") ||
+    permissions.includes("assessment_manage") ||
+    permissions.includes("assessment_grade");
 
   return (
     <header
@@ -215,6 +222,24 @@ export function Topbar({
                 </button>
               </DropdownMenuItem>
             </form>
+            {canTrain ? (
+              <form action={switchPortalAction}>
+                <input type="hidden" name="portal" value="trainer" />
+                <DropdownMenuItem asChild>
+                  <button
+                    type="submit"
+                    className="flex w-full items-center gap-2"
+                    disabled={activePortal === "trainer"}
+                  >
+                    <PresentationIcon />
+                    Trainer portal
+                    {activePortal === "trainer" ? (
+                      <CheckIcon className="ml-auto size-4 text-brand-blue" />
+                    ) : null}
+                  </button>
+                </DropdownMenuItem>
+              </form>
+            ) : null}
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <Link href="/dashboard/settings">Profile & settings</Link>

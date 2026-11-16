@@ -8163,7 +8163,7 @@ export type Database = {
         | "active"
         | "completed"
         | "terminated"
-      portal_mode: "student" | "caregiver"
+      portal_mode: "student" | "caregiver" | "trainer"
       programme_status: "active" | "archived"
       purchase_request_status:
         | "draft"
@@ -8591,7 +8591,7 @@ export const Constants = {
         "completed",
         "terminated",
       ],
-      portal_mode: ["student", "caregiver"],
+      portal_mode: ["student", "caregiver", "trainer"],
       programme_status: ["active", "archived"],
       purchase_request_status: [
         "draft",

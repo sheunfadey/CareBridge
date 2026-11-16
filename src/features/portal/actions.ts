@@ -4,10 +4,14 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
+import {
+  canUseTrainerPortal,
+  getCurrentUser,
+} from "@/server/auth/current-user";
 import { recordAudit } from "@/server/audit/record-audit";
 import type { PortalMode } from "@/types/database";
 
-const PORTALS: PortalMode[] = ["student", "caregiver"];
+const PORTALS: PortalMode[] = ["student", "caregiver", "trainer"];
 
 export async function switchPortalAction(formData: FormData): Promise<void> {
   const requested = String(formData.get("portal") ?? "");
@@ -23,6 +27,13 @@ export async function switchPortalAction(formData: FormData): Promise<void> {
 
   if (!user) {
     redirect("/login?redirectTo=%2Fdashboard");
+  }
+
+  if (portal === "trainer") {
+    const current = await getCurrentUser();
+    if (!current || !canUseTrainerPortal(current)) {
+      redirect("/dashboard");
+    }
   }
 
   const { error } = await supabase

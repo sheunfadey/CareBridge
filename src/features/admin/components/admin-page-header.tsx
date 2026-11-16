@@ -37,7 +37,7 @@ export function AdminPageHeader({
         className="absolute -bottom-20 right-24 size-40 rounded-full bg-white/15"
       />
       <div className="relative">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/60 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-portal-sky-strong">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#2b6385]">
           <ShieldCheckIcon className="size-3.5" />
           {eyebrow}
         </span>

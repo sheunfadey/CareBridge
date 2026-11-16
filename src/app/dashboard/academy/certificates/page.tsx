@@ -82,14 +82,14 @@ export default async function CertificatesPage() {
                     className="absolute -bottom-10 right-16 size-24 rounded-full bg-white/15"
                   />
                   <div className="relative flex items-start justify-between gap-3">
-                    <span className="flex size-11 items-center justify-center rounded-xl bg-white/60 text-portal-mint-strong">
+                    <span className="flex size-11 items-center justify-center rounded-xl bg-white/60 dark:bg-white/10 text-portal-mint-strong">
                       <ShieldCheckIcon className="size-6" />
                     </span>
                     <span
                       className={
                         certificate.revokedAt
                           ? "rounded-full bg-brand-error/10 px-2.5 py-1 text-[11px] font-semibold text-brand-error"
-                          : "rounded-full bg-white/70 px-2.5 py-1 text-[11px] font-semibold text-portal-mint-strong"
+                          : "rounded-full bg-white/70 dark:bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-portal-mint-strong"
                       }
                     >
                       {certificate.revokedAt ? "Revoked" : "Valid"}
