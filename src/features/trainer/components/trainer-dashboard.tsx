@@ -99,7 +99,7 @@ export function TrainerDashboard({
             icon={<UsersIcon className="size-4.5" />}
             tone="mint"
             index={1}
-            href="/dashboard/trainer/gradebook"
+            href="/dashboard/trainer/learners"
           />
           <OverviewTile
             label="Assessments"
@@ -108,7 +108,7 @@ export function TrainerDashboard({
             icon={<ClipboardCheckIcon className="size-4.5" />}
             tone="sky"
             index={2}
-            href="/dashboard/trainer/gradebook"
+            href="/dashboard/trainer/assessments"
           />
           <OverviewTile
             label="Certificates"
@@ -117,7 +117,7 @@ export function TrainerDashboard({
             icon={<AwardIcon className="size-4.5" />}
             tone="peach"
             index={3}
-            href="/dashboard/trainer/gradebook"
+            href="/dashboard/trainer/certificates"
           />
         </div>
       </PortalSection>
