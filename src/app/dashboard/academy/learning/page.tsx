@@ -96,13 +96,15 @@ export default async function MyLearningPage({
           { label: learningLabel },
         ]}
         actions={
-          <Button
-            variant="outline"
-            className="rounded-full border-brand-navy/15 bg-card/70"
-            asChild
-          >
-            <Link href="/courses">Browse catalogue</Link>
-          </Button>
+          user.activePortal === "student" ? (
+            <Button
+              variant="outline"
+              className="rounded-full border-brand-navy/15 bg-card/70"
+              asChild
+            >
+              <Link href="/dashboard/academy/courses">My Courses</Link>
+            </Button>
+          ) : undefined
         }
       />
 
@@ -158,11 +160,15 @@ export default async function MyLearningPage({
             You are not enrolled in any courses yet
           </p>
           <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
-            Enrol in a published course to start learning.
+            {user.activePortal === "student"
+              ? "Enrol in a published course to start learning."
+              : "Your manager assigns training courses from the student portal."}
           </p>
-          <Button className="mt-4 rounded-full" asChild>
-            <Link href="/courses">Browse courses</Link>
-          </Button>
+          {user.activePortal === "student" ? (
+            <Button className="mt-4 rounded-full" asChild>
+              <Link href="/dashboard/academy/courses">Browse My Courses</Link>
+            </Button>
+          ) : null}
         </div>
       ) : visible.length === 0 ? (
         <div className="rounded-[var(--radius-2xl)] bg-card/85 p-6 text-center ring-1 ring-foreground/10">

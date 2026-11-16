@@ -168,7 +168,7 @@ export function Sidebar({
   const defaultOpenGroups = isSuperAdmin
     ? []
     : activePortal === "caregiver"
-      ? ["Care work", "Work", "Training", "Communication"]
+      ? ["Care work", "Work", "Communication"]
       : ["Academy", "Career", "Communication"];
   const sidebarLabel = pathname.startsWith("/dashboard/care-homes")
     ? "Care workspace"

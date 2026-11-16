@@ -19,6 +19,7 @@ export type AcademyCourseSummary = {
   title: string;
   slug: string;
   summary: string | null;
+  coverImageUrl: string | null;
   category: string | null;
   difficulty: CourseDifficulty;
   estimatedMinutes: number;
@@ -389,7 +390,7 @@ export async function getPublishedCourses(): Promise<{
   const { data, error } = await supabase
     .from("courses")
     .select(
-      "id, title, slug, summary, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, programmes(title), organisations(name), course_modules(id)",
+      "id, title, slug, summary, cover_image_url, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, programmes(title), organisations(name), course_modules(id)",
     )
     .eq("status", "published")
     .eq("is_public", true)
@@ -411,6 +412,7 @@ export async function getPublishedCourses(): Promise<{
         title: course.title,
         slug: course.slug,
         summary: course.summary,
+        coverImageUrl: course.cover_image_url,
         category: category?.name ?? course.category,
         difficulty: course.difficulty,
         estimatedMinutes: course.estimated_minutes,
@@ -433,7 +435,7 @@ export async function getPublishedCourseSyllabus(
   const { data, error } = await supabase
     .from("courses")
     .select(
-      "id, title, slug, summary, description, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, learning_outcomes, prerequisites, version, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, estimated_minutes, position, is_required, is_preview))",
+      "id, title, slug, summary, description, cover_image_url, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, learning_outcomes, prerequisites, version, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, estimated_minutes, position, is_required, is_preview))",
     )
     .eq("slug", slug)
     .eq("status", "published")
@@ -455,6 +457,7 @@ export async function getPublishedCourseSyllabus(
     slug: data.slug,
     summary: data.summary,
     description: data.description,
+    coverImageUrl: data.cover_image_url,
     category: singleRelation(data.course_categories)?.name ?? data.category,
     difficulty: data.difficulty,
     estimatedMinutes: data.estimated_minutes,
@@ -510,7 +513,7 @@ export async function getCourseForLearning(
   const { data, error } = await supabase
     .from("courses")
     .select(
-      "id, title, slug, summary, description, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, learning_outcomes, prerequisites, version, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, content, video_url, estimated_minutes, position, is_required, is_preview))",
+      "id, title, slug, summary, description, cover_image_url, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, learning_outcomes, prerequisites, version, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, content, video_url, estimated_minutes, position, is_required, is_preview))",
     )
     .eq("id", courseId)
     .maybeSingle();
@@ -588,6 +591,7 @@ export async function getCourseForLearning(
     slug: data.slug,
     summary: data.summary,
     description: data.description,
+    coverImageUrl: data.cover_image_url,
     category: singleRelation(data.course_categories)?.name ?? data.category,
     difficulty: data.difficulty,
     estimatedMinutes: data.estimated_minutes,

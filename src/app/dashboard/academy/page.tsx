@@ -74,7 +74,7 @@ export default async function AcademyPage() {
                 className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
                 asChild
               >
-                <Link href="/courses">
+                <Link href="/dashboard/academy/courses">
                   <BookOpenCheckIcon />
                   Browse catalogue
                 </Link>
@@ -168,7 +168,7 @@ export default async function AcademyPage() {
               building your learning history.
             </p>
             <Button className="mt-4 rounded-full" asChild>
-              <Link href="/courses">Browse courses</Link>
+              <Link href="/dashboard/academy/courses">Browse courses</Link>
             </Button>
           </div>
         ) : (

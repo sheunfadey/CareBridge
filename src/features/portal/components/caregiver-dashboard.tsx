@@ -3,7 +3,6 @@ import {
   BriefcaseIcon,
   CalendarClockIcon,
   CalendarDaysIcon,
-  GraduationCapIcon,
   MapPinIcon,
   MessagesSquareIcon,
   ShieldCheckIcon,
@@ -136,7 +135,7 @@ export function CaregiverDashboard({
         subtitle={
           data.todayShifts.length > 0
             ? `${data.todayShifts.length} shift${data.todayShifts.length === 1 ? "" : "s"} today`
-            : "Your care work and training in one place"
+            : "Your care work, shifts and applications in one place"
         }
       />
 
@@ -175,18 +174,18 @@ export function CaregiverDashboard({
             href="/dashboard/jobs/applications"
           />
           <OverviewTile
-            label="Training"
-            value={data.activeCourses}
-            hint={`${data.certificates} certificates`}
-            icon={<GraduationCapIcon className="size-4.5" />}
+            label="Shifts today"
+            value={data.todayShifts.length}
+            hint="On your schedule"
+            icon={<CalendarClockIcon className="size-4.5" />}
             tone="lavender"
             index={3}
-            href="/dashboard/academy/learning"
+            href="/dashboard/care-homes/roster"
           />
         </div>
       </PortalSection>
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <div className="grid gap-4">
         <PortalSection delay={0.05}>
           <SectionHeading title="Your schedule" actionHref="/dashboard/care-homes/roster" />
           <div className="space-y-3">
@@ -222,73 +221,6 @@ export function CaregiverDashboard({
           </div>
         </PortalSection>
 
-        <PortalSection delay={0.1}>
-          <SectionHeading
-            title="Continue training"
-            actionHref="/dashboard/academy/learning"
-          />
-          {data.training.length > 0 ? (
-            <div className="space-y-3">
-              {data.training.map((course) => {
-                const percent =
-                  course.totalLessons === 0
-                    ? 100
-                    : Math.round(
-                        (course.completedLessons * 100) / course.totalLessons,
-                      );
-                return (
-                  <div
-                    key={course.enrolmentId}
-                    className="rounded-[var(--radius-2xl)] bg-card/85 p-4 ring-1 ring-foreground/10"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="font-heading text-sm font-semibold text-brand-strong">
-                          {course.title}
-                        </p>
-                        <p className="mt-0.5 text-xs text-muted-foreground">
-                          {course.completedLessons} of {course.totalLessons} lessons
-                        </p>
-                      </div>
-                      <span className="rounded-full bg-portal-lavender px-2.5 py-1 text-[11px] font-semibold text-portal-lavender-strong">
-                        {percent}%
-                      </span>
-                    </div>
-                    <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-brand-navy/10">
-                      <div
-                        className="h-full rounded-full bg-portal-lavender-strong"
-                        style={{ width: `${percent}%` }}
-                      />
-                    </div>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="mt-3 w-full rounded-full"
-                      asChild
-                    >
-                      <Link href={`/dashboard/academy/learning/${course.courseId}`}>
-                        Resume course
-                      </Link>
-                    </Button>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="rounded-[var(--radius-2xl)] bg-card/85 p-6 text-center ring-1 ring-foreground/10">
-              <GraduationCapIcon className="mx-auto size-8 text-portal-lavender-strong" />
-              <p className="mt-3 font-heading text-base font-semibold text-brand-strong">
-                No active training
-              </p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Keep your care skills current with a short course.
-              </p>
-              <Button className="mt-4 rounded-full" asChild>
-                <Link href="/dashboard/academy/learning">Open My Learning</Link>
-              </Button>
-            </div>
-          )}
-        </PortalSection>
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">

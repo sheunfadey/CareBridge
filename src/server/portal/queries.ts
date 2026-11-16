@@ -1,7 +1,6 @@
 import "server-only";
 
 import { createClient } from "@/lib/supabase/server";
-import { getMyLearning, type MyLearningCourse } from "@/server/academy/queries";
 
 const DISPLAY_TIME_ZONE = "Africa/Lagos";
 
@@ -320,9 +319,6 @@ export type CaregiverDashboardData = {
   } | null;
   applications: CaregiverApplication[];
   applicationCount: number;
-  activeCourses: number;
-  certificates: number;
-  training: MyLearningCourse[];
 };
 
 export async function getCaregiverDashboardData(
@@ -331,13 +327,8 @@ export async function getCaregiverDashboardData(
   const supabase = await createClient();
   const today = dateKey(new Date());
 
-  const [
-    { data: assignmentData },
-    { data: placementData },
-    { data: applicationData },
-    learning,
-    { count: certificates },
-  ] = await Promise.all([
+  const [{ data: assignmentData }, { data: placementData }, { data: applicationData }] =
+    await Promise.all([
     supabase
       .from("shift_assignments")
       .select(
@@ -359,12 +350,6 @@ export async function getCaregiverDashboardData(
       )
       .eq("applicant_id", userId)
       .order("submitted_at", { ascending: false }),
-    getMyLearning(userId),
-    supabase
-      .from("certificates")
-      .select("id", { count: "exact", head: true })
-      .eq("user_id", userId)
-      .is("revoked_at", null),
   ]);
 
   const now = new Date();
@@ -445,8 +430,6 @@ export async function getCaregiverDashboardData(
     ];
   });
 
-  const activeCourses = learning.filter((course) => course.status === "active");
-
   return {
     shiftsThisWeek,
     todayShifts,
@@ -455,8 +438,5 @@ export async function getCaregiverDashboardData(
     placement: placements[0] ?? null,
     applications,
     applicationCount: applications.length,
-    activeCourses: activeCourses.length,
-    certificates: certificates ?? 0,
-    training: activeCourses.slice(0, 2),
   };
 }

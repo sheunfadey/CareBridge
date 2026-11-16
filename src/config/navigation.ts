@@ -88,7 +88,15 @@ const communityGroup: NavGroup = {
   ],
 };
 
-const accountGroup: NavGroup = {
+const studentAccountGroup: NavGroup = {
+  label: "Account",
+  items: [
+    { label: "Settings", href: "/dashboard/settings", icon: "Settings" },
+    { label: "Help Centre", href: "/dashboard/help", icon: "LifeBuoy" },
+  ],
+};
+
+const caregiverAccountGroup: NavGroup = {
   label: "Account",
   items: [
     { label: "Workspace overview", href: "/dashboard/overview", icon: "LayoutDashboard" },
@@ -109,7 +117,7 @@ export const studentNav: NavSection = {
       items: [
         { label: "Academy", href: "/dashboard/academy", icon: "GraduationCap" },
         { label: "My Classroom", href: "/dashboard/academy/learning", icon: "BookOpen" },
-        { label: "Browse Courses", href: "/courses", icon: "BookOpenCheck" },
+        { label: "My Courses", href: "/dashboard/academy/courses", icon: "BookOpenCheck" },
         { label: "Certificates", href: "/dashboard/academy/certificates", icon: "ShieldCheck" },
       ],
     },
@@ -125,7 +133,7 @@ export const studentNav: NavSection = {
     },
     communityGroup,
     communicationGroup,
-    accountGroup,
+    studentAccountGroup,
   ],
 };
 
@@ -156,16 +164,9 @@ export const caregiverNav: NavSection = {
         { label: "Job applications", href: "/dashboard/jobs/applications", icon: "FileText" },
       ],
     },
-    {
-      label: "Training",
-      items: [
-        { label: "My Learning", href: "/dashboard/academy/learning", icon: "BookOpen" },
-        { label: "Certificates", href: "/dashboard/academy/certificates", icon: "ShieldCheck" },
-      ],
-    },
     communityGroup,
     communicationGroup,
-    accountGroup,
+    caregiverAccountGroup,
   ],
 };
 
