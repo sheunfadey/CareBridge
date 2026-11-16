@@ -4,12 +4,63 @@ import {
   createAssessmentQuestionSchema,
   createAssessmentSchema,
   createCourseCategorySchema,
+  createCourseSchema,
   learningResourceSchema,
   parseCorrectOptionIds,
   updateCourseCategorySchema,
 } from "@/lib/validation/academy";
 
 const assessmentId = "11111111-1111-4111-8111-111111111111";
+const programmeId = "22222222-2222-4222-8222-222222222222";
+
+describe("course pricing validation", () => {
+  const base = {
+    programmeId,
+    organisationId: "",
+    title: "Foundations of care",
+    summary: "A practical introduction to safe, person-centred care.",
+    description:
+      "This course covers the foundations of safe and person-centred care practice.",
+    category: "",
+    categoryId: "",
+    difficulty: "foundation" as const,
+    estimatedMinutes: 60,
+    learningOutcomes: "",
+    prerequisites: "",
+    scholarshipEligible: false,
+    certificateEnabled: true,
+  };
+
+  it("accepts a free course", () => {
+    const result = createCourseSchema.safeParse({
+      ...base,
+      pricingType: "free",
+      priceNaira: 0,
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("accepts a paid course with a positive price", () => {
+    const result = createCourseSchema.safeParse({
+      ...base,
+      pricingType: "paid",
+      priceNaira: 15000,
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects a paid course without a price", () => {
+    const result = createCourseSchema.safeParse({
+      ...base,
+      pricingType: "paid",
+      priceNaira: 0,
+    });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues[0]?.path).toEqual(["priceNaira"]);
+    }
+  });
+});
 
 describe("assessment validation", () => {
   const base = {

@@ -88,9 +88,21 @@ export const createCourseSchema = z.object({
     .max(10000),
   learningOutcomes: optionalText(2000),
   prerequisites: optionalText(2000),
+  pricingType: z.enum(["free", "paid"]).default("free"),
+  priceNaira: z.coerce
+    .number()
+    .min(0, "Price cannot be negative")
+    .max(10_000_000, "Price is too high")
+    .default(0),
   scholarshipEligible: z.boolean().default(false),
   certificateEnabled: z.boolean().default(true),
-});
+}).refine(
+  (data) => data.pricingType === "free" || data.priceNaira > 0,
+  {
+    path: ["priceNaira"],
+    message: "Enter a price greater than zero for a paid course",
+  },
+);
 
 export type CreateCourseInput = z.infer<typeof createCourseSchema>;
 

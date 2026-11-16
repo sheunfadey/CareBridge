@@ -68,6 +68,8 @@ export function CreateCourseForm({
       estimatedMinutes: 60,
       learningOutcomes: "",
       prerequisites: "",
+      pricingType: "free",
+      priceNaira: 0,
       scholarshipEligible: false,
       certificateEnabled: true,
     },
@@ -77,6 +79,7 @@ export function CreateCourseForm({
   const organisationId = useWatch({ control, name: "organisationId" });
   const categoryId = useWatch({ control, name: "categoryId" });
   const difficulty = useWatch({ control, name: "difficulty" });
+  const pricingType = useWatch({ control, name: "pricingType" });
   const scholarshipEligible = useWatch({
     control,
     name: "scholarshipEligible",
@@ -299,6 +302,57 @@ export function CreateCourseForm({
             }
           />
         </div>
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div className="space-y-2">
+          <Label htmlFor="course-pricing">Pricing</Label>
+          <Select
+            value={pricingType}
+            onValueChange={(value) =>
+              setValue("pricingType", value as "free" | "paid", {
+                shouldValidate: true,
+              })
+            }
+          >
+            <SelectTrigger id="course-pricing" className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="free">Free course</SelectItem>
+              <SelectItem value="paid">Paid course</SelectItem>
+            </SelectContent>
+          </Select>
+          <p className="text-xs text-muted-foreground">
+            {pricingType === "free"
+              ? "Learners enrol instantly at no cost."
+              : "Learners pay securely before enrolment is activated."}
+          </p>
+        </div>
+        {pricingType === "paid" ? (
+          <div className="space-y-2">
+            <Label htmlFor="course-price">Price (NGN)</Label>
+            <Input
+              id="course-price"
+              type="number"
+              min={1}
+              step="0.01"
+              placeholder="e.g. 15000"
+              aria-invalid={Boolean(errors.priceNaira)}
+              {...register("priceNaira", { valueAsNumber: true })}
+            />
+            <FormFieldError
+              messages={
+                errors.priceNaira?.message
+                  ? [errors.priceNaira.message]
+                  : fieldErrors.priceNaira
+              }
+            />
+            <p className="text-xs text-muted-foreground">
+              Stored as integer kobo; learners see the Naira amount.
+            </p>
+          </div>
+        ) : null}
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">

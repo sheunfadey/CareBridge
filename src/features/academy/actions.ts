@@ -196,6 +196,10 @@ export async function createCourseAction(
     const organisationName =
       user.organisations.find((org) => org.organisationId === organisationId)
         ?.organisationName ?? "HillCrest Academy";
+    const priceMinorUnits =
+      parsed.data.pricingType === "paid"
+        ? Math.round(parsed.data.priceNaira * 100)
+        : 0;
 
     const { data: course, error } = await supabase
       .from("courses")
@@ -214,7 +218,7 @@ export async function createCourseAction(
         estimated_minutes: parsed.data.estimatedMinutes,
         instructor_id: user.id,
         status: "draft",
-        price_minor_units: 0,
+        price_minor_units: priceMinorUnits,
         currency: "NGN",
         scholarship_eligible: parsed.data.scholarshipEligible,
         certificate_enabled: parsed.data.certificateEnabled,

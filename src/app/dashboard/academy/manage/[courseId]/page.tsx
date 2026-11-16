@@ -87,9 +87,11 @@ export default async function ManageCoursePage({
         ]}
         actions={
           <>
-            <Button variant="outline" asChild>
-              <Link href={`/courses/${course.slug}`}>View public page</Link>
-            </Button>
+            {course.status === "published" && course.isPublic ? (
+              <Button variant="outline" asChild>
+                <Link href={`/courses/${course.slug}`}>View public page</Link>
+              </Button>
+            ) : null}
             {canAddContent ? (
               <Button variant="outline" asChild>
                 <a href="#learning-resources">Upload resource</a>
