@@ -8,8 +8,6 @@ import { cn } from "cn";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { switchPortalAction } from "@/features/portal/actions";
-import type { PortalMode } from "@/types/database";
 
 const tileTones = {
   peach: {
@@ -44,13 +42,11 @@ export function WelcomeHero({
   name,
   email,
   avatarUrl,
-  portal,
   subtitle,
 }: {
   name: string;
   email: string;
   avatarUrl: string | null;
-  portal: PortalMode;
   subtitle: string;
 }) {
   const reduceMotion = useReducedMotion();
@@ -60,8 +56,6 @@ export function WelcomeHero({
     .slice(0, 2)
     .map((part) => part[0]?.toUpperCase() ?? "")
     .join("");
-  const otherPortal: PortalMode = portal === "student" ? "caregiver" : "student";
-
   return (
     <motion.header
       initial={reduceMotion ? false : { opacity: 0, y: 14 }}
@@ -84,18 +78,6 @@ export function WelcomeHero({
           <p className="mt-0.5 text-sm text-muted-foreground">{subtitle}</p>
         </div>
       </div>
-
-      <form action={switchPortalAction} className="shrink-0">
-        <input type="hidden" name="portal" value={otherPortal} />
-        <Button
-          type="submit"
-          variant="outline"
-          className="w-full rounded-full border-brand-navy/15 bg-card/70 sm:w-auto"
-        >
-          Switch to {otherPortal === "student" ? "student" : "caregiver"} portal
-          <ArrowUpRightIcon aria-hidden="true" />
-        </Button>
-      </form>
     </motion.header>
   );
 }

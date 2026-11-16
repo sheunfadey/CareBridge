@@ -11,9 +11,12 @@ import { PortalSection } from "@/features/portal/components/portal-ui";
 import { getCurrentUser } from "@/server/auth/current-user";
 import { getMyLearning } from "@/server/academy/queries";
 
-export const metadata: Metadata = {
-  title: "My Learning",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const user = await getCurrentUser();
+  return {
+    title: user?.activePortal === "caregiver" ? "My Learning" : "My Classroom",
+  };
+}
 
 type MyLearningPageProps = {
   searchParams: Promise<{ payment?: string; reference?: string; status?: string }>;
@@ -65,6 +68,8 @@ export default async function MyLearningPage({
     redirect("/login?redirectTo=/dashboard/academy/learning");
   }
 
+  const learningLabel =
+    user.activePortal === "caregiver" ? "My Learning" : "My Classroom";
   const { payment, status } = await searchParams;
   const notice = payment ? paymentNotices[payment] : null;
   const learning = await getMyLearning(user.id);
@@ -83,12 +88,12 @@ export default async function MyLearningPage({
     <div className="mx-auto w-full max-w-5xl space-y-5 pb-5">
       <PageHeader
         eyebrow="Academy"
-        title="My Learning"
+        title={learningLabel}
         description="Resume courses where you left off and review completed ones."
         breadcrumbs={[
           { label: "Dashboard", href: "/dashboard" },
           { label: "Academy", href: "/dashboard/academy" },
-          { label: "My Learning" },
+          { label: learningLabel },
         ]}
         actions={
           <Button

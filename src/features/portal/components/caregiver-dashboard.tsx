@@ -133,7 +133,6 @@ export function CaregiverDashboard({
         name={user.name}
         email={user.email}
         avatarUrl={user.avatarUrl}
-        portal="caregiver"
         subtitle={
           data.todayShifts.length > 0
             ? `${data.todayShifts.length} shift${data.todayShifts.length === 1 ? "" : "s"} today`

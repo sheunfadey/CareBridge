@@ -46,7 +46,6 @@ export function StudentDashboard({
         name={user.name}
         email={user.email}
         avatarUrl={user.avatarUrl}
-        portal="student"
         subtitle={
           data.activeCourses > 0
             ? `${data.activeCourses} active course${data.activeCourses === 1 ? "" : "s"} · keep going`

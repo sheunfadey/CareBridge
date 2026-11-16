@@ -51,6 +51,8 @@ export default async function LearningCoursePage({
   }
 
   const assessments = await listCourseAssessments(courseId, user.id);
+  const learningLabel =
+    user.activePortal === "caregiver" ? "My Learning" : "My Classroom";
 
   const progress = course.totalLessons
     ? Math.round((course.completedLessons / course.totalLessons) * 100)
@@ -59,13 +61,13 @@ export default async function LearningCoursePage({
   return (
     <div className="space-y-4 lg:space-y-5">
       <PageHeader
-        eyebrow="My Learning"
+        eyebrow={learningLabel}
         title={course.title}
         description={course.summary ?? "Work through the syllabus and track your progress."}
         breadcrumbs={[
           { label: "Dashboard", href: "/dashboard" },
           { label: "Academy", href: "/dashboard/academy" },
-          { label: "My Learning", href: "/dashboard/academy/learning" },
+          { label: learningLabel, href: "/dashboard/academy/learning" },
           { label: course.title },
         ]}
         actions={

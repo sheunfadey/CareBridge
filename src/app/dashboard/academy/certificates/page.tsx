@@ -21,6 +21,8 @@ export default async function CertificatesPage() {
   }
 
   const certificates = await listIssuedCertificates(user);
+  const learningLabel =
+    user.activePortal === "caregiver" ? "My Learning" : "My Classroom";
 
   return (
     <div className="mx-auto w-full max-w-5xl space-y-5 pb-5">
@@ -57,7 +59,9 @@ export default async function CertificatesPage() {
             earn one.
           </p>
           <Button className="mt-4 rounded-full" asChild>
-            <Link href="/dashboard/academy/learning">Go to My Learning</Link>
+            <Link href="/dashboard/academy/learning">
+              Go to {learningLabel}
+            </Link>
           </Button>
         </div>
       ) : (
