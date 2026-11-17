@@ -27,7 +27,12 @@ function NavIcon({ name, className }: { name: string; className?: string }) {
 }
 
 function isActivePath(pathname: string, href: string) {
-  if (href === "/dashboard" || href === "/dashboard/admin") {
+  if (
+    href === "/dashboard" ||
+    href === "/dashboard/admin" ||
+    href === "/dashboard/overview" ||
+    href === "/trainer"
+  ) {
     return pathname === href;
   }
   return pathname === href || pathname.startsWith(`${href}/`);
@@ -154,6 +159,8 @@ type SidebarProps = {
   isSuperAdmin?: boolean;
   permissions?: string[];
   activePortal?: PortalMode;
+  /** The standalone trainer workspace renders its own navigation. */
+  surface?: "portal" | "trainer";
 };
 
 export function Sidebar({
@@ -162,30 +169,39 @@ export function Sidebar({
   isSuperAdmin = false,
   permissions = [],
   activePortal = "student",
+  surface = "portal",
 }: SidebarProps) {
   const pathname = usePathname();
+  const isTrainerSurface = surface === "trainer";
 
-  const navigation = isSuperAdmin
-    ? superAdminNav
-    : activePortal === "caregiver"
-      ? caregiverNav
-      : activePortal === "trainer"
-        ? trainerNav
-        : studentNav;
-  const defaultOpenGroups = isSuperAdmin
-    ? []
-    : activePortal === "caregiver"
-      ? ["Care work", "Work", "Course Studio", "Communication"]
-      : activePortal === "trainer"
-        ? ["Course Studio", "Learner performance", "Communication"]
-        : ["Academy", "Career", "Communication"];
-  const sidebarLabel = pathname.startsWith("/dashboard/care-homes")
-    ? "Care workspace"
-    : pathname.startsWith("/dashboard/organisation")
-      ? "Organisation"
-      : activePortal === "trainer"
-        ? "Trainer studio"
-        : `${activePortal} portal`;
+  const navigation = isTrainerSurface
+    ? trainerNav
+    : isSuperAdmin
+      ? superAdminNav
+      : activePortal === "caregiver"
+        ? caregiverNav
+        : activePortal === "trainer"
+          ? trainerNav
+          : studentNav;
+  const defaultOpenGroups = isTrainerSurface
+    ? ["Course Studio", "Learner performance", "Communication"]
+    : isSuperAdmin
+      ? []
+      : activePortal === "caregiver"
+        ? ["Care work", "Work", "Course Studio", "Communication"]
+        : activePortal === "trainer"
+          ? ["Course Studio", "Learner performance", "Communication"]
+          : ["Academy", "Career", "Communication"];
+  const homeHref = isTrainerSurface ? "/trainer" : "/dashboard";
+  const sidebarLabel = isTrainerSurface
+    ? "Trainer studio"
+    : pathname.startsWith("/dashboard/care-homes")
+      ? "Care workspace"
+      : pathname.startsWith("/dashboard/organisation")
+        ? "Organisation"
+        : activePortal === "trainer"
+          ? "Trainer studio"
+          : `${activePortal} portal`;
 
   const canSee = React.useCallback(
     (item: NavItem) =>
@@ -226,13 +242,13 @@ export function Sidebar({
     >
       <div className="shrink-0 px-2">
         <Link
-          href="/dashboard"
+          href={homeHref}
           onClick={onNavigate}
           className="inline-flex rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
         >
           <HillCrestLogo size="sm" tone="onDark" />
         </Link>
-        {!isSuperAdmin ? (
+        {!isSuperAdmin || isTrainerSurface ? (
           <p className="mt-2 inline-flex rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-sidebar-foreground/70">
             {sidebarLabel}
           </p>

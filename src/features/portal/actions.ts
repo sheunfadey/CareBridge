@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
 import {
-  canUseTrainerPortal,
+  canUseTrainerWorkspace,
   getCurrentUser,
 } from "@/server/auth/current-user";
 import { recordAudit } from "@/server/audit/record-audit";
@@ -31,7 +31,7 @@ export async function switchPortalAction(formData: FormData): Promise<void> {
 
   if (portal === "trainer") {
     const current = await getCurrentUser();
-    if (!current || !canUseTrainerPortal(current)) {
+    if (!current || !canUseTrainerWorkspace(current)) {
       redirect("/dashboard");
     }
   }
@@ -55,5 +55,6 @@ export async function switchPortalAction(formData: FormData): Promise<void> {
   });
 
   revalidatePath("/dashboard", "layout");
-  redirect("/dashboard");
+  revalidatePath("/trainer", "layout");
+  redirect(portal === "trainer" ? "/trainer" : "/dashboard");
 }

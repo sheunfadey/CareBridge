@@ -46,6 +46,7 @@ export async function updateSession(request: NextRequest) {
 
   const isProtectedRoute =
     pathname.startsWith("/dashboard") ||
+    pathname.startsWith("/trainer") ||
     pathname.startsWith("/onboarding");
 
   if (!user && isProtectedRoute) {
@@ -83,7 +84,6 @@ export async function updateSession(request: NextRequest) {
       const allowed =
         pathname.startsWith("/dashboard/admin") ||
         pathname.startsWith("/dashboard/academy") ||
-        pathname.startsWith("/dashboard/trainer") ||
         pathname.startsWith("/dashboard/overview") ||
         pathname.startsWith("/dashboard/notifications") ||
         pathname.startsWith("/dashboard/messages") ||

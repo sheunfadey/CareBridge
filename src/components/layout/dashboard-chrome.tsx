@@ -1,7 +1,10 @@
 import type { ReactNode } from "react";
 
 import { DashboardShell } from "@/components/layout/dashboard-shell";
-import { getCurrentUser } from "@/server/auth/current-user";
+import {
+  canUseTrainerWorkspace,
+  getCurrentUser,
+} from "@/server/auth/current-user";
 import { listNotifications } from "@/server/notifications/service";
 
 /**
@@ -30,6 +33,7 @@ export async function DashboardChrome({ children }: { children: ReactNode }) {
       permissions={user ? Array.from(user.permissions) : []}
       notifications={notifications}
       activePortal={user?.activePortal ?? "student"}
+      trainerWorkspace={user ? canUseTrainerWorkspace(user) : false}
     >
       {children}
     </DashboardShell>

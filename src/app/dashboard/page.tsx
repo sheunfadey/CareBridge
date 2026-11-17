@@ -6,11 +6,10 @@ import { AlertTriangleIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CaregiverDashboard } from "@/features/portal/components/caregiver-dashboard";
 import { StudentDashboard } from "@/features/portal/components/student-dashboard";
-import { TrainerDashboard } from "@/features/trainer/components/trainer-dashboard";
 import { subscriptionStatusLabels } from "@/lib/validation/billing";
 import { getBillingSummary } from "@/server/billing/queries";
 import {
-  canUseTrainerPortal,
+  canUseTrainerWorkspace,
   getCurrentUser,
   userHasPermission,
 } from "@/server/auth/current-user";
@@ -18,7 +17,6 @@ import {
   getCaregiverDashboardData,
   getStudentDashboardData,
 } from "@/server/portal/queries";
-import { getTrainerDashboardData } from "@/server/trainer/queries";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -32,6 +30,11 @@ export default async function DashboardPage() {
 
   if (user.isSuperAdmin) {
     redirect("/dashboard/admin");
+  }
+
+  // Trainers work in their own workspace, which is not a mode of this portal.
+  if (user.activePortal === "trainer" && canUseTrainerWorkspace(user)) {
+    redirect("/trainer");
   }
 
   const primaryOrganisation =
@@ -67,8 +70,6 @@ export default async function DashboardPage() {
     email: user.email,
     avatarUrl: user.avatarUrl,
   };
-  const showTrainer =
-    user.activePortal === "trainer" && canUseTrainerPortal(user);
 
   return (
     <div className="space-y-5">
@@ -103,12 +104,7 @@ export default async function DashboardPage() {
         </div>
       ) : null}
 
-      {showTrainer ? (
-        <TrainerDashboard
-          user={{ name: person.name }}
-          data={await getTrainerDashboardData(user)}
-        />
-      ) : user.activePortal === "caregiver" ? (
+      {user.activePortal === "caregiver" ? (
         <CaregiverDashboard
           user={person}
           data={await getCaregiverDashboardData(user.id)}

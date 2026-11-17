@@ -7,6 +7,7 @@ import {
   BellIcon,
   Building2Icon,
   CalendarDaysIcon,
+  ClipboardCheckIcon,
   GraduationCapIcon,
   LayoutDashboardIcon,
   MenuIcon,
@@ -27,7 +28,9 @@ import {
 } from "@/components/ui/sheet";
 
 function isActivePath(pathname: string, href: string) {
-  if (href === "/dashboard" || href === "/dashboard/admin") return pathname === href;
+  if (href === "/dashboard" || href === "/dashboard/admin" || href === "/trainer") {
+    return pathname === href;
+  }
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -52,16 +55,25 @@ const superAdminShortcuts = [
   { label: "Alerts", href: "/dashboard/notifications", icon: BellIcon },
 ] as const;
 
+const trainerShortcuts = [
+  { label: "Home", href: "/trainer", icon: LayoutDashboardIcon },
+  { label: "Learners", href: "/trainer/learners", icon: UsersIcon },
+  { label: "Gradebook", href: "/trainer/gradebook", icon: ClipboardCheckIcon },
+  { label: "Alerts", href: "/trainer/notifications", icon: BellIcon },
+] as const;
+
 export function MobileNav({
   isSuperAdmin = false,
   permissions = [],
   unreadNotifications = 0,
   activePortal = "student",
+  surface = "portal",
 }: {
   isSuperAdmin?: boolean;
   permissions?: string[];
   unreadNotifications?: number;
   activePortal?: PortalMode;
+  surface?: "portal" | "trainer";
 }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -70,11 +82,14 @@ export function MobileNav({
     permissions.includes("care_record_manage") ||
     permissions.includes("resident_view");
 
-  const shortcuts = isSuperAdmin
-    ? superAdminShortcuts
-    : activePortal === "caregiver" && isCareWorker
-      ? caregiverShortcuts
-      : learnerShortcuts;
+  const shortcuts =
+    surface === "trainer"
+      ? trainerShortcuts
+      : isSuperAdmin
+        ? superAdminShortcuts
+        : activePortal === "caregiver" && isCareWorker
+          ? caregiverShortcuts
+          : learnerShortcuts;
 
   return (
     <nav
@@ -130,6 +145,7 @@ export function MobileNav({
               isSuperAdmin={isSuperAdmin}
               permissions={permissions}
               activePortal={activePortal}
+              surface={surface}
               onNavigate={() => setMenuOpen(false)}
             />
           </SheetContent>

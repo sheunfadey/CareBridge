@@ -99,7 +99,7 @@ export function TrainerDashboard({
             icon={<UsersIcon className="size-4.5" />}
             tone="mint"
             index={1}
-            href="/dashboard/trainer/learners"
+            href="/trainer/learners"
           />
           <OverviewTile
             label="Assessments"
@@ -108,7 +108,7 @@ export function TrainerDashboard({
             icon={<ClipboardCheckIcon className="size-4.5" />}
             tone="sky"
             index={2}
-            href="/dashboard/trainer/assessments"
+            href="/trainer/assessments"
           />
           <OverviewTile
             label="Certificates"
@@ -117,7 +117,7 @@ export function TrainerDashboard({
             icon={<AwardIcon className="size-4.5" />}
             tone="peach"
             index={3}
-            href="/dashboard/trainer/certificates"
+            href="/trainer/certificates"
           />
         </div>
       </PortalSection>
@@ -136,7 +136,7 @@ export function TrainerDashboard({
           </p>
         </Link>
         <Link
-          href="/dashboard/trainer/gradebook"
+          href="/trainer/gradebook"
           className="rounded-[var(--radius-2xl)] bg-card/85 p-4 ring-1 ring-foreground/10 transition hover:ring-brand-navy/20"
         >
           <ClipboardCheckIcon className="size-5 text-portal-sky-strong" />
@@ -178,7 +178,7 @@ export function TrainerDashboard({
           <div className="h-full rounded-[var(--radius-2xl)] bg-card/85 p-4 ring-1 ring-foreground/10">
             <SectionHeading
               title="Recent submissions"
-              actionHref="/dashboard/trainer/gradebook"
+              actionHref="/trainer/gradebook"
             />
             {data.submissions.length === 0 ? (
               <p className="rounded-xl bg-brand-navy/5 px-4 py-6 text-center text-sm text-muted-foreground">

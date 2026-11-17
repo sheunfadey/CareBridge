@@ -13,6 +13,8 @@ type DashboardShellProps = {
   permissions?: string[];
   notifications?: ComponentProps<typeof Topbar>["notifications"];
   activePortal?: PortalMode;
+  surface?: "portal" | "trainer";
+  trainerWorkspace?: boolean;
 };
 
 export function DashboardShell({
@@ -22,6 +24,8 @@ export function DashboardShell({
   permissions = [],
   notifications,
   activePortal,
+  surface = "portal",
+  trainerWorkspace = false,
 }: DashboardShellProps) {
   return (
     <div className="flex min-h-svh bg-background">
@@ -31,6 +35,7 @@ export function DashboardShell({
             isSuperAdmin={isSuperAdmin}
             permissions={permissions}
             activePortal={activePortal}
+            surface={surface}
           />
         </div>
       </aside>
@@ -42,6 +47,8 @@ export function DashboardShell({
           permissions={permissions}
           notifications={notifications}
           activePortal={activePortal}
+          surface={surface}
+          trainerWorkspace={trainerWorkspace}
         />
         <main
           id="main-content"
@@ -55,6 +62,7 @@ export function DashboardShell({
         isSuperAdmin={isSuperAdmin}
         permissions={permissions}
         activePortal={activePortal}
+        surface={surface}
         unreadNotifications={
           notifications?.filter((notification) => !notification.read).length ??
           0

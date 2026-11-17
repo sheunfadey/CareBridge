@@ -156,14 +156,15 @@ export function userHasPermission(
   return user.permissions.has(permission);
 }
 
-/** Trainers and administrators who can use the course studio. */
-export function canUseTrainerPortal(user: CurrentUser): boolean {
+/**
+ * The trainer workspace is a separate product surface, so it is gated by the
+ * teaching roles rather than by course permissions that care managers also hold.
+ */
+export function canUseTrainerWorkspace(user: CurrentUser): boolean {
   return (
     user.isSuperAdmin ||
-    userHasPermission(user, "course_manage") ||
-    userHasPermission(user, "course_publish") ||
-    userHasPermission(user, "assessment_manage") ||
-    userHasPermission(user, "assessment_grade")
+    user.roles.includes("instructor") ||
+    user.roles.includes("training_admin")
   );
 }
 

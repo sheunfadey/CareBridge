@@ -53,6 +53,10 @@ type TopbarProps = {
   isSuperAdmin?: boolean;
   permissions?: string[];
   activePortal?: PortalMode;
+  /** The standalone trainer workspace hides the shared portal switching. */
+  surface?: "portal" | "trainer";
+  /** Whether the avatar menu should offer the separate trainer workspace. */
+  trainerWorkspace?: boolean;
   className?: string;
 };
 
@@ -62,10 +66,14 @@ export function Topbar({
   isSuperAdmin = false,
   permissions = [],
   activePortal = "student",
+  surface = "portal",
+  trainerWorkspace = false,
   className,
 }: TopbarProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { theme, setTheme } = useTheme();
+  const isTrainerSurface = surface === "trainer";
+  const basePath = isTrainerSurface ? "/trainer" : "/dashboard";
 
   if (!user) {
     return null;
@@ -76,12 +84,6 @@ export function Topbar({
     .slice(0, 2)
     .map((part) => part.charAt(0).toUpperCase())
     .join("");
-  const canTrain =
-    permissions.includes("course_manage") ||
-    permissions.includes("course_publish") ||
-    permissions.includes("learning_material_manage") ||
-    permissions.includes("assessment_manage") ||
-    permissions.includes("assessment_grade");
 
   return (
     <header
@@ -109,15 +111,17 @@ export function Topbar({
           <Sidebar
             isSuperAdmin={isSuperAdmin}
             permissions={permissions}
+            activePortal={activePortal}
+            surface={surface}
             onNavigate={() => setMobileOpen(false)}
           />
         </SheetContent>
       </Sheet>
 
       <Link
-        href="/dashboard"
+        href={basePath}
         className="flex items-center gap-2 lg:hidden"
-        aria-label="HillCrest dashboard"
+        aria-label={`HillCrest ${isTrainerSurface ? "trainer workspace" : "dashboard"}`}
       >
         <LogoMark size={24} />
       </Link>
@@ -131,7 +135,11 @@ export function Topbar({
           />
           <input
             type="search"
-            placeholder="Search courses, jobs, residents, transactions"
+            placeholder={
+              isTrainerSurface
+                ? "Search courses, learners, assessments"
+                : "Search courses, jobs, residents, transactions"
+            }
             className="h-9 w-full rounded-lg border border-input bg-card pl-9 pr-3 text-sm outline-none transition focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30"
           />
         </label>
@@ -188,7 +196,7 @@ export function Topbar({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuLabel className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-              Switch portal
+              {isTrainerSurface ? "Personal portals" : "Switch portal"}
             </DropdownMenuLabel>
             <form action={switchPortalAction}>
               <input type="hidden" name="portal" value="student" />
@@ -222,33 +230,28 @@ export function Topbar({
                 </button>
               </DropdownMenuItem>
             </form>
-            {canTrain ? (
+            {!isTrainerSurface && trainerWorkspace ? (
               <form action={switchPortalAction}>
                 <input type="hidden" name="portal" value="trainer" />
                 <DropdownMenuItem asChild>
-                  <button
-                    type="submit"
-                    className="flex w-full items-center gap-2"
-                    disabled={activePortal === "trainer"}
-                  >
+                  <button type="submit" className="flex w-full items-center gap-2">
                     <PresentationIcon />
-                    Trainer portal
-                    {activePortal === "trainer" ? (
-                      <CheckIcon className="ml-auto size-4 text-brand-blue" />
-                    ) : null}
+                    Trainer workspace
                   </button>
                 </DropdownMenuItem>
               </form>
             ) : null}
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href="/dashboard/settings">Profile & settings</Link>
+              <Link href={`${basePath}/settings`}>Profile &amp; settings</Link>
             </DropdownMenuItem>
+            {!isTrainerSurface ? (
+              <DropdownMenuItem asChild>
+                <Link href="/dashboard/overview">Workspace overview</Link>
+              </DropdownMenuItem>
+            ) : null}
             <DropdownMenuItem asChild>
-              <Link href="/dashboard/overview">Workspace overview</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/dashboard/settings/notifications">
+              <Link href={`${basePath}/settings/notifications`}>
                 Notification preferences
               </Link>
             </DropdownMenuItem>
