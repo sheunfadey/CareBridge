@@ -172,7 +172,7 @@ export async function loginAction(input: LoginInput): Promise<ActionResult> {
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data: signIn, error } = await supabase.auth.signInWithPassword({
     email: parsed.data.email,
     password: parsed.data.password,
   });
@@ -184,8 +184,22 @@ export async function loginAction(input: LoginInput): Promise<ActionResult> {
     };
   }
 
+  // Trainers land in their own workspace; everyone else starts in the portal.
+  let redirectTo = "/dashboard";
+  if (signIn.user) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("active_portal")
+      .eq("id", signIn.user.id)
+      .maybeSingle();
+
+    if (profile?.active_portal === "trainer") {
+      redirectTo = "/trainer";
+    }
+  }
+
   revalidatePath("/", "layout");
-  return { ok: true, redirectTo: "/dashboard" };
+  return { ok: true, redirectTo };
 }
 
 export async function logoutAction(): Promise<void> {
