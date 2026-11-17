@@ -142,6 +142,17 @@ export async function registerAction(
     });
   }
 
+  // Email confirmation can be disabled at the project level for testing, in
+  // which case Supabase returns a session straight away.
+  if (data.session) {
+    revalidatePath("/", "layout");
+    return {
+      ok: true,
+      message: "Account created.",
+      redirectTo: "/onboarding",
+    };
+  }
+
   return {
     ok: true,
     message:
