@@ -53,18 +53,18 @@ function SiteHeaderContent() {
             <div key={group.label} className="group relative">
               <button
                 type="button"
-                className="inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-card/70 hover:text-brand-strong focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 aria-haspopup="true"
               >
                 {group.label}
                 <ChevronDownIcon className="size-3.5" aria-hidden="true" />
               </button>
-              <div className="invisible absolute left-0 top-full z-50 w-72 translate-y-1 rounded-xl bg-popover p-2 opacity-0 shadow-lg ring-1 ring-foreground/10 transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+              <div className="invisible absolute left-0 top-full z-50 w-72 translate-y-1 rounded-2xl bg-popover p-2 opacity-0 shadow-xl ring-1 ring-foreground/10 transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
                 {group.links.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="block rounded-lg px-3 py-2 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="block rounded-xl px-3 py-2 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     <span className="block text-sm font-medium text-foreground">
                       {link.label}

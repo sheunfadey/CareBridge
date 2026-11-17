@@ -15,14 +15,14 @@ export function SiteSection({
 }) {
   const toneClass = {
     default: "bg-background",
-    ivory: "surface-ivory",
-    sky: "bg-gradient-to-br from-brand-sky/70 via-white to-brand-ivory dark:from-brand-sky/50 dark:via-brand-dark-surface dark:to-brand-dark",
+    ivory: "bg-card/40",
+    sky: "bg-portal-sky/35",
     navy: "bg-brand-navy text-white",
   }[tone];
 
   return (
     <section id={id} className={cn(toneClass, className)}>
-      <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
+      <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
         {children}
       </div>
     </section>
@@ -62,7 +62,7 @@ export function SectionHeading({
       ) : null}
       <h2
         className={cn(
-          "font-heading text-3xl font-semibold leading-tight sm:text-4xl",
+          "font-heading text-2xl font-semibold leading-tight sm:text-3xl",
           isDark ? "text-white" : "text-brand-strong",
         )}
       >

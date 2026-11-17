@@ -46,70 +46,82 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <SiteSection tone="ivory" className="relative overflow-hidden">
-        <div aria-hidden="true" className="pointer-events-none absolute -top-24 right-0 h-72 w-72 rounded-full bg-gradient-to-br from-brand-blue/10 to-brand-green/10 blur-3xl" />
-        <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 left-0 h-80 w-80 rounded-full bg-gradient-to-tr from-brand-bright-blue/10 to-brand-sky/20 blur-3xl" />
-        <div className="relative grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-teal/30 bg-gradient-to-r from-brand-sky/80 to-brand-green/10 px-3 py-1 text-xs font-medium text-brand-teal shadow-sm">
-              <SparklesIcon className="size-3.5 animate-pulse" aria-hidden="true" />
-              Learn. Practise. Work.
-            </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl lg:text-6xl">
-              Build a Career in Care.
-              <span className="bg-gradient-to-r from-brand-blue via-brand-green to-brand-bright-blue bg-clip-text text-transparent block">
-                Help Someone Live Better.
+      <SiteSection className="relative overflow-hidden">
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-portal-peach via-portal-cream to-portal-lavender p-5 sm:p-8 lg:p-12">
+          <span
+            aria-hidden="true"
+            className="absolute -right-20 -top-24 size-72 rounded-full border-[24px] border-white/25"
+          />
+          <span
+            aria-hidden="true"
+            className="absolute -bottom-28 left-1/3 size-64 rounded-full bg-white/15"
+          />
+          <div className="relative grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <div className="space-y-5">
+              <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#7b4a2c]">
+                <SparklesIcon className="size-3.5" aria-hidden="true" />
+                Learn. Practise. Work.
               </span>
-            </h1>
-            <p className="max-w-xl text-lg text-muted-foreground">
-              {brand.name} connects structured caregiver training, supervised
-              practical experience and employment opportunities — while giving
-              care homes and agencies the operations tools they need to deliver
-              safe, dignified care.
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" className="bg-gradient-to-r from-brand-blue to-brand-green shadow-lg transition hover:scale-[1.02] hover:shadow-xl" asChild>
-                <Link href="/caregiver-training">Explore Training</Link>
-              </Button>
-              <Button size="lg" variant="outline" className="border-brand-teal/40 hover:bg-brand-sky/60" asChild>
-                <Link href="/become-an-employer-partner">Become a Care Partner</Link>
-              </Button>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              No fabricated statistics, testimonials or accreditations — ever.
-              We show only what has actually been verified.
-            </p>
-          </div>
-
-          <div className="relative">
-            <div aria-hidden="true" className="absolute -right-10 -top-10 hidden h-40 w-40 animate-float rounded-full bg-gradient-to-br from-brand-bright-blue/20 to-brand-blue/10 blur-2xl lg:block" />
-            <div className="mb-6 flex justify-center lg:justify-start">
-              <AnimatedHillCrestLogo size="lg" showTagline />
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {[
-                { icon: GraduationCapIcon, title: "Structured training", body: "Modules, lessons and assessments that record real progress.", gradient: "from-brand-blue/15 to-brand-sky/40" },
-                { icon: ClipboardListIcon, title: "Practical competency", body: "Supervised placements with competency recorded as you go.", gradient: "from-brand-green/15 to-brand-light-green" },
-                { icon: Building2Icon, title: "Care operations", body: "Residents, staff, shifts, care records and reporting.", gradient: "from-brand-navy/10 to-brand-sky/30" },
-                { icon: HeartHandshakeIcon, title: "Charity and access", body: "Scholarships and campaigns that widen access to training.", gradient: "from-brand-bright-blue/15 to-brand-light-green" },
-              ].map((card) => (
-                <div
-                  key={card.title}
-                  className="group relative overflow-hidden rounded-xl bg-card p-5 shadow-lg ring-1 ring-foreground/10 transition-all hover:-translate-y-1 hover:shadow-xl"
+              <h1 className="font-heading text-3xl font-semibold leading-[1.08] tracking-[-0.04em] text-brand-strong sm:text-4xl lg:text-5xl">
+                Build a career in care.
+                <span className="mt-1 block text-brand-navy/80">
+                  Help someone live better.
+                </span>
+              </h1>
+              <p className="max-w-xl text-base text-brand-navy/70 dark:text-foreground/70">
+                {brand.name} connects structured caregiver training, supervised
+                practical experience, employment opportunities and the
+                operations tools care providers need.
+              </p>
+              <div className="flex flex-wrap items-center gap-2">
+                <Button
+                  size="lg"
+                  className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                  asChild
                 >
-                  <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${card.gradient}`} />
-                  <span
-                    aria-hidden="true"
-                    className="relative flex size-10 items-center justify-center rounded-lg bg-gradient-to-br from-brand-blue to-brand-green text-white shadow-md transition-transform group-hover:scale-110"
+                  <Link href="/caregiver-training">Explore training</Link>
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="rounded-full border-brand-navy/15 bg-white/60"
+                  asChild
+                >
+                  <Link href="/for-care-homes">For care providers</Link>
+                </Button>
+              </div>
+              <p className="text-xs text-brand-navy/60 dark:text-foreground/60">
+                Verified records · Access-controlled data · Append-only finances
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex justify-center lg:justify-start">
+                <AnimatedHillCrestLogo size="md" showTagline />
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {[
+                  { icon: GraduationCapIcon, title: "Structured training", body: "Modules, lessons and assessments that record real progress." },
+                  { icon: ClipboardListIcon, title: "Practical competency", body: "Supervised placements with competency recorded as you go." },
+                  { icon: Building2Icon, title: "Care operations", body: "Residents, staff, shifts, care records and reporting." },
+                  { icon: HeartHandshakeIcon, title: "Charity and access", body: "Scholarships and campaigns that widen access to training." },
+                ].map((card) => (
+                  <div
+                    key={card.title}
+                    className="group rounded-[var(--radius-2xl)] bg-white/70 p-4 ring-1 ring-brand-navy/5 transition hover:-translate-y-1 hover:bg-white/90 dark:bg-card/70"
                   >
-                    <card.icon className="size-5" />
-                  </span>
-                  <p className="relative mt-4 font-heading font-semibold text-brand-strong">
-                    {card.title}
-                  </p>
-                  <p className="relative mt-1.5 text-sm text-muted-foreground">{card.body}</p>
-                </div>
-              ))}
+                    <span className="flex size-9 items-center justify-center rounded-xl bg-white/70 text-brand-navy dark:bg-white/10 dark:text-brand-strong">
+                      <card.icon className="size-4.5" aria-hidden="true" />
+                    </span>
+                    <p className="mt-3 font-heading text-sm font-semibold text-brand-strong">
+                      {card.title}
+                    </p>
+                    <p className="mt-1 text-xs leading-relaxed text-brand-navy/65 dark:text-foreground/65">
+                      {card.body}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -139,7 +151,7 @@ export default function HomePage() {
           ].map((item) => (
             <div
               key={item.title}
-              className="group relative overflow-hidden rounded-xl bg-card p-6 shadow-lg ring-1 ring-foreground/10 transition-all hover:-translate-y-1 hover:shadow-xl"
+              className="group relative overflow-hidden rounded-[var(--radius-2xl)] bg-card/85 p-6 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10 transition-all hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-green to-brand-teal" />
               <span className="relative flex size-10 items-center justify-center rounded-lg bg-gradient-to-br from-brand-green/20 to-brand-teal/20">
@@ -171,7 +183,7 @@ export default function HomePage() {
             {homepageSteps.map((step) => (
               <div
                 key={step.step}
-                className="group relative overflow-hidden rounded-xl bg-card p-6 shadow-lg ring-1 ring-foreground/10 transition-all hover:-translate-y-1 hover:shadow-xl"
+                className="group relative overflow-hidden rounded-[var(--radius-2xl)] bg-card/85 p-6 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10 transition-all hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-teal via-brand-green to-brand-coral" />
                 <span className="relative font-heading text-4xl font-semibold bg-gradient-to-br from-brand-teal to-brand-green bg-clip-text text-transparent">
@@ -203,7 +215,7 @@ export default function HomePage() {
           {trainingProgrammes.map((programme) => (
             <div
               key={programme.title}
-              className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10"
+              className="rounded-[var(--radius-2xl)] bg-card/85 p-6 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
             >
               <span
                 aria-hidden="true"
@@ -253,7 +265,7 @@ export default function HomePage() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="flex gap-4 rounded-xl bg-card p-5 shadow-card ring-1 ring-foreground/10"
+                className="flex gap-4 rounded-[var(--radius-2xl)] bg-card/85 p-5 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
               >
                 <span
                   aria-hidden="true"
@@ -289,7 +301,7 @@ export default function HomePage() {
             return (
               <div
                 key={feature.title}
-                className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10"
+                className="rounded-[var(--radius-2xl)] bg-card/85 p-6 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
               >
                 <span
                   aria-hidden="true"

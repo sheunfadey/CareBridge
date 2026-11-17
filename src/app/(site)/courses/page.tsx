@@ -49,56 +49,75 @@ export default async function CoursesPage() {
 
   return (
     <>
-      <SiteSection tone="ivory">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-teal/20 bg-brand-sky px-3 py-1 text-xs font-medium text-brand-teal">
-              <BookOpenIcon className="size-3.5" aria-hidden="true" />
-              Academy catalogue
-            </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
-              Courses for every stage of care work
-              <span className="text-gradient-care block">
-                Start where you are.
+      <SiteSection className="relative overflow-hidden">
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-portal-sky via-portal-cream to-portal-lavender p-5 sm:p-8 lg:p-10">
+          <span
+            aria-hidden="true"
+            className="absolute -right-20 -top-24 size-72 rounded-full border-[24px] border-white/30"
+          />
+          <span
+            aria-hidden="true"
+            className="absolute -bottom-24 left-1/3 size-56 rounded-full bg-white/20"
+          />
+          <div className="relative grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+            <div className="space-y-5">
+              <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#2b6385]">
+                <BookOpenIcon className="size-3.5" aria-hidden="true" />
+                Academy catalogue
               </span>
-            </h1>
-            <p className="max-w-xl text-lg text-muted-foreground">
-              Enrol in published {brand.name} Academy courses, work through the
-              syllabus at your own pace and earn a verifiable certificate when
-              you complete all required lessons.
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" asChild>
-                <Link href="/register">Create an account</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/dashboard/academy">Go to Academy</Link>
-              </Button>
-            </div>
-          </div>
-
-          <div className="grid gap-4">
-            {programmeFeatures.map((feature) => (
-              <div
-                key={feature.title}
-                className="flex gap-4 rounded-xl bg-card p-5 shadow-card ring-1 ring-foreground/10"
-              >
-                <span
-                  aria-hidden="true"
-                  className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-sky text-brand-teal"
-                >
-                  <feature.icon className="size-5" />
+              <h1 className="font-heading text-3xl font-semibold leading-[1.08] tracking-[-0.04em] text-brand-strong sm:text-4xl lg:text-5xl">
+                Courses for every stage of care work.
+                <span className="mt-1 block text-brand-navy/80">
+                  Start where you are.
                 </span>
-                <div>
-                  <p className="font-heading font-semibold text-brand-strong">
-                    {feature.title}
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {feature.body}
-                  </p>
-                </div>
+              </h1>
+              <p className="max-w-xl text-base text-brand-navy/70 dark:text-foreground/70">
+                Enrol in published {brand.name} Academy courses, work through the
+                syllabus at your own pace and earn a verifiable certificate when
+                you complete all required lessons.
+              </p>
+              <div className="flex flex-wrap items-center gap-2">
+                <Button
+                  size="lg"
+                  className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                  asChild
+                >
+                  <Link href="/register">Create an account</Link>
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="rounded-full border-brand-navy/15 bg-white/60"
+                  asChild
+                >
+                  <Link href="/dashboard/academy">Go to Academy</Link>
+                </Button>
               </div>
-            ))}
+            </div>
+
+            <div className="grid gap-3">
+              {programmeFeatures.map((feature) => (
+                <div
+                  key={feature.title}
+                  className="flex gap-3 rounded-[var(--radius-2xl)] bg-white/70 p-4 ring-1 ring-brand-navy/5 dark:bg-card/70"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white/70 text-brand-navy dark:bg-white/10 dark:text-brand-strong"
+                  >
+                    <feature.icon className="size-4.5" />
+                  </span>
+                  <div>
+                    <p className="font-heading text-sm font-semibold text-brand-strong">
+                      {feature.title}
+                    </p>
+                    <p className="mt-1 text-xs leading-relaxed text-brand-navy/65 dark:text-foreground/65">
+                      {feature.body}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </SiteSection>
@@ -126,15 +145,32 @@ export default async function CoursesPage() {
         ) : (
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             {courses.map((course) => (
-              <div
+              <article
                 key={course.id}
-                className="flex flex-col rounded-xl bg-card shadow-card ring-1 ring-foreground/10"
+                className="flex flex-col overflow-hidden rounded-[var(--radius-2xl)] bg-card/85 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
               >
-                <div className="flex-1 space-y-4 p-6">
-                  <div className="flex flex-wrap items-center gap-2">
-                    {course.category ? (
-                      <Badge variant="outline">{course.category}</Badge>
-                    ) : null}
+                <div
+                  role="img"
+                  aria-label={course.title}
+                  className="relative h-28 bg-portal-lavender bg-cover bg-center"
+                  style={
+                    course.coverImageUrl
+                      ? { backgroundImage: `url("${course.coverImageUrl}")` }
+                      : undefined
+                  }
+                >
+                  <span className="absolute inset-0 bg-gradient-to-t from-brand-navy/40 via-transparent to-transparent" />
+                  <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-brand-navy">
+                    {course.category ?? "Course"}
+                  </span>
+                  <span className="absolute bottom-3 right-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-brand-navy">
+                    {course.priceMinorUnits === 0
+                      ? "Free"
+                      : `${course.currency} ${(course.priceMinorUnits / 100).toFixed(2)}`}
+                  </span>
+                </div>
+                <div className="flex-1 space-y-3 p-4">
+                  <div className="flex flex-wrap items-center gap-1.5">
                     <Badge variant="outline">
                       {courseDifficultyLabels[course.difficulty]}
                     </Badge>
@@ -146,10 +182,10 @@ export default async function CoursesPage() {
                     ) : null}
                   </div>
                   <div>
-                    <p className="font-heading text-lg font-semibold text-brand-strong">
+                    <p className="font-heading text-base font-semibold text-brand-strong">
                       {course.title}
                     </p>
-                    <p className="mt-1 text-sm text-muted-foreground">
+                    <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
                       {course.summary}
                     </p>
                   </div>
@@ -166,17 +202,17 @@ export default async function CoursesPage() {
                     <span>{course.providerName}</span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between border-t px-6 py-4">
-                  <p className="text-sm text-muted-foreground">
+                <div className="flex items-center justify-between border-t px-4 py-3">
+                  <p className="text-sm font-medium text-brand-strong">
                     {course.priceMinorUnits === 0
-                      ? "Free"
+                      ? "Free to enrol"
                       : `${course.currency} ${(course.priceMinorUnits / 100).toFixed(2)}`}
                   </p>
-                  <Button asChild>
+                  <Button size="sm" className="rounded-full" asChild>
                     <Link href={`/courses/${course.slug}`}>View course</Link>
                   </Button>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         )}
@@ -192,7 +228,7 @@ export default async function CoursesPage() {
           {trainingProgrammes.map((programme) => (
             <div
               key={programme.title}
-              className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10"
+              className="rounded-[var(--radius-2xl)] bg-card/85 p-6 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
             >
               <span
                 aria-hidden="true"
