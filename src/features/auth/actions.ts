@@ -1,20 +1,24 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
 import { createClient } from "@/lib/supabase/server";
 import { getPublicEnv } from "@/lib/env";
+import { REFERRAL_COOKIE } from "@/lib/referrals";
 import {
   registerSchema,
   loginSchema,
   forgotPasswordSchema,
   resetPasswordSchema,
+  resendVerificationSchema,
   onboardingSchema,
   type RegisterInput,
   type LoginInput,
   type ForgotPasswordInput,
   type ResetPasswordInput,
+  type ResendVerificationInput,
   type OnboardingInput,
 } from "@/lib/validation/auth";
 import { ROLE_PERMISSIONS } from "@/lib/permissions/registry";
@@ -93,11 +97,24 @@ export async function registerAction(
     });
   }
 
+  // Keep the referral code until the customer's first purchase so the
+  // attribution function can credit the referring partner.
+  if (parsed.data.referralCode) {
+    const cookieStore = await cookies();
+    cookieStore.set(REFERRAL_COOKIE, parsed.data.referralCode, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30,
+    });
+  }
+
   return {
     ok: true,
     message:
       "Account created. Check your email to verify your address before signing in.",
-    redirectTo: "/verify-email",
+    redirectTo: `/verify-email?email=${encodeURIComponent(parsed.data.email)}`,
   };
 }
 
@@ -166,6 +183,36 @@ export async function forgotPasswordAction(
   return {
     ok: true,
     message: "If an account exists for that email, a reset link is on its way.",
+  };
+}
+
+export async function resendVerificationAction(
+  input: ResendVerificationInput,
+): Promise<ActionResult> {
+  const parsed = resendVerificationSchema.safeParse(input);
+  if (!parsed.success) {
+    return {
+      ok: false,
+      message: "Enter a valid email address.",
+      fieldErrors: fieldErrorsFromZod(parsed.error.issues),
+    };
+  }
+
+  const supabase = await createClient();
+  const env = getPublicEnv();
+  await supabase.auth.resend({
+    type: "signup",
+    email: parsed.data.email,
+    options: {
+      emailRedirectTo: `${env.NEXT_PUBLIC_APP_URL}/auth/callback`,
+    },
+  });
+
+  // Always report success so the form cannot be used to enumerate accounts.
+  return {
+    ok: true,
+    message:
+      "If that address is waiting for verification, a new link is on its way. Check your spam folder too.",
   };
 }
 

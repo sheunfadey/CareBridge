@@ -37,6 +37,7 @@ export function RegisterForm() {
       email: "",
       password: "",
       confirmPassword: "",
+      referralCode: "",
       acceptTerms: false,
     },
   });
@@ -144,6 +145,28 @@ export function RegisterForm() {
               errors.confirmPassword?.message
                 ? [errors.confirmPassword.message]
                 : undefined
+            }
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="referralCode">
+            Referral code <span className="text-muted-foreground">(optional)</span>
+          </Label>
+          <Input
+            id="referralCode"
+            autoComplete="off"
+            spellCheck={false}
+            placeholder="e.g. ABC123"
+            className="uppercase placeholder:normal-case"
+            aria-invalid={Boolean(errors.referralCode)}
+            {...register("referralCode")}
+          />
+          <FormFieldError
+            messages={
+              errors.referralCode?.message
+                ? [errors.referralCode.message]
+                : serverFieldErrors?.referralCode
             }
           />
         </div>

@@ -56,6 +56,32 @@ describe("registerSchema", () => {
       false,
     );
   });
+
+  it("keeps an optional referral code and normalises its case", () => {
+    const withCode = registerSchema.safeParse({
+      ...base,
+      referralCode: "  ab12cd  ",
+    });
+    expect(withCode.success).toBe(true);
+    if (withCode.success) {
+      expect(withCode.data.referralCode).toBe("AB12CD");
+    }
+
+    const withoutCode = registerSchema.safeParse({ ...base, referralCode: "" });
+    expect(withoutCode.success).toBe(true);
+    if (withoutCode.success) {
+      expect(withoutCode.data.referralCode).toBeUndefined();
+    }
+  });
+
+  it("rejects malformed referral codes", () => {
+    expect(
+      registerSchema.safeParse({ ...base, referralCode: "abc" }).success,
+    ).toBe(false);
+    expect(
+      registerSchema.safeParse({ ...base, referralCode: "not a code!" }).success,
+    ).toBe(false);
+  });
 });
 
 describe("loginSchema", () => {

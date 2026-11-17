@@ -16,12 +16,22 @@ export const emailSchema = z
   .toLowerCase()
   .pipe(z.email("Enter a valid email address"));
 
+export const referralCodeSchema = z
+  .string()
+  .trim()
+  .toUpperCase()
+  .refine((value) => value === "" || /^[A-Z0-9]{6,12}$/.test(value), {
+    message: "Referral codes are 6 to 12 letters or numbers",
+  })
+  .transform((value) => (value === "" ? undefined : value));
+
 export const registerSchema = z
   .object({
     fullName: z.string().min(2, "Enter your full name").max(120),
     email: emailSchema,
     password: passwordSchema,
     confirmPassword: z.string(),
+    referralCode: referralCodeSchema.optional(),
     acceptTerms: z
       .boolean()
       .refine((value) => value === true, "You must accept the terms to continue"),
@@ -43,6 +53,14 @@ export type LoginInput = z.infer<typeof loginSchema>;
 export const forgotPasswordSchema = z.object({
   email: emailSchema,
 });
+
+export const resendVerificationSchema = z.object({
+  email: emailSchema,
+});
+
+export type ResendVerificationInput = z.infer<
+  typeof resendVerificationSchema
+>;
 
 export type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
 
