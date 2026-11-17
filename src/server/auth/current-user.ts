@@ -1,3 +1,4 @@
+import { cache } from "react";
 import type { User } from "@supabase/supabase-js";
 
 import { createClient } from "@/lib/supabase/server";
@@ -36,18 +37,20 @@ export type CurrentUser = {
  * Authorisation must still be enforced by RLS in the database — this is a
  * convenience layer for server logic and UI gating, never the sole control.
  */
-export async function getCurrentUser(): Promise<CurrentUser | null> {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export const getCurrentUser = cache(
+  async (): Promise<CurrentUser | null> => {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  if (!user) {
-    return null;
-  }
+    if (!user) {
+      return null;
+    }
 
-  return buildCurrentUser(supabase, user);
-}
+    return buildCurrentUser(supabase, user);
+  },
+);
 
 async function buildCurrentUser(
   supabase: Awaited<ReturnType<typeof createClient>>,

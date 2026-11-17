@@ -239,7 +239,7 @@ export function Sidebar({
         ) : null}
       </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1">
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {pinnedItems.length > 0 ? (
           <ul className="space-y-0.5 pb-3">
             {pinnedItems.map((item) => (
