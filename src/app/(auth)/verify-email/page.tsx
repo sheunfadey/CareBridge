@@ -50,6 +50,13 @@ async function VerifyEmailContent({
           Already verified?{" "}
           <Link href="/login" className="font-medium text-brand-teal hover:underline">
             Sign in
+          </Link>{" "}
+          <span className="text-muted-foreground">or</span>{" "}
+          <Link
+            href="/forgot-password"
+            className="font-medium text-brand-teal hover:underline"
+          >
+            reset your password
           </Link>
         </span>
       }

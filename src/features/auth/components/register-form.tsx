@@ -57,6 +57,8 @@ export function RegisterForm() {
 
   const serverFieldErrors =
     result && !result.ok ? result.fieldErrors : undefined;
+  const alreadyRegistered =
+    result && !result.ok && result.message.includes("already exists");
 
   return (
     <AuthCard
@@ -77,6 +79,21 @@ export function RegisterForm() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
         {result && !result.ok ? (
           <FormAlert tone="error">{result.message}</FormAlert>
+        ) : null}
+
+        {alreadyRegistered ? (
+          <p className="text-sm">
+            <Link href="/login" className="font-medium text-brand-teal hover:underline">
+              Sign in
+            </Link>{" "}
+            <span className="text-muted-foreground">or</span>{" "}
+            <Link
+              href="/forgot-password"
+              className="font-medium text-brand-teal hover:underline"
+            >
+              reset your password
+            </Link>
+          </p>
         ) : null}
 
         <div className="space-y-2">

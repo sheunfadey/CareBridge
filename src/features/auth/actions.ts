@@ -77,12 +77,44 @@ export async function registerAction(
   });
 
   if (error) {
+    const message = error.message.toLowerCase();
+    if (message.includes("rate limit") || error.status === 429) {
+      return {
+        ok: false,
+        message:
+          "The email service is rate limited right now, so the verification email could not be sent. Wait a few minutes and try again.",
+      };
+    }
+    if (message.includes("invalid")) {
+      return {
+        ok: false,
+        message: "That email address was rejected. Use an address that can receive mail.",
+        fieldErrors: { email: ["Use an email address that can receive mail."] },
+      };
+    }
+    return {
+      ok: false,
+      message: message.includes("already")
+        ? "An account with this email already exists."
+        : "We could not create your account. Try again shortly.",
+    };
+  }
+
+  // Supabase hides existing accounts by returning a user with no identities and
+  // sends no verification mail. Tell the person plainly so they sign in or
+  // reset their password instead of waiting for an email that will not arrive.
+  if (
+    data.user &&
+    (data.user.identities?.length ?? 0) === 0 &&
+    data.user.email_confirmed_at
+  ) {
     return {
       ok: false,
       message:
-        error.message.toLowerCase().includes("already")
-          ? "An account with this email already exists."
-          : "We could not create your account. Try again shortly.",
+        "An account with this email already exists and is verified. Sign in with your password, or reset it if you have forgotten it.",
+      fieldErrors: {
+        email: ["This email is already registered and verified."],
+      },
     };
   }
 
@@ -200,13 +232,26 @@ export async function resendVerificationAction(
 
   const supabase = await createClient();
   const env = getPublicEnv();
-  await supabase.auth.resend({
+  const { error } = await supabase.auth.resend({
     type: "signup",
     email: parsed.data.email,
     options: {
       emailRedirectTo: `${env.NEXT_PUBLIC_APP_URL}/auth/callback`,
     },
   });
+
+  // Rate limits are project-wide, so reporting them reveals nothing about the
+  // address. Everything else reports success to stop account enumeration.
+  if (
+    error &&
+    (error.status === 429 || error.message.toLowerCase().includes("rate limit"))
+  ) {
+    return {
+      ok: false,
+      message:
+        "The email service is rate limited right now. Wait a few minutes, then try again.",
+    };
+  }
 
   // Always report success so the form cannot be used to enumerate accounts.
   return {
