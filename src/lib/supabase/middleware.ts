@@ -69,9 +69,27 @@ export async function updateSession(request: NextRequest) {
   ) {
     const { data: profile } = await supabase
       .from("profiles")
-      .select("is_super_admin")
+      .select(
+        "is_super_admin, user_role_assignments!user_role_assignments_user_id_fkey(role_key)",
+      )
       .eq("id", user.id)
       .maybeSingle();
+
+    const roleKeys = (profile?.user_role_assignments ?? []).map(
+      (assignment) => assignment.role_key,
+    );
+    const isTrainerAccount =
+      !profile?.is_super_admin &&
+      (roleKeys.includes("instructor") || roleKeys.includes("training_admin"));
+
+    // Trainer accounts have their own workspace and never use the personal
+    // dashboard, so bounce them at the edge before any dashboard page renders.
+    if (isTrainerAccount) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/trainer";
+      url.search = "";
+      return NextResponse.redirect(url);
+    }
 
     if (profile?.is_super_admin) {
       if (pathname === "/dashboard" || pathname.startsWith("/onboarding")) {
