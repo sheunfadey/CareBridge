@@ -250,6 +250,7 @@ export async function createCourseAction(
 
     revalidatePath("/dashboard/academy");
     revalidatePath("/dashboard/academy/manage");
+  revalidatePath("/trainer/courses");
     revalidatePath("/courses");
     return {
       ok: true,
@@ -338,8 +339,11 @@ export async function createCourseCategoryAction(
     });
 
     revalidatePath("/dashboard/academy/manage");
+  revalidatePath("/trainer/courses");
     revalidatePath("/dashboard/academy/manage/categories");
+  revalidatePath("/trainer/courses/categories");
     revalidatePath("/dashboard/academy/manage/new");
+  revalidatePath("/trainer/courses/new");
     return { ok: true, message: "Category created." };
   } catch (error) {
     return toFriendlyError(error);
@@ -432,8 +436,11 @@ export async function updateCourseCategoryAction(
     });
 
     revalidatePath("/dashboard/academy/manage");
+  revalidatePath("/trainer/courses");
     revalidatePath("/dashboard/academy/manage/categories");
+  revalidatePath("/trainer/courses/categories");
     revalidatePath("/dashboard/academy/manage/new");
+  revalidatePath("/trainer/courses/new");
     return { ok: true, message: "Category updated." };
   } catch (error) {
     return toFriendlyError(error);
@@ -489,8 +496,11 @@ export async function setCourseCategoryActiveAction(
     });
 
     revalidatePath("/dashboard/academy/manage");
+  revalidatePath("/trainer/courses");
     revalidatePath("/dashboard/academy/manage/categories");
+  revalidatePath("/trainer/courses/categories");
     revalidatePath("/dashboard/academy/manage/new");
+  revalidatePath("/trainer/courses/new");
     return {
       ok: true,
       message: active ? "Category activated." : "Category archived.",
@@ -556,6 +566,7 @@ export async function updateCourseAction(
     });
 
     revalidatePath(`/dashboard/academy/manage/${course.id}`);
+  revalidatePath(`/trainer/courses/${course.id}`);
     revalidatePath(`/courses/${course.slug}`);
     return { ok: true, message: "Course details saved." };
   } catch (error) {
@@ -626,7 +637,9 @@ export async function setCoursePublicationAction(
 
     revalidatePath("/dashboard/academy");
     revalidatePath("/dashboard/academy/manage");
+  revalidatePath("/trainer/courses");
     revalidatePath(`/dashboard/academy/manage/${courseId}`);
+  revalidatePath(`/trainer/courses/${courseId}`);
     revalidatePath("/courses");
     revalidatePath(`/courses/${course.slug}`);
 
@@ -700,6 +713,7 @@ export async function addModuleAction(
     });
 
     revalidatePath(`/dashboard/academy/manage/${course.id}`);
+  revalidatePath(`/trainer/courses/${course.id}`);
     return { ok: true, message: "Module added." };
   } catch (error) {
     return toFriendlyError(error);
@@ -779,6 +793,7 @@ export async function addLessonAction(
     });
 
     revalidatePath(`/dashboard/academy/manage/${course.id}`);
+  revalidatePath(`/trainer/courses/${course.id}`);
     return { ok: true, message: "Lesson added." };
   } catch (error) {
     return toFriendlyError(error);
@@ -874,6 +889,7 @@ export async function addLearningResourceAction(
     });
 
     revalidatePath(`/dashboard/academy/manage/${course.id}`);
+  revalidatePath(`/trainer/courses/${course.id}`);
     revalidatePath(`/dashboard/academy/learning/${course.id}`);
     return { ok: true, message: "Resource added." };
   } catch (error) {
@@ -1024,6 +1040,7 @@ export async function addLearningResourceUploadAction(
     });
 
     revalidatePath(`/dashboard/academy/manage/${course.id}`);
+  revalidatePath(`/trainer/courses/${course.id}`);
     revalidatePath(`/dashboard/academy/learning/${course.id}`);
     return { ok: true, message: "Resource uploaded." };
   } catch (error) {
@@ -1209,6 +1226,7 @@ export async function createAssessmentAction(
     });
 
     revalidatePath(`/dashboard/academy/manage/${course.id}`);
+  revalidatePath(`/trainer/courses/${course.id}`);
     return {
       ok: true,
       message: "Assessment created as a draft.",
@@ -1315,6 +1333,9 @@ export async function addAssessmentQuestionAction(
     revalidatePath(
       `/dashboard/academy/manage/${assessment.course_id}/assessments/${assessment.id}`,
     );
+    revalidatePath(
+      `/trainer/courses/${assessment.course_id}/assessments/${assessment.id}`,
+    );
     return { ok: true, message: "Question added." };
   } catch (error) {
     return toFriendlyError(error);
@@ -1390,8 +1411,12 @@ export async function setAssessmentPublicationAction(
     });
 
     revalidatePath(`/dashboard/academy/manage/${assessment.course_id}`);
+  revalidatePath(`/trainer/courses/${assessment.course_id}`);
     revalidatePath(
       `/dashboard/academy/manage/${assessment.course_id}/assessments/${assessment.id}`,
+    );
+    revalidatePath(
+      `/trainer/courses/${assessment.course_id}/assessments/${assessment.id}`,
     );
     revalidatePath(`/dashboard/academy/learning/${assessment.course_id}`);
 

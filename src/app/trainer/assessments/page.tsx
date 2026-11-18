@@ -34,7 +34,7 @@ export default async function TrainerAssessmentsPage() {
         ]}
         actions={
           <Button variant="outline" className="rounded-full" asChild>
-            <Link href="/dashboard/academy/manage">Course Studio</Link>
+            <Link href="/trainer/courses">Course Studio</Link>
           </Button>
         }
       />
@@ -55,7 +55,7 @@ export default async function TrainerAssessmentsPage() {
             {assessments.map((assessment) => (
               <li key={assessment.id}>
                 <Link
-                  href={`/dashboard/academy/manage/${assessment.courseId}/assessments/${assessment.id}`}
+                  href={`/trainer/courses/${assessment.courseId}/assessments/${assessment.id}`}
                   className="flex flex-wrap items-center justify-between gap-3 p-4 transition hover:bg-brand-navy/[0.03]"
                 >
                   <div className="min-w-0">

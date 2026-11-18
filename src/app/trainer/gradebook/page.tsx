@@ -52,7 +52,7 @@ export default async function TrainerGradebookPage() {
             className="rounded-full border-brand-navy/15 bg-card/70"
             asChild
           >
-            <Link href="/dashboard/academy/manage">Course Studio</Link>
+            <Link href="/trainer/courses">Course Studio</Link>
           </Button>
         }
       />
@@ -80,7 +80,7 @@ export default async function TrainerGradebookPage() {
             {submissions.map((submission) => (
               <li key={submission.id}>
                 <Link
-                  href={`/dashboard/academy/manage/${submission.courseId}/assessments/${submission.assessmentId}`}
+                  href={`/trainer/courses/${submission.courseId}/assessments/${submission.assessmentId}`}
                   className="grid gap-2 p-4 text-sm transition hover:bg-brand-navy/[0.03] lg:grid-cols-[1.2fr_1.4fr_0.6fr_0.6fr_0.7fr] lg:items-center lg:gap-3"
                 >
                   <div className="min-w-0">

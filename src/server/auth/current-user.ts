@@ -157,15 +157,20 @@ export function userHasPermission(
 }
 
 /**
- * The trainer workspace is a separate product surface, so it is gated by the
- * teaching roles rather than by course permissions that care managers also hold.
+ * Trainer accounts use the standalone trainer workspace and never the personal
+ * dashboard. Course permissions alone are not enough, because care managers
+ * hold them too.
  */
-export function canUseTrainerWorkspace(user: CurrentUser): boolean {
+export function isTrainerAccount(user: CurrentUser): boolean {
   return (
-    user.isSuperAdmin ||
-    user.roles.includes("instructor") ||
-    user.roles.includes("training_admin")
+    !user.isSuperAdmin &&
+    (user.roles.includes("instructor") || user.roles.includes("training_admin"))
   );
+}
+
+/** The standalone trainer workspace, including platform super administrators. */
+export function canUseTrainerWorkspace(user: CurrentUser): boolean {
+  return user.isSuperAdmin || isTrainerAccount(user);
 }
 
 export function canAccessOrganisation(

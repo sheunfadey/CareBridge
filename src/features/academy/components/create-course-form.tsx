@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import { FormAlert, FormFieldError } from "@/features/auth/components/auth-ui";
 import { createCourseAction } from "@/features/academy/actions";
+import { rebaseStudioHref } from "@/features/academy/studio/base";
 import {
   COURSE_DIFFICULTIES,
   courseDifficultyLabels,
@@ -42,7 +43,8 @@ export function CreateCourseForm({
   programmes,
   organisations,
   categories,
-}: CreateCourseFormProps) {
+  manageHref = "/dashboard/academy/manage",
+}: CreateCourseFormProps & { manageHref?: string }) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
@@ -106,7 +108,7 @@ export function CreateCourseForm({
       const result = await createCourseAction(payload);
       if (result.ok) {
         if (result.redirectTo) {
-          router.push(result.redirectTo);
+          router.push(rebaseStudioHref(result.redirectTo, manageHref) ?? manageHref);
         } else {
           router.refresh();
         }
@@ -234,7 +236,7 @@ export function CreateCourseForm({
           <div className="flex items-center justify-between gap-2">
             <Label htmlFor="course-category">Category (optional)</Label>
             <Link
-              href="/dashboard/academy/manage/categories"
+              href={`${manageHref}/categories`}
               className="text-xs font-medium text-brand-teal hover:underline"
             >
               Manage
@@ -400,7 +402,7 @@ export function CreateCourseForm({
           {isPending ? "Creating..." : "Create draft course"}
         </Button>
         <Button type="button" variant="outline" asChild>
-          <Link href="/dashboard/academy/manage">Cancel</Link>
+          <Link href={manageHref}>Cancel</Link>
         </Button>
       </div>
     </form>

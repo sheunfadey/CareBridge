@@ -7,10 +7,7 @@ import { Card } from "@/components/ui/card";
 import { PasswordForm } from "@/features/account/components/password-form";
 import { ProfileSettings } from "@/features/account/components/profile-settings";
 import { switchPortalAction } from "@/features/portal/actions";
-import {
-  canUseTrainerWorkspace,
-  getCurrentUser,
-} from "@/server/auth/current-user";
+import { getCurrentUser } from "@/server/auth/current-user";
 
 type AccountSettingsProps = {
   basePath: "/dashboard" | "/trainer";
@@ -30,7 +27,6 @@ export async function AccountSettings({
   }
 
   const isTrainerSurface = basePath === "/trainer";
-  const trainerWorkspace = canUseTrainerWorkspace(user);
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
@@ -126,62 +122,41 @@ export async function AccountSettings({
           </div>
         </Card>
 
-        <Card className="space-y-3 p-4 lg:col-span-2">
-          <div>
-            <h2 className="font-heading text-base font-semibold text-brand-strong">
-              {isTrainerSurface ? "Personal portals" : "Portal"}
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              {isTrainerSurface
-                ? "Switch to your personal student or caregiver portal. Your trainer workspace and permissions stay as they are."
-                : "Choose the home that matches what you are doing today. Your permissions and records do not change."}
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <form action={switchPortalAction}>
-              <input type="hidden" name="portal" value="student" />
-              <Button
-                type="submit"
-                variant={
-                  !isTrainerSurface && user.activePortal === "student"
-                    ? "default"
-                    : "outline"
-                }
-                disabled={!isTrainerSurface && user.activePortal === "student"}
-              >
-                Student portal
-              </Button>
-            </form>
-            <form action={switchPortalAction}>
-              <input type="hidden" name="portal" value="caregiver" />
-              <Button
-                type="submit"
-                variant={
-                  !isTrainerSurface && user.activePortal === "caregiver"
-                    ? "default"
-                    : "outline"
-                }
-                disabled={!isTrainerSurface && user.activePortal === "caregiver"}
-              >
-                Caregiver portal
-              </Button>
-            </form>
-            {trainerWorkspace ? (
-              isTrainerSurface ? (
-                <Button type="button" disabled>
-                  Trainer workspace
+        {!isTrainerSurface ? (
+          <Card className="space-y-3 p-4 lg:col-span-2">
+            <div>
+              <h2 className="font-heading text-base font-semibold text-brand-strong">
+                Portal
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Choose the home that matches what you are doing today. Your
+                permissions and records do not change.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <form action={switchPortalAction}>
+                <input type="hidden" name="portal" value="student" />
+                <Button
+                  type="submit"
+                  variant={user.activePortal === "student" ? "default" : "outline"}
+                  disabled={user.activePortal === "student"}
+                >
+                  Student portal
                 </Button>
-              ) : (
-                <form action={switchPortalAction}>
-                  <input type="hidden" name="portal" value="trainer" />
-                  <Button type="submit" variant="outline">
-                    Trainer workspace
-                  </Button>
-                </form>
-              )
-            ) : null}
-          </div>
-        </Card>
+              </form>
+              <form action={switchPortalAction}>
+                <input type="hidden" name="portal" value="caregiver" />
+                <Button
+                  type="submit"
+                  variant={user.activePortal === "caregiver" ? "default" : "outline"}
+                  disabled={user.activePortal === "caregiver"}
+                >
+                  Caregiver portal
+                </Button>
+              </form>
+            </div>
+          </Card>
+        ) : null}
 
         {showOrganisations ? (
           <Card className="space-y-3 p-4 lg:col-span-2">

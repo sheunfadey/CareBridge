@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import { FormAlert, FormFieldError } from "@/features/auth/components/auth-ui";
 import { createAssessmentAction } from "@/features/academy/actions";
+import { rebaseStudioHref } from "@/features/academy/studio/base";
 import {
   ASSESSMENT_KINDS,
   assessmentKindLabels,
@@ -34,9 +35,11 @@ const selectClass =
 export function CreateAssessmentDialog({
   courseId,
   children,
+  manageHref = "/dashboard/academy/manage",
 }: {
   courseId: string;
   children: ReactNode;
+  manageHref?: string;
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -87,7 +90,7 @@ export function CreateAssessmentDialog({
         });
         setOpen(false);
         if (result.redirectTo) {
-          router.push(result.redirectTo);
+          router.push(rebaseStudioHref(result.redirectTo, manageHref) ?? manageHref);
         } else {
           router.refresh();
         }

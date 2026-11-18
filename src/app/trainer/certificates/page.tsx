@@ -41,7 +41,7 @@ export default async function TrainerCertificatesPage() {
         ]}
         actions={
           <Button variant="outline" className="rounded-full" asChild>
-            <Link href="/dashboard/academy/manage">Course Studio</Link>
+            <Link href="/trainer/courses">Course Studio</Link>
           </Button>
         }
       />

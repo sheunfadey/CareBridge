@@ -215,9 +215,9 @@ export const trainerNav: NavSection = {
     {
       label: "Course Studio",
       items: [
-        { label: "Manage courses", href: "/dashboard/academy/manage", icon: "FileCog", permissions: ["course_manage", "course_publish", "learning_material_manage"] },
-        { label: "New course", href: "/dashboard/academy/manage/new", icon: "PlusCircle", permissions: ["course_manage"] },
-        { label: "Categories", href: "/dashboard/academy/manage/categories", icon: "Tags", permissions: ["course_manage"] },
+        { label: "Manage courses", href: "/trainer/courses", icon: "FileCog", permissions: ["course_manage", "course_publish", "learning_material_manage"] },
+        { label: "New course", href: "/trainer/courses/new", icon: "PlusCircle", permissions: ["course_manage"] },
+        { label: "Categories", href: "/trainer/courses/categories", icon: "Tags", permissions: ["course_manage"] },
       ],
     },
     {
@@ -227,7 +227,6 @@ export const trainerNav: NavSection = {
         { label: "Assessments", href: "/trainer/assessments", icon: "ClipboardList", permissions: ["assessment_manage", "assessment_grade", "course_manage"] },
         { label: "Gradebook", href: "/trainer/gradebook", icon: "ClipboardCheck", permissions: ["assessment_grade", "assessment_manage", "course_manage"] },
         { label: "Certificates", href: "/trainer/certificates", icon: "Award", permissions: ["course_manage", "course_publish"] },
-        { label: "Reports", href: "/dashboard/reports", icon: "BarChart3", permissions: ["report_view"] },
       ],
     },
     trainerCommunicationGroup,

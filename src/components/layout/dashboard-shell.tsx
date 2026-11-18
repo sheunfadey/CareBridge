@@ -14,7 +14,6 @@ type DashboardShellProps = {
   notifications?: ComponentProps<typeof Topbar>["notifications"];
   activePortal?: PortalMode;
   surface?: "portal" | "trainer";
-  trainerWorkspace?: boolean;
 };
 
 export function DashboardShell({
@@ -25,7 +24,6 @@ export function DashboardShell({
   notifications,
   activePortal,
   surface = "portal",
-  trainerWorkspace = false,
 }: DashboardShellProps) {
   return (
     <div className="flex min-h-svh bg-background">
@@ -48,7 +46,6 @@ export function DashboardShell({
           notifications={notifications}
           activePortal={activePortal}
           surface={surface}
-          trainerWorkspace={trainerWorkspace}
         />
         <main
           id="main-content"

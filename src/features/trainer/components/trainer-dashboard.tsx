@@ -61,7 +61,7 @@ export function TrainerDashboard({
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
             <Button className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90" asChild>
-              <Link href="/dashboard/academy/manage">
+              <Link href="/trainer/courses">
                 <BookOpenCheckIcon />
                 Open Course Studio
               </Link>
@@ -71,7 +71,7 @@ export function TrainerDashboard({
               className="rounded-full border-brand-navy/15 bg-white/60"
               asChild
             >
-              <Link href="/dashboard/academy/manage/new">
+              <Link href="/trainer/courses/new">
                 <PlusIcon />
                 New course
               </Link>
@@ -90,7 +90,7 @@ export function TrainerDashboard({
             icon={<LayersIcon className="size-4.5" />}
             tone="lavender"
             index={0}
-            href="/dashboard/academy/manage"
+            href="/trainer/courses"
           />
           <OverviewTile
             label="Learners"
@@ -124,7 +124,7 @@ export function TrainerDashboard({
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <Link
-          href="/dashboard/academy/manage/new"
+          href="/trainer/courses/new"
           className="rounded-[var(--radius-2xl)] bg-card/85 p-4 ring-1 ring-foreground/10 transition hover:ring-brand-navy/20"
         >
           <GraduationCapIcon className="size-5 text-portal-lavender-strong" />
@@ -148,7 +148,7 @@ export function TrainerDashboard({
           </p>
         </Link>
         <Link
-          href="/dashboard/academy/manage/categories"
+          href="/trainer/courses/categories"
           className="rounded-[var(--radius-2xl)] bg-card/85 p-4 ring-1 ring-foreground/10 transition hover:ring-brand-navy/20"
         >
           <LayersIcon className="size-5 text-portal-mint-strong" />
@@ -160,7 +160,7 @@ export function TrainerDashboard({
           </p>
         </Link>
         <Link
-          href="/dashboard/academy/manage"
+          href="/trainer/courses"
           className="rounded-[var(--radius-2xl)] bg-card/85 p-4 ring-1 ring-foreground/10 transition hover:ring-brand-navy/20"
         >
           <PresentationIcon className="size-5 text-portal-peach-strong" />
@@ -189,7 +189,7 @@ export function TrainerDashboard({
                 {data.submissions.slice(0, 5).map((submission) => (
                   <li key={submission.id}>
                     <Link
-                      href={`/dashboard/academy/manage/${submission.courseId}/assessments/${submission.assessmentId}`}
+                      href={`/trainer/courses/${submission.courseId}/assessments/${submission.assessmentId}`}
                       className="flex items-center gap-3 py-3"
                     >
                       <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-portal-sky text-portal-sky-strong">
@@ -225,7 +225,7 @@ export function TrainerDashboard({
           <div className="h-full rounded-[var(--radius-2xl)] bg-card/85 p-4 ring-1 ring-foreground/10">
             <SectionHeading
               title="Your courses"
-              actionHref="/dashboard/academy/manage"
+              actionHref="/trainer/courses"
             />
             {data.courses.length === 0 ? (
               <div className="rounded-xl bg-brand-navy/5 px-4 py-6 text-center">
@@ -233,7 +233,7 @@ export function TrainerDashboard({
                   No courses yet
                 </p>
                 <Button className="mt-3 rounded-full" size="sm" asChild>
-                  <Link href="/dashboard/academy/manage/new">Create course</Link>
+                  <Link href="/trainer/courses/new">Create course</Link>
                 </Button>
               </div>
             ) : (
@@ -241,7 +241,7 @@ export function TrainerDashboard({
                 {data.courses.slice(0, 5).map((course) => (
                   <li key={course.id}>
                     <Link
-                      href={`/dashboard/academy/manage/${course.id}`}
+                      href={`/trainer/courses/${course.id}`}
                       className="flex items-center gap-3 py-3"
                     >
                       <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-portal-lavender text-portal-lavender-strong">

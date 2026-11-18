@@ -180,18 +180,14 @@ export function Sidebar({
       ? superAdminNav
       : activePortal === "caregiver"
         ? caregiverNav
-        : activePortal === "trainer"
-          ? trainerNav
-          : studentNav;
+        : studentNav;
   const defaultOpenGroups = isTrainerSurface
     ? ["Course Studio", "Learner performance", "Communication"]
     : isSuperAdmin
       ? []
       : activePortal === "caregiver"
         ? ["Care work", "Work", "Course Studio", "Communication"]
-        : activePortal === "trainer"
-          ? ["Course Studio", "Learner performance", "Communication"]
-          : ["Academy", "Career", "Communication"];
+        : ["Academy", "Career", "Communication"];
   const homeHref = isTrainerSurface ? "/trainer" : "/dashboard";
   const sidebarLabel = isTrainerSurface
     ? "Trainer studio"
@@ -199,9 +195,7 @@ export function Sidebar({
       ? "Care workspace"
       : pathname.startsWith("/dashboard/organisation")
         ? "Organisation"
-        : activePortal === "trainer"
-          ? "Trainer studio"
-          : `${activePortal} portal`;
+        : `${activePortal} portal`;
 
   const canSee = React.useCallback(
     (item: NavItem) =>

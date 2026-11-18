@@ -10,7 +10,6 @@ import {
   LogOutIcon,
   MenuIcon,
   MoonIcon,
-  PresentationIcon,
   SearchIcon,
   SunIcon,
 } from "lucide-react";
@@ -55,8 +54,6 @@ type TopbarProps = {
   activePortal?: PortalMode;
   /** The standalone trainer workspace hides the shared portal switching. */
   surface?: "portal" | "trainer";
-  /** Whether the avatar menu should offer the separate trainer workspace. */
-  trainerWorkspace?: boolean;
   className?: string;
 };
 
@@ -67,7 +64,6 @@ export function Topbar({
   permissions = [],
   activePortal = "student",
   surface = "portal",
-  trainerWorkspace = false,
   className,
 }: TopbarProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -195,53 +191,46 @@ export function Topbar({
               </span>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuLabel className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-              {isTrainerSurface ? "Personal portals" : "Switch portal"}
-            </DropdownMenuLabel>
-            <form action={switchPortalAction}>
-              <input type="hidden" name="portal" value="student" />
-              <DropdownMenuItem asChild>
-                <button
-                  type="submit"
-                  className="flex w-full items-center gap-2"
-                  disabled={activePortal === "student"}
-                >
-                  <GraduationCapIcon />
-                  Student portal
-                  {activePortal === "student" ? (
-                    <CheckIcon className="ml-auto size-4 text-brand-blue" />
-                  ) : null}
-                </button>
-              </DropdownMenuItem>
-            </form>
-            <form action={switchPortalAction}>
-              <input type="hidden" name="portal" value="caregiver" />
-              <DropdownMenuItem asChild>
-                <button
-                  type="submit"
-                  className="flex w-full items-center gap-2"
-                  disabled={activePortal === "caregiver"}
-                >
-                  <HeartHandshakeIcon />
-                  Caregiver portal
-                  {activePortal === "caregiver" ? (
-                    <CheckIcon className="ml-auto size-4 text-brand-blue" />
-                  ) : null}
-                </button>
-              </DropdownMenuItem>
-            </form>
-            {!isTrainerSurface && trainerWorkspace ? (
-              <form action={switchPortalAction}>
-                <input type="hidden" name="portal" value="trainer" />
-                <DropdownMenuItem asChild>
-                  <button type="submit" className="flex w-full items-center gap-2">
-                    <PresentationIcon />
-                    Trainer workspace
-                  </button>
-                </DropdownMenuItem>
-              </form>
+            {!isTrainerSurface ? (
+              <>
+                <DropdownMenuLabel className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                  Switch portal
+                </DropdownMenuLabel>
+                <form action={switchPortalAction}>
+                  <input type="hidden" name="portal" value="student" />
+                  <DropdownMenuItem asChild>
+                    <button
+                      type="submit"
+                      className="flex w-full items-center gap-2"
+                      disabled={activePortal === "student"}
+                    >
+                      <GraduationCapIcon />
+                      Student portal
+                      {activePortal === "student" ? (
+                        <CheckIcon className="ml-auto size-4 text-brand-blue" />
+                      ) : null}
+                    </button>
+                  </DropdownMenuItem>
+                </form>
+                <form action={switchPortalAction}>
+                  <input type="hidden" name="portal" value="caregiver" />
+                  <DropdownMenuItem asChild>
+                    <button
+                      type="submit"
+                      className="flex w-full items-center gap-2"
+                      disabled={activePortal === "caregiver"}
+                    >
+                      <HeartHandshakeIcon />
+                      Caregiver portal
+                      {activePortal === "caregiver" ? (
+                        <CheckIcon className="ml-auto size-4 text-brand-blue" />
+                      ) : null}
+                    </button>
+                  </DropdownMenuItem>
+                </form>
+                <DropdownMenuSeparator />
+              </>
             ) : null}
-            <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <Link href={`${basePath}/settings`}>Profile &amp; settings</Link>
             </DropdownMenuItem>
