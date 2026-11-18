@@ -65,7 +65,9 @@ export async function updateSession(request: NextRequest) {
 
   if (
     user &&
-    (pathname.startsWith("/dashboard") || pathname.startsWith("/onboarding"))
+    (pathname.startsWith("/dashboard") ||
+      pathname.startsWith("/trainer") ||
+      pathname.startsWith("/onboarding"))
   ) {
     const { data: profile } = await supabase
       .from("profiles")
@@ -82,13 +84,24 @@ export async function updateSession(request: NextRequest) {
       !profile?.is_super_admin &&
       (roleKeys.includes("instructor") || roleKeys.includes("training_admin"));
 
-    // Trainer accounts have their own workspace and never use the personal
-    // dashboard, so bounce them at the edge before any dashboard page renders.
-    if (isTrainerAccount) {
+    // The trainer workspace and the personal portals are separate products:
+    // trainer accounts never enter /dashboard, and everyone else never enters
+    // /trainer. Both directions are decided at the edge.
+    if (isTrainerAccount && pathname.startsWith("/dashboard")) {
       const url = request.nextUrl.clone();
       url.pathname = "/trainer";
       url.search = "";
       return NextResponse.redirect(url);
+    }
+
+    if (pathname.startsWith("/trainer")) {
+      if (!isTrainerAccount && !profile?.is_super_admin) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/dashboard";
+        url.search = "";
+        return NextResponse.redirect(url);
+      }
+      return supabaseResponse;
     }
 
     if (profile?.is_super_admin) {
