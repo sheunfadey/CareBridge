@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function TrainerNotificationsPage() {
-  return <NotificationsScreen homeHref="/trainer" homeLabel="Trainer home" />;
+  return <NotificationsScreen homeHref="/trainer" homeLabel="Dashboard" />;
 }

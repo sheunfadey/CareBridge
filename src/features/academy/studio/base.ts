@@ -27,7 +27,7 @@ export const trainerStudioBase: StudioBase = {
   manageHref: "/trainer/courses",
   academyHref: "/trainer",
   homeHref: "/trainer",
-  homeLabel: "Trainer home",
+  homeLabel: "Dashboard",
   eyebrow: "Trainer workspace",
 };
 

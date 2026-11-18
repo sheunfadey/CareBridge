@@ -10,7 +10,7 @@ export default function TrainerNotificationSettingsPage() {
   return (
     <NotificationPreferencesScreen
       basePath="/trainer"
-      homeLabel="Trainer home"
+      homeLabel="Dashboard"
     />
   );
 }

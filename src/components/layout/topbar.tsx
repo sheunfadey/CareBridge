@@ -234,7 +234,7 @@ export function Topbar({
             <DropdownMenuItem asChild>
               <Link href={`${basePath}/settings`}>Profile &amp; settings</Link>
             </DropdownMenuItem>
-            {!isTrainerSurface ? (
+            {!isTrainerSurface && activePortal === "caregiver" ? (
               <DropdownMenuItem asChild>
                 <Link href="/dashboard/overview">Workspace overview</Link>
               </DropdownMenuItem>

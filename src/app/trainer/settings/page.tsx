@@ -10,7 +10,7 @@ export default function TrainerSettingsPage() {
   return (
     <AccountSettings
       basePath="/trainer"
-      homeLabel="Trainer home"
+      homeLabel="Dashboard"
       showOrganisations={false}
     />
   );

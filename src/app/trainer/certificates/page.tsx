@@ -36,7 +36,7 @@ export default async function TrainerCertificatesPage() {
         title="Issued certificates"
         description="Certificates issued to learners across your courses, with public verification links."
         breadcrumbs={[
-          { label: "Trainer home", href: "/trainer" },
+          { label: "Dashboard", href: "/trainer" },
           { label: "Certificates" },
         ]}
         actions={

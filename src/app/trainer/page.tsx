@@ -9,7 +9,7 @@ import {
 import { getTrainerDashboardData } from "@/server/trainer/queries";
 
 export const metadata: Metadata = {
-  title: "Trainer home",
+  title: "Dashboard",
 };
 
 export default async function TrainerHomePage() {

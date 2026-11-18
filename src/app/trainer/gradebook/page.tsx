@@ -43,7 +43,7 @@ export default async function TrainerGradebookPage() {
         title="Gradebook"
         description="Assessment submissions across your courses, with learner scores and pass status."
         breadcrumbs={[
-          { label: "Trainer home", href: "/trainer" },
+          { label: "Dashboard", href: "/trainer" },
           { label: "Gradebook" },
         ]}
         actions={

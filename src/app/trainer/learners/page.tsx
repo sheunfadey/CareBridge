@@ -37,7 +37,7 @@ export default async function TrainerLearnersPage() {
         title="Learners"
         description="Everyone enrolled across your courses, with progress and completion status."
         breadcrumbs={[
-          { label: "Trainer home", href: "/trainer" },
+          { label: "Dashboard", href: "/trainer" },
           { label: "Learners" },
         ]}
         actions={

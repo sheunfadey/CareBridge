@@ -52,7 +52,7 @@ export async function MessagesWorkspace({
         title="Messages"
         description="Private conversations with active members of your organisations. Messages are permanent, organisation-scoped and visible only to the people in the conversation."
         breadcrumbs={[
-          { label: basePath === "/trainer" ? "Trainer home" : "Dashboard", href: basePath },
+          { label: "Dashboard", href: basePath },
           { label: "Messages" },
         ]}
         actions={

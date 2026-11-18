@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function TrainerHelpPage() {
-  return <HelpCentre homeHref="/trainer" homeLabel="Trainer home" />;
+  return <HelpCentre homeHref="/trainer" homeLabel="Dashboard" />;
 }

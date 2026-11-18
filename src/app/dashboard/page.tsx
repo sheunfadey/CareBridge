@@ -115,7 +115,7 @@ export default async function DashboardPage() {
         <StudentDashboard
           user={person}
           data={await getStudentDashboardData(user.id)}
-          showWorkspaceOverview={showWorkspaceOverview}
+          showWorkspaceOverview={false}
         />
       )}
     </div>

@@ -29,7 +29,7 @@ export default async function TrainerAssessmentsPage() {
         title="Assessments"
         description="Tests and exams across your courses, with pass marks, question counts and submissions."
         breadcrumbs={[
-          { label: "Trainer home", href: "/trainer" },
+          { label: "Dashboard", href: "/trainer" },
           { label: "Assessments" },
         ]}
         actions={

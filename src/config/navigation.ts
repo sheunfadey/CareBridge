@@ -210,7 +210,7 @@ const trainerCommunicationGroup: NavGroup = {
  * administration, so those entries point into the dashboard.
  */
 export const trainerNav: NavSection = {
-  pinned: [{ label: "Trainer home", href: "/trainer", icon: "Presentation" }],
+  pinned: [{ label: "Dashboard", href: "/trainer", icon: "Presentation" }],
   groups: [
     {
       label: "Course Studio",
