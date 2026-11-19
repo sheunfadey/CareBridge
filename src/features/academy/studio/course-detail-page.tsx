@@ -111,13 +111,21 @@ export async function CourseDetailPage({
       />
 
       <div className="flex flex-col gap-4 rounded-[var(--radius-2xl)] bg-card/90 p-4 ring-1 ring-foreground/10 sm:flex-row sm:items-center">
-        <div className="flex h-24 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl bg-portal-peach/60 sm:w-36">
+        <div className="group relative flex h-24 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl bg-portal-peach/60 sm:w-36">
           {course.coverImageUrl ? (
-            <img
-              src={course.coverImageUrl}
-              alt={`${course.title} cover`}
-              className="h-full w-full object-contain transition-transform duration-300 hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100"
-            />
+            <>
+              <img
+                src={course.coverImageUrl}
+                alt={`${course.title} cover`}
+                className="h-full w-full object-contain transition-opacity duration-300 group-hover:opacity-0 motion-reduce:transition-none"
+              />
+              <img
+                src={course.coverImageUrl}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 h-full w-full scale-105 object-cover opacity-0 transition-all duration-500 ease-out group-hover:scale-100 group-hover:opacity-100 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+              />
+            </>
           ) : null}
         </div>
         <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">

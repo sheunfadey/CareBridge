@@ -140,12 +140,21 @@ export default async function MyCoursesPage() {
                   />
                   <div className="relative flex h-44 items-center justify-center overflow-hidden bg-portal-sky/40">
                     {course.coverImageUrl ? (
-                      <img
-                        src={course.coverImageUrl}
-                        alt={`${course.title} cover`}
-                        loading="lazy"
-                        className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-                      />
+                      <>
+                        <img
+                          src={course.coverImageUrl}
+                          alt={`${course.title} cover`}
+                          loading="lazy"
+                          className="h-full w-full object-contain transition-opacity duration-300 group-hover:opacity-0 motion-reduce:transition-none"
+                        />
+                        <img
+                          src={course.coverImageUrl}
+                          alt=""
+                          aria-hidden="true"
+                          loading="lazy"
+                          className="absolute inset-0 h-full w-full scale-105 object-cover opacity-0 transition-all duration-500 ease-out group-hover:scale-100 group-hover:opacity-100 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                        />
+                      </>
                     ) : (
                       <span className="flex flex-col items-center gap-1 text-portal-sky-strong">
                         <BookOpenCheckIcon className="size-7" aria-hidden="true" />
