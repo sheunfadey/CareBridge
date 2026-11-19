@@ -3,7 +3,13 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { CheckIcon, XIcon, PauseIcon, RotateCcwIcon } from "lucide-react";
+import {
+  CheckIcon,
+  XIcon,
+  PauseIcon,
+  RotateCcwIcon,
+  Trash2Icon,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -17,9 +23,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
+  deleteOrganisationAction,
   setOrganisationStatusAction,
   setOrganisationVerificationAction,
 } from "@/features/admin/actions";
@@ -27,6 +35,7 @@ import {
 type OrganisationActionsProps = {
   organisationId: string;
   organisationName: string;
+  organisationSlug: string;
   status: "pending" | "active" | "suspended" | "disabled";
   verificationStatus: "unverified" | "pending" | "verified" | "rejected";
 };
@@ -57,6 +66,7 @@ function ReasonField({
 export function OrganisationActions({
   organisationId,
   organisationName,
+  organisationSlug,
   status,
   verificationStatus,
 }: OrganisationActionsProps) {
@@ -197,7 +207,121 @@ export function OrganisationActions({
           icon={<RotateCcwIcon aria-hidden="true" />}
         />
       ) : null}
+
+      <DeleteOrganisationDialog
+        organisationId={organisationId}
+        organisationName={organisationName}
+        organisationSlug={organisationSlug}
+        disabled={pending}
+      />
     </div>
+  );
+}
+
+function DeleteOrganisationDialog({
+  organisationId,
+  organisationName,
+  organisationSlug,
+  disabled,
+}: {
+  organisationId: string;
+  organisationName: string;
+  organisationSlug: string;
+  disabled: boolean;
+}) {
+  const router = useRouter();
+  const [open, setOpen] = React.useState(false);
+  const [confirmation, setConfirmation] = React.useState("");
+  const [reason, setReason] = React.useState("");
+  const [pending, startTransition] = React.useTransition();
+
+  const matches =
+    confirmation.trim().toLowerCase() === organisationSlug.toLowerCase();
+  const fieldId = `delete-confirm-${organisationId}`;
+
+  const submit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    startTransition(async () => {
+      const result = await deleteOrganisationAction({
+        organisationId,
+        confirmation,
+        reason,
+      });
+
+      if (result.ok) {
+        toast.success(result.message);
+        setOpen(false);
+        setConfirmation("");
+        setReason("");
+        router.refresh();
+      } else {
+        toast.error(result.message);
+      }
+    });
+  };
+
+  return (
+    <AlertDialog
+      open={open}
+      onOpenChange={(next) => {
+        if (pending) return;
+        setOpen(next);
+        if (!next) {
+          setConfirmation("");
+          setReason("");
+        }
+      }}
+    >
+      <AlertDialogTrigger asChild>
+        <Button variant="outline" size="sm" disabled={disabled}>
+          <Trash2Icon aria-hidden="true" className="text-brand-error" />
+          Delete
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Delete {organisationName}?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This permanently removes the organisation and everything inside it:
+            memberships, courses, enrolments, care records, invoices, donations
+            and reports. It cannot be undone.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+
+        <div className="space-y-2">
+          <Label htmlFor={fieldId}>
+            Type{" "}
+            <span className="font-mono font-semibold">{organisationSlug}</span>{" "}
+            to confirm
+          </Label>
+          <Input
+            id={fieldId}
+            value={confirmation}
+            onChange={(event) => setConfirmation(event.target.value)}
+            autoComplete="off"
+            spellCheck={false}
+            placeholder={organisationSlug}
+          />
+        </div>
+
+        <ReasonField
+          id={`delete-reason-${organisationId}`}
+          reason={reason}
+          onChange={setReason}
+        />
+
+        <AlertDialogFooter>
+          <AlertDialogCancel disabled={pending}>Cancel</AlertDialogCancel>
+          <AlertDialogAction
+            onClick={submit}
+            disabled={pending || !matches}
+            className="bg-brand-error text-white hover:bg-brand-error/90"
+          >
+            {pending ? "Deleting…" : "Delete organisation"}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
 

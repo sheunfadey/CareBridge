@@ -161,6 +161,42 @@ export const adminService = {
     return { ok: true, data: count ?? 0 };
   },
 
+  async getOrganisation(
+    organisationId: string,
+  ): Promise<AdminResult<OrganisationRow>> {
+    const client = createAdminClient();
+    if (!client) return unavailable();
+
+    const { data, error } = await client
+      .from("organisations")
+      .select("*")
+      .eq("id", organisationId)
+      .maybeSingle();
+
+    if (error) return failed(error.message);
+    if (!data) return failed("Organisation not found.");
+    return { ok: true, data };
+  },
+
+  /**
+   * Hard-deletes an organisation and every tenant-scoped row that cascades from
+   * it. The database function defers restrictive foreign keys to the end of the
+   * transaction so a single delete can cascade through history tables.
+   */
+  async deleteOrganisation(
+    organisationId: string,
+  ): Promise<AdminResult<{ id: string }>> {
+    const client = createAdminClient();
+    if (!client) return unavailable();
+
+    const { error } = await client.rpc("delete_organisation", {
+      p_organisation_id: organisationId,
+    });
+
+    if (error) return failed(error.message);
+    return { ok: true, data: { id: organisationId } };
+  },
+
   async setOrganisationStatus(
     organisationId: string,
     status: OrganisationRow["status"],

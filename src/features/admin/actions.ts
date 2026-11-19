@@ -177,3 +177,67 @@ export async function setOrganisationVerificationAction(input: {
     return { ok: false, message: "Something went wrong. Please try again." };
   }
 }
+
+/**
+ * Hard-deletes an organisation and all tenant-scoped data. The caller must type
+ * the organisation slug so an accidental click cannot destroy a workspace.
+ */
+export async function deleteOrganisationAction(input: {
+  organisationId: string;
+  confirmation: string;
+  reason?: string;
+}): Promise<AdminActionResult> {
+  try {
+    const user = await requireSuperAdmin();
+
+    const organisation = await adminService.getOrganisation(input.organisationId);
+    if (!organisation.ok) {
+      return { ok: false, message: organisation.message };
+    }
+
+    const expectedSlug = organisation.data.slug;
+    if (input.confirmation.trim().toLowerCase() !== expectedSlug.toLowerCase()) {
+      return {
+        ok: false,
+        message: "Type the organisation slug exactly to confirm deletion.",
+      };
+    }
+
+    const result = await adminService.deleteOrganisation(input.organisationId);
+    if (!result.ok) {
+      return {
+        ok: false,
+        message:
+          result.reason === "UNAVAILABLE"
+            ? result.message
+            : "The organisation could not be deleted. Some linked records may still block it.",
+      };
+    }
+
+    await recordAudit({
+      actorId: user.id,
+      organisationId: null,
+      action: "organisation.deleted",
+      entityType: "organisation",
+      entityId: input.organisationId,
+      metadata: {
+        name: organisation.data.name,
+        slug: organisation.data.slug,
+        type: organisation.data.type,
+        status: organisation.data.status,
+        via: "platform_admin",
+        reason: input.reason ? sanitiseReason(input.reason) : null,
+      },
+    });
+
+    revalidatePath("/dashboard/admin");
+    revalidatePath("/dashboard/admin/organisations");
+    return { ok: true, message: `${organisation.data.name} deleted.` };
+  } catch (error) {
+    if (error instanceof AuthorisationError) {
+      return { ok: false, message: "You do not have permission to do that." };
+    }
+    console.error("[admin] deleteOrganisationAction failed", error);
+    return { ok: false, message: "Something went wrong. Please try again." };
+  }
+}

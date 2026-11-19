@@ -7840,6 +7840,10 @@ export type Database = {
         Returns: boolean
       }
       current_organisation_ids: { Args: never; Returns: string[] }
+      delete_organisation: {
+        Args: { p_organisation_id: string }
+        Returns: undefined
+      }
       enrol_in_course: { Args: { p_course: string }; Returns: string }
       family_resident_summaries: {
         Args: never

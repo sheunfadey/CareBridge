@@ -99,6 +99,7 @@ export default async function AdminOrganisationsPage() {
                         <OrganisationActions
                           organisationId={org.id}
                           organisationName={org.name}
+                          organisationSlug={org.slug}
                           status={org.status}
                           verificationStatus={org.verification_status}
                         />
@@ -171,6 +172,7 @@ export default async function AdminOrganisationsPage() {
                         <OrganisationActions
                           organisationId={org.id}
                           organisationName={org.name}
+                          organisationSlug={org.slug}
                           status={org.status}
                           verificationStatus={org.verification_status}
                         />
