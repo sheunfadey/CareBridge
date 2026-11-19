@@ -14,7 +14,7 @@ import { getMyLearning } from "@/server/academy/queries";
 export async function generateMetadata(): Promise<Metadata> {
   const user = await getCurrentUser();
   return {
-    title: user?.activePortal === "caregiver" ? "My Learning" : "My Classroom",
+    title: user?.activePortal === "caregiver" ? "My Learning" : "My Progress",
   };
 }
 
@@ -69,7 +69,7 @@ export default async function MyLearningPage({
   }
 
   const learningLabel =
-    user.activePortal === "caregiver" ? "My Learning" : "My Classroom";
+    user.activePortal === "caregiver" ? "My Learning" : "My Progress";
   const { payment, status } = await searchParams;
   const notice = payment ? paymentNotices[payment] : null;
   const learning = await getMyLearning(user.id);
@@ -102,7 +102,7 @@ export default async function MyLearningPage({
               className="rounded-full border-brand-navy/15 bg-card/70"
               asChild
             >
-              <Link href="/dashboard/academy/courses">My Courses</Link>
+              <Link href="/dashboard/academy/courses">All Courses</Link>
             </Button>
           ) : undefined
         }
@@ -166,7 +166,7 @@ export default async function MyLearningPage({
           </p>
           {user.activePortal === "student" ? (
             <Button className="mt-4 rounded-full" asChild>
-              <Link href="/dashboard/academy/courses">Browse My Courses</Link>
+              <Link href="/dashboard/academy/courses">Browse all courses</Link>
             </Button>
           ) : null}
         </div>

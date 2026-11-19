@@ -51,13 +51,13 @@ export default async function StudentCoursePage({ params }: CoursePageProps) {
   return (
     <div className="mx-auto w-full max-w-5xl space-y-5 pb-5">
       <PageHeader
-        eyebrow="My Courses"
+        eyebrow="All Courses"
         title={course.title}
         description={course.summary ?? "Course details and syllabus."}
         breadcrumbs={[
           { label: "Dashboard", href: "/dashboard" },
           { label: "Academy", href: "/dashboard/academy" },
-          { label: "My Courses", href: "/dashboard/academy/courses" },
+          { label: "All Courses", href: "/dashboard/academy/courses" },
           { label: course.title },
         ]}
         actions={
@@ -66,7 +66,7 @@ export default async function StudentCoursePage({ params }: CoursePageProps) {
             className="rounded-full border-brand-navy/15 bg-card/70"
             asChild
           >
-            <Link href="/dashboard/academy/courses">Back to My Courses</Link>
+            <Link href="/dashboard/academy/courses">Back to All Courses</Link>
           </Button>
         }
       />
@@ -130,8 +130,8 @@ export default async function StudentCoursePage({ params }: CoursePageProps) {
                 <Button className="rounded-full" asChild>
                   <Link href={`/dashboard/academy/learning/${course.id}`}>
                     {enrolment.status === "completed"
-                      ? "Review in My Classroom"
-                      : "Continue in My Classroom"}
+                      ? "Review in My Progress"
+                      : "Continue in My Progress"}
                   </Link>
                 </Button>
               ) : (

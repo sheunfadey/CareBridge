@@ -114,8 +114,8 @@ export const studentNav: NavSection = {
       label: "Academy",
       items: [
         { label: "Academy", href: "/dashboard/academy", icon: "GraduationCap" },
-        { label: "My Classroom", href: "/dashboard/academy/learning", icon: "BookOpen" },
-        { label: "My Courses", href: "/dashboard/academy/courses", icon: "BookOpenCheck" },
+        { label: "My Progress", href: "/dashboard/academy/learning", icon: "BookOpen" },
+        { label: "All Courses", href: "/dashboard/academy/courses", icon: "BookOpenCheck" },
         { label: "Certificates", href: "/dashboard/academy/certificates", icon: "ShieldCheck" },
       ],
     },

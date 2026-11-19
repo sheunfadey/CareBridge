@@ -22,7 +22,7 @@ export default async function CertificatesPage() {
 
   const certificates = await listIssuedCertificates(user);
   const learningLabel =
-    user.activePortal === "caregiver" ? "My Learning" : "My Classroom";
+    user.activePortal === "caregiver" ? "My Learning" : "My Progress";
 
   return (
     <div className="mx-auto w-full max-w-5xl space-y-5 pb-5">

@@ -52,7 +52,7 @@ export default async function LearningCoursePage({
 
   const assessments = await listCourseAssessments(courseId, user.id);
   const learningLabel =
-    user.activePortal === "caregiver" ? "My Learning" : "My Classroom";
+    user.activePortal === "caregiver" ? "My Learning" : "My Progress";
 
   const progress = course.totalLessons
     ? Math.round((course.completedLessons / course.totalLessons) * 100)
