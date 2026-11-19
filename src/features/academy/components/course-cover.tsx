@@ -31,6 +31,7 @@ export function CourseCoverCard({ src, alt, className }: CoverProps) {
       )}
     >
       {src ? (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={src}
           alt={alt}
@@ -70,6 +71,7 @@ export function CourseCoverBanner({ src, alt, className }: CoverProps) {
           aria-label={`View ${alt} image`}
         >
           <div className="aspect-[16/7] w-full sm:aspect-[16/6]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={src}
               alt={alt}
@@ -84,6 +86,7 @@ export function CourseCoverBanner({ src, alt, className }: CoverProps) {
       </DialogTrigger>
       <DialogContent className="max-w-5xl border-none bg-black/95 p-2 sm:p-4">
         <DialogTitle className="sr-only">{alt}</DialogTitle>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
           alt={alt}

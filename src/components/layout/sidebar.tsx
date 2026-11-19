@@ -253,9 +253,9 @@ export function Sidebar({
         ) : null}
       </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {pinnedItems.length > 0 ? (
-          <ul className="space-y-0.5 pb-3">
+      {pinnedItems.length > 0 ? (
+        <div className="shrink-0 pb-2">
+          <ul className="space-y-0.5">
             {pinnedItems.map((item) => (
               <NavLink
                 key={item.href}
@@ -265,8 +265,10 @@ export function Sidebar({
               />
             ))}
           </ul>
-        ) : null}
+        </div>
+      ) : null}
 
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <div className="space-y-4 border-t border-sidebar-border/60 pt-3">
           <NavGroups
             key={`${pathname}-${activePortal}`}
