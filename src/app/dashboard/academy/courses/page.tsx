@@ -138,22 +138,27 @@ export default async function MyCoursesPage() {
                     tabIndex={-1}
                     className="absolute inset-0 z-10 rounded-[var(--radius-2xl)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   />
-                  <div
-                    role="img"
-                    aria-label={course.title}
-                    className="relative h-24 bg-portal-sky bg-cover bg-center sm:h-28"
-                    style={
-                      course.coverImageUrl
-                        ? { backgroundImage: `url("${course.coverImageUrl}")` }
-                        : undefined
-                    }
-                  >
-                    <span className="absolute inset-0 bg-gradient-to-t from-brand-navy/40 via-transparent to-transparent" />
-                    <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-brand-navy">
+                  <div className="relative flex h-44 items-center justify-center overflow-hidden bg-portal-sky/40">
+                    {course.coverImageUrl ? (
+                      <img
+                        src={course.coverImageUrl}
+                        alt={`${course.title} cover`}
+                        loading="lazy"
+                        className="h-full w-full object-contain"
+                      />
+                    ) : (
+                      <span className="flex flex-col items-center gap-1 text-portal-sky-strong">
+                        <BookOpenCheckIcon className="size-7" aria-hidden="true" />
+                        <span className="text-[11px] font-medium">
+                          Course image
+                        </span>
+                      </span>
+                    )}
+                    <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-brand-navy shadow-sm">
                       {course.category ?? "Course"}
                     </span>
                     {isEnrolled ? (
-                      <span className="absolute right-3 top-3 rounded-full bg-portal-mint px-2.5 py-1 text-[11px] font-semibold text-portal-mint-strong">
+                      <span className="absolute right-3 top-3 rounded-full bg-portal-mint px-2.5 py-1 text-[11px] font-semibold text-portal-mint-strong shadow-sm">
                         {isCompleted ? "Completed" : "Enrolled"}
                       </span>
                     ) : null}

@@ -149,21 +149,24 @@ export default async function CoursesPage() {
                 key={course.id}
                 className="flex flex-col overflow-hidden rounded-[var(--radius-2xl)] bg-card/85 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
               >
-                <div
-                  role="img"
-                  aria-label={course.title}
-                  className="relative h-28 bg-portal-lavender bg-cover bg-center"
-                  style={
-                    course.coverImageUrl
-                      ? { backgroundImage: `url("${course.coverImageUrl}")` }
-                      : undefined
-                  }
-                >
-                  <span className="absolute inset-0 bg-gradient-to-t from-brand-navy/40 via-transparent to-transparent" />
-                  <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-brand-navy">
+                <div className="relative flex h-44 items-center justify-center overflow-hidden bg-portal-lavender/50">
+                  {course.coverImageUrl ? (
+                    <img
+                      src={course.coverImageUrl}
+                      alt={`${course.title} cover`}
+                      loading="lazy"
+                      className="h-full w-full object-contain"
+                    />
+                  ) : (
+                    <span className="flex flex-col items-center gap-1 text-portal-lavender-strong">
+                      <BookOpenIcon className="size-7" aria-hidden="true" />
+                      <span className="text-[11px] font-medium">Course image</span>
+                    </span>
+                  )}
+                  <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-brand-navy shadow-sm">
                     {course.category ?? "Course"}
                   </span>
-                  <span className="absolute bottom-3 right-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-brand-navy">
+                  <span className="absolute bottom-3 right-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-brand-navy shadow-sm">
                     {course.priceMinorUnits === 0
                       ? "Free"
                       : `${course.currency} ${(course.priceMinorUnits / 100).toFixed(2)}`}

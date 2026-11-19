@@ -111,16 +111,15 @@ export async function CourseDetailPage({
       />
 
       <div className="flex flex-col gap-4 rounded-[var(--radius-2xl)] bg-card/90 p-4 ring-1 ring-foreground/10 sm:flex-row sm:items-center">
-        <div
-          role="img"
-          aria-label={course.title}
-          className="h-20 w-full shrink-0 rounded-xl bg-portal-peach bg-cover bg-center sm:w-28"
-          style={
-            course.coverImageUrl
-              ? { backgroundImage: `url("${course.coverImageUrl}")` }
-              : undefined
-          }
-        />
+        <div className="flex h-24 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl bg-portal-peach/60 sm:w-36">
+          {course.coverImageUrl ? (
+            <img
+              src={course.coverImageUrl}
+              alt={`${course.title} cover`}
+              className="h-full w-full object-contain"
+            />
+          ) : null}
+        </div>
         <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
           <StatusBadge status={course.status} />
           <Badge variant="outline">

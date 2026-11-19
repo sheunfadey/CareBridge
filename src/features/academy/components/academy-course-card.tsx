@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
-import { GraduationCapIcon, ShieldCheckIcon } from "lucide-react";
+import { BookOpenIcon, GraduationCapIcon, ShieldCheckIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import type { MyLearningCourse } from "@/server/academy/queries";
@@ -44,21 +44,24 @@ export function AcademyCourseCard({
         tabIndex={-1}
         className="absolute inset-0 z-10 rounded-[var(--radius-2xl)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       />
-      <div
-        role="img"
-        aria-label={course.title}
-        className="relative h-24 bg-portal-lavender bg-cover bg-center sm:h-28"
-        style={
-          course.coverImageUrl
-            ? { backgroundImage: `url("${course.coverImageUrl}")` }
-            : undefined
-        }
-      >
-        <span className="absolute inset-0 bg-gradient-to-t from-brand-navy/45 via-brand-navy/5 to-transparent" />
-        <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold capitalize text-brand-navy">
+      <div className="relative flex h-44 items-center justify-center overflow-hidden bg-portal-lavender/50">
+        {course.coverImageUrl ? (
+          <img
+            src={course.coverImageUrl}
+            alt={`${course.title} cover`}
+            loading="lazy"
+            className="h-full w-full object-contain"
+          />
+        ) : (
+          <span className="flex flex-col items-center gap-1 text-portal-lavender-strong">
+            <BookOpenIcon className="size-7" aria-hidden="true" />
+            <span className="text-[11px] font-medium">Course image</span>
+          </span>
+        )}
+        <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold capitalize text-brand-navy shadow-sm">
           {badgeLabel ?? (completed ? "Completed" : "In progress")}
         </span>
-        <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-brand-navy">
+        <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-brand-navy shadow-sm">
           {progress}%
         </span>
       </div>
