@@ -169,6 +169,18 @@ export function isTrainerAccount(user: CurrentUser): boolean {
   );
 }
 
+/**
+ * Organisation administrators run a care workspace. They oversee members,
+ * trainers and learners, so they are not offered the personal portal switcher.
+ */
+export function isOrganisationAdmin(user: CurrentUser): boolean {
+  return (
+    !user.isSuperAdmin &&
+    (user.roles.includes("care_home_owner") ||
+      user.roles.includes("care_home_manager"))
+  );
+}
+
 export function canAccessOrganisation(
   user: CurrentUser,
   organisationId: string,

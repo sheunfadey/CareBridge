@@ -14,6 +14,8 @@ type DashboardShellProps = {
   notifications?: ComponentProps<typeof Topbar>["notifications"];
   activePortal?: PortalMode;
   surface?: "portal" | "trainer";
+  /** Organisation administrators see a management label and no portal switch. */
+  organisationAdmin?: boolean;
 };
 
 export function DashboardShell({
@@ -24,6 +26,7 @@ export function DashboardShell({
   notifications,
   activePortal,
   surface = "portal",
+  organisationAdmin = false,
 }: DashboardShellProps) {
   return (
     <div className="flex min-h-svh bg-background">
@@ -34,6 +37,7 @@ export function DashboardShell({
             permissions={permissions}
             activePortal={activePortal}
             surface={surface}
+            organisationAdmin={organisationAdmin}
           />
         </div>
       </aside>
@@ -46,6 +50,7 @@ export function DashboardShell({
           notifications={notifications}
           activePortal={activePortal}
           surface={surface}
+          showPortalSwitch={!organisationAdmin}
         />
         <main
           id="main-content"
@@ -60,6 +65,7 @@ export function DashboardShell({
         permissions={permissions}
         activePortal={activePortal}
         surface={surface}
+        organisationAdmin={organisationAdmin}
         unreadNotifications={
           notifications?.filter((notification) => !notification.read).length ??
           0

@@ -11,6 +11,7 @@ import { getBillingSummary } from "@/server/billing/queries";
 import {
   isTrainerAccount,
   getCurrentUser,
+  isOrganisationAdmin,
   userHasPermission,
 } from "@/server/auth/current-user";
 import {
@@ -71,6 +72,8 @@ export default async function DashboardPage() {
     avatarUrl: user.avatarUrl,
   };
 
+  const portal = isOrganisationAdmin(user) ? "caregiver" : user.activePortal;
+
   return (
     <div className="space-y-5">
       {readOnly ? (
@@ -104,7 +107,7 @@ export default async function DashboardPage() {
         </div>
       ) : null}
 
-      {user.activePortal === "caregiver" ? (
+      {portal === "caregiver" ? (
         <CaregiverDashboard
           user={person}
           data={await getCaregiverDashboardData(user.id)}

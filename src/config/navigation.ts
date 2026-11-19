@@ -100,8 +100,6 @@ const caregiverAccountGroup: NavGroup = {
   label: "Account",
   items: [
     { label: "Workspace overview", href: "/dashboard/overview", icon: "LayoutDashboard" },
-    { label: "Organisation", href: "/dashboard/organisation", icon: "Building2" },
-    { label: "Family portal", href: "/dashboard/family", icon: "HeartHandshake" },
     { label: "Settings", href: "/dashboard/settings", icon: "Settings" },
     { label: "Help Centre", href: "/dashboard/help", icon: "LifeBuoy" },
   ],
@@ -165,10 +163,23 @@ export const caregiverNav: NavSection = {
       ],
     },
     {
-      label: "Course Studio",
+      label: "Teaching",
       items: [
-        { label: "Manage courses", href: "/dashboard/academy/manage", icon: "FileCog", permissions: ["course_manage", "course_publish", "learning_material_manage"] },
+        { label: "Course Studio", href: "/dashboard/academy/manage", icon: "FileCog", permissions: ["course_manage", "course_publish", "learning_material_manage"] },
         { label: "Categories", href: "/dashboard/academy/manage/categories", icon: "Tags", permissions: ["course_manage"] },
+        { label: "Learners", href: "/dashboard/manage/learners", icon: "Users", permissions: ["course_manage", "course_publish", "learning_material_manage"] },
+        { label: "Assessments", href: "/dashboard/manage/assessments", icon: "ClipboardList", permissions: ["assessment_manage", "assessment_grade", "course_manage"] },
+        { label: "Gradebook", href: "/dashboard/manage/gradebook", icon: "ClipboardCheck", permissions: ["assessment_grade", "assessment_manage", "course_manage"] },
+        { label: "Certificates", href: "/dashboard/manage/certificates", icon: "Award", permissions: ["course_manage", "course_publish"] },
+      ],
+    },
+    {
+      label: "Organisation",
+      items: [
+        { label: "People", href: "/dashboard/people", icon: "Users", permissions: ["user_view"] },
+        { label: "Organisation", href: "/dashboard/organisation", icon: "Building2" },
+        { label: "Billing & plan", href: "/dashboard/organisation/billing", icon: "CreditCard", permissions: ["subscription_view", "billing_manage"] },
+        { label: "Family portal", href: "/dashboard/family", icon: "HeartHandshake" },
       ],
     },
     communityGroup,

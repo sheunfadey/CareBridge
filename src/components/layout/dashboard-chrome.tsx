@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { DashboardShell } from "@/components/layout/dashboard-shell";
 import {
   getCurrentUser,
+  isOrganisationAdmin,
   isTrainerAccount,
 } from "@/server/auth/current-user";
 import { listNotifications } from "@/server/notifications/service";
@@ -25,6 +26,7 @@ export async function DashboardChrome({ children }: { children: ReactNode }) {
 
   const primaryOrganisation = user?.organisations[0];
   const notifications = user ? await listNotifications(15) : [];
+  const organisationAdmin = user ? isOrganisationAdmin(user) : false;
 
   return (
     <DashboardShell
@@ -41,7 +43,10 @@ export async function DashboardChrome({ children }: { children: ReactNode }) {
       isSuperAdmin={user?.isSuperAdmin ?? false}
       permissions={user ? Array.from(user.permissions) : []}
       notifications={notifications}
-      activePortal={user?.activePortal ?? "student"}
+      activePortal={
+        organisationAdmin ? "caregiver" : (user?.activePortal ?? "student")
+      }
+      organisationAdmin={organisationAdmin}
     >
       {children}
     </DashboardShell>

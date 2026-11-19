@@ -54,6 +54,8 @@ type TopbarProps = {
   activePortal?: PortalMode;
   /** The standalone trainer workspace hides the shared portal switching. */
   surface?: "portal" | "trainer";
+  /** Organisation administrators do not switch into student or caregiver portals. */
+  showPortalSwitch?: boolean;
   className?: string;
 };
 
@@ -64,6 +66,7 @@ export function Topbar({
   permissions = [],
   activePortal = "student",
   surface = "portal",
+  showPortalSwitch = true,
   className,
 }: TopbarProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -191,7 +194,7 @@ export function Topbar({
               </span>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            {!isTrainerSurface ? (
+            {!isTrainerSurface && showPortalSwitch ? (
               <>
                 <DropdownMenuLabel className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                   Switch portal

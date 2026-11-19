@@ -7,7 +7,10 @@ import { Card } from "@/components/ui/card";
 import { PasswordForm } from "@/features/account/components/password-form";
 import { ProfileSettings } from "@/features/account/components/profile-settings";
 import { switchPortalAction } from "@/features/portal/actions";
-import { getCurrentUser } from "@/server/auth/current-user";
+import {
+  getCurrentUser,
+  isOrganisationAdmin,
+} from "@/server/auth/current-user";
 
 type AccountSettingsProps = {
   basePath: "/dashboard" | "/trainer";
@@ -27,6 +30,7 @@ export async function AccountSettings({
   }
 
   const isTrainerSurface = basePath === "/trainer";
+  const orgAdmin = isOrganisationAdmin(user);
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-5 pb-6">
@@ -122,7 +126,7 @@ export async function AccountSettings({
           </div>
         </Card>
 
-        {!isTrainerSurface ? (
+        {!isTrainerSurface && !orgAdmin ? (
           <Card className="space-y-3 p-4 lg:col-span-2">
             <div>
               <h2 className="font-heading text-base font-semibold text-brand-strong">

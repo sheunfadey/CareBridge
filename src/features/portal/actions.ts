@@ -4,6 +4,10 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
+import {
+  getCurrentUser,
+  isOrganisationAdmin,
+} from "@/server/auth/current-user";
 import { recordAudit } from "@/server/audit/record-audit";
 import type { PortalMode } from "@/types/database";
 
@@ -23,6 +27,13 @@ export async function switchPortalAction(formData: FormData): Promise<void> {
 
   if (!user) {
     redirect("/login?redirectTo=%2Fdashboard");
+  }
+
+  // Organisation administrators run a workspace; they do not hold personal
+  // portals, so portal switching is refused for them as well as hidden.
+  const current = await getCurrentUser();
+  if (current && isOrganisationAdmin(current)) {
+    redirect("/dashboard");
   }
 
   const { error } = await supabase

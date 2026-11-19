@@ -161,6 +161,7 @@ type SidebarProps = {
   activePortal?: PortalMode;
   /** The standalone trainer workspace renders its own navigation. */
   surface?: "portal" | "trainer";
+  organisationAdmin?: boolean;
 };
 
 export function Sidebar({
@@ -170,6 +171,7 @@ export function Sidebar({
   permissions = [],
   activePortal = "student",
   surface = "portal",
+  organisationAdmin = false,
 }: SidebarProps) {
   const pathname = usePathname();
   const isTrainerSurface = surface === "trainer";
@@ -186,7 +188,7 @@ export function Sidebar({
     : isSuperAdmin
       ? []
       : activePortal === "caregiver"
-        ? ["Care work", "Work", "Course Studio", "Communication"]
+        ? ["Care work", "Teaching", "Work", "Organisation", "Communication"]
         : ["Academy", "Career", "Communication"];
   const homeHref = isTrainerSurface ? "/trainer" : "/dashboard";
   const sidebarLabel = isTrainerSurface
@@ -195,7 +197,9 @@ export function Sidebar({
       ? "Care workspace"
       : pathname.startsWith("/dashboard/organisation")
         ? "Organisation"
-        : `${activePortal} portal`;
+        : organisationAdmin
+          ? "Organisation admin"
+          : `${activePortal} portal`;
 
   const canSee = React.useCallback(
     (item: NavItem) =>

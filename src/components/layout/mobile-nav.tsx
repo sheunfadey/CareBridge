@@ -68,12 +68,14 @@ export function MobileNav({
   unreadNotifications = 0,
   activePortal = "student",
   surface = "portal",
+  organisationAdmin = false,
 }: {
   isSuperAdmin?: boolean;
   permissions?: string[];
   unreadNotifications?: number;
   activePortal?: PortalMode;
   surface?: "portal" | "trainer";
+  organisationAdmin?: boolean;
 }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -146,6 +148,7 @@ export function MobileNav({
               permissions={permissions}
               activePortal={activePortal}
               surface={surface}
+              organisationAdmin={organisationAdmin}
               onNavigate={() => setMenuOpen(false)}
             />
           </SheetContent>
