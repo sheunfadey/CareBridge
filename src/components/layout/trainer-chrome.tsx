@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import { DashboardShell } from "@/components/layout/dashboard-shell";
 import {
-  canUseTrainerWorkspace,
+  isTrainerAccount,
   getCurrentUser,
 } from "@/server/auth/current-user";
 import { listNotifications } from "@/server/notifications/service";
@@ -19,8 +19,10 @@ export async function TrainerChrome({ children }: { children: ReactNode }) {
     redirect("/login?redirectTo=%2Ftrainer");
   }
 
-  if (!canUseTrainerWorkspace(user)) {
-    redirect("/dashboard");
+  if (!isTrainerAccount(user)) {
+    // Super administrators belong in the platform console, never in a tenant
+    // workspace.
+    redirect(user.isSuperAdmin ? "/dashboard/admin" : "/dashboard");
   }
 
   const primaryOrganisation = user.organisations[0];

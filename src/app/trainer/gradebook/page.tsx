@@ -6,7 +6,7 @@ import { ClipboardCheckIcon } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import {
-  canUseTrainerWorkspace,
+  isTrainerAccount,
   getCurrentUser,
 } from "@/server/auth/current-user";
 import { getTrainerGradebook } from "@/server/trainer/queries";
@@ -30,7 +30,7 @@ export default async function TrainerGradebookPage() {
   if (!user) {
     redirect("/login?redirectTo=/trainer/gradebook");
   }
-  if (!canUseTrainerWorkspace(user)) {
+  if (!isTrainerAccount(user)) {
     redirect("/dashboard");
   }
 

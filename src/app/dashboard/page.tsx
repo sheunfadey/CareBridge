@@ -9,7 +9,7 @@ import { StudentDashboard } from "@/features/portal/components/student-dashboard
 import { subscriptionStatusLabels } from "@/lib/validation/billing";
 import { getBillingSummary } from "@/server/billing/queries";
 import {
-  canUseTrainerWorkspace,
+  isTrainerAccount,
   getCurrentUser,
   userHasPermission,
 } from "@/server/auth/current-user";
@@ -33,7 +33,7 @@ export default async function DashboardPage() {
   }
 
   // Trainers work in their own workspace, which is not a mode of this portal.
-  if (user.activePortal === "trainer" && canUseTrainerWorkspace(user)) {
+  if (user.activePortal === "trainer" && isTrainerAccount(user)) {
     redirect("/trainer");
   }
 

@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
 import {
-  canUseTrainerWorkspace,
+  isTrainerAccount,
   getCurrentUser,
 } from "@/server/auth/current-user";
 import { getTrainerAssessments } from "@/server/trainer/queries";
@@ -18,7 +18,7 @@ export const metadata: Metadata = { title: "Assessments" };
 export default async function TrainerAssessmentsPage() {
   const user = await getCurrentUser();
   if (!user) redirect("/login?redirectTo=/trainer/assessments");
-  if (!canUseTrainerWorkspace(user)) redirect("/dashboard");
+  if (!isTrainerAccount(user)) redirect("/dashboard");
 
   const assessments = await getTrainerAssessments(user);
 

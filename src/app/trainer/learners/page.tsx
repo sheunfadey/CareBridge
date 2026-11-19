@@ -6,7 +6,7 @@ import { UsersIcon } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import {
-  canUseTrainerWorkspace,
+  isTrainerAccount,
   getCurrentUser,
 } from "@/server/auth/current-user";
 import { getTrainerLearners } from "@/server/trainer/queries";
@@ -26,7 +26,7 @@ function formatDate(value: string | null): string {
 export default async function TrainerLearnersPage() {
   const user = await getCurrentUser();
   if (!user) redirect("/login?redirectTo=/trainer/learners");
-  if (!canUseTrainerWorkspace(user)) redirect("/dashboard");
+  if (!isTrainerAccount(user)) redirect("/dashboard");
 
   const learners = await getTrainerLearners(user);
 

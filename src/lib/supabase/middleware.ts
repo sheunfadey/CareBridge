@@ -95,9 +95,9 @@ export async function updateSession(request: NextRequest) {
     }
 
     if (pathname.startsWith("/trainer")) {
-      if (!isTrainerAccount && !profile?.is_super_admin) {
+      if (!isTrainerAccount) {
         const url = request.nextUrl.clone();
-        url.pathname = "/dashboard";
+        url.pathname = profile?.is_super_admin ? "/dashboard/admin" : "/dashboard";
         url.search = "";
         return NextResponse.redirect(url);
       }

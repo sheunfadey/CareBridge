@@ -159,18 +159,14 @@ export function userHasPermission(
 /**
  * Trainer accounts use the standalone trainer workspace and never the personal
  * dashboard. Course permissions alone are not enough, because care managers
- * hold them too.
+ * hold them too. Platform super administrators are deliberately excluded: they
+ * belong in the admin console, not in a tenant workspace.
  */
 export function isTrainerAccount(user: CurrentUser): boolean {
   return (
     !user.isSuperAdmin &&
     (user.roles.includes("instructor") || user.roles.includes("training_admin"))
   );
-}
-
-/** The standalone trainer workspace, including platform super administrators. */
-export function canUseTrainerWorkspace(user: CurrentUser): boolean {
-  return user.isSuperAdmin || isTrainerAccount(user);
 }
 
 export function canAccessOrganisation(

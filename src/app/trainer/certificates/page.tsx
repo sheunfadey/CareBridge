@@ -6,7 +6,7 @@ import { AwardIcon } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import {
-  canUseTrainerWorkspace,
+  isTrainerAccount,
   getCurrentUser,
 } from "@/server/auth/current-user";
 import { getTrainerCertificates } from "@/server/trainer/queries";
@@ -25,7 +25,7 @@ function formatDate(value: string): string {
 export default async function TrainerCertificatesPage() {
   const user = await getCurrentUser();
   if (!user) redirect("/login?redirectTo=/trainer/certificates");
-  if (!canUseTrainerWorkspace(user)) redirect("/dashboard");
+  if (!isTrainerAccount(user)) redirect("/dashboard");
 
   const certificates = await getTrainerCertificates(user);
 

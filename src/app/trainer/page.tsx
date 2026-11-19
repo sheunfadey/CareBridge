@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 
 import { TrainerDashboard } from "@/features/trainer/components/trainer-dashboard";
 import {
-  canUseTrainerWorkspace,
+  isTrainerAccount,
   getCurrentUser,
 } from "@/server/auth/current-user";
 import { getTrainerDashboardData } from "@/server/trainer/queries";
@@ -19,7 +19,7 @@ export default async function TrainerHomePage() {
     redirect("/login?redirectTo=%2Ftrainer");
   }
 
-  if (!canUseTrainerWorkspace(user)) {
+  if (!isTrainerAccount(user)) {
     redirect("/dashboard");
   }
 
