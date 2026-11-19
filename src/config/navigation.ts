@@ -43,17 +43,6 @@ export const superAdminNav: NavSection = {
       ],
     },
     {
-      label: "Academy",
-      items: [
-        { label: "Course Studio", href: "/dashboard/academy/manage", icon: "FileCog" },
-        { label: "Categories", href: "/dashboard/academy/manage/categories", icon: "Tags" },
-        { label: "Learners", href: "/trainer/learners", icon: "Users" },
-        { label: "Assessments", href: "/trainer/assessments", icon: "ClipboardList" },
-        { label: "Gradebook", href: "/trainer/gradebook", icon: "ClipboardCheck" },
-        { label: "Certificates", href: "/trainer/certificates", icon: "Award" },
-      ],
-    },
-    {
       label: "Platform",
       items: [
         { label: "Organisations", href: "/dashboard/admin/organisations", icon: "Building2" },
