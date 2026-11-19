@@ -24,6 +24,7 @@ import { AddLessonDialog } from "@/features/academy/components/add-lesson-dialog
 import { PublishCourseButton } from "@/features/academy/components/publish-course-button";
 import { CreateAssessmentDialog } from "@/features/academy/components/create-assessment-dialog";
 import { AddResourceDialog } from "@/features/academy/components/add-resource-dialog";
+import { CourseCoverForm } from "@/features/academy/components/course-cover-form";
 import {
   studioAssessmentHref,
   type StudioBase,
@@ -372,6 +373,23 @@ export async function CourseDetailPage({
         </div>
 
         <div className="space-y-4">
+          {canAddContent ? (
+            <Card className="space-y-3 p-4">
+              <div>
+                <p className="font-heading font-semibold text-brand-strong">
+                  Course image
+                </p>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  Shown on the catalogue, public course page and studio cards.
+                </p>
+              </div>
+              <CourseCoverForm
+                courseId={course.id}
+                currentUrl={course.coverImageUrl}
+              />
+            </Card>
+          ) : null}
+
           <Card className="p-4">
             <p className="font-heading font-semibold text-brand-strong">
               Course details

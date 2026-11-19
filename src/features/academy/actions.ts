@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import {
   createAssessmentQuestionSchema,
   createAssessmentSchema,
@@ -1552,5 +1553,174 @@ export async function completeLessonAction(
     };
   } catch (error) {
     return toFriendlyError(error) as CompleteLessonResult;
+  }
+}
+
+// ---- Course cover images ----------------------------------------------------
+
+const COURSE_COVER_BUCKET = "course-covers";
+const COURSE_COVER_MAX_BYTES = 4 * 1024 * 1024;
+const COURSE_COVER_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
+
+function courseCoverExtension(type: string): string {
+  if (type === "image/png") return "png";
+  if (type === "image/webp") return "webp";
+  return "jpg";
+}
+
+function revalidateCourseCover(courseId: string, slug?: string) {
+  revalidatePath("/dashboard/academy/manage");
+  revalidatePath(`/dashboard/academy/manage/${courseId}`);
+  revalidatePath("/trainer/courses");
+  revalidatePath(`/trainer/courses/${courseId}`);
+  revalidatePath("/courses");
+  if (slug) revalidatePath(`/courses/${slug}`);
+}
+
+export async function uploadCourseCoverAction(
+  formData: FormData,
+): Promise<AcademyActionResult> {
+  try {
+    const user = await requireUser();
+    const courseId = String(formData.get("courseId") ?? "");
+    const file = formData.get("file");
+
+    if (!courseId || !(file instanceof File)) {
+      return { ok: false, message: "Choose an image to upload." };
+    }
+
+    if (!COURSE_COVER_TYPES.has(file.type)) {
+      return { ok: false, message: "Use a JPG, PNG or WebP image." };
+    }
+
+    if (file.size > COURSE_COVER_MAX_BYTES) {
+      return { ok: false, message: "Images must be 4 MB or smaller." };
+    }
+
+    await assertCanManageCourse(courseId);
+    const supabase = await createClient();
+    const course = await loadCourseForManagement(supabase, courseId);
+    await assertPermission(
+      user.id,
+      "learning_material_manage",
+      course.organisation_id,
+    );
+
+    const storage = createAdminClient() ?? supabase;
+    const storagePath = `${course.id}/cover-${crypto.randomUUID()}.${courseCoverExtension(file.type)}`;
+
+    const { error: uploadError } = await storage.storage
+      .from(COURSE_COVER_BUCKET)
+      .upload(storagePath, file, {
+        contentType: file.type,
+        cacheControl: "31536000",
+        upsert: false,
+      });
+
+    if (uploadError) {
+      console.warn("[academy] course cover upload failed", {
+        reason: uploadError.message,
+      });
+      return {
+        ok: false,
+        message: uploadError.message.toLowerCase().includes("bucket")
+          ? "Course image storage is not set up yet. Contact platform support."
+          : "We could not upload that image. Try a smaller file.",
+      };
+    }
+
+    const { data: publicUrlData } = storage.storage
+      .from(COURSE_COVER_BUCKET)
+      .getPublicUrl(storagePath);
+
+    const { error: updateError } = await supabase
+      .from("courses")
+      .update({ cover_image_url: publicUrlData.publicUrl })
+      .eq("id", course.id);
+
+    if (updateError) {
+      return {
+        ok: false,
+        message: "The image uploaded but the course could not be updated.",
+      };
+    }
+
+    await recordAudit({
+      actorId: user.id,
+      organisationId: course.organisation_id,
+      action: "course.cover_updated",
+      entityType: "course",
+      entityId: course.id,
+      metadata: { storage_path: storagePath },
+    });
+
+    revalidateCourseCover(course.id, course.slug);
+    return { ok: true, message: "Course image updated." };
+  } catch (error) {
+    return toFriendlyError(error);
+  }
+}
+
+export async function removeCourseCoverAction(
+  formData: FormData,
+): Promise<AcademyActionResult> {
+  try {
+    const user = await requireUser();
+    const courseId = String(formData.get("courseId") ?? "");
+    if (!courseId) {
+      return { ok: false, message: "Course not found." };
+    }
+
+    await assertCanManageCourse(courseId);
+    const supabase = await createClient();
+    const { data: course } = await supabase
+      .from("courses")
+      .select("id, slug, organisation_id, cover_image_url")
+      .eq("id", courseId)
+      .maybeSingle();
+
+    if (!course) {
+      return { ok: false, message: "Course not found." };
+    }
+
+    await assertPermission(
+      user.id,
+      "learning_material_manage",
+      course.organisation_id,
+    );
+
+    const marker = "/course-covers/";
+    if (course.cover_image_url?.includes(marker)) {
+      const storagePath = decodeURIComponent(
+        course.cover_image_url.split(marker)[1] ?? "",
+      );
+      if (storagePath) {
+        const storage = createAdminClient() ?? supabase;
+        await storage.storage.from(COURSE_COVER_BUCKET).remove([storagePath]);
+      }
+    }
+
+    const { error } = await supabase
+      .from("courses")
+      .update({ cover_image_url: null })
+      .eq("id", course.id);
+
+    if (error) {
+      return { ok: false, message: "The course image could not be removed." };
+    }
+
+    await recordAudit({
+      actorId: user.id,
+      organisationId: course.organisation_id,
+      action: "course.cover_updated",
+      entityType: "course",
+      entityId: course.id,
+      metadata: { removed: true },
+    });
+
+    revalidateCourseCover(course.id, course.slug);
+    return { ok: true, message: "Course image removed." };
+  } catch (error) {
+    return toFriendlyError(error);
   }
 }

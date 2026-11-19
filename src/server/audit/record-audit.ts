@@ -44,6 +44,7 @@ export type AuditAction =
   | "course.updated"
   | "course.published"
   | "course.unpublished"
+  | "course.cover_updated"
   | "course.category.created"
   | "course.category.updated"
   | "course.resource.created"
