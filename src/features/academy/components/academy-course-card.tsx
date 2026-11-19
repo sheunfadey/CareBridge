@@ -10,9 +10,12 @@ import type { MyLearningCourse } from "@/server/academy/queries";
 export function AcademyCourseCard({
   course,
   index = 0,
+  badgeLabel,
 }: {
   course: MyLearningCourse;
   index?: number;
+  /** Optional chip label, e.g. "Enrolled" when shown in the catalogue. */
+  badgeLabel?: string;
 }) {
   const reduceMotion = useReducedMotion();
   const progress =
@@ -53,7 +56,7 @@ export function AcademyCourseCard({
       >
         <span className="absolute inset-0 bg-gradient-to-t from-brand-navy/45 via-brand-navy/5 to-transparent" />
         <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold capitalize text-brand-navy">
-          {completed ? "Completed" : "In progress"}
+          {badgeLabel ?? (completed ? "Completed" : "In progress")}
         </span>
         <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-brand-navy">
           {progress}%

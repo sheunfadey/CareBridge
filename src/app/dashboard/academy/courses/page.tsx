@@ -37,6 +37,14 @@ export default async function MyCoursesPage() {
   const active = learning.filter((course) => course.status === "active");
   const completed = learning.filter((course) => course.status === "completed");
 
+  // Courses that are not in the public catalogue (for example an employer's
+  // private training) still belong in "All courses" for the learner enrolled in
+  // them.
+  const catalogueIds = new Set(catalogue.courses.map((course) => course.id));
+  const enrolledOutsideCatalogue = learning.filter(
+    (course) => !catalogueIds.has(course.courseId),
+  );
+
   return (
     <div className="mx-auto w-full max-w-6xl space-y-5 pb-5">
       <PageHeader
@@ -95,13 +103,14 @@ export default async function MyCoursesPage() {
 
       <PortalSection delay={0.1}>
         <SectionHeading title="All courses" />
-        {catalogue.unavailable ? (
+        {catalogue.unavailable && enrolledOutsideCatalogue.length === 0 ? (
           <div className="rounded-[var(--radius-2xl)] bg-card/85 p-6 text-center ring-1 ring-foreground/10">
             <p className="text-sm text-muted-foreground">
               Courses are temporarily unavailable. Try again shortly.
             </p>
           </div>
-        ) : catalogue.courses.length === 0 ? (
+        ) : catalogue.courses.length === 0 &&
+          enrolledOutsideCatalogue.length === 0 ? (
           <div className="rounded-[var(--radius-2xl)] bg-card/85 p-6 text-center ring-1 ring-foreground/10">
             <BookOpenCheckIcon className="mx-auto size-8 text-portal-mint-strong" />
             <p className="mt-2 font-heading font-semibold text-brand-strong">
@@ -191,6 +200,14 @@ export default async function MyCoursesPage() {
                 </article>
               );
             })}
+            {enrolledOutsideCatalogue.map((course, index) => (
+              <AcademyCourseCard
+                key={course.enrolmentId}
+                course={course}
+                index={index + catalogue.courses.length}
+                badgeLabel="Enrolled"
+              />
+            ))}
           </div>
         )}
       </PortalSection>
