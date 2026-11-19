@@ -1639,9 +1639,16 @@ export async function uploadCourseCoverAction(
       .eq("id", course.id);
 
     if (updateError) {
+      console.error("[academy] course cover update failed", {
+        reason: updateError.message,
+      });
+      const blocked =
+        /read-only|does not include the .* module/i.test(updateError.message);
       return {
         ok: false,
-        message: "The image uploaded but the course could not be updated.",
+        message: blocked
+          ? updateError.message
+          : "The image uploaded but the course could not be updated.",
       };
     }
 
@@ -1706,7 +1713,18 @@ export async function removeCourseCoverAction(
       .eq("id", course.id);
 
     if (error) {
-      return { ok: false, message: "The course image could not be removed." };
+      console.error("[academy] course cover removal failed", {
+        reason: error.message,
+      });
+      const blocked = /read-only|does not include the .* module/i.test(
+        error.message,
+      );
+      return {
+        ok: false,
+        message: blocked
+          ? error.message
+          : "The course image could not be removed.",
+      };
     }
 
     await recordAudit({
