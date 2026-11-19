@@ -50,7 +50,7 @@ export function AcademyCourseCard({
             src={course.coverImageUrl}
             alt={`${course.title} cover`}
             loading="lazy"
-            className="h-full w-full object-contain"
+            className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           />
         ) : (
           <span className="flex flex-col items-center gap-1 text-portal-lavender-strong">

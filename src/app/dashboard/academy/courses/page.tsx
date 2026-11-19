@@ -130,7 +130,7 @@ export default async function MyCoursesPage() {
               return (
                 <article
                   key={course.id}
-                  className="relative flex flex-col overflow-hidden rounded-[var(--radius-2xl)] bg-card/90 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
+                  className="group relative flex flex-col overflow-hidden rounded-[var(--radius-2xl)] bg-card/90 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
                 >
                   <Link
                     href={`/dashboard/academy/courses/${course.slug}`}
@@ -144,7 +144,7 @@ export default async function MyCoursesPage() {
                         src={course.coverImageUrl}
                         alt={`${course.title} cover`}
                         loading="lazy"
-                        className="h-full w-full object-contain"
+                        className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                       />
                     ) : (
                       <span className="flex flex-col items-center gap-1 text-portal-sky-strong">

@@ -147,7 +147,7 @@ export default async function CoursesPage() {
             {courses.map((course) => (
               <article
                 key={course.id}
-                className="flex flex-col overflow-hidden rounded-[var(--radius-2xl)] bg-card/85 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
+                className="group flex flex-col overflow-hidden rounded-[var(--radius-2xl)] bg-card/85 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
               >
                 <div className="relative flex h-44 items-center justify-center overflow-hidden bg-portal-lavender/50">
                   {course.coverImageUrl ? (
@@ -155,7 +155,7 @@ export default async function CoursesPage() {
                       src={course.coverImageUrl}
                       alt={`${course.title} cover`}
                       loading="lazy"
-                      className="h-full w-full object-contain"
+                      className="h-full w-full object-contain transition-transform duration-500 ease-out group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                     />
                   ) : (
                     <span className="flex flex-col items-center gap-1 text-portal-lavender-strong">

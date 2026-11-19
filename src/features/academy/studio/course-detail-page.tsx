@@ -116,7 +116,7 @@ export async function CourseDetailPage({
             <img
               src={course.coverImageUrl}
               alt={`${course.title} cover`}
-              className="h-full w-full object-contain"
+              className="h-full w-full object-contain transition-transform duration-300 hover:scale-105 motion-reduce:transition-none motion-reduce:hover:scale-100"
             />
           ) : null}
         </div>
