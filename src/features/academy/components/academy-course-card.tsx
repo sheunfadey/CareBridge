@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
-import { BookOpenIcon, GraduationCapIcon, ShieldCheckIcon } from "lucide-react";
+import { GraduationCapIcon, ShieldCheckIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import type { MyLearningCourse } from "@/server/academy/queries";
+import { CourseCoverCard } from "@/features/academy/components/course-cover";
 
 export function AcademyCourseCard({
   course,
@@ -44,29 +45,11 @@ export function AcademyCourseCard({
         tabIndex={-1}
         className="absolute inset-0 z-10 rounded-[var(--radius-2xl)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       />
-      <div className="relative flex h-44 items-center justify-center overflow-hidden bg-portal-lavender/50">
-        {course.coverImageUrl ? (
-          <>
-            <img
-              src={course.coverImageUrl}
-              alt={`${course.title} cover`}
-              loading="lazy"
-              className="h-full w-full object-contain transition-opacity duration-300 group-hover:opacity-0 motion-reduce:transition-none"
-            />
-            <img
-              src={course.coverImageUrl}
-              alt=""
-              aria-hidden="true"
-              loading="lazy"
-              className="absolute inset-0 h-full w-full scale-105 object-cover opacity-0 transition-all duration-500 ease-out group-hover:scale-100 group-hover:opacity-100 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-            />
-          </>
-        ) : (
-          <span className="flex flex-col items-center gap-1 text-portal-lavender-strong">
-            <BookOpenIcon className="size-7" aria-hidden="true" />
-            <span className="text-[11px] font-medium">Course image</span>
-          </span>
-        )}
+      <div className="relative">
+        <CourseCoverCard
+          src={course.coverImageUrl}
+          alt={`${course.title} cover`}
+        />
         <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold capitalize text-brand-navy shadow-sm">
           {badgeLabel ?? (completed ? "Completed" : "In progress")}
         </span>

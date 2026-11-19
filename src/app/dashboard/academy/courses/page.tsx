@@ -11,6 +11,7 @@ import {
 import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import { AcademyCourseCard } from "@/features/academy/components/academy-course-card";
+import { CourseCoverCard } from "@/features/academy/components/course-cover";
 import { PortalSection, SectionHeading } from "@/features/portal/components/portal-ui";
 import { courseDifficultyLabels } from "@/lib/validation/academy";
 import { getCurrentUser } from "@/server/auth/current-user";
@@ -138,31 +139,11 @@ export default async function MyCoursesPage() {
                     tabIndex={-1}
                     className="absolute inset-0 z-10 rounded-[var(--radius-2xl)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   />
-                  <div className="relative flex h-44 items-center justify-center overflow-hidden bg-portal-sky/40">
-                    {course.coverImageUrl ? (
-                      <>
-                        <img
-                          src={course.coverImageUrl}
-                          alt={`${course.title} cover`}
-                          loading="lazy"
-                          className="h-full w-full object-contain transition-opacity duration-300 group-hover:opacity-0 motion-reduce:transition-none"
-                        />
-                        <img
-                          src={course.coverImageUrl}
-                          alt=""
-                          aria-hidden="true"
-                          loading="lazy"
-                          className="absolute inset-0 h-full w-full scale-105 object-cover opacity-0 transition-all duration-500 ease-out group-hover:scale-100 group-hover:opacity-100 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-                        />
-                      </>
-                    ) : (
-                      <span className="flex flex-col items-center gap-1 text-portal-sky-strong">
-                        <BookOpenCheckIcon className="size-7" aria-hidden="true" />
-                        <span className="text-[11px] font-medium">
-                          Course image
-                        </span>
-                      </span>
-                    )}
+                  <div className="relative">
+                    <CourseCoverCard
+                      src={course.coverImageUrl}
+                      alt={`${course.title} cover`}
+                    />
                     <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-brand-navy shadow-sm">
                       {course.category ?? "Course"}
                     </span>

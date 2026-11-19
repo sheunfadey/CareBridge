@@ -25,6 +25,7 @@ import { PublishCourseButton } from "@/features/academy/components/publish-cours
 import { CreateAssessmentDialog } from "@/features/academy/components/create-assessment-dialog";
 import { AddResourceDialog } from "@/features/academy/components/add-resource-dialog";
 import { CourseCoverForm } from "@/features/academy/components/course-cover-form";
+import { CourseCoverBanner } from "@/features/academy/components/course-cover";
 import {
   studioAssessmentHref,
   type StudioBase,
@@ -110,24 +111,12 @@ export async function CourseDetailPage({
         }
       />
 
+      <CourseCoverBanner
+        src={course.coverImageUrl}
+        alt={`${course.title} cover`}
+      />
+
       <div className="flex flex-col gap-4 rounded-[var(--radius-2xl)] bg-card/90 p-4 ring-1 ring-foreground/10 sm:flex-row sm:items-center">
-        <div className="group relative flex h-24 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl bg-portal-peach/60 sm:w-36">
-          {course.coverImageUrl ? (
-            <>
-              <img
-                src={course.coverImageUrl}
-                alt={`${course.title} cover`}
-                className="h-full w-full object-contain transition-opacity duration-300 group-hover:opacity-0 motion-reduce:transition-none"
-              />
-              <img
-                src={course.coverImageUrl}
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 h-full w-full scale-105 object-cover opacity-0 transition-all duration-500 ease-out group-hover:scale-100 group-hover:opacity-100 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-              />
-            </>
-          ) : null}
-        </div>
         <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
           <StatusBadge status={course.status} />
           <Badge variant="outline">

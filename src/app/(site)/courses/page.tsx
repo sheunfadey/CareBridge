@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { CourseCoverCard } from "@/features/academy/components/course-cover";
 import { trainingProgrammes } from "@/config/site-content";
 import { brand } from "@/config/brand";
 import { getPublishedCourses } from "@/server/academy/queries";
@@ -149,29 +150,11 @@ export default async function CoursesPage() {
                 key={course.id}
                 className="group flex flex-col overflow-hidden rounded-[var(--radius-2xl)] bg-card/85 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
               >
-                <div className="relative flex h-44 items-center justify-center overflow-hidden bg-portal-lavender/50">
-                  {course.coverImageUrl ? (
-                    <>
-                      <img
-                        src={course.coverImageUrl}
-                        alt={`${course.title} cover`}
-                        loading="lazy"
-                        className="h-full w-full object-contain transition-opacity duration-300 group-hover:opacity-0 motion-reduce:transition-none"
-                      />
-                      <img
-                        src={course.coverImageUrl}
-                        alt=""
-                        aria-hidden="true"
-                        loading="lazy"
-                        className="absolute inset-0 h-full w-full scale-105 object-cover opacity-0 transition-all duration-500 ease-out group-hover:scale-100 group-hover:opacity-100 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-                      />
-                    </>
-                  ) : (
-                    <span className="flex flex-col items-center gap-1 text-portal-lavender-strong">
-                      <BookOpenIcon className="size-7" aria-hidden="true" />
-                      <span className="text-[11px] font-medium">Course image</span>
-                    </span>
-                  )}
+                <div className="relative">
+                  <CourseCoverCard
+                    src={course.coverImageUrl}
+                    alt={`${course.title} cover`}
+                  />
                   <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-brand-navy shadow-sm">
                     {course.category ?? "Course"}
                   </span>

@@ -13,6 +13,7 @@ import {
 import { PageHeader } from "@/components/layout/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CourseCoverBanner } from "@/features/academy/components/course-cover";
 import { CourseEnrolmentCta } from "@/features/payments/components/course-enrolment-cta";
 import { PortalSection } from "@/features/portal/components/portal-ui";
 import { courseDifficultyLabels } from "@/lib/validation/academy";
@@ -72,36 +73,27 @@ export default async function StudentCoursePage({ params }: CoursePageProps) {
       />
 
       <PortalSection>
-        <div className="overflow-hidden rounded-[var(--radius-2xl)] bg-card/90 ring-1 ring-foreground/10">
-          <div
-            role="img"
-            aria-label={course.title}
-            className="relative h-36 bg-portal-sky bg-cover bg-center sm:h-48"
-            style={
-              course.coverImageUrl
-                ? { backgroundImage: `url("${course.coverImageUrl}")` }
-                : undefined
-            }
-          >
-            <span className="absolute inset-0 bg-gradient-to-t from-brand-navy/50 via-brand-navy/5 to-transparent" />
-            <div className="absolute bottom-3 left-3 flex flex-wrap gap-1.5">
+        <div className="space-y-4">
+          <CourseCoverBanner
+            src={course.coverImageUrl}
+            alt={`${course.title} cover`}
+          />
+
+          <div className="space-y-4 rounded-[var(--radius-2xl)] bg-card/90 p-4 ring-1 ring-foreground/10 sm:p-5">
+            <div className="flex flex-wrap gap-1.5">
               {course.category ? (
-                <Badge className="bg-white/90 text-brand-navy">
+                <Badge className="bg-brand-sky text-brand-navy">
                   {course.category}
                 </Badge>
               ) : null}
-              <Badge className="bg-white/90 text-brand-navy">
+              <Badge variant="outline">
                 {courseDifficultyLabels[course.difficulty]}
               </Badge>
               {course.certificateEnabled ? (
-                <Badge className="bg-white/90 text-brand-navy">
-                  Certificate included
-                </Badge>
+                <Badge variant="secondary">Certificate included</Badge>
               ) : null}
             </div>
-          </div>
 
-          <div className="space-y-4 p-4 sm:p-5">
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
               <span className="flex items-center gap-1.5">
                 <ClockIcon className="size-4" />

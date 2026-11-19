@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
 import { CourseEnrolmentCta } from "@/features/payments/components/course-enrolment-cta";
+import { CourseCoverBanner } from "@/features/academy/components/course-cover";
 import { getCurrentUser } from "@/server/auth/current-user";
 import { getPublishedCourseSyllabus } from "@/server/academy/queries";
 import { courseDifficultyLabels } from "@/lib/validation/academy";
@@ -63,6 +64,10 @@ export default async function CourseDetailPage({
       <SiteSection tone="ivory">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div className="space-y-6">
+            <CourseCoverBanner
+              src={course.coverImageUrl}
+              alt={`${course.title} cover`}
+            />
             <div className="flex flex-wrap items-center gap-2">
               {course.category ? (
                 <Badge variant="outline">{course.category}</Badge>

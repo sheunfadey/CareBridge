@@ -10,6 +10,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/ui/status-badge";
+import { CourseCoverCard } from "@/features/academy/components/course-cover";
 import {
   OverviewTile,
   PortalSection,
@@ -163,29 +164,11 @@ export async function ManageCoursesPage({ base }: { base: StudioBase }) {
                   tabIndex={-1}
                   className="absolute inset-0 z-10 rounded-[var(--radius-2xl)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 />
-                <div className="relative flex h-40 items-center justify-center overflow-hidden bg-portal-lavender/50">
-                  {course.coverImageUrl ? (
-                    <>
-                      <img
-                        src={course.coverImageUrl}
-                        alt={`${course.title} cover`}
-                        loading="lazy"
-                        className="h-full w-full object-contain transition-opacity duration-300 group-hover:opacity-0 motion-reduce:transition-none"
-                      />
-                      <img
-                        src={course.coverImageUrl}
-                        alt=""
-                        aria-hidden="true"
-                        loading="lazy"
-                        className="absolute inset-0 h-full w-full scale-105 object-cover opacity-0 transition-all duration-500 ease-out group-hover:scale-100 group-hover:opacity-100 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-                      />
-                    </>
-                  ) : (
-                    <span className="flex flex-col items-center gap-1 text-portal-lavender-strong">
-                      <FileCogIcon className="size-6" aria-hidden="true" />
-                      <span className="text-[11px] font-medium">Course image</span>
-                    </span>
-                  )}
+                <div className="relative">
+                  <CourseCoverCard
+                    src={course.coverImageUrl}
+                    alt={`${course.title} cover`}
+                  />
                   <span className="absolute left-3 top-3">
                     <StatusBadge status={course.status} />
                   </span>
