@@ -176,7 +176,7 @@ export default async function MyCoursesPage() {
                       </span>
                     </div>
                     <p className="mt-2 text-[11px] text-muted-foreground">
-                      {course.programmeTitle} · {course.providerName}
+                      By {course.publisherName} · {course.programmeTitle}
                     </p>
                     <div className="relative z-20 mt-auto pt-3">
                       <Button size="sm" className="w-full rounded-full" asChild>

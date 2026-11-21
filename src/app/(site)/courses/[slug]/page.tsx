@@ -103,7 +103,7 @@ export default async function CourseDetailPage({
               </span>
               <span className="flex items-center gap-1.5">
                 <GraduationCapIcon className="size-4" />
-                {course.providerName}
+                By {course.publisherName}
               </span>
             </div>
             <div className="flex flex-wrap gap-3">

@@ -199,7 +199,7 @@ export default async function CoursesPage() {
                       {course.moduleCount} module
                       {course.moduleCount === 1 ? "" : "s"}
                     </span>
-                    <span>{course.providerName}</span>
+                    <span>{course.publisherName}</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between border-t px-4 py-3">

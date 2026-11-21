@@ -80,19 +80,17 @@ function NavLink({
 
 /**
  * Collapsible navigation groups. The component is keyed on the current path,
- * so every navigation or refresh mounts it with all groups closed except the
+ * so every navigation or refresh mounts it with every group closed except the
  * group that owns the active page.
  */
 function NavGroups({
   groups,
   activeGroupLabel,
-  defaultOpenGroups,
   pathname,
   onNavigate,
 }: {
   groups: NavGroup[];
   activeGroupLabel: string | undefined;
-  defaultOpenGroups: string[];
   pathname: string;
   onNavigate?: () => void;
 }) {
@@ -100,11 +98,7 @@ function NavGroups({
     Record<string, boolean>
   >(() =>
     Object.fromEntries(
-      groups.map((group) => [
-        group.label,
-        group.label !== activeGroupLabel &&
-          !defaultOpenGroups.includes(group.label),
-      ]),
+      groups.map((group) => [group.label, group.label !== activeGroupLabel]),
     ),
   );
 
@@ -183,13 +177,6 @@ export function Sidebar({
       : activePortal === "caregiver"
         ? caregiverNav
         : studentNav;
-  const defaultOpenGroups = isTrainerSurface
-    ? ["Course Studio", "Learner performance", "Communication"]
-    : isSuperAdmin
-      ? []
-      : activePortal === "caregiver"
-        ? ["Care work", "Teaching", "Work", "Organisation", "Communication"]
-        : ["Academy", "Career", "Communication"];
   const homeHref = isTrainerSurface ? "/trainer" : "/dashboard";
   const sidebarLabel = isTrainerSurface
     ? "Trainer studio"
@@ -274,7 +261,6 @@ export function Sidebar({
             key={`${pathname}-${activePortal}`}
             groups={visibleGroups}
             activeGroupLabel={activeGroupLabel}
-            defaultOpenGroups={defaultOpenGroups}
             pathname={pathname}
             onNavigate={onNavigate}
           />

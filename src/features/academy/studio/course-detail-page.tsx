@@ -122,9 +122,7 @@ export async function CourseDetailPage({
           <Badge variant="outline">
             {courseDifficultyLabels[course.difficulty]}
           </Badge>
-          <Badge variant="secondary">
-            {course.organisationName ?? "HillCrest platform"}
-          </Badge>
+          <Badge variant="secondary">By {course.publisherName}</Badge>
           <Badge variant="secondary">{course.programmeTitle}</Badge>
           <span className="text-xs text-muted-foreground">
             {course.totalLessons} lesson{course.totalLessons === 1 ? "" : "s"} ·{" "}

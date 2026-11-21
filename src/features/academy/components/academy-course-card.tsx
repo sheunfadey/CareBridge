@@ -70,6 +70,9 @@ export function AcademyCourseCard({
         <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
           {course.summary ?? "Continue where you left off."}
         </p>
+        <p className="mt-1 text-[11px] font-medium text-brand-teal">
+          By {course.publisherName}
+        </p>
 
         <div className="mt-3">
           <div className="h-1.5 overflow-hidden rounded-full bg-brand-navy/10">

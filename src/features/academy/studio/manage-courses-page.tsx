@@ -181,8 +181,7 @@ export async function ManageCoursesPage({ base }: { base: StudioBase }) {
                     {course.title}
                   </h2>
                   <p className="mt-1 text-xs text-muted-foreground">
-                    {course.programmeTitle} ·{" "}
-                    {course.organisationName ?? "HillCrest platform"}
+                    {course.programmeTitle} · By {course.publisherName}
                   </p>
                   <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-muted-foreground">
                     <span className="rounded-full bg-brand-navy/5 px-2 py-1 font-medium">

@@ -29,6 +29,8 @@ export type AcademyCourseSummary = {
   certificateEnabled: boolean;
   programmeTitle: string;
   providerName: string;
+  /** Trainer or instructor name, falling back to the publishing organisation. */
+  publisherName: string;
   moduleCount: number;
 };
 
@@ -108,6 +110,7 @@ export type MyLearningCourse = {
   certificateId: string | null;
   certificateNumber: string | null;
   certificateCode: string | null;
+  publisherName: string;
   totalLessons: number;
   completedLessons: number;
 };
@@ -221,6 +224,7 @@ export type ManagedCourse = {
   programmeTitle: string;
   categoryName: string | null;
   coverImageUrl: string | null;
+  publisherName: string;
   moduleCount: number;
   enrolmentCount: number;
   updatedAt: string;
@@ -269,6 +273,7 @@ export type ManagedCourseDetail = {
   programmeId: string;
   programmeTitle: string;
   organisationName: string | null;
+  publisherName: string;
   publishedAt: string | null;
   modules: (Omit<SyllabusModule, "lessons"> & {
     lessons: (SyllabusLesson & {
@@ -310,6 +315,52 @@ type Relation<T> = T | T[] | null;
 function singleRelation<T>(relation: Relation<T>): T | null {
   if (Array.isArray(relation)) return relation[0] ?? null;
   return relation;
+}
+
+/**
+ * Resolves course instructor names. Profiles are only readable to people who
+ * share an organisation with them, so anonymous catalogue visitors fall back to
+ * the publishing organisation name.
+ */
+async function loadInstructorNames(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  instructorIds: (string | null)[],
+): Promise<Map<string, string>> {
+  const ids = [...new Set(instructorIds.filter((id): id is string => Boolean(id)))];
+  const names = new Map<string, string>();
+
+  if (ids.length > 0) {
+    const { data } = await supabase
+      .from("profiles")
+      .select("id, full_name")
+      .in("id", ids);
+
+    for (const row of data ?? []) {
+      names.set(row.id, row.full_name?.trim() ?? "");
+    }
+  }
+
+  return mergePublicInstructorNames(supabase, names);
+}
+
+/**
+ * Public visitors cannot read trainer profiles, so published courses also ask a
+ * security-definer function for the instructor display name. Signed-in values
+ * win when both are available.
+ */
+async function mergePublicInstructorNames(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  names: Map<string, string>,
+): Promise<Map<string, string>> {
+  const { data } = await supabase.rpc("course_instructor_names");
+
+  for (const row of data ?? []) {
+    if (!names.get(row.course_id) && row.instructor_name) {
+      names.set(row.course_id, row.instructor_name);
+    }
+  }
+
+  return names;
 }
 
 function canManageAcademyForOrganisation(
@@ -390,7 +441,7 @@ export async function getPublishedCourses(): Promise<{
   const { data, error } = await supabase
     .from("courses")
     .select(
-      "id, title, slug, summary, cover_image_url, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, programmes(title), organisations(name), course_modules(id)",
+      "id, title, slug, summary, cover_image_url, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, instructor_id, programmes(title), organisations(name), course_modules(id)",
     )
     .eq("status", "published")
     .eq("is_public", true)
@@ -401,12 +452,23 @@ export async function getPublishedCourses(): Promise<{
     return { courses: [], unavailable: true };
   }
 
+  const instructorNames = await loadInstructorNames(
+    supabase,
+    (data ?? []).map((course) => course.instructor_id),
+  );
+
   return {
     unavailable: false,
     courses: (data ?? []).map((course) => {
       const programme = singleRelation(course.programmes);
       const organisation = singleRelation(course.organisations);
       const category = singleRelation(course.course_categories);
+      const publisherName =
+        (course.instructor_id
+          ? instructorNames.get(course.instructor_id)
+          : "") ||
+        organisation?.name ||
+        "HillCrest Academy";
       return {
         id: course.id,
         title: course.title,
@@ -422,6 +484,7 @@ export async function getPublishedCourses(): Promise<{
         certificateEnabled: course.certificate_enabled,
         programmeTitle: programme?.title ?? "HillCrest Academy",
         providerName: organisation?.name ?? "HillCrest Academy",
+        publisherName,
         moduleCount: course.course_modules?.length ?? 0,
       };
     }),
@@ -435,7 +498,7 @@ export async function getPublishedCourseSyllabus(
   const { data, error } = await supabase
     .from("courses")
     .select(
-      "id, title, slug, summary, description, cover_image_url, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, learning_outcomes, prerequisites, version, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, estimated_minutes, position, is_required, is_preview))",
+      "id, title, slug, summary, description, cover_image_url, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, learning_outcomes, prerequisites, version, published_at, instructor_id, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, estimated_minutes, position, is_required, is_preview))",
     )
     .eq("slug", slug)
     .eq("status", "published")
@@ -450,6 +513,9 @@ export async function getPublishedCourseSyllabus(
   const modules = normaliseModules(data.course_modules ?? []);
   const programme = singleRelation(data.programmes);
   const organisation = singleRelation(data.organisations);
+  const instructorNames = await loadInstructorNames(supabase, [
+    data.instructor_id,
+  ]);
 
   return {
     id: data.id,
@@ -471,6 +537,10 @@ export async function getPublishedCourseSyllabus(
     publishedAt: data.published_at,
     programmeTitle: programme?.title ?? "HillCrest Academy",
     providerName: organisation?.name ?? "HillCrest Academy",
+    publisherName:
+      (data.instructor_id ? instructorNames.get(data.instructor_id) : "") ||
+      organisation?.name ||
+      "HillCrest Academy",
     moduleCount: modules.length,
     totalLessons: modules.reduce(
       (total, module) => total + module.lessons.length,
@@ -513,7 +583,7 @@ export async function getCourseForLearning(
   const { data, error } = await supabase
     .from("courses")
     .select(
-      "id, title, slug, summary, description, cover_image_url, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, learning_outcomes, prerequisites, version, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, content, video_url, estimated_minutes, position, is_required, is_preview))",
+      "id, title, slug, summary, description, cover_image_url, category, course_categories(name), difficulty, estimated_minutes, price_minor_units, currency, scholarship_eligible, certificate_enabled, learning_outcomes, prerequisites, version, published_at, instructor_id, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, content, video_url, estimated_minutes, position, is_required, is_preview))",
     )
     .eq("id", courseId)
     .maybeSingle();
@@ -584,6 +654,9 @@ export async function getCourseForLearning(
 
   const programme = singleRelation(data.programmes);
   const organisation = singleRelation(data.organisations);
+  const instructorNames = await loadInstructorNames(supabase, [
+    data.instructor_id,
+  ]);
 
   return {
     id: data.id,
@@ -605,6 +678,10 @@ export async function getCourseForLearning(
     publishedAt: data.published_at,
     programmeTitle: programme?.title ?? "HillCrest Academy",
     providerName: organisation?.name ?? "HillCrest Academy",
+    publisherName:
+      (data.instructor_id ? instructorNames.get(data.instructor_id) : "") ||
+      organisation?.name ||
+      "HillCrest Academy",
     moduleCount: learningModules.length,
     totalLessons: learningModules.reduce(
       (total, module) => total + module.lessons.length,
@@ -634,7 +711,7 @@ export async function getMyLearning(userId: string): Promise<MyLearningCourse[]>
   const { data, error } = await supabase
     .from("course_enrolments")
     .select(
-      "id, status, enrolled_at, completed_at, course_id, courses(id, title, slug, summary, cover_image_url, category, difficulty, estimated_minutes, status, certificate_enabled, course_modules(id, lessons(id)))",
+      "id, status, enrolled_at, completed_at, course_id, courses(id, title, slug, summary, cover_image_url, category, difficulty, estimated_minutes, status, certificate_enabled, instructor_id, organisations(name), course_modules(id, lessons(id)))",
     )
     .eq("user_id", userId)
     .order("enrolled_at", { ascending: false });
@@ -677,9 +754,17 @@ export async function getMyLearning(userId: string): Promise<MyLearningCourse[]>
     ]),
   );
 
+  const instructorNames = await loadInstructorNames(
+    supabase,
+    enrolments.map(
+      (enrolment) => singleRelation(enrolment.courses)?.instructor_id ?? null,
+    ),
+  );
+
   return enrolments.flatMap((enrolment) => {
     const course = singleRelation(enrolment.courses);
     if (!course) return [];
+    const organisation = singleRelation(course.organisations);
     const certificate = certificateByCourse.get(course.id);
     const totalLessons = (course.course_modules ?? []).reduce(
       (total, module) => total + (module.lessons?.length ?? 0),
@@ -705,6 +790,12 @@ export async function getMyLearning(userId: string): Promise<MyLearningCourse[]>
         certificateId: certificate?.id ?? null,
         certificateNumber: certificate?.certificate_number ?? null,
         certificateCode: certificate?.verification_code ?? null,
+        publisherName:
+          (course.instructor_id
+            ? instructorNames.get(course.instructor_id)
+            : "") ||
+          organisation?.name ||
+          "HillCrest Academy",
         totalLessons,
         completedLessons: completedByEnrolment.get(enrolment.id) ?? 0,
       },
@@ -729,7 +820,7 @@ export async function listManagedCourses(
   let query = supabase
     .from("courses")
     .select(
-      "id, title, slug, status, difficulty, is_public, organisation_id, category, cover_image_url, updated_at, course_categories(name), programmes(title), organisations(name), course_modules(id), course_enrolments(id)",
+      "id, title, slug, status, difficulty, is_public, organisation_id, category, cover_image_url, instructor_id, updated_at, course_categories(name), programmes(title), organisations(name), course_modules(id), course_enrolments(id)",
     )
     .order("updated_at", { ascending: false });
 
@@ -742,6 +833,11 @@ export async function listManagedCourses(
     console.error("[academy] could not load managed courses", error);
     return [];
   }
+
+  const instructorNames = await loadInstructorNames(
+    supabase,
+    (data ?? []).map((course) => course.instructor_id),
+  );
 
   return (data ?? []).map((course) => {
     const programme = singleRelation(course.programmes);
@@ -759,6 +855,12 @@ export async function listManagedCourses(
       programmeTitle: programme?.title ?? "HillCrest Academy",
       categoryName: category?.name ?? course.category,
       coverImageUrl: course.cover_image_url,
+      publisherName:
+        (course.instructor_id
+          ? instructorNames.get(course.instructor_id)
+          : "") ||
+        organisation?.name ||
+        "HillCrest Academy",
       moduleCount: course.course_modules?.length ?? 0,
       enrolmentCount: course.course_enrolments?.length ?? 0,
       updatedAt: course.updated_at,
@@ -1150,7 +1252,7 @@ export async function getManagedCourseDetail(
   const { data, error } = await supabase
     .from("courses")
     .select(
-      "id, title, slug, summary, description, category, cover_image_url, course_categories(name), difficulty, estimated_minutes, learning_outcomes, prerequisites, scholarship_eligible, certificate_enabled, status, is_public, organisation_id, programme_id, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, content, video_url, estimated_minutes, position, is_required, is_preview))",
+      "id, title, slug, summary, description, category, cover_image_url, course_categories(name), difficulty, estimated_minutes, learning_outcomes, prerequisites, scholarship_eligible, certificate_enabled, status, is_public, organisation_id, programme_id, instructor_id, published_at, programmes(title), organisations(name), course_modules(id, title, summary, position, is_required, lessons(id, title, slug, content, video_url, estimated_minutes, position, is_required, is_preview))",
     )
     .eq("id", courseId)
     .maybeSingle();
@@ -1186,6 +1288,9 @@ export async function getManagedCourseDetail(
 
   const programme = singleRelation(data.programmes);
   const organisation = singleRelation(data.organisations);
+  const instructorNames = await loadInstructorNames(supabase, [
+    data.instructor_id,
+  ]);
 
   return {
     id: data.id,
@@ -1207,6 +1312,10 @@ export async function getManagedCourseDetail(
     programmeId: data.programme_id,
     programmeTitle: programme?.title ?? "HillCrest Academy",
     organisationName: organisation?.name ?? null,
+    publisherName:
+      (data.instructor_id ? instructorNames.get(data.instructor_id) : "") ||
+      organisation?.name ||
+      "HillCrest Academy",
     publishedAt: data.published_at,
     modules: syllabusModules,
     totalLessons: syllabusModules.reduce(

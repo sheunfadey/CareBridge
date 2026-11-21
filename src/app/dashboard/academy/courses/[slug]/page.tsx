@@ -107,7 +107,7 @@ export default async function StudentCoursePage({ params }: CoursePageProps) {
               </span>
               <span className="flex items-center gap-1.5">
                 <GraduationCapIcon className="size-4" />
-                {course.providerName}
+                By {course.publisherName}
               </span>
               <span className="flex items-center gap-1.5">
                 <ShieldCheckIcon className="size-4" />
