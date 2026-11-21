@@ -2,8 +2,6 @@ import type { ReactNode } from "react";
 
 import { cn } from "cn";
 
-import { FadeIn } from "@/components/site/hero-motion";
-
 const tones = {
   peach: "from-portal-peach via-portal-cream to-portal-lavender",
   sky: "from-portal-sky via-portal-cream to-portal-lavender",
@@ -60,7 +58,7 @@ export function SiteHero({
         className="absolute -bottom-24 left-1/3 size-56 rounded-full bg-white/20 dark:bg-white/5"
       />
 
-      <FadeIn
+      <div
         className={cn(
           "relative grid gap-8",
           aside ? "lg:grid-cols-[1.05fr_0.95fr] lg:items-center" : "",
@@ -95,7 +93,7 @@ export function SiteHero({
         </div>
 
         {aside ? <div className="space-y-3">{aside}</div> : null}
-      </FadeIn>
+      </div>
     </div>
   );
 }

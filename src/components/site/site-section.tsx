@@ -2,16 +2,21 @@ import type { ReactNode } from "react";
 
 import { cn } from "cn";
 
+import { SectionReveal } from "@/components/site/section-reveal";
+
 export function SiteSection({
   children,
   className,
   tone = "default",
   id,
+  reveal = true,
 }: {
   children: ReactNode;
   className?: string;
   tone?: "default" | "ivory" | "sky" | "navy";
   id?: string;
+  /** Set false for sections that already animate their own content. */
+  reveal?: boolean;
 }) {
   const toneClass = {
     default: "bg-background",
@@ -23,7 +28,7 @@ export function SiteSection({
   return (
     <section id={id} className={cn(toneClass, className)}>
       <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
-        {children}
+        {reveal ? <SectionReveal>{children}</SectionReveal> : children}
       </div>
     </section>
   );

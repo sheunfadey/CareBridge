@@ -54,7 +54,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <SiteSection className="relative overflow-hidden">
+      <SiteSection className="relative overflow-hidden" reveal={false}>
         <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-portal-peach via-portal-cream to-portal-lavender p-5 shadow-[0_30px_80px_-60px_rgb(16_43_92/0.55)] sm:p-8 lg:p-12 dark:from-brand-dark dark:via-brand-dark-surface dark:to-brand-navy">
           <span
             aria-hidden="true"
