@@ -7833,7 +7833,11 @@ export type Database = {
       course_readable: { Args: { p_course: string }; Returns: boolean }
       course_instructor_names: {
         Args: never
-        Returns: { course_id: string; instructor_name: string }[]
+        Returns: {
+          course_id: string
+          instructor_id: string
+          instructor_name: string
+        }[]
       }
       course_required_assessments_complete: {
         Args: { p_enrolment: string }

@@ -355,8 +355,8 @@ async function mergePublicInstructorNames(
   const { data } = await supabase.rpc("course_instructor_names");
 
   for (const row of data ?? []) {
-    if (!names.get(row.course_id) && row.instructor_name) {
-      names.set(row.course_id, row.instructor_name);
+    if (!names.get(row.instructor_id) && row.instructor_name) {
+      names.set(row.instructor_id, row.instructor_name);
     }
   }
 
@@ -431,22 +431,6 @@ function normaliseModules(
           isPreview: lesson.is_preview,
         })),
     }));
-}
-
-export async function debugCoursePublishers(): Promise<[string, string][]> {
-  const supabase = await createClient();
-  const { data } = await supabase
-    .from("courses")
-    .select("instructor_id")
-    .eq("status", "published")
-    .eq("is_public", true);
-
-  const names = await loadInstructorNames(
-    supabase,
-    (data ?? []).map((course) => course.instructor_id),
-  );
-
-  return [...names.entries()];
 }
 
 export async function getPublishedCourses(): Promise<{
