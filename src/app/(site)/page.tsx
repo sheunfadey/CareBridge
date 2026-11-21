@@ -20,6 +20,14 @@ import { AnimatedHillCrestLogo } from "@/components/brand/animated-carebridge-lo
 import { FaqAccordion } from "@/components/site/faq-accordion";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
 import {
+  FadeIn,
+  Float,
+  Glow,
+  HoverLift,
+  Stagger,
+  StaggerItem,
+} from "@/components/site/hero-motion";
+import {
   homeFaqs,
   homepageSteps,
   organisationFeatures,
@@ -47,36 +55,45 @@ export default function HomePage() {
     <>
       {/* Hero */}
       <SiteSection className="relative overflow-hidden">
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-portal-peach via-portal-cream to-portal-lavender p-5 sm:p-8 lg:p-12">
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-portal-peach via-portal-cream to-portal-lavender p-5 shadow-[0_30px_80px_-60px_rgb(16_43_92/0.55)] sm:p-8 lg:p-12 dark:from-brand-dark dark:via-brand-dark-surface dark:to-brand-navy">
           <span
             aria-hidden="true"
-            className="absolute -right-20 -top-24 size-72 rounded-full border-[24px] border-white/25"
+            className="absolute -right-20 -top-24 size-72 rounded-full border-[24px] border-white/25 dark:border-white/10"
           />
           <span
             aria-hidden="true"
-            className="absolute -bottom-28 left-1/3 size-64 rounded-full bg-white/15"
+            className="absolute -bottom-28 left-1/3 size-64 rounded-full bg-white/15 dark:bg-white/5"
           />
           <div className="relative grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div className="space-y-5">
-              <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#7b4a2c]">
-                <SparklesIcon className="size-3.5" aria-hidden="true" />
-                Learn. Practise. Work.
-              </span>
-              <h1 className="font-heading text-3xl font-semibold leading-[1.08] tracking-[-0.04em] text-brand-strong sm:text-4xl lg:text-5xl">
-                Build a career in care.
-                <span className="mt-1 block text-brand-navy/80">
-                  Help someone live better.
+              <FadeIn>
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#7b4a2c] shadow-sm backdrop-blur-sm dark:bg-white/10 dark:text-white/80">
+                  <SparklesIcon className="size-3.5" aria-hidden="true" />
+                  Learn. Practise. Work.
                 </span>
-              </h1>
-              <p className="max-w-xl text-base text-brand-navy/70 dark:text-foreground/70">
-                {brand.name} connects structured caregiver training, supervised
-                practical experience, employment opportunities and the
-                operations tools care providers need.
-              </p>
-              <div className="flex flex-wrap items-center gap-2">
+              </FadeIn>
+
+              <FadeIn delay={0.08}>
+                <h1 className="font-heading text-3xl font-semibold leading-[1.08] tracking-[-0.04em] text-brand-strong sm:text-4xl lg:text-5xl">
+                  Build a career in care.
+                  <span className="mt-1 block text-brand-navy/80 dark:text-white/85">
+                    Help someone live better.
+                  </span>
+                </h1>
+              </FadeIn>
+
+              <FadeIn delay={0.16}>
+                <p className="max-w-xl text-base text-brand-navy/70 dark:text-foreground/75">
+                  {brand.name} connects structured caregiver training, supervised
+                  practical experience, employment opportunities and the
+                  operations tools care providers need.
+                </p>
+              </FadeIn>
+
+              <FadeIn delay={0.24} className="flex flex-wrap items-center gap-2">
                 <Button
                   size="lg"
-                  className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                  className="rounded-full bg-brand-navy text-white shadow-sm hover:bg-brand-navy/90 dark:bg-white dark:text-brand-navy dark:hover:bg-white/90"
                   asChild
                 >
                   <Link href="/caregiver-training">Explore training</Link>
@@ -84,44 +101,55 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="rounded-full border-brand-navy/15 bg-white/60"
+                  className="rounded-full border-brand-navy/15 bg-white/60 backdrop-blur-sm hover:bg-white/80 dark:border-white/20 dark:bg-white/10 dark:text-white dark:hover:bg-white/15"
                   asChild
                 >
                   <Link href="/for-care-homes">For care providers</Link>
                 </Button>
-              </div>
-              <p className="text-xs text-brand-navy/60 dark:text-foreground/60">
-                Verified records · Access-controlled data · Append-only finances
-              </p>
+              </FadeIn>
+
+              <FadeIn delay={0.3}>
+                <p className="text-xs text-brand-navy/60 dark:text-foreground/60">
+                  Verified records · Access-controlled data · Append-only finances
+                </p>
+              </FadeIn>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex justify-center lg:justify-start">
-                <AnimatedHillCrestLogo size="md" showTagline />
-              </div>
-              <div className="grid gap-3 sm:grid-cols-2">
+            <div className="space-y-5">
+              <FadeIn delay={0.18} className="relative flex justify-center lg:justify-start">
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 flex items-center justify-center"
+                >
+                  <Glow className="size-36 rounded-full bg-white/50 blur-3xl dark:bg-brand-teal/25" />
+                </span>
+                <Float className="relative">
+                  <AnimatedHillCrestLogo size="md" showTagline />
+                </Float>
+              </FadeIn>
+
+              <Stagger delay={0.28} className="grid gap-3 sm:grid-cols-2">
                 {[
                   { icon: GraduationCapIcon, title: "Structured training", body: "Modules, lessons and assessments that record real progress." },
                   { icon: ClipboardListIcon, title: "Practical competency", body: "Supervised placements with competency recorded as you go." },
                   { icon: Building2Icon, title: "Care operations", body: "Residents, staff, shifts, care records and reporting." },
                   { icon: HeartHandshakeIcon, title: "Charity and access", body: "Scholarships and campaigns that widen access to training." },
                 ].map((card) => (
-                  <div
-                    key={card.title}
-                    className="group rounded-[var(--radius-2xl)] bg-white/70 p-4 ring-1 ring-brand-navy/5 transition hover:-translate-y-1 hover:bg-white/90 dark:bg-card/70"
-                  >
-                    <span className="flex size-9 items-center justify-center rounded-xl bg-white/70 text-brand-navy dark:bg-white/10 dark:text-brand-strong">
-                      <card.icon className="size-4.5" aria-hidden="true" />
-                    </span>
-                    <p className="mt-3 font-heading text-sm font-semibold text-brand-strong">
-                      {card.title}
-                    </p>
-                    <p className="mt-1 text-xs leading-relaxed text-brand-navy/65 dark:text-foreground/65">
-                      {card.body}
-                    </p>
-                  </div>
+                  <StaggerItem key={card.title} className="h-full">
+                    <HoverLift className="group h-full rounded-[var(--radius-2xl)] bg-white/70 p-4 shadow-sm ring-1 ring-brand-navy/5 backdrop-blur-sm transition-colors hover:bg-white/90 dark:bg-white/[0.06] dark:ring-white/10 dark:hover:bg-white/[0.1]">
+                      <span className="flex size-9 items-center justify-center rounded-xl bg-white/80 text-brand-navy shadow-sm dark:bg-white/10 dark:text-white dark:shadow-none">
+                        <card.icon className="size-4.5" aria-hidden="true" />
+                      </span>
+                      <p className="mt-3 font-heading text-sm font-semibold text-brand-strong dark:text-white">
+                        {card.title}
+                      </p>
+                      <p className="mt-1 text-xs leading-relaxed text-brand-navy/65 dark:text-foreground/65">
+                        {card.body}
+                      </p>
+                    </HoverLift>
+                  </StaggerItem>
                 ))}
-              </div>
+              </Stagger>
             </div>
           </div>
         </div>
