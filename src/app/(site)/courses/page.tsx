@@ -13,6 +13,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import {
+  FadeIn,
+  HoverLift,
+  Stagger,
+  StaggerItem,
+} from "@/components/site/hero-motion";
 import { CourseCoverCard } from "@/features/academy/components/course-cover";
 import { trainingProgrammes } from "@/config/site-content";
 import { brand } from "@/config/brand";
@@ -51,28 +57,28 @@ export default async function CoursesPage() {
   return (
     <>
       <SiteSection className="relative overflow-hidden">
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-portal-sky via-portal-cream to-portal-lavender p-5 sm:p-8 lg:p-10">
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-portal-sky via-portal-cream to-portal-lavender p-5 shadow-[0_30px_80px_-60px_rgb(16_43_92/0.55)] sm:p-8 lg:p-10 dark:from-brand-dark dark:via-brand-dark-surface dark:to-brand-navy">
           <span
             aria-hidden="true"
-            className="absolute -right-20 -top-24 size-72 rounded-full border-[24px] border-white/30"
+            className="absolute -right-20 -top-24 size-72 rounded-full border-[24px] border-white/30 dark:border-white/10"
           />
           <span
             aria-hidden="true"
-            className="absolute -bottom-24 left-1/3 size-56 rounded-full bg-white/20"
+            className="absolute -bottom-24 left-1/3 size-56 rounded-full bg-white/20 dark:bg-white/5"
           />
-          <div className="relative grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+          <FadeIn className="relative grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
             <div className="space-y-5">
-              <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#2b6385]">
+              <span className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#2b6385] shadow-sm backdrop-blur-sm dark:bg-white/10 dark:text-white/80 dark:shadow-none">
                 <BookOpenIcon className="size-3.5" aria-hidden="true" />
                 Academy catalogue
               </span>
               <h1 className="font-heading text-3xl font-semibold leading-[1.08] tracking-[-0.04em] text-brand-strong sm:text-4xl lg:text-5xl">
                 Courses for every stage of care work.
-                <span className="mt-1 block text-brand-navy/80">
+                <span className="mt-1 block text-brand-navy/80 dark:text-white/85">
                   Start where you are.
                 </span>
               </h1>
-              <p className="max-w-xl text-base text-brand-navy/70 dark:text-foreground/70">
+              <p className="max-w-xl text-base text-brand-navy/70 dark:text-foreground/75">
                 Enrol in published {brand.name} Academy courses, work through the
                 syllabus at your own pace and earn a verifiable certificate when
                 you complete all required lessons.
@@ -80,7 +86,7 @@ export default async function CoursesPage() {
               <div className="flex flex-wrap items-center gap-2">
                 <Button
                   size="lg"
-                  className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                  className="rounded-full bg-brand-navy text-white shadow-sm hover:bg-brand-navy/90 dark:bg-white dark:text-brand-navy dark:hover:bg-white/90"
                   asChild
                 >
                   <Link href="/register">Create an account</Link>
@@ -88,7 +94,7 @@ export default async function CoursesPage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="rounded-full border-brand-navy/15 bg-white/60"
+                  className="rounded-full border-brand-navy/15 bg-white/60 backdrop-blur-sm hover:bg-white/80 dark:border-white/20 dark:bg-white/10 dark:text-white dark:hover:bg-white/15"
                   asChild
                 >
                   <Link href="/dashboard/academy">Go to Academy</Link>
@@ -96,30 +102,29 @@ export default async function CoursesPage() {
               </div>
             </div>
 
-            <div className="grid gap-3">
+            <Stagger delay={0.15} className="grid gap-3">
               {programmeFeatures.map((feature) => (
-                <div
-                  key={feature.title}
-                  className="flex gap-3 rounded-[var(--radius-2xl)] bg-white/70 p-4 ring-1 ring-brand-navy/5 dark:bg-card/70"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white/70 text-brand-navy dark:bg-white/10 dark:text-brand-strong"
-                  >
-                    <feature.icon className="size-4.5" />
-                  </span>
-                  <div>
-                    <p className="font-heading text-sm font-semibold text-brand-strong">
-                      {feature.title}
-                    </p>
-                    <p className="mt-1 text-xs leading-relaxed text-brand-navy/65 dark:text-foreground/65">
-                      {feature.body}
-                    </p>
-                  </div>
-                </div>
+                <StaggerItem key={feature.title} className="h-full">
+                  <HoverLift className="flex h-full gap-3 rounded-[var(--radius-2xl)] bg-white/70 p-4 shadow-sm ring-1 ring-brand-navy/5 backdrop-blur-sm transition-colors hover:bg-white/90 dark:bg-white/[0.06] dark:ring-white/10 dark:hover:bg-white/[0.1]">
+                    <span
+                      aria-hidden="true"
+                      className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white/80 text-brand-navy shadow-sm dark:bg-white/10 dark:text-white dark:shadow-none"
+                    >
+                      <feature.icon className="size-4.5" />
+                    </span>
+                    <div>
+                      <p className="font-heading text-sm font-semibold text-brand-strong dark:text-white">
+                        {feature.title}
+                      </p>
+                      <p className="mt-1 text-xs leading-relaxed text-brand-navy/65 dark:text-foreground/65">
+                        {feature.body}
+                      </p>
+                    </div>
+                  </HoverLift>
+                </StaggerItem>
               ))}
-            </div>
-          </div>
+            </Stagger>
+          </FadeIn>
         </div>
       </SiteSection>
 
