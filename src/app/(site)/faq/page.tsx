@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CircleHelpIcon, MessageCircleIcon } from "lucide-react";
+import { MessageCircleIcon } from "lucide-react";
 
 import { FaqAccordion } from "@/components/site/faq-accordion";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteHero } from "@/components/site/site-hero";
 import { Button } from "@/components/ui/button";
 import { brand } from "@/config/brand";
 import { homeFaqs, type FaqItem } from "@/config/site-content";
@@ -145,53 +146,32 @@ const groupedFaqs: { title: string; items: FaqItem[] }[] = [
 export default function FaqPage() {
   return (
     <>
-      <SiteSection tone="ivory">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-teal/20 bg-brand-sky px-3 py-1 text-xs font-medium text-brand-teal">
-              <CircleHelpIcon className="size-3.5" aria-hidden="true" />
-              Frequently asked questions
-            </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
-              Frequently asked questions
-              <span className="text-gradient-care block">
-                about training, work and the platform
-              </span>
-            </h1>
-            <p className="max-w-xl text-lg text-muted-foreground">
-              The questions people ask {brand.name} most often, grouped by the
-              area they relate to. If your question is not answered here, the
-              help centre and the contact page are the next places to look.
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" asChild>
-                <Link href="/help">Visit the help centre</Link>
+            <SiteSection>
+        <SiteHero
+          tone="lavender"
+          eyebrow="Frequently asked questions"
+          title="Answers about training,"
+          highlight="work and the platform."
+          description="Straight answers on programmes, placements, employment, care operations, referrals, payments and charity support."
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
+                <Link href="/contact">Ask us directly</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/contact">Contact us</Link>
+              <Button
+                size="lg"
+                variant="outline" className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
+                <Link href="/courses">Browse courses</Link>
               </Button>
-            </div>
-          </div>
-
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-strong">
-              On this page
-            </p>
-            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              {["About HillCrest", ...groupedFaqs.map((group) => group.title)].map(
-                (heading) => (
-                  <li key={heading} className="flex gap-3">
-                    <span
-                      aria-hidden="true"
-                      className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-teal"
-                    />
-                    {heading}
-                  </li>
-                ),
-              )}
-            </ul>
-          </div>
-        </div>
+            </>
+          }
+        />
       </SiteSection>
 
       <SiteSection>

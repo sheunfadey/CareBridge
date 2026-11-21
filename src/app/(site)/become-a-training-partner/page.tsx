@@ -14,6 +14,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteHero, SiteHeroCard } from "@/components/site/site-hero";
 import { brand } from "@/config/brand";
 
 export const metadata: Metadata = {
@@ -81,62 +82,52 @@ const applicationSteps = [
   },
 ] as const;
 
-const partnerTypes = [
-  "Care homes and home-care agencies that want to run their own induction and development pathway.",
-  "Training providers and educators delivering care-related programmes.",
-  "Community and faith-based organisations supporting people who want to enter care work.",
-  "Employers building a pipeline of trained caregivers for their own services.",
-];
-
 export default function BecomeATrainingPartnerPage() {
   return (
     <>
-      <SiteSection tone="ivory">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-teal/20 bg-brand-sky px-3 py-1 text-xs font-medium text-brand-teal">
-              <GraduationCapIcon className="size-3.5" aria-hidden="true" />
-              Training partners
-            </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
-              Become a training partner
-              <span className="text-gradient-care block">
-                and train the next generation of caregivers
-              </span>
-            </h1>
-            <p className="max-w-xl text-lg text-muted-foreground">
-              Training partners work with {brand.name} to deliver caregiver
-              programmes, host practical placements and help shape the
-              curriculum. You bring the setting and the experience; we bring the
-              platform, the learner records and the assessments.
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" asChild>
-                <Link href="/contact">Talk to our team</Link>
+            <SiteSection>
+        <SiteHero
+          tone="lavender"
+          eyebrow="Training partners"
+          title="Become a training partner."
+          highlight="Deliver structured, verifiable training."
+          description="Bring your programmes to HillCrest so learners get organised modules, assessments and practical competency checks, with completion records they can show employers."
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
+                <Link href="/contact">Apply to partner</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/register">Create an account</Link>
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
+                <Link href="/caregiver-training">See the training model</Link>
               </Button>
-            </div>
-          </div>
-
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-strong">
-              Who partners with us
-            </p>
-            <ul className="mt-4 space-y-3">
-              {partnerTypes.map((point) => (
-                <li key={point} className="flex gap-3 text-sm text-muted-foreground">
-                  <span
-                    aria-hidden="true"
-                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
-                  />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+            </>
+          }
+          aside={
+            <>
+              <SiteHeroCard
+                title="Reach motivated learners"
+                body="Programmes are discoverable in the Academy catalogue."
+              />
+              <SiteHeroCard
+                title="Structured delivery"
+                body="Modules, lessons, assessments and resources in one studio."
+              />
+              <SiteHeroCard
+                title="Records that hold up"
+                body="Completion and competency tied to the learner's profile."
+              />
+            </>
+          }
+        />
       </SiteSection>
 
       <SiteSection>

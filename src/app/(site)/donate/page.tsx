@@ -9,6 +9,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteHero } from "@/components/site/site-hero";
 import { FaqAccordion } from "@/components/site/faq-accordion";
 import type { FaqItem } from "@/config/site-content";
 import { brand } from "@/config/brand";
@@ -45,11 +46,31 @@ const donationFaqs: FaqItem[] = [
 export default function DonatePage() {
   return (
     <>
-      <SiteSection tone="ivory">
-        <SectionHeading
+            <SiteSection>
+        <SiteHero
+          tone="rose"
           eyebrow="Donate"
-          title="Help widen access to quality care training"
-          description="Your support funds scholarships so that capable people are not held back by the cost of training — and so that more people can receive safe, dignified care."
+          title="Help widen access"
+          highlight="to quality care training."
+          description="Your support funds scholarships so that capable people are not held back by the cost of training - and so that more people can receive safe, dignified care."
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
+                <Link href="/charity">See campaigns</Link>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline" className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
+                <Link href="/contact">Talk to us</Link>
+              </Button>
+            </>
+          }
         />
       </SiteSection>
 

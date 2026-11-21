@@ -15,6 +15,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteHero } from "@/components/site/site-hero";
 import { organisationFeatures } from "@/config/site-content";
 
 export const metadata: Metadata = {
@@ -35,47 +36,60 @@ const iconMap: Record<string, typeof UsersIcon> = {
 export default function ForCareHomesPage() {
   return (
     <>
-      <SiteSection tone="ivory">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <SectionHeading
-              eyebrow="For Care Homes"
-              title="Caregiver operations software built for accountability"
-              description="Manage residents, staff, shifts, care records, incidents, inventory, purchases and finances in one place — with clear access control and auditable history."
-            />
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" asChild>
+      <SiteSection>
+        <SiteHero
+          eyebrow="For care homes"
+          title="Care operations software"
+          highlight="built for accountability."
+          description="Manage residents, staff, shifts, care records, incidents, inventory, purchases and finances in one place — with clear access control and auditable history."
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
                 <Link href="/register">Get started</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
                 <Link href="/contact">Talk to our team</Link>
               </Button>
+            </>
+          }
+          aside={
+            <div className="rounded-[var(--radius-2xl)] bg-white/70 p-5 ring-1 ring-brand-navy/5 dark:bg-card/70">
+              <p className="font-heading text-sm font-semibold text-brand-strong">
+                What you can manage
+              </p>
+              <ul className="mt-3 space-y-2.5">
+                {[
+                  "Residents and staff records with access control",
+                  "Shifts and scheduling",
+                  "Daily care and care plans",
+                  "Incidents and safeguarding",
+                  "Inventory, purchases and expenses",
+                  "Invoices and reporting with append-only history",
+                ].map((point) => (
+                  <li
+                    key={point}
+                    className="flex gap-2.5 text-sm text-brand-navy/70 dark:text-foreground/70"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
+                    />
+                    {point}
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-strong">
-              What you can manage
-            </p>
-            <ul className="mt-4 space-y-3">
-              {[
-                "Residents and staff records with access control",
-                "Shifts and scheduling",
-                "Daily care and care plans",
-                "Incidents and safeguarding",
-                "Inventory, purchases and expenses",
-                "Invoices and reporting with append-only history",
-              ].map((point) => (
-                <li key={point} className="flex gap-3 text-sm text-muted-foreground">
-                  <span
-                    aria-hidden="true"
-                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
-                  />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+          }
+        />
       </SiteSection>
 
       <SiteSection>

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AccessibilityIcon, InfoIcon } from "lucide-react";
 
-import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteSection } from "@/components/site/site-section";
+import { SiteHero } from "@/components/site/site-hero";
 import { brand } from "@/config/brand";
 
 export const metadata: Metadata = {
@@ -14,13 +15,17 @@ export const metadata: Metadata = {
 export default function AccessibilityPage() {
   return (
     <>
+      <SiteSection>
+        <SiteHero
+          eyebrow="Legal"
+          title="Accessibility Statement"
+          description={`Our commitment to making ${brand.name} usable by everyone, what we have done so far, and what we are still working on.`}
+        />
+      </SiteSection>
+
       <SiteSection tone="ivory">
         <div className="max-w-3xl space-y-6">
-          <SectionHeading
-            eyebrow="Legal"
-            title="Accessibility Statement"
-            description={`Our commitment to making ${brand.name} usable by everyone, what we have done so far, and what we are still working on.`}
-          />
+          
           <div className="rounded-xl border border-brand-warning/30 bg-brand-sky p-5">
             <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-strong">
               <InfoIcon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />

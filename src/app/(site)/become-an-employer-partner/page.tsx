@@ -13,6 +13,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteHero, SiteHeroCard } from "@/components/site/site-hero";
 import { brand } from "@/config/brand";
 
 export const metadata: Metadata = {
@@ -80,62 +81,52 @@ const gettingStartedSteps = [
   },
 ] as const;
 
-const partnerTypes = [
-  "Care homes and residential services building a reliable pool of caregivers.",
-  "Home-care agencies and domiciliary providers recruiting in their local area.",
-  "Hospitals, clinics and other health services recruiting support workers.",
-  "Recruiters and staffing agencies placing caregivers with care providers.",
-];
-
 export default function BecomeAnEmployerPartnerPage() {
   return (
     <>
-      <SiteSection tone="ivory">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-teal/20 bg-brand-sky px-3 py-1 text-xs font-medium text-brand-teal">
-              <UserCheckIcon className="size-3.5" aria-hidden="true" />
-              Employer partners
-            </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
-              Become an employer partner
-              <span className="text-gradient-care block">
-                and recruit from verified records
-              </span>
-            </h1>
-            <p className="max-w-xl text-lg text-muted-foreground">
-              Employer partners use {brand.name} to hire caregivers whose
-              training and competency records are already in one place, to offer
-              internships and placements, and to record the feedback that shapes
-              each learner&apos;s next step.
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" asChild>
+            <SiteSection>
+        <SiteHero
+          tone="sky"
+          eyebrow="Employer partners"
+          title="Become an employer partner."
+          highlight="Hire from a verified pipeline."
+          description="Post vacancies, review candidates whose training and competency records actually exist, and manage applications, interviews and offers in one place."
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
+                <Link href="/register">Get started</Link>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
                 <Link href="/contact">Talk to our team</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/for-employers">For employers</Link>
-              </Button>
-            </div>
-          </div>
-
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-strong">
-              Who partners with us
-            </p>
-            <ul className="mt-4 space-y-3">
-              {partnerTypes.map((point) => (
-                <li key={point} className="flex gap-3 text-sm text-muted-foreground">
-                  <span
-                    aria-hidden="true"
-                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
-                  />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+            </>
+          }
+          aside={
+            <>
+              <SiteHeroCard
+                title="Verified candidates"
+                body="Training, assessments and practical evaluations visible on profile."
+              />
+              <SiteHeroCard
+                title="One hiring record"
+                body="Applications, interviews and offers tracked together."
+              />
+              <SiteHeroCard
+                title="Less guesswork"
+                body="Review what has been demonstrated, not just claimed."
+              />
+            </>
+          }
+        />
       </SiteSection>
 
       <SiteSection>

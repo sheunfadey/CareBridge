@@ -11,6 +11,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteHero } from "@/components/site/site-hero";
 
 export const metadata: Metadata = {
   title: "Referral Programme",
@@ -53,46 +54,32 @@ const howItWorksSteps = [
 export default function ReferralProgrammePage() {
   return (
     <>
-      <SiteSection tone="ivory">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <SectionHeading
-              eyebrow="Referral Programme"
-              title="Refer partners and earn when it qualifies"
-              description="The referral programme lets partners introduce learners and organisations to HillCrest. Commissions follow a published policy and become payable only when they qualify."
-            />
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" asChild>
+            <SiteSection>
+        <SiteHero
+          tone="lavender"
+          eyebrow="Referral programme"
+          title="Refer partners and earn"
+          highlight="when it qualifies."
+          description="Introduce learners and organisations to HillCrest. Commissions follow a published policy and become payable only when they qualify."
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
                 <Link href="/dashboard/referrals">Join the programme</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/referral-terms">Read referral terms</Link>
+              <Button
+                size="lg"
+                variant="outline" className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
+                <Link href="/referral-terms">Read the terms</Link>
               </Button>
-            </div>
-          </div>
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-strong">
-              Key principles
-            </p>
-            <ul className="mt-4 space-y-3">
-              {[
-                "Published policy defines eligibility and commission rates",
-                "Commissions become payable only when they qualify",
-                "Referrals are tracked against the published policy",
-                "Financial history is append-only and auditable",
-                "No silent rewrites to already-earned amounts",
-              ].map((point) => (
-                <li key={point} className="flex gap-3 text-sm text-muted-foreground">
-                  <span
-                    aria-hidden="true"
-                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
-                  />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+            </>
+          }
+        />
       </SiteSection>
 
       <SiteSection>

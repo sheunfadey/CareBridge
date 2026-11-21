@@ -6,13 +6,12 @@ import {
   FileCheckIcon,
   SearchIcon,
   ShieldCheckIcon,
-  UserRoundSearchIcon,
   UsersRoundIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
-import { brand } from "@/config/brand";
+import { SiteHero } from "@/components/site/site-hero";
 
 export const metadata: Metadata = {
   title: "Find Caregivers",
@@ -59,58 +58,32 @@ const verificationPoints = [
 export default function FindCaregiversPage() {
   return (
     <>
-      <SiteSection tone="ivory">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-teal/20 bg-brand-sky px-3 py-1 text-xs font-medium text-brand-teal">
-              <UserRoundSearchIcon className="size-3.5" aria-hidden="true" />
-              For families and individuals
-            </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
-              Find caregivers you can
-              <span className="text-gradient-care block">
-                actually check.
-              </span>
-            </h1>
-            <p className="max-w-xl text-lg text-muted-foreground">
-              {brand.name} helps families and individuals find caregivers for
-              home, family and residential support. Instead of relying on a
-              listing alone, you review the caregiver&apos;s training and
-              competency records — and you can see exactly what was verified and
-              what was not.
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" asChild>
+            <SiteSection>
+        <SiteHero
+          tone="peach"
+          eyebrow="For families and individuals"
+          title="Find caregivers"
+          highlight="you can actually check."
+          description="Caregivers on HillCrest build a record of completed training, supervised practice and verified competency, so you can see what has genuinely been done."
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
                 <Link href="/register">Get started</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/contact">Talk to our team</Link>
+              <Button
+                size="lg"
+                variant="outline" className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
+                <Link href="/how-it-works">How verification works</Link>
               </Button>
-            </div>
-          </div>
-
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-strong">
-              Who this service is for
-            </p>
-            <ul className="mt-4 space-y-3">
-              {[
-                "Families arranging support for an older relative at home.",
-                "People recovering from illness who need help with daily living.",
-                "Anyone looking for ongoing company, personal care or respite support.",
-                "Families living far away who want to see a caregiver's records for themselves.",
-              ].map((point) => (
-                <li key={point} className="flex gap-3 text-sm text-muted-foreground">
-                  <span
-                    aria-hidden="true"
-                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
-                  />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+            </>
+          }
+        />
       </SiteSection>
 
       <SiteSection>

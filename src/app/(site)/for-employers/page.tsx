@@ -13,6 +13,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteHero } from "@/components/site/site-hero";
 
 export const metadata: Metadata = {
   title: "For Employers",
@@ -69,45 +70,59 @@ const verificationPoints = [
 export default function ForEmployersPage() {
   return (
     <>
-      <SiteSection tone="ivory">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <SectionHeading
-              eyebrow="For Employers"
-              title="Hire verified caregivers with confidence"
-              description="Post vacancies, review verified candidates and manage applications, interviews and offers — backed by training and competency records you can actually check."
-            />
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" asChild>
+      <SiteSection>
+        <SiteHero
+          tone="sky"
+          eyebrow="For employers"
+          title="Hire verified caregivers"
+          highlight="with confidence."
+          description="Post vacancies, review verified candidates and manage applications, interviews and offers — backed by training and competency records you can actually check."
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
                 <Link href="/register">Get started</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
                 <Link href="/contact">Talk to our team</Link>
               </Button>
+            </>
+          }
+          aside={
+            <div className="rounded-[var(--radius-2xl)] bg-white/70 p-5 ring-1 ring-brand-navy/5 dark:bg-card/70">
+              <p className="font-heading text-sm font-semibold text-brand-strong">
+                Built for hiring teams
+              </p>
+              <ul className="mt-3 space-y-2.5">
+                {[
+                  "Care homes and residential providers",
+                  "Home care agencies",
+                  "Recruiters placing caregivers",
+                  "Organisations needing verified care staff",
+                ].map((point) => (
+                  <li
+                    key={point}
+                    className="flex gap-2.5 text-sm text-brand-navy/70 dark:text-foreground/70"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
+                    />
+                    {point}
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-strong">
-              Built for hiring teams
-            </p>
-            <ul className="mt-4 space-y-3">
-              {[
-                "Care homes and residential providers",
-                "Home care agencies",
-                "Recruiters placing caregivers",
-                "Organisations needing verified care staff",
-              ].map((point) => (
-                <li key={point} className="flex gap-3 text-sm text-muted-foreground">
-                  <span
-                    aria-hidden="true"
-                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
-                  />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+          }
+        />
       </SiteSection>
 
       <SiteSection>

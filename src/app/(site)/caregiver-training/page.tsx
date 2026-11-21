@@ -22,6 +22,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteHero, SiteHeroCard } from "@/components/site/site-hero";
 import { brand } from "@/config/brand";
 
 export const metadata: Metadata = {
@@ -141,80 +142,65 @@ const recordPoints = [
 export default function CaregiverTrainingPage() {
   return (
     <>
-      <SiteSection tone="ivory">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-teal/20 bg-brand-sky px-3 py-1 text-xs font-medium text-brand-teal">
-              <ClipboardCheckIcon className="size-3.5" aria-hidden="true" />
-              Learn. Practise. Qualify.
-            </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
-              Caregiver training that ends in capability
-              <span className="text-gradient-care block">
-                You can show, not just claim.
-              </span>
-            </h1>
-            <p className="max-w-xl text-lg text-muted-foreground">
-              {brand.name} delivers training as structured programmes — modules,
-              lessons and assessments followed by supervised practical work — so
-              that your record shows what you can actually do in a care setting.
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" asChild>
+      <SiteSection>
+        <SiteHero
+          eyebrow="Learn. Practise. Qualify."
+          title="Caregiver training that ends in capability."
+          highlight="You can show, not just claim."
+          description={`${brand.name} delivers training as structured programmes — modules, lessons and assessments followed by supervised practical work — so your record shows what you can actually do in a care setting.`}
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
                 <Link href="/courses">Browse courses</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
                 <Link href="/register">Create an account</Link>
               </Button>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              No prior experience is needed to begin foundation training. You
-              start with core care principles and build towards more specialist
-              practice.
-            </p>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2">
-            {[
-              {
-                icon: LayersIcon,
-                title: "Structured programmes",
-                body: "Organised modules and lessons that build on one another.",
-              },
-              {
-                icon: ClipboardCheckIcon,
-                title: "Assessment built in",
-                body: "Understanding is checked as you learn, not only at the end.",
-              },
-              {
-                icon: ClipboardListIcon,
-                title: "Supervised placements",
-                body: "Practical placements matched to your stage of training.",
-              },
-              {
-                icon: BadgeCheckIcon,
-                title: "Records and certificates",
-                body: "Completion and competency recorded on your profile.",
-              },
-            ].map((card) => (
-              <div
-                key={card.title}
-                className="rounded-xl bg-card p-5 shadow-card ring-1 ring-foreground/10"
-              >
-                <span
-                  aria-hidden="true"
-                  className="flex size-10 items-center justify-center rounded-lg bg-brand-sky text-brand-teal"
-                >
-                  <card.icon className="size-5" />
-                </span>
-                <p className="mt-4 font-heading font-semibold text-brand-strong">
-                  {card.title}
-                </p>
-                <p className="mt-1.5 text-sm text-muted-foreground">{card.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+            </>
+          }
+          aside={
+            <>
+              {[
+                {
+                  icon: LayersIcon,
+                  title: "Structured programmes",
+                  body: "Organised modules and lessons that build on one another.",
+                },
+                {
+                  icon: ClipboardCheckIcon,
+                  title: "Assessment built in",
+                  body: "Understanding is checked as you learn, not only at the end.",
+                },
+                {
+                  icon: ClipboardListIcon,
+                  title: "Supervised placements",
+                  body: "Practical placements matched to your stage of training.",
+                },
+                {
+                  icon: BadgeCheckIcon,
+                  title: "Records and certificates",
+                  body: "Completion and competency recorded on your profile.",
+                },
+              ].map((card) => (
+                <SiteHeroCard
+                  key={card.title}
+                  icon={<card.icon className="size-4.5" />}
+                  title={card.title}
+                  body={card.body}
+                />
+              ))}
+            </>
+          }
+        />
       </SiteSection>
 
       <SiteSection>

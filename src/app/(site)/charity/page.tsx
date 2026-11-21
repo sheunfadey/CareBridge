@@ -12,6 +12,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteHero, SiteHeroCard } from "@/components/site/site-hero";
 import { formatDate, formatMoney } from "@/lib/format";
 import {
   listOpenScholarshipProgrammes,
@@ -72,45 +73,48 @@ export default async function CharityPage() {
 
   return (
     <>
-      <SiteSection tone="ivory">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <SectionHeading
-              eyebrow="Charity and Scholarships"
-              title="Widening access to care careers"
-              description="Charity campaigns raise funds for training access and scholarships. Scholarship applications are reviewed through a defined process, and awards and fund allocation are recorded transparently."
-            />
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" asChild>
+            <SiteSection>
+        <SiteHero
+          tone="rose"
+          eyebrow="Charity and scholarships"
+          title="Widen access"
+          highlight="to care careers."
+          description="Charity campaigns raise funds for training access and scholarships. Awards and fund allocation are recorded transparently and kept separate from commercial operations."
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
                 <Link href="/donate">Donate</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/contact">Talk to our team</Link>
+              <Button
+                size="lg"
+                variant="outline" className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
+                <Link href="/contact">Talk to us</Link>
               </Button>
-            </div>
-          </div>
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-strong">
-              Our commitments
-            </p>
-            <ul className="mt-4 space-y-3">
-              {[
-                "Scholarship applications reviewed through a defined process",
-                "Awards and fund allocation recorded transparently",
-                "Charity funds kept separate from commercial operations",
-                "Clear reporting on how funds are used",
-              ].map((point) => (
-                <li key={point} className="flex gap-3 text-sm text-muted-foreground">
-                  <span
-                    aria-hidden="true"
-                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
-                  />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+            </>
+          }
+          aside={
+            <>
+              <SiteHeroCard
+                title="Training access"
+                body="Removing barriers to structured caregiver training."
+              />
+              <SiteHeroCard
+                title="Scholarships"
+                body="Helping more people start and complete their training."
+              />
+              <SiteHeroCard
+                title="Community support"
+                body="Widening access to care careers where it is needed most."
+              />
+            </>
+          }
+        />
       </SiteSection>
 
       <SiteSection>

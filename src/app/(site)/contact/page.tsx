@@ -11,6 +11,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteHero } from "@/components/site/site-hero";
 import { brand } from "@/config/brand";
 
 export const metadata: Metadata = {
@@ -64,63 +65,32 @@ const beforeYouWrite = [
 export default function ContactPage() {
   return (
     <>
-      <SiteSection tone="ivory">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-teal/20 bg-brand-sky px-3 py-1 text-xs font-medium text-brand-teal">
-              <MailIcon className="size-3.5" aria-hidden="true" />
-              Contact
-            </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
-              Contact {brand.name}
-              <span className="text-gradient-care block">
-                and we will point you to the right place
-              </span>
-            </h1>
-            <p className="max-w-xl text-lg text-muted-foreground">
-              Every message comes to a real inbox, so using the route below
-              means your question reaches the team that deals with it rather than
-              a general queue. {brand.tagline}.
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" asChild>
-                <Link href="/help">Visit the help centre</Link>
+            <SiteSection>
+        <SiteHero
+          tone="sky"
+          eyebrow="Contact"
+          title="Contact HillCrest"
+          highlight="and we will point you to the right place."
+          description="Questions about training, placements, hiring, care operations, referrals or charity support all reach the same team."
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
+                <Link href="/register">Create an account</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/faq">Read the FAQ</Link>
+              <Button
+                size="lg"
+                variant="outline" className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
+                <Link href="/courses">Browse courses</Link>
               </Button>
-            </div>
-          </div>
-
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-strong">
-              What happens next
-            </p>
-            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-              <li className="flex gap-3">
-                <span
-                  aria-hidden="true"
-                  className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
-                />
-                We aim to respond during business hours in {brand.timeZone}.
-              </li>
-              <li className="flex gap-3">
-                <span
-                  aria-hidden="true"
-                  className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
-                />
-                Messages sent outside business hours are picked up on the next working day.
-              </li>
-              <li className="flex gap-3">
-                <span
-                  aria-hidden="true"
-                  className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
-                />
-                We do not operate a 24-hour support desk, so urgent safeguarding matters should be raised with the relevant emergency services as well.
-              </li>
-            </ul>
-          </div>
-        </div>
+            </>
+          }
+        />
       </SiteSection>
 
       <SiteSection>

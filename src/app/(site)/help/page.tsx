@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  BookOpenIcon,
   BuildingIcon,
   GraduationCapIcon,
   LifeBuoyIcon,
@@ -11,6 +10,7 @@ import {
 
 import { FaqAccordion } from "@/components/site/faq-accordion";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteHero } from "@/components/site/site-hero";
 import { Button } from "@/components/ui/button";
 import { brand } from "@/config/brand";
 import type { FaqItem } from "@/config/site-content";
@@ -98,63 +98,32 @@ const popularFaqs: FaqItem[] = [
 export default function HelpPage() {
   return (
     <>
-      <SiteSection tone="ivory">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-teal/20 bg-brand-sky px-3 py-1 text-xs font-medium text-brand-teal">
-              <BookOpenIcon className="size-3.5" aria-hidden="true" />
-              Help centre
-            </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
-              Help centre
-              <span className="text-gradient-care block">
-                find your answer without waiting
-              </span>
-            </h1>
-            <p className="max-w-xl text-lg text-muted-foreground">
-              {brand.name} is designed to be understandable without help. This
-              page covers the four areas people ask about most, and points you
-              to the guidance for each one.
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" asChild>
+            <SiteSection>
+        <SiteHero
+          tone="mint"
+          eyebrow="Help centre"
+          title="Find your answer"
+          highlight="without waiting."
+          description="Guides and short answers for learners, caregivers, care providers, employers and partners."
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
                 <Link href="/faq">Read the FAQ</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button
+                size="lg"
+                variant="outline" className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
                 <Link href="/contact">Contact us</Link>
               </Button>
-            </div>
-          </div>
-
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-strong">
-              How the help centre works
-            </p>
-            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-              <li className="flex gap-3">
-                <span
-                  aria-hidden="true"
-                  className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
-                />
-                Each topic below explains how the area works and links to the part of the platform it refers to.
-              </li>
-              <li className="flex gap-3">
-                <span
-                  aria-hidden="true"
-                  className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
-                />
-                Popular questions are answered further down this page.
-              </li>
-              <li className="flex gap-3">
-                <span
-                  aria-hidden="true"
-                  className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
-                />
-                If the answer depends on your account or your organisation, write to us through the contact page.
-              </li>
-            </ul>
-          </div>
-        </div>
+            </>
+          }
+        />
       </SiteSection>
 
       <SiteSection>

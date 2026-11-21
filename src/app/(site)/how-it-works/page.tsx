@@ -10,6 +10,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteHero } from "@/components/site/site-hero";
 
 export const metadata: Metadata = {
   title: "How It Works",
@@ -47,11 +48,31 @@ const stages = [
 export default function HowItWorksPage() {
   return (
     <>
-      <SiteSection tone="ivory">
-        <SectionHeading
+      <SiteSection>
+        <SiteHero
           eyebrow="How it works"
-          title="A pathway from learning to working"
+          title="A pathway from learning"
+          highlight="to working."
           description="HillCrest is built as a sequence of connected stages, so that each step builds on the last and nothing is left to chance."
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
+                <Link href="/courses">Browse courses</Link>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
+                <Link href="/register">Create an account</Link>
+              </Button>
+            </>
+          }
         />
       </SiteSection>
 

@@ -9,6 +9,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteHero } from "@/components/site/site-hero";
 import { brand } from "@/config/brand";
 
 export const metadata: Metadata = {
@@ -20,11 +21,31 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <SiteSection tone="ivory">
-        <SectionHeading
+      <SiteSection>
+        <SiteHero
           eyebrow="About HillCrest"
-          title="Careers in care, built on real capability"
+          title="Careers in care,"
+          highlight="built on real capability."
           description={`${brand.name} exists to make it easier for people to build a career in care — and for the people receiving care to be supported by capable, verified professionals.`}
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
+                <Link href="/how-it-works">See how it works</Link>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
+                <Link href="/contact">Talk to us</Link>
+              </Button>
+            </>
+          }
         />
       </SiteSection>
 

@@ -13,7 +13,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { SectionHeading, SiteSection } from "@/components/site/site-section";
-import { brand } from "@/config/brand";
+import { SiteHero, SiteHeroCard } from "@/components/site/site-hero";
 
 export const metadata: Metadata = {
   title: "Internship Opportunities",
@@ -98,56 +98,48 @@ const pathwaySteps = [
 export default function InternshipsPage() {
   return (
     <>
-      <SiteSection tone="ivory">
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="space-y-6">
-            <span className="inline-flex items-center gap-2 rounded-full border border-brand-teal/20 bg-brand-sky px-3 py-1 text-xs font-medium text-brand-teal">
-              <UserCheckIcon className="size-3.5" aria-hidden="true" />
-              Supervised practice
-            </span>
-            <h1 className="font-heading text-4xl font-semibold leading-tight text-brand-strong sm:text-5xl">
-              Internship opportunities
-              <span className="text-gradient-care block">
-                Learn on the job, with support.
-              </span>
-            </h1>
-            <p className="max-w-xl text-lg text-muted-foreground">
-              Internships on {brand.name} are supervised practical placements.
-              You work with people who need support, a supervisor is responsible
-              for your practice, and your performance is evaluated and recorded
-              as part of your training.
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button size="lg" asChild>
-                <Link href="/register">Create an account</Link>
+            <SiteSection>
+        <SiteHero
+          tone="mint"
+          eyebrow="Supervised practice"
+          title="Internship opportunities."
+          highlight="Learn on the job, with support."
+          description="Placements are matched to your stage of training, supervised by a named professional and recorded as part of your competency history."
+          actions={
+            <>
+              <Button
+                size="lg"
+                className="rounded-full bg-brand-navy text-white hover:bg-brand-navy/90"
+                asChild
+              >
+                <Link href="/register">Find a placement</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/contact">Talk to our team</Link>
+              <Button
+                size="lg"
+                variant="outline" className="rounded-full border-brand-navy/15 bg-white/60"
+                asChild
+              >
+                <Link href="/how-it-works">How it works</Link>
               </Button>
-            </div>
-          </div>
-
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
-            <p className="font-heading text-lg font-semibold text-brand-strong">
-              Who internships are for
-            </p>
-            <ul className="mt-4 space-y-3">
-              {[
-                "Learners who have completed the relevant classroom modules and assessments.",
-                "Caregivers already working who want their experience evaluated and recorded.",
-                "People returning to care work who want a supervised route back in.",
-              ].map((point) => (
-                <li key={point} className="flex gap-3 text-sm text-muted-foreground">
-                  <span
-                    aria-hidden="true"
-                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand-green"
-                  />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+            </>
+          }
+          aside={
+            <>
+              <SiteHeroCard
+                title="Apply for a placement"
+                body="Tell us where you are in your training and what you want to practise."
+              />
+              <SiteHeroCard
+                title="Work under supervision"
+                body="A supervisor reviews your practice and gives feedback as you go."
+              />
+              <SiteHeroCard
+                title="Evaluation and sign-off"
+                body="A structured evaluation updates your competency record."
+              />
+            </>
+          }
+        />
       </SiteSection>
 
       <SiteSection>

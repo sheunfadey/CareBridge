@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CookieIcon, InfoIcon } from "lucide-react";
 
-import { SectionHeading, SiteSection } from "@/components/site/site-section";
+import { SiteSection } from "@/components/site/site-section";
+import { SiteHero } from "@/components/site/site-hero";
 import { brand } from "@/config/brand";
 
 export const metadata: Metadata = {
@@ -14,13 +15,17 @@ export const metadata: Metadata = {
 export default function CookiesPage() {
   return (
     <>
+      <SiteSection>
+        <SiteHero
+          eyebrow="Legal"
+          title="Cookie and Privacy Preferences"
+          description={`How ${brand.name} uses cookies and similar technologies, and the choices available to you.`}
+        />
+      </SiteSection>
+
       <SiteSection tone="ivory">
         <div className="max-w-3xl space-y-6">
-          <SectionHeading
-            eyebrow="Legal"
-            title="Cookie and Privacy Preferences"
-            description={`How ${brand.name} uses cookies and similar technologies, and the choices available to you.`}
-          />
+          
           <div className="rounded-xl border border-brand-warning/30 bg-brand-sky p-5">
             <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-strong">
               <InfoIcon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
