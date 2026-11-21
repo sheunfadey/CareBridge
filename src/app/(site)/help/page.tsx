@@ -136,11 +136,11 @@ export default function HelpPage() {
           {helpTopics.map((topic) => (
             <div
               key={topic.title}
-              className="flex flex-col rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10"
+              className="flex flex-col rounded-[var(--radius-2xl)] bg-card/85 p-6 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
             >
               <span
                 aria-hidden="true"
-                className="flex size-10 items-center justify-center rounded-lg bg-brand-sky text-brand-teal"
+                className="flex size-10 items-center justify-center rounded-xl bg-brand-sky/80 text-brand-teal ring-1 ring-brand-teal/10"
               >
                 <topic.icon className="size-5" />
               </span>
@@ -180,10 +180,10 @@ export default function HelpPage() {
             </div>
           </div>
 
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
+          <div className="rounded-[var(--radius-2xl)] bg-card/85 p-6 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10">
             <span
               aria-hidden="true"
-              className="flex size-10 items-center justify-center rounded-lg bg-brand-sky text-brand-teal"
+              className="flex size-10 items-center justify-center rounded-xl bg-brand-sky/80 text-brand-teal ring-1 ring-brand-teal/10"
             >
               <LifeBuoyIcon className="size-5" />
             </span>

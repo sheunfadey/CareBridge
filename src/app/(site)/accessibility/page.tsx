@@ -26,7 +26,7 @@ export default function AccessibilityPage() {
       <SiteSection tone="ivory">
         <div className="max-w-3xl space-y-6">
           
-          <div className="rounded-xl border border-brand-warning/30 bg-brand-sky p-5">
+          <div className="rounded-[var(--radius-2xl)] border border-brand-warning/30 bg-brand-sky/70 p-5">
             <p className="flex items-start gap-2 font-heading text-sm font-semibold text-brand-strong">
               <InfoIcon className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
               Working draft

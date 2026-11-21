@@ -219,7 +219,7 @@ export default function HomePage() {
             >
               <span
                 aria-hidden="true"
-                className="flex size-10 items-center justify-center rounded-lg bg-brand-sky text-brand-teal"
+                className="flex size-10 items-center justify-center rounded-xl bg-brand-sky/80 text-brand-teal ring-1 ring-brand-teal/10"
               >
                 <BookOpenIcon className="size-5" />
               </span>
@@ -269,7 +269,7 @@ export default function HomePage() {
               >
                 <span
                   aria-hidden="true"
-                  className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-sky text-brand-teal"
+                  className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-sky/80 text-brand-teal ring-1 ring-brand-teal/10"
                 >
                   <item.icon className="size-5" />
                 </span>
@@ -305,7 +305,7 @@ export default function HomePage() {
               >
                 <span
                   aria-hidden="true"
-                  className="flex size-10 items-center justify-center rounded-lg bg-brand-sky text-brand-teal"
+                  className="flex size-10 items-center justify-center rounded-xl bg-brand-sky/80 text-brand-teal ring-1 ring-brand-teal/10"
                 >
                   <Icon className="size-5" />
                 </span>

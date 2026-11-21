@@ -135,11 +135,11 @@ export default function ForEmployersPage() {
           {employerActions.map((item) => (
             <li
               key={item.title}
-              className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10"
+              className="rounded-[var(--radius-2xl)] bg-card/85 p-6 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
             >
               <span
                 aria-hidden="true"
-                className="flex size-10 items-center justify-center rounded-lg bg-brand-sky text-brand-teal"
+                className="flex size-10 items-center justify-center rounded-xl bg-brand-sky/80 text-brand-teal ring-1 ring-brand-teal/10"
               >
                 <item.icon className="size-5" />
               </span>
@@ -163,11 +163,11 @@ export default function ForEmployersPage() {
             {verificationPoints.map((point) => (
               <div
                 key={point.title}
-                className="flex gap-4 rounded-xl bg-card p-5 shadow-card ring-1 ring-foreground/10"
+                className="flex gap-4 rounded-[var(--radius-2xl)] bg-card/85 p-5 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10"
               >
                 <span
                   aria-hidden="true"
-                  className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-sky text-brand-teal"
+                  className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-sky/80 text-brand-teal ring-1 ring-brand-teal/10"
                 >
                   <point.icon className="size-5" />
                 </span>
@@ -198,11 +198,11 @@ export default function ForEmployersPage() {
             title="Place verified caregivers efficiently"
             description="Care agencies and recruiters can manage placements with visibility into training and competency history, keeping records consistent across candidates and clients."
           />
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
+          <div className="rounded-[var(--radius-2xl)] bg-card/85 p-6 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10">
             <div className="flex items-center gap-4">
               <span
                 aria-hidden="true"
-                className="flex size-10 items-center justify-center rounded-lg bg-brand-sky text-brand-teal"
+                className="flex size-10 items-center justify-center rounded-xl bg-brand-sky/80 text-brand-teal ring-1 ring-brand-teal/10"
               >
                 <MessageSquareIcon className="size-5" />
               </span>

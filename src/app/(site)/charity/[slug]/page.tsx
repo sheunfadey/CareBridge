@@ -64,7 +64,7 @@ export default async function PublicCampaignPage({
             </div>
           </div>
 
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
+          <div className="rounded-[var(--radius-2xl)] bg-card/85 p-6 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10">
             <div className="flex items-center justify-between text-sm">
               <span className="font-medium text-brand-strong">
                 {formatMoney(campaign.receivedMinorUnits, campaign.currency)} raised
@@ -117,7 +117,7 @@ export default async function PublicCampaignPage({
             title="Support this campaign"
             description="Payments are processed securely and verified on the server. A donation is recorded only after the provider confirms it."
           />
-          <div className="rounded-xl bg-card p-6 shadow-card ring-1 ring-foreground/10">
+          <div className="rounded-[var(--radius-2xl)] bg-card/85 p-6 shadow-[0_12px_32px_-24px_rgb(16_43_92/0.35)] ring-1 ring-foreground/10">
             {user ? (
               <DonateForm campaignId={campaign.campaignId} campaignTitle={campaign.title} />
             ) : (
