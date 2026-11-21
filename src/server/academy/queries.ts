@@ -433,6 +433,22 @@ function normaliseModules(
     }));
 }
 
+export async function debugCoursePublishers(): Promise<[string, string][]> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("courses")
+    .select("instructor_id")
+    .eq("status", "published")
+    .eq("is_public", true);
+
+  const names = await loadInstructorNames(
+    supabase,
+    (data ?? []).map((course) => course.instructor_id),
+  );
+
+  return [...names.entries()];
+}
+
 export async function getPublishedCourses(): Promise<{
   courses: AcademyCourseSummary[];
   unavailable: boolean;
